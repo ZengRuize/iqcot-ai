@@ -514,3 +514,28 @@ Decision: `MODEL_REVISED`.
 Next useful action: stop Ton-min/Ton-floor variants.  Run one minimal deferred
 post-active pulse inhibit or controlled reentry chunk with the same R049H
 three-window acceptance gate.
+
+<!-- R049J_PR_ECB_POST_ACTIVE_INHIBIT -->
+
+## R049J Latest Update
+
+R049J added `output/iqcot_r049j_build_post_active_inhibit_model.m`,
+`output/iqcot_r049j_pr_ecb_post_active_inhibit_chunk.m`, and
+`output/iqcot_r049j_waveform_metric_audit.py`.  It copied the completed R049I
+model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049j_post_active_inhibit.slx`.
+
+A2 used request-path post-active inhibit from `0.070us` to `2.000us` after the
+load step.  This boundary was selected from baseline traces: qh4 naturally
+falls at about `0.052us`, and the next qh1 rise is about `1.690us`.
+
+Result: Ton truncation remained disabled, and active-HS remaining Ton4 stayed
+`52ns -> 52ns`, so R049J did not truncate the current pulse.  It blocked one
+future request and improved positive recovery peaks, but introduced recovery
+undershoot penalties of `-2.9901mV` and `-4.1571mV` across the two offsets.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: R049K should test controlled reentry / soft request
+restoration, still as one minimal `40A->20A` two-offset chunk using the R049H
+three-window gate plus recovery-undershoot penalty.

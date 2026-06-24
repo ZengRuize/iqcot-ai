@@ -412,3 +412,31 @@ Adaptive revision:
   unchanged from A0;
 - stop Ton-min/Ton-floor variants and move the next chunk to deferred
   post-active pulse inhibit or controlled reentry.
+
+Status after R049J: the deferred post-active pulse-inhibit chunk completed and
+ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049J copied the completed R049I model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049j_post_active_inhibit.slx`
+and inserted a request-path gate after the existing scheduler allow logic:
+
+```text
+allow_to_scheduler = existing_allow AND NOT(post_active_inhibit)
+```
+
+Adaptive revision:
+
+- the action starts at `0.070 us` after load step, after the baseline active-HS
+  qh4 natural falling edge at about `0.052 us`;
+- Ton truncation is disabled, and active-HS remaining Ton4 remains
+  `52 ns -> 52 ns`, so R049J does not repeat the R049G/R049I current-pulse
+  truncation issue;
+- A2 blocks one future request and reduces positive recovery peaks;
+- the hard `0.070-2.000 us` request inhibit creates recovery undershoot
+  penalties of `-2.9901 mV` and `-4.1571 mV` in the two offsets;
+- the next chunk should be controlled reentry with softer request restoration,
+  not fixed hard inhibit.

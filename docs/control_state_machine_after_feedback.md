@@ -408,3 +408,56 @@ R049I decision:
 ```text
 MODEL_REVISED
 ```
+
+## R049J State-Machine Revision
+
+R049J tested the next action family:
+
+```text
+post_active_inhibit:
+    start after current active-HS pulse natural end
+    inhibit future scheduler requests only
+```
+
+The inserted gate is request-path only:
+
+```text
+allow_to_scheduler = existing_allow AND NOT(post_active_inhibit)
+```
+
+At the `0.05 us` active-HS offset, the selected inhibit window starts at
+`0.070 us`, after the baseline qh4 natural falling edge at about `0.052 us`.
+This preserves current-pulse semantics:
+
+```text
+remaining Ton4: 52 ns -> 52 ns
+Ton-trunc duration: 0 us
+```
+
+But hard inhibit still causes reentry stress:
+
+```text
+0.05 us recovery undershoot penalty: -2.9901 mV
+0.105 us recovery undershoot penalty: -4.1571 mV
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT:
+    fixed_post_active_inhibit:
+        not accepted as final PR-ECB action
+
+    controlled_reentry:
+        next candidate action
+        restore requests softly after inhibit / recovery gate
+
+    metric_guard:
+        include recovery undershoot, not only positive peak
+```
+
+R049J decision:
+
+```text
+MODEL_REVISED
+```

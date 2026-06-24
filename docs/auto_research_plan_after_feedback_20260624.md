@@ -309,6 +309,24 @@ Status after R049I:
   for deferred post-active pulse inhibit or controlled reentry, still using the
   R049H three-window acceptance gate.
 
+Status after R049J:
+
+- `output/iqcot_r049j_build_post_active_inhibit_model.m` copied the completed
+  R049I model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049j_post_active_inhibit.slx`.
+- R049J selected a request-path inhibit window from baseline timing evidence:
+  qh4 naturally falls about `0.052 us` after the active-HS load step, so A2
+  starts inhibit at `0.070 us` and holds until `2.000 us`.
+- Ton truncation was disabled in both A0 and A2.  At `0.05 us`, remaining Ton4
+  stayed `52 ns -> 52 ns`, so the current active-HS pulse was not truncated.
+- A2 blocked one future request and reduced positive recovery peaks, but caused
+  recovery undershoot penalties: `-2.9901 mV` at `0.05 us` and `-4.1571 mV`
+  at `0.105 us`.
+- Decision: `MODEL_REVISED`.
+- Do not promote fixed post-active inhibit.  The next useful step is controlled
+  reentry with softer request restoration, or a shorter/phase-selective inhibit
+  explicitly penalized for recovery undershoot.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

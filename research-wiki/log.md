@@ -357,3 +357,27 @@ _Append-only timeline._
 - At `0.105us`, A2 matched A0 in all three windows.
 - Decision: `MODEL_REVISED`.  Stop Ton-min/Ton-floor variants; next action
   should be deferred post-active pulse inhibit or controlled reentry.
+
+<!-- R049J_PR_ECB_POST_ACTIVE_INHIBIT -->
+
+## 2026-06-25 R049J PR-ECB deferred post-active pulse inhibit
+
+- Added `output/iqcot_r049j_build_post_active_inhibit_model.m`,
+  `output/iqcot_r049j_pr_ecb_post_active_inhibit_chunk.m`, and
+  `output/iqcot_r049j_waveform_metric_audit.py`.
+- Built the new post-active inhibit copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049j_post_active_inhibit.slx`
+  from the completed R049I model through MATLAB APIs.
+- Inserted a request-path gate:
+  `allow_to_scheduler = existing_allow AND NOT(post_active_inhibit)`.
+- Selected `post_active_inhibit = 0.070-2.000us` from baseline timing:
+  qh4 naturally falls at about `0.052us`, and the next qh1 rise is about
+  `1.690us`.
+- Ran only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-inhibit and A2 deferred post-active request inhibit.
+- At `0.05us`, remaining Ton4 stayed `52ns -> 52ns` and Ton-trunc duration was
+  `0us`, so the current active pulse was not truncated.
+- A2 blocked one future request and reduced positive recovery peaks, but caused
+  recovery undershoot penalties of `-2.9901mV` and `-4.1571mV`.
+- Decision: `MODEL_REVISED`.  Fixed post-active inhibit is too hard; next step
+  should be controlled reentry / soft request restoration.

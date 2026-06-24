@@ -759,6 +759,55 @@ for this mild active-HS case.
 The next validation should switch to deferred post-active pulse inhibit or
 controlled reentry, preserving the R049H three-window acceptance gate.
 
+### R049J Result: Request Inhibit Avoids Ton Truncation but Needs Controlled Reentry
+
+R049J copied the completed R049I model into a new derived copy and inserted a
+request-path post-active inhibit gate:
+
+```text
+allow_to_scheduler = existing_allow AND NOT(post_active_inhibit)
+```
+
+The selected A2 window was evidence-based:
+
+```text
+baseline qh4 natural fall: 0.052 us after load step
+post_active_inhibit: 0.070 us -> 2.000 us
+```
+
+This avoided the R049G/R049I failure mode.  In the `0.05 us` active-HS row:
+
+```text
+remaining Ton4: 52 ns -> 52 ns
+global Ton-trunc duration: 0 us
+skipped REQ count during inhibit: 1
+```
+
+However, the hard request inhibit caused an undershoot/reentry penalty:
+
+| Offset | Early peak A2-A0 | Recovery peak improvement | Recovery undershoot penalty |
+|---:|---:|---:|---:|
+| `0.050 us` | `0.0000 mV` | `+0.6262 mV` | `-2.9901 mV` |
+| `0.105 us` | `0.0000 mV` | `+0.5813 mV` | `-4.1571 mV` |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+Avoiding current-pulse truncation is necessary, but a hard post-active request
+inhibit is not sufficient.  The next action must include controlled reentry or
+soft request restoration, and the R049H window gate must include recovery
+undershoot penalties.
+```
+
+The next validation should be R049K: one minimal controlled-reentry chunk, not
+a full matrix.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:
