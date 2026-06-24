@@ -207,3 +207,23 @@ Recommended next output:
 docs/pr_ecb_control_minimal_chunk_r049b.md
 refine-logs/LOCAL_AUDIT_R049B_PR_ECB_MINIMAL_*.md
 ```
+
+Status after R049B: the smallest OV-skip chunk completed and ended in:
+
+```text
+CLAIM_DOWNGRADED
+```
+
+R049B used a new derived copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049b_ovskip.slx`,
+and ran only `40A -> 1A near0` at offsets `0.05 us` and `0.105 us` with
+A0/A1 rows.  The simple over-voltage skip gate inhibited later requests
+(`18.880 us` / `19.816 us`; `19` / `20` skipped REQ edges) but did not reduce
+the first peak (`6.2586 mV` and `5.9603 mV`, unchanged from A0).
+
+Adaptive revision:
+
+- simple OV skip remains a valid `SKIP_HOLD` / request-inhibit action;
+- it must not be claimed as a validated first-peak suppression action;
+- the next chunk should test minimal Ton truncation or active-HS remaining-on-time
+  truncation before any full PR-ECB A-matrix expansion.

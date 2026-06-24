@@ -131,6 +131,26 @@ Status after R049A:
   action first, then test one load-drop magnitude at two phase offsets before
   expanding any A matrix.
 
+Status after R049B:
+
+- `output/iqcot_r049b_build_ovskip_model.m` now builds
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049b_ovskip.slx`
+  as a second-level derived copy from the R049A scaffold.
+- R049B implemented only simple over-voltage request skip:
+  `Allow = GlobalReady && REQ && (Vout <= Vo_ref + Vov_skip)`.
+- The minimal chunk ran only `40A -> 1A near0` at two offsets
+  (`0.05 us`, `0.105 us`) with A0 same-model no-skip and A1 OV-skip rows.
+- A1 inhibited new requests for about `18.880 us` / `19.816 us` and blocked
+  `19` / `20` raw REQ edges, but first-peak overshoot was unchanged:
+  `6.2586 mV` and `5.9603 mV` for A0 and A1 at the two offsets.
+- Decision: `CLAIM_DOWNGRADED`.  Simple OV skip should be described as a
+  post-threshold request-inhibit / skip-hold mechanism, not as a validated
+  first-peak suppression mechanism.
+- Do not expand the full A matrix from this result.  The next chunk should use
+  a new derived-copy single action: minimal Ton truncation or active-HS
+  remaining-on-time truncation, again on one load-drop magnitude crossed with
+  two phase offsets.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

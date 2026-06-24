@@ -314,3 +314,25 @@ Next useful action: R049B should implement one minimal derived-copy protection
 action first, such as simple over-voltage skip or Ton truncation, then run one
 load-drop magnitude at two phase offsets.  Do not expand to the full A matrix
 until that chunk is diagnosed.
+
+<!-- R049B_PR_ECB_MINIMAL_OVSKIP -->
+
+## R049B Latest Update
+
+R049B implemented a second-level derived copy with simple over-voltage request
+skip:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049b_ovskip.slx`.
+The build and runner scripts are `output/iqcot_r049b_build_ovskip_model.m` and
+`output/iqcot_r049b_pr_ecb_minimal_chunk.m`.
+
+Minimal chunk only: `40A -> 1A near0` at offsets `0.05us` and `0.105us`, with
+A0 same-model no-skip and A1 OV-skip rows.  A1 did inhibit later requests
+(`18.880us` / `19.816us`, `19` / `20` skipped REQ edges), but did not reduce
+the first peak: A0 and A1 remained `6.2586mV` and `5.9603mV` at the two offsets.
+
+Decision: `CLAIM_DOWNGRADED`.
+
+Next useful action: do not expand the A matrix from simple OV skip.  Implement a
+new single-action derived-copy test for minimal Ton truncation or active-HS
+remaining-on-time truncation, again using one load-drop magnitude crossed with
+two offsets.  Keep all claims derived-Simulink-only.

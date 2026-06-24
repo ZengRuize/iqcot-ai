@@ -1,0 +1,5 @@
+case_id,controller,target_label,objective,role,base_load_A,target_load_A,load_drop_A,load_step_offset_us,tau_ai_us,selected_ref_slew_us,vov_skip_mV,delta_v_allow_mV
+r049b_near0_off0p050_a0,A0_no_skip,near0,r049b_minimal_ovskip,baseline_same_model,40,1,39,0.05,1.25,60,1000,10
+r049b_near0_off0p050_a1_ovskip,A1_ov_skip,near0,r049b_minimal_ovskip,simple_over_voltage_skip,40,1,39,0.05,1.25,60,2,10
+r049b_near0_off0p105_a0,A0_no_skip,near0,r049b_minimal_ovskip,baseline_same_model,40,1,39,0.105,1.25,60,1000,10
+r049b_near0_off0p105_a1_ovskip,A1_ov_skip,near0,r049b_minimal_ovskip,simple_over_voltage_skip,40,1,39,0.105,1.25,60,2,10

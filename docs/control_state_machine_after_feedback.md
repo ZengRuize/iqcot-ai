@@ -167,6 +167,32 @@ explicit revision hooks:
 | `Ton_diff` hurts phase spacing | add phase-cost guard before leaving `BALANCE_RECOVERY` |
 | shed event causes overshoot | extend shed lockout after cut-load/reentry |
 | add event causes current spike | add new-phase current ramp state or integrator reset |
+| simple OV skip inhibits requests but does not reduce first peak | keep OV skip as `SKIP_HOLD` / request-inhibit only; require `CUT_LOAD_PROTECT` to include Ton truncation or active-HS remaining-on-time truncation for first-peak protection |
 
 Every such revision must be logged in a refine-log and synchronized to the
 claims/evidence matrix before further grid expansion.
+
+## R049B State-Machine Revision
+
+R049B validated a minimal simple OV-skip insertion on a new derived copy.  The
+gate entered the request path as:
+
+```text
+Allow = GlobalReady && REQ && (Vout <= Vo_ref + Vov_skip)
+```
+
+In the `40A -> 1A near0` two-offset chunk, this gate inhibited later requests
+for about `19 us`, but did not reduce the first peak.  Therefore the state
+machine should treat simple OV skip as a `SKIP_HOLD` action after over-voltage
+is detected, not as the primary `CUT_LOAD_PROTECT` action for first-peak
+suppression.
+
+Revised priority:
+
+```text
+CUT_LOAD_PROTECT:
+    active-HS / first-peak action first
+        -> Ton truncation or remaining-on-time truncation
+    then SKIP_HOLD:
+        -> simple OV skip / pulse inhibit for reentry control
+```

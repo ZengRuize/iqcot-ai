@@ -434,6 +434,38 @@ Compare:
 Main metrics: peak overshoot, first-peak time, truncated pulse count, inhibit
 duration, skip count, reentry time, secondary oscillation, and final error.
 
+### R049B Result: Simple OV Skip Claim Downgrade
+
+R049B implemented the first minimal derived-copy protection action: simple
+over-voltage request skip,
+
+```text
+Allow = GlobalReady && REQ && (Vout <= Vo_ref + Vov_skip).
+```
+
+The minimal chunk used `40A -> 1A near0` and two offsets, `0.05 us` and
+`0.105 us`.  With `Vov_skip = 2 mV`, A1 inhibited new requests for about
+`18.880 us` and `19.816 us`, blocking `19` and `20` raw REQ edges.  However,
+the first-peak overshoot remained unchanged relative to A0:
+
+| Offset | A0 peak | A1 OV-skip peak | Improvement |
+|---:|---:|---:|---:|
+| `0.05 us` | `6.2586 mV` | `6.2586 mV` | `0.0000 mV` |
+| `0.105 us` | `5.9603 mV` | `5.9603 mV` | `0.0000 mV` |
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+simple OV skip = post-threshold request-inhibit / SKIP_HOLD action
+simple OV skip != validated first-peak suppression action
+```
+
+For first-peak protection, PR-ECB should prioritize actions that can reduce
+remaining high-side energy injection, such as minimal Ton truncation or
+active-HS remaining-on-time truncation.  Simple OV skip may still be useful for
+skip-hold/reentry management, but it should not be the primary A1 first-peak
+claim.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

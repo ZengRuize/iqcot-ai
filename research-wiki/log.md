@@ -184,3 +184,23 @@ _Append-only timeline._
   injection: `UPDATE_DIAGRAM_OK model=four_phase_iek_pr_ecb_control`.
 - Decision: `MODEL_CONFIRMED`.  This is a scaffold/observability result only,
   not PR-ECB protection-performance validation.
+
+<!-- R049B_PR_ECB_MINIMAL_OVSKIP -->
+
+## 2026-06-24 R049B PR-ECB minimal OV-skip chunk
+
+- Added `output/iqcot_r049b_build_ovskip_model.m` and
+  `output/iqcot_r049b_pr_ecb_minimal_chunk.m`.
+- Built the new derived copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049b_ovskip.slx`
+  through MATLAB APIs.
+- Implemented only simple over-voltage request skip:
+  `Allow = GlobalReady && REQ && (Vout <= Vo_ref + Vov_skip)`.
+- Ran the minimal chunk only: `40A -> 1A near0` at offsets `0.05us` and
+  `0.105us`, with A0 same-model no-skip and A1 OV-skip rows.
+- A1 inhibited later requests for `18.880us` / `19.816us` and blocked `19` /
+  `20` REQ edges, but first peaks were unchanged from A0:
+  `6.2586mV` and `5.9603mV`.
+- Decision: `CLAIM_DOWNGRADED`.  Simple OV skip is now bounded as a
+  post-threshold request-inhibit / skip-hold mechanism, not a validated
+  first-peak suppression action.
