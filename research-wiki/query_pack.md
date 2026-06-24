@@ -161,3 +161,40 @@ Rule summary: near0/5A-like large cut-loads are charge+ESR dominated with r_E ab
 Current claim boundary: `E_HS,rem` is an active-HS segmentation feature, not a globally validated additive law. PR-ECB is a first-peak risk feature/safety boundary from derived-Simulink offline evidence only; it is not hardware/HIL validation, not a global calibration proof, and not a replacement for PIS-IEK/r_hat/B_epsilon post-peak recovery logic.
 
 Next useful action: R044 can convert the R043 segmented rules into a compact paper figure/table and, if needed, design a small hold-out calibration check around new load-drop magnitudes. Keep all claims bounded to derived-Simulink/offline evidence until hardware/HIL data exists.
+
+<!-- R046_DIRECTION_REVISION_AFTER_USER_FEEDBACK -->
+
+## R046 Direction Revision
+
+User feedback on 2026-06-24 corrected the project direction. The external
+load-current transition rate is not controlled by the VRM, so `T_slew` must not
+remain the main control variable. Existing `T_slew` and AI-delay work should be
+kept as historical/future-extension evidence, but the active research line is
+now:
+
+`PR-ECB cut-load voltage stabilization + PIS-IEK steady-state current sharing + variable-phase add/shed hybrid event management`.
+
+Main implications:
+
+- PR-ECB should move from offline first-peak risk calibration toward derived
+  cut-load protection actions: Ton truncation, pulse inhibit, integrator
+  hold/reset, skip hold, and controlled reentry.
+- PIS-IEK should move from model validation toward steady-state current-sharing
+  control: `Ton_diff` as the main DC current-sharing actuator and
+  `Lambda_diff` as phase-spacing/ripple-cancellation trim.
+- Phase add/shed should be introduced as a variable active phase set
+  `A subset {1,2,3,4}` with hysteresis, dwell time, and shedding disabled during
+  cut-load protection.
+- Current validation should ignore AI delay unless a later stage explicitly
+  reintroduces supervisory scheduling. The next comparison matrix should be:
+  original IQCOT, empirical no-model control, PIS-IEK-only, PR-ECB-only, and
+  PR-ECB+PIS-IEK coordinated control.
+
+New direction files:
+
+- `docs/research_direction_after_user_feedback_20260624.md`
+- `docs/auto_research_plan_after_feedback_20260624.md`
+
+Next useful action: specify the derived control state machine and model-wiring
+table before running any new Simulink cases. Do not edit original `.slx` files
+or rerun R042/R043 post-processing unless an audit finds a concrete issue.

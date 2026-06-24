@@ -14,6 +14,22 @@ PR-ECB large-signal first-peak risk-boundary calibration branch.
 - v8 figure/table/audit plan:
   `output/iqcot_v8_pr_ecb_figure_table_audit_plan.md`
 
+## Current Research Direction
+
+After the 2026-06-24 direction review, the project main line is revised away
+from AI/`T_slew` as the primary claim. The active research direction is:
+
+```text
+PR-ECB cut-load voltage stabilization
++ PIS-IEK steady-state current sharing
++ variable-phase add/shed hybrid event management
+```
+
+Key planning documents:
+
+- `docs/research_direction_after_user_feedback_20260624.md`
+- `docs/auto_research_plan_after_feedback_20260624.md`
+
 ## Research Logs
 
 - Research wiki: `research-wiki/`
@@ -24,9 +40,10 @@ PR-ECB large-signal first-peak risk-boundary calibration branch.
 
 - AI is only a supervisory parameter-scheduling layer; it does not replace the
   IQCOT inner loop.
+- `T_slew` is not the external load-current slew rate and should not be treated
+  as the main control variable.
 - PR-ECB is a derived-Simulink/offline first-peak risk feature and safety
   boundary, not hardware or HIL validation.
-- `T_slew` is objective-sensitive; do not claim global optimality.
 - PIS-IEK should not be claimed to precisely predict large-signal first peaks.
 - `E_HS,rem` is an active-HS segmentation feature, not a globally validated
   additive correction law.
@@ -37,4 +54,3 @@ The repository intentionally excludes local tool checkouts, vendored Python
 dependencies, temporary literature downloads, cache directories, and installed
 skill links. The reproducible research artifacts, scripts, CSV outputs, figures,
 reports, wiki pages, and manuscript drafts are kept under version control.
-

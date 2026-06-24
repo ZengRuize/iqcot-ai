@@ -247,6 +247,14 @@ R035 最关键的收束是修正 R034 的表述边界：`38/46/50/54/46us` 是 t
 |---|---|---|---|---|
 | R043 converts the completed R040/R041/R042 first-peak evidence into a segmented PR-ECB calibration surface over load-drop magnitude, active high-side remaining-on-time, and dominant bound class. | `output/iqcot_r043_pr_ecb_segmented_calibration.py`; `output/iqcot_r043_pr_ecb_segmented_rows.csv`; `output/iqcot_r043_pr_ecb_segmented_rules.csv`; `output/iqcot_r043_pr_ecb_segmented_report.md`; `output/iqcot_r043_pr_ecb_segmented_paper_section.md`. The merged dataset has 28 rows and 6 rule segments. near0/5A charge+ESR bands: r_E `0.760-0.993`, bound/actual `1.522-1.701`. 10A transition bands: r_E `0.587-0.729`, bound/actual `1.737-1.853`. 20A energy/corrected-energy bands: r_E `0.409-0.626`, bound/actual `1.820-2.870`. | Medium; it integrates completed derived-Simulink evidence, but remains offline post-processing on one derived model. | "R043 supports writing PR-ECB as a segmented supervisory first-peak risk feature: charge+ESR for near0/5A, active-HS corrected energy versus post-turnoff raw energy for 10A transition rows, and energy/corrected-energy for 20A with explicit conservatism." | "R043 proves hardware/HIL safety, global PR-ECB calibration, a universal additive `E_HS,rem` law, global `T_slew` optimality, or that AI replaces the IQCOT inner loop." |
 
+<!-- R046_DIRECTION_REVISION_AFTER_USER_FEEDBACK -->
+
+### C41 / R046: revised control-centered research direction
+
+| Claim | Evidence | Strength | Safe wording | Do not claim |
+|---|---|---|---|---|
+| The active research direction should shift from AI/`T_slew`-centered scheduling to control-centered IQCOT research: PR-ECB cut-load voltage stabilization, PIS-IEK steady-state current sharing, and variable-phase add/shed hybrid event management. | User feedback on 2026-06-24; `C:/Users/zengruize/Downloads/iqcot_research_direction_guidance_after_repo_review.md`; `docs/research_direction_after_user_feedback_20260624.md`; `docs/auto_research_plan_after_feedback_20260624.md`; existing R039-R043 PR-ECB evidence; existing IEK/PIS-IEK actuator-classification evidence. | High as project-direction correction; future validation still required for the new control actions. | "The next stage uses PR-ECB to guide cut-load protection actions, PIS-IEK to guide steady-state balance and phase recovery, and active phase set modeling to support add/shed phase logic." | "`T_slew` controls the external load-current slew rate; AI is the present main control contribution; PIS-IEK precisely predicts all large-signal first peaks; PR-ECB or the revised framework is already hardware/HIL validated." |
+
 <!-- R042_PR_ECB_PHASE_DENSE_PARTIAL -->
 
 ### C38 / R042: PR-ECB phase-dense high-side boundary validation

@@ -115,3 +115,12 @@ _Append-only timeline._
 - Planned required v8 figures: two-layer supervisory architecture, R042 active-HS boundary, R043 conservative ratio bands, R043 dominant-bound family, and existing PIS-IEK validation panel.
 - Listed blocking submission audits: numeric claim audit, citation audit, structure audit, figure audit, and formatting/compile audit.
 - No new Simulink run and no R042/R043 post-processing repeat.
+<!-- R046_DIRECTION_REVISION_AFTER_USER_FEEDBACK -->
+
+## 2026-06-24 R046 direction revision after user feedback
+
+- Read user reference file `C:/Users/zengruize/Downloads/iqcot_research_direction_guidance_after_repo_review.md`.
+- Revised the active research direction away from AI/`T_slew` as the main claim.
+- New main line: PR-ECB cut-load voltage stabilization, PIS-IEK steady-state current sharing, and variable-phase add/shed hybrid event management.
+- Added `docs/research_direction_after_user_feedback_20260624.md` and `docs/auto_research_plan_after_feedback_20260624.md`.
+- Updated the automation plan so the next work specifies the derived control state machine and model-wiring table before any new Simulink runs.
