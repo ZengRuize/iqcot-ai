@@ -463,3 +463,28 @@ existing R049C/R049D/R049E/R049F/R049G exports.  Split early local peak
 (`0-2us`), recovery peak (`2-12us`), and late settling/undershoot (`12-80us`)
 before choosing any new action such as soft Ton trim, deferred pulse inhibit,
 or controlled reentry.
+
+<!-- R049H_PR_ECB_WAVEFORM_METRIC -->
+
+## R049H Latest Update
+
+R049H added `output/iqcot_r049h_waveform_metric_audit.py` and ran an
+offline-only audit over existing R049C/R049D/R049E/R049F/R049G wave CSVs.  It
+generated `output/cutload_pr_ecb_control/r049h_waveform_metric_case_windows.csv`,
+`output/cutload_pr_ecb_control/r049h_waveform_metric_pair_delta.csv`, and
+`output/cutload_pr_ecb_control/r049h_waveform_metric_summary.md`.
+
+The audit split response into early local peak (`0-2us`), recovery peak
+(`2-12us`), and late settling/undershoot (`12-80us`).  Active-HS summary:
+R049C near0 improves early/recovery peaks by `0.7660/1.0047mV`; R049D 10A
+improves early peak by `0.6036mV` but not recovery/late positive peaks; R049E
+20A OV-triggered action has no window-level effect; R049G repaired
+phase-selective hard Ton-min worsens early/recovery peaks by
+`0.2902/0.0476mV`.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: R049I should run one minimal repaired-model gentle
+phase-selective Ton-trim chunk on the same `40A->20A` two-offset setup.  Use
+R049H's three-window metrics as the acceptance gate; do not expand to a full
+matrix.

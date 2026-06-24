@@ -330,3 +330,36 @@ CUT_LOAD_PROTECT:
 
 The next validation should be an offline R049H waveform-metric audit rather
 than another blind action chunk or a full A matrix.
+
+## R049H State-Machine Revision
+
+R049H did not change the plant model or run new switching simulation.  It
+audited existing R049C/R049D/R049E/R049F/R049G waveforms with three response
+windows:
+
+```text
+EARLY_LOCAL_PEAK: 0-2 us
+RECOVERY_PEAK:    2-12 us
+LATE_SETTLING:    12-80 us
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT acceptance gate:
+    require no unacceptable increase in EARLY_LOCAL_PEAK
+    require intended improvement in RECOVERY_PEAK or documented trade-off
+    check LATE_SETTLING / undershoot before promoting the action
+
+hard_active_HS_Ton_min:
+    rejected as a confirmed mild-load action after R049G/R049H
+
+gentle_phase_selective_Ton_trim:
+    next candidate action, but only as a single R049I chunk
+```
+
+R049H decision:
+
+```text
+MODEL_REVISED
+```

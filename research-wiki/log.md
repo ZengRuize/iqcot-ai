@@ -312,3 +312,24 @@ _Append-only timeline._
   insufficient; hard active-HS Ton-min truncation is not yet a confirmed safe
   PR-ECB action for mild `40A -> 20A` cuts.  Next step: R049H offline
   waveform-metric audit splitting early local, recovery, and late windows.
+
+<!-- R049H_PR_ECB_WAVEFORM_METRIC -->
+
+## 2026-06-24 R049H PR-ECB offline waveform metric audit
+
+- Added `output/iqcot_r049h_waveform_metric_audit.py`.
+- Reused existing R049C/R049D/R049E/R049F/R049G wave CSV exports; no new
+  Simulink switching simulation and no `.slx` modification.
+- Generated `output/cutload_pr_ecb_control/r049h_waveform_metric_case_windows.csv`,
+  `output/cutload_pr_ecb_control/r049h_waveform_metric_pair_delta.csv`, and
+  `output/cutload_pr_ecb_control/r049h_waveform_metric_summary.md`.
+- Split metrics into `0-2us` early local peak, `2-12us` recovery peak, and
+  `12-80us` late settling/undershoot.
+- Active-HS summary: R049C near0 improves early/recovery peaks by
+  `0.7660/1.0047mV`; R049D 10A improves early peak by `0.6036mV` but not
+  recovery/late positive peaks; R049E 20A OV-triggered action has no
+  window-level effect; R049G repaired phase-selective hard Ton-min worsens
+  early/recovery peaks by `0.2902/0.0476mV`.
+- Decision: `MODEL_REVISED`.  Next step: R049I one minimal repaired-model
+  gentle phase-selective Ton-trim chunk using R049H three-window metrics; no
+  full A matrix.

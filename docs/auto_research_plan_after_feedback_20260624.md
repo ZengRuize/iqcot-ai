@@ -268,6 +268,27 @@ Status after R049G:
   `0-2 us` early local peak, `2-12 us` recovery peak, and `12-80 us`
   settling/undershoot windows before selecting any next action.
 
+Status after R049H:
+
+- `output/iqcot_r049h_waveform_metric_audit.py` performed an offline-only
+  waveform audit over existing R049C/R049D/R049E/R049F/R049G wave CSV exports.
+- It generated
+  `output/cutload_pr_ecb_control/r049h_waveform_metric_case_windows.csv`,
+  `output/cutload_pr_ecb_control/r049h_waveform_metric_pair_delta.csv`, and
+  `output/cutload_pr_ecb_control/r049h_waveform_metric_summary.md`.
+- R049H split response metrics into `0-2 us` early local peak, `2-12 us`
+  recovery peak, and `12-80 us` late settling/undershoot.
+- Active-HS summary: R049C near0 improves early/recovery peaks by
+  `0.7660/1.0047 mV`; R049D 10A improves early peak by `0.6036 mV` but does
+  not improve recovery/late positive peaks; R049E 20A OV-triggered action has
+  no window-level effect; R049G repaired phase-selective hard Ton-min worsens
+  early/recovery peaks by `0.2902/0.0476 mV`.
+- Decision: `MODEL_REVISED`.
+- The next useful step is R049I: one minimal repaired-model action chunk on the
+  same `40A -> 20A` two-offset setup, testing gentler phase-selective Ton trim
+  rather than hard `5 ns` Ton-min.  Use R049H's three-window metrics as the
+  acceptance gate; do not expand to a full matrix.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

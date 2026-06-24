@@ -673,6 +673,49 @@ existing R049C/R049D/R049E/R049F/R049G wave exports.  Do not run a full matrix
 or another Ton-min action before this metric/state-machine revision is
 documented.
 
+### R049H Result: Windowed Peak Metrics Revise the PR-ECB Acceptance Gate
+
+R049H ran no new switching simulation.  It reprocessed existing wave CSVs from
+R049C/R049D/R049E/R049F/R049G with three windows:
+
+```text
+0-2 us    early local peak
+2-12 us   recovery peak
+12-80 us  late settling / undershoot
+```
+
+Active-HS summary:
+
+| Chunk | Early peak improvement | Recovery peak improvement | Late peak improvement |
+|---|---:|---:|---:|
+| R049C near0 | `+0.7660 mV` | `+1.0047 mV` | `-0.4480 mV` |
+| R049D 10A | `+0.6036 mV` | `-0.0323 mV` | `-0.0045 mV` |
+| R049E 20A OV-triggered | `0.0000 mV` | `0.0000 mV` | `0.0000 mV` |
+| R049G 20A repaired phase-selective | `-0.2902 mV` | `-0.0476 mV` | `-0.0866 mV` |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+PR-ECB action acceptance requires segmented metrics:
+    J_early_peak    over 0-2 us
+    J_recovery_peak over 2-12 us
+    J_late_min      over 12-80 us
+
+R049C supports broad near0 Ton-truncation benefit.
+R049D supports mainly early-local-peak benefit for 10A.
+R049G rejects hard phase-selective Ton-min as a confirmed mild-load action.
+```
+
+The next validation should be R049I: a single repaired-model gentle
+phase-selective Ton-trim chunk on the same `40A -> 20A` two-offset setup, using
+R049H's three-window metrics as the acceptance gate.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

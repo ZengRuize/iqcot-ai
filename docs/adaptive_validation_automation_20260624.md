@@ -356,3 +356,29 @@ Adaptive revision:
 - the next chunk should be R049H: an offline waveform-metric audit that splits
   early local spike, recovery peak, and late undershoot windows before any new
   Ton-trim / pulse-inhibit action is tested.
+
+Status after R049H: the offline waveform-metric audit completed and ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049H did not run new Simulink switching simulation.  It reused existing
+R049C/R049D/R049E/R049F/R049G wave CSV exports and split each cut-load response
+into `0-2 us` early local peak, `2-12 us` recovery peak, and `12-80 us` late
+settling/undershoot windows.
+
+Adaptive revision:
+
+- R049C near0 supports a broad active-HS Ton-truncation benefit: early peak
+  improvement `0.7660 mV`, recovery peak improvement `1.0047 mV`;
+- R049D `10A` hold-out support is narrower: early peak improvement
+  `0.6036 mV`, but recovery/late positive peaks are essentially unchanged or
+  slightly worse;
+- R049E `20A` confirms over-voltage trigger lateness with no window-level
+  change;
+- R049G repaired phase-selective hard Ton-min worsens the mild active-HS
+  early peak by `0.2902 mV` and recovery peak by `0.0476 mV`;
+- the next chunk should be R049I: one minimal repaired-model gentle
+  phase-selective Ton-trim action, using the R049H three-window metrics, not a
+  full matrix.
