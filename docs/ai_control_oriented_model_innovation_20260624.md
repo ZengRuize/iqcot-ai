@@ -624,6 +624,55 @@ R049F clarifies the R049E negative result: the command path can remove active
 Ton when asserted early enough, but the action must be redesigned as an
 active-HS-only guard before further expansion.
 
+### R049G Result: Repaired Phase-Selective Truncation Still Revises the Action
+
+R049G copied the completed R049F model into a new derived copy and first
+repaired a timing-wiring issue exposed by R049F:
+
+```text
+R049C_After_LoadStep/2 was unconnected.
+R049G adds R049G_LoadStep_Time = t_load_step
+and connects it to R049C_After_LoadStep/2.
+```
+
+This means the severe R049F undervoltage should be treated as an
+implementation-timing artifact of the over-voltage-free early window starting
+at simulation time zero.  R049G then tested the intended phase-selective action:
+
+```text
+ton_truncate_i = early_window AND Memory(qh_i)
+```
+
+The repaired `40A -> 20A` two-offset chunk produced:
+
+| Offset | A0 peak | A2 peak | A0 rem Ton4 | A2 rem Ton4 | Interpretation |
+|---:|---:|---:|---:|---:|---|
+| `0.05 us` | `2.1103 mV` | `2.3879 mV` | `52 ns` | `2 ns` | active phase is truncated, but first peak worsens |
+| `0.105 us` | `2.0936 mV` | `2.0936 mV` | `0 ns` | `0 ns` | no active Ton to remove, no change |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+Hard active-HS Ton-min truncation is structurally effective but not yet a
+confirmed beneficial PR-ECB action for mild 40A -> 20A cuts.
+
+The PR-ECB first-peak metric must split:
+    early local spike risk,
+    recovery peak risk,
+    late undershoot / settling risk.
+```
+
+The next validation should be R049H, an offline waveform-metric audit over
+existing R049C/R049D/R049E/R049F/R049G wave exports.  Do not run a full matrix
+or another Ton-min action before this metric/state-machine revision is
+documented.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

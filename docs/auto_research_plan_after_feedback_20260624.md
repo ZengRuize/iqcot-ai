@@ -244,6 +244,30 @@ Status after R049F:
   truncation guard, such as `early_window AND qh_i`, to test whether the R049F
   failure was caused by global all-phase truncation.
 
+Status after R049G:
+
+- `output/iqcot_r049g_build_phase_selective_tontrunc_model.m` copied the
+  completed R049F model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049g_phase_selective_tontrunc.slx`.
+- R049G repaired the inherited early-window lower-bound wiring by connecting
+  `R049G_LoadStep_Time = t_load_step` to `R049C_After_LoadStep/2`.  This
+  corrects the R049F/R049G pre-repair artifact where the early window fired
+  from simulation time zero after the over-voltage gate was removed.
+- `output/iqcot_r049g_pr_ecb_phase_selective_tontrunc_chunk.m` ran only
+  `40A -> 20A` at offsets `0.05 us` and `0.105 us`, with A0 same-model
+  no-trunc and A2 repaired phase-selective early Ton-trunc rows.
+- At `0.05 us`, A2 reduced phase-4 remaining Ton from about `52 ns` to about
+  `2 ns`, but worsened the first-peak metric from `2.1103 mV` to
+  `2.3879 mV`.
+- At `0.105 us`, A2 remained identical to A0 at `2.0936 mV`, consistent with
+  no remaining active high-side Ton.
+- Decision: `MODEL_REVISED`.
+- Do not expand to a full matrix and do not keep testing hard Ton-min
+  truncation blindly.  The next useful step is R049H: an offline waveform
+  metric audit over existing R049C/R049D/R049E/R049F/R049G exports, splitting
+  `0-2 us` early local peak, `2-12 us` recovery peak, and `12-80 us`
+  settling/undershoot windows before selecting any next action.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

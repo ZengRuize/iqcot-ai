@@ -286,3 +286,47 @@ CUT_LOAD_PROTECT:
 
 The next state-machine validation should test `early_window AND qh_i` or an
 equivalent active-HS-only guard.
+
+## R049G State-Machine Revision
+
+R049G repaired the early-window lower bound by explicitly connecting
+`t_load_step` to `R049C_After_LoadStep/2`, then tested:
+
+```text
+ton_truncate_i = early_window AND Memory(qh_i)
+```
+
+At the `40A -> 20A`, `0.05 us` active-HS offset, this did truncate only the
+active phase and reduced phase-4 remaining Ton:
+
+```text
+remaining Ton4: about 52 ns -> about 2 ns
+```
+
+However, the first-peak metric worsened:
+
+```text
+A0 peak: 2.1103 mV
+A2 peak: 2.3879 mV
+```
+
+At `0.105 us`, where no phase had remaining active high-side Ton, A2 was
+identical to A0.
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT:
+    hard_active_HS_Ton_min:
+        not accepted as a safe/useful PR-ECB action for mild 20A cut-load
+        until early local spike and recovery peak metrics are separated
+
+    phase_state_guard:
+        necessary but insufficient
+
+    metric_guard:
+        must check immediate local spike, recovery peak, and late undershoot
+```
+
+The next validation should be an offline R049H waveform-metric audit rather
+than another blind action chunk or a full A matrix.

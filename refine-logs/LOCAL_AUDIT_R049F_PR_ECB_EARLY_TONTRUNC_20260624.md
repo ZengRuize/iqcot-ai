@@ -76,3 +76,12 @@ to a full A matrix.
 R049F is derived-Simulink evidence only.  It is not hardware/HIL validation, not
 a complete PR-ECB controller, not global calibration, and not a universal
 additive `E_HS,rem` law.
+
+## R049G Erratum
+
+R049G later found that the inherited `R049C_After_LoadStep` block had input 2
+unconnected.  Once R049F removed the over-voltage gate, the intended early
+window therefore began at simulation time zero rather than at `t_load_step`.
+The severe R049F undervoltage should be treated as an implementation-timing
+artifact of that diagnostic wiring.  R049G repairs the lower bound in a new
+derived copy and supersedes the R049F action interpretation.

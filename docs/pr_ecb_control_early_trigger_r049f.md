@@ -145,3 +145,18 @@ from global all-phase truncation rather than early timing itself.
 R049F remains derived-Simulink evidence only.  It does not prove hardware/HIL
 safety, complete PR-ECB control, global calibration, or a universal additive
 `E_HS,rem` law.
+
+## R049G erratum
+
+R049G later found that `R049C_After_LoadStep/2` was unconnected in the inherited
+derived model.  After R049F removed the over-voltage gate, this made the
+intended early window start at simulation time zero rather than at
+`t_load_step`.  Therefore the severe R049F undervoltage should be treated as an
+implementation-timing artifact of the R049F diagnostic wiring, not as a valid
+standalone proof that a correctly load-step-synchronous global early action
+would always collapse the plant.
+
+The durable R049F/R049G lesson is narrower: trigger timing and phase-state
+guarding both matter, and hard Ton-min actions must be evaluated with explicit
+early-local-peak and recovery-peak metrics before being claimed as PR-ECB
+protection.

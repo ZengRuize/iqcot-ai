@@ -324,3 +324,35 @@ Adaptive revision:
   used as the PR-ECB action;
 - next chunk should test a phase-selective / active-HS-only early guard, not a
   full matrix.
+
+Status after R049G: the repaired phase-selective early Ton-truncation
+diagnostic completed and ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049G used a new copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049g_phase_selective_tontrunc.slx`,
+made from the completed R049F model.  Before running the phase-selective
+diagnostic, it repaired a latent timing issue: `R049C_After_LoadStep/2` was
+unconnected in the inherited model, so R049F's over-voltage-free "early"
+window fired from simulation time zero.  R049G explicitly connected
+`R049G_LoadStep_Time = t_load_step` to `R049C_After_LoadStep/2`.
+
+With the repair, all A2 rows start near the correct pre-step operating point
+(`vout0` about `0.9995 V`).  At `0.05 us`, A2 phase-selective truncation
+reduced phase-4 remaining Ton from about `52 ns` to about `2 ns`, but worsened
+the first-peak metric from `2.1103 mV` to `2.3879 mV`.  At `0.105 us`, A2 was
+unchanged from A0, consistent with no remaining high-side Ton.
+
+Adaptive revision:
+
+- the severe R049F undervoltage must be treated as an implementation-timing
+  artifact exposed by removing the over-voltage gate, not as a valid global
+  action result;
+- repaired phase-selective hard Ton-min truncation is structurally effective
+  but not confirmed as beneficial for the mild `40A -> 20A` active-HS case;
+- the next chunk should be R049H: an offline waveform-metric audit that splits
+  early local spike, recovery peak, and late undershoot windows before any new
+  Ton-trim / pulse-inhibit action is tested.

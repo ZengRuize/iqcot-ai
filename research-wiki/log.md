@@ -287,3 +287,28 @@ _Append-only timeline._
 - Decision: `MODEL_REVISED`.  Early timing can affect active Ton, but global
   all-phase early Ton-min truncation is over-aggressive; the next action should
   be phase-selective / active-HS-only.
+
+<!-- R049G_PR_ECB_PHASE_SELECTIVE_TONTRUNC -->
+
+## 2026-06-24 R049G PR-ECB repaired phase-selective Ton-truncation diagnostic
+
+- Added `output/iqcot_r049g_build_phase_selective_tontrunc_model.m` and
+  `output/iqcot_r049g_pr_ecb_phase_selective_tontrunc_chunk.m`.
+- Built the new phase-selective copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049g_phase_selective_tontrunc.slx`
+  from the completed R049F model through MATLAB APIs.
+- Repaired the inherited early-window lower-bound issue by connecting
+  `R049G_LoadStep_Time = t_load_step` to `R049C_After_LoadStep/2`; this
+  reclassifies the severe R049F undervoltage as an implementation-timing
+  artifact of the over-voltage-free early window starting at simulation time
+  zero.
+- Ran only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-trunc and A2 repaired phase-selective early Ton-trunc rows.
+- At `0.05us`, A2 reduced phase-4 remaining Ton from about `52ns` to about
+  `2ns`, but worsened first peak from `2.1103mV` to `2.3879mV`.
+- At `0.105us`, A2 matched A0 at `2.0936mV`, consistent with no remaining
+  active high-side Ton.
+- Decision: `MODEL_REVISED`.  Phase-state guarding is necessary but
+  insufficient; hard active-HS Ton-min truncation is not yet a confirmed safe
+  PR-ECB action for mild `40A -> 20A` cuts.  Next step: R049H offline
+  waveform-metric audit splitting early local, recovery, and late windows.

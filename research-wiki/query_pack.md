@@ -433,3 +433,33 @@ Decision: `MODEL_REVISED`.
 Next useful action: do not expand to a full matrix.  Test a phase-selective /
 active-HS-only early guard, e.g. `early_window AND qh_i`, on the same
 `40A->20A` two-offset chunk.
+
+<!-- R049G_PR_ECB_PHASE_SELECTIVE_TONTRUNC -->
+
+## R049G Latest Update
+
+R049G copied the completed R049F model into:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049g_phase_selective_tontrunc.slx`.
+The build and runner scripts are
+`output/iqcot_r049g_build_phase_selective_tontrunc_model.m` and
+`output/iqcot_r049g_pr_ecb_phase_selective_tontrunc_chunk.m`.
+
+R049G repaired the inherited early-window lower-bound issue by connecting
+`R049G_LoadStep_Time = t_load_step` to `R049C_After_LoadStep/2`.  This means
+the severe R049F undervoltage was an implementation-timing artifact after the
+over-voltage gate was removed, not a valid global action conclusion by itself.
+
+The repaired phase-selective diagnostic used
+`ton_truncate_i = early_window AND Memory(qh_i)` on the same `40A->20A`
+offsets `0.05us` and `0.105us`.  At `0.05us`, A2 reduced phase-4 remaining
+Ton from about `52ns` to about `2ns`, but worsened the first peak from
+`2.1103mV` to `2.3879mV`.  At `0.105us`, A2 was identical to A0 at
+`2.0936mV`.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: R049H should be an offline waveform-metric audit over
+existing R049C/R049D/R049E/R049F/R049G exports.  Split early local peak
+(`0-2us`), recovery peak (`2-12us`), and late settling/undershoot (`12-80us`)
+before choosing any new action such as soft Ton trim, deferred pulse inhibit,
+or controlled reentry.
