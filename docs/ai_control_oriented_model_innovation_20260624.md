@@ -466,6 +466,46 @@ active-HS remaining-on-time truncation.  Simple OV skip may still be useful for
 skip-hold/reentry management, but it should not be the primary A1 first-peak
 claim.
 
+### R049C Result: Ton Truncation Confirms Active-HS First-Peak Action
+
+R049C implemented command-path Ton truncation as the next minimal derived-copy
+protection action:
+
+```text
+if t_load_step <= t <= t_load_step + Tton_trunc_window
+   and Vout > Vo_ref + Vton_trunc_ov
+then
+   Ton_iqcot_i -> Tton_trunc_min
+```
+
+The minimal chunk reused `40A -> 1A near0` and offsets `0.05 us` / `0.105 us`.
+With `Vton_trunc_ov = 2 mV`, `Tton_trunc_min = 5 ns`, and
+`Tton_trunc_window = 2 us`, A2 produced:
+
+| Offset | Phase state | A0 peak | A2 peak | Improvement |
+|---:|---|---:|---:|---:|
+| `0.05 us` | active-HS boundary, phase-4 remaining Ton about `52 ns` | `6.2586 mV` | `5.4926 mV` | `0.7660 mV` |
+| `0.105 us` | post-turnoff, remaining Ton `0 ns` | `5.9603 mV` | `5.9603 mV` | `0.0000 mV` |
+
+Decision:
+
+```text
+MODEL_CONFIRMED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+Ton truncation = first-peak active-HS energy-reduction action
+OV skip        = post-threshold request-inhibit / SKIP_HOLD action
+E_HS,rem       = phase-state segmentation feature, not a global additive law
+```
+
+The next validation should not jump to the full A matrix.  It should first run
+one hold-out load-drop magnitude, such as `40A -> 10A`, crossed with the same
+two offsets to test whether the active-HS Ton-truncation benefit transfers
+without creating a new reentry or secondary-oscillation penalty.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

@@ -151,6 +151,28 @@ Status after R049B:
   remaining-on-time truncation, again on one load-drop magnitude crossed with
   two phase offsets.
 
+Status after R049C:
+
+- `output/iqcot_r049c_build_tontrunc_model.m` now builds
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049c_tontrunc.slx`
+  from the R049A scaffold as a new derived copy.
+- R049C implemented only command-path Ton truncation during the first cut-load
+  window:
+  `Ton_iqcot_i -> Tton_trunc_min` when
+  `t_load_step <= t <= t_load_step + Tton_trunc_window` and
+  `Vout > Vo_ref + Vton_trunc_ov`.
+- The minimal chunk ran only `40A -> 1A near0` at offsets `0.05 us` and
+  `0.105 us`, with A0 same-model no-trunc and A2 Ton-trunc rows.
+- At the active-HS boundary offset `0.05 us`, A2 reduced first peak from
+  `6.2586 mV` to `5.4926 mV` and reduced phase-4 remaining high-side on-time
+  from about `52 ns` to about `2 ns`.
+- At the post-turnoff offset `0.105 us`, A2 left the first peak unchanged
+  (`5.9603 mV`), consistent with no remaining high-side on-time to remove.
+- Decision: `MODEL_CONFIRMED`.
+- Do not expand to the full A matrix yet.  The next chunk should be a
+  hold-out load-drop validation, preferably `40A -> 10A` crossed with
+  `0.05 us` and `0.105 us`, using the same A0/A2 Ton-truncation comparison.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

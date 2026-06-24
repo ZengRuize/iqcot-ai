@@ -204,3 +204,23 @@ _Append-only timeline._
 - Decision: `CLAIM_DOWNGRADED`.  Simple OV skip is now bounded as a
   post-threshold request-inhibit / skip-hold mechanism, not a validated
   first-peak suppression action.
+
+<!-- R049C_PR_ECB_MINIMAL_TONTRUNC -->
+
+## 2026-06-24 R049C PR-ECB minimal Ton-truncation chunk
+
+- Added `output/iqcot_r049c_build_tontrunc_model.m` and
+  `output/iqcot_r049c_pr_ecb_tontrunc_chunk.m`.
+- Built the new derived copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049c_tontrunc.slx`
+  through MATLAB APIs.
+- Implemented only command-path Ton truncation in the first cut-load window:
+  `Ton_iqcot_i -> Tton_trunc_min` when over-voltage is detected.
+- Ran the minimal chunk only: `40A -> 1A near0` at offsets `0.05us` and
+  `0.105us`, with A0 same-model no-trunc and A2 Ton-trunc rows.
+- At `0.05us`, A2 reduced first peak from `6.2586mV` to `5.4926mV` and
+  shortened phase-4 remaining Ton from about `52ns` to about `2ns`.
+- At `0.105us`, remaining Ton was `0ns` and peak stayed `5.9603mV`.
+- Decision: `MODEL_CONFIRMED`.  Ton truncation is the first confirmed
+  active-HS first-peak action in the derived model; still no hardware/HIL or
+  full-matrix claim.

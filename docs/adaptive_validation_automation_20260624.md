@@ -227,3 +227,27 @@ Adaptive revision:
 - it must not be claimed as a validated first-peak suppression action;
 - the next chunk should test minimal Ton truncation or active-HS remaining-on-time
   truncation before any full PR-ECB A-matrix expansion.
+
+Status after R049C: the smallest command-path Ton-truncation chunk completed
+and ended in:
+
+```text
+MODEL_CONFIRMED
+```
+
+R049C used a new derived copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049c_tontrunc.slx`,
+and ran only `40A -> 1A near0` at offsets `0.05 us` and `0.105 us` with A0/A2
+rows.  At the active-HS boundary offset, A2 reduced first peak from
+`6.2586 mV` to `5.4926 mV` and shortened phase-4 remaining Ton from about
+`52 ns` to about `2 ns`.  At the post-turnoff offset, A2 left the first peak
+unchanged at `5.9603 mV`.
+
+Adaptive revision:
+
+- Ton truncation is confirmed as the first-peak active-HS energy-reduction
+  action for the tested chunk;
+- simple OV skip remains a skip-hold / request-inhibit action;
+- `E_HS,rem` remains a segmentation feature, not a global additive law;
+- the next chunk should be one hold-out load-drop magnitude before any full
+  A-matrix expansion.

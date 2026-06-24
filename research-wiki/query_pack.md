@@ -336,3 +336,24 @@ Next useful action: do not expand the A matrix from simple OV skip.  Implement a
 new single-action derived-copy test for minimal Ton truncation or active-HS
 remaining-on-time truncation, again using one load-drop magnitude crossed with
 two offsets.  Keep all claims derived-Simulink-only.
+
+<!-- R049C_PR_ECB_MINIMAL_TONTRUNC -->
+
+## R049C Latest Update
+
+R049C implemented a new derived copy with command-path Ton truncation:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049c_tontrunc.slx`.
+The build and runner scripts are `output/iqcot_r049c_build_tontrunc_model.m`
+and `output/iqcot_r049c_pr_ecb_tontrunc_chunk.m`.
+
+Minimal chunk only: `40A -> 1A near0` at offsets `0.05us` and `0.105us`, with
+A0 same-model no-trunc and A2 Ton-trunc rows.  At `0.05us`, A2 reduced the
+first peak from `6.2586mV` to `5.4926mV` and shortened phase-4 remaining Ton
+from about `52ns` to about `2ns`.  At `0.105us`, remaining Ton was already zero
+and first peak stayed `5.9603mV`.
+
+Decision: `MODEL_CONFIRMED`.
+
+Next useful action: do not expand to the full A matrix yet.  Run one hold-out
+load-drop magnitude, preferably `40A->10A`, crossed with the same two offsets,
+using the same R049C Ton-truncation mechanism and A0/A2 comparison.

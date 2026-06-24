@@ -196,3 +196,29 @@ CUT_LOAD_PROTECT:
     then SKIP_HOLD:
         -> simple OV skip / pulse inhibit for reentry control
 ```
+
+## R049C State-Machine Confirmation
+
+R049C confirms the revised priority above for the tested near0 chunk.  A
+command-path Ton-truncation action reduced the first peak only at the offset
+with remaining active high-side on-time:
+
+```text
+0.05 us offset:
+    remaining Ton4: about 52 ns -> about 2 ns
+    first peak: 6.2586 mV -> 5.4926 mV
+
+0.105 us offset:
+    remaining Ton4: 0 ns
+    first peak unchanged at 5.9603 mV
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT should carry the Ton-truncation / active-HS action.
+SKIP_HOLD should carry later request inhibit and reentry management.
+```
+
+The state machine should not claim that truncation helps every phase offset.
+Its first confirmed control value is phase-state selective.
