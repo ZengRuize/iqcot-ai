@@ -166,3 +166,21 @@ _Append-only timeline._
   `0.1 ohm` MOSFET issue was found.
 - Decision: `MODEL_CONFIRMED`.  No simulation matrix was run, no original
   `.slx` was modified, and no `.slx` XML was edited.
+
+<!-- R049A_PR_ECB_SCAFFOLD -->
+
+## 2026-06-24 R049A PR-ECB derived-control scaffold
+
+- Added `output/iqcot_r049_build_pr_ecb_control_model.m`.
+- Built derived model
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control.slx` from the
+  R048-audited `four_phase_iek_dynamic_load_refslew.slx`.
+- Persisted logging taps for `vout`, `req_global`, `phase_idx`, `il1..4`,
+  `qh1..4`, `ql1..4`, `ton_iqcot1..4`, `ton_done1..4`, `nqmin1..4`, and
+  `current_limit1..4`.
+- Added logged no-op placeholders for `protect_state`, `r_p`,
+  `ton_truncate1..4`, `pulse_inhibit1..4`, `hold_int1..4`, and `reset_int1..4`.
+- Non-simulation update-diagram preflight passed after explicit variable
+  injection: `UPDATE_DIAGRAM_OK model=four_phase_iek_pr_ecb_control`.
+- Decision: `MODEL_CONFIRMED`.  This is a scaffold/observability result only,
+  not PR-ECB protection-performance validation.

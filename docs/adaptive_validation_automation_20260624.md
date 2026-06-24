@@ -192,13 +192,18 @@ Pause automation and notify the user if:
 
 ## Updated Next Heartbeat
 
-The next heartbeat should not run a full simulation matrix. It should perform
-the preflight model audit and fill the actual model-path wiring table. If the
-wiring table is clean, run only the smallest PR-ECB cut-load protection chunk.
+Status after R049A: the preflight model audit and actual model-path wiring
+table are complete, and a PR-ECB derived-control scaffold has been built at
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control.slx`.
+
+The next heartbeat should not run a full simulation matrix. It should replace
+the no-op R049A protection placeholders with only one minimal derived-copy
+protection action first, then run the smallest PR-ECB cut-load protection chunk:
+one load-drop magnitude crossed with two phase offsets.
 
 Recommended next output:
 
 ```text
-docs/model_wiring_audit_after_r047.md
-refine-logs/LOCAL_AUDIT_R048_MODEL_WIRING_*.md
+docs/pr_ecb_control_minimal_chunk_r049b.md
+refine-logs/LOCAL_AUDIT_R049B_PR_ECB_MINIMAL_*.md
 ```

@@ -284,3 +284,33 @@ variables and mark `vout/qh1..4/il1..4` at run time.  Before the next PR-ECB
 chunk, build or modify only a derived copy through MATLAB APIs and add explicit
 logging for `REQ`, `phase_idx`, `QL1..4`, `Ton_done_i` or measured high-side
 pulse width, and future `protect_state`.
+
+<!-- R049A_PR_ECB_SCAFFOLD -->
+
+## R049A Latest Update
+
+R049A built the first PR-ECB derived-control scaffold with MATLAB APIs:
+`output/iqcot_r049_build_pr_ecb_control_model.m` copies the R048-audited
+`four_phase_iek_dynamic_load_refslew.slx` into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control.slx`.  No original
+`.slx` was modified, no raw `.slx` XML was edited, and no full switching matrix
+was run.
+
+Decision: `MODEL_CONFIRMED`.
+
+The scaffold persists logging for `vout`, `req_global`, `phase_idx`, `il1..4`,
+`qh1..4`, `ql1..4`, `ton_iqcot1..4`, `ton_done1..4`, `nqmin1..4`, and
+`current_limit1..4`.  It also adds logged no-op protection placeholders:
+`protect_state`, `r_p`, `ton_truncate1..4`, `pulse_inhibit1..4`,
+`hold_int1..4`, and `reset_int1..4`.  These placeholders do not affect the
+plant or IQCOT inner loop.
+
+A non-simulation update-diagram preflight passed after explicit variable
+injection:
+
+`UPDATE_DIAGRAM_OK model=four_phase_iek_pr_ecb_control`.
+
+Next useful action: R049B should implement one minimal derived-copy protection
+action first, such as simple over-voltage skip or Ton truncation, then run one
+load-drop magnitude at two phase offsets.  Do not expand to the full A matrix
+until that chunk is diagnosed.

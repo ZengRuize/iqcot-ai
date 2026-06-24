@@ -113,6 +113,24 @@ Output directory:
 output/cutload_pr_ecb_control/
 ```
 
+Status after R049A:
+
+- `docs/model_wiring_audit_after_r047.md` completed the R048 wiring preflight
+  with decision `MODEL_CONFIRMED`.
+- `output/iqcot_r049_build_pr_ecb_control_model.m` now builds
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control.slx` as a
+  derived-control scaffold.
+- The R049A scaffold persists logging for `vout`, `req_global`, `phase_idx`,
+  `il1..4`, `qh1..4`, `ql1..4`, `ton_iqcot1..4`, `ton_done1..4`,
+  `nqmin1..4`, `current_limit1..4`, and no-op protection tokens
+  `protect_state`, `r_p`, `ton_truncate1..4`, `pulse_inhibit1..4`,
+  `hold_int1..4`, `reset_int1..4`.
+- A non-simulation update-diagram check passed after explicit variable
+  injection.  No protection-performance claim is made yet.
+- The next chunk should implement only one minimal derived-copy protection
+  action first, then test one load-drop magnitude at two phase offsets before
+  expanding any A matrix.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:
