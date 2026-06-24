@@ -461,3 +461,44 @@ recovery.
 The next concrete research step should be the R048 state-machine and model
 wiring document. Only after that should a derived Simulink model be built or
 modified through MATLAB APIs. Original `.slx` files should remain untouched.
+
+## Adaptive Validation Commitment
+
+The GAE-IQCOT model is not frozen before validation. Future validation must be
+used to refine the model innovation itself.
+
+After each validation chunk, automation should classify the result as:
+
+```text
+MODEL_CONFIRMED
+MODEL_REVISED
+IMPLEMENTATION_ISSUE
+CLAIM_DOWNGRADED
+```
+
+If the result is `MODEL_REVISED`, this document must be updated before the next
+simulation chunk. The update must state:
+
+```text
+old assumption
+observed contradiction
+new assumption
+affected controller/state-machine rule
+affected validation matrix
+new safe claim boundary
+```
+
+Examples:
+
+- If PR-ECB predicts low first-peak risk but the measured overshoot is high,
+  revise the risk segmentation or add a missing phase-state feature.
+- If PR-ECB protection lowers overshoot but creates excessive secondary
+  undershoot, revise the inhibit/reentry token rather than claiming simple
+  superiority.
+- If PIS-IEK `Ton_diff` improves current balance but damages phase spacing, add
+  a stronger projection penalty or reduce `T_trim_max`.
+- If phase shedding creates a transient spike, revise dwell/reentry locks and
+  new-phase ramp logic before claiming an efficiency benefit.
+
+The automation plan for this loop is recorded in
+`docs/adaptive_validation_automation_20260624.md`.

@@ -232,3 +232,28 @@ Next useful action: inspect the derived `.slx` model blocks and signal names,
 then build a derived copy through MATLAB APIs if needed. Do not edit raw `.slx`
 XML, and do not run the PR-ECB/PIS-IEK/phase-shed ablations until the wiring
 table is confirmed.
+
+<!-- R047B_ADAPTIVE_VALIDATION_AUTOMATION -->
+
+## R047B Adaptive Validation Automation
+
+User instruction on 2026-06-24: adjust automation and remember to modify the
+model innovation in real time during validation. The project automation is now
+an adaptive loop:
+
+`validate -> diagnose -> revise model innovation -> revise next validation`.
+
+Each validation chunk must end with one decision:
+
+- `MODEL_CONFIRMED`
+- `MODEL_REVISED`
+- `IMPLEMENTATION_ISSUE`
+- `CLAIM_DOWNGRADED`
+
+If a chunk contradicts the current GAE-IQCOT/PR-ECB/PIS-IEK/active-phase
+assumption, automation must update the model innovation document and evidence
+matrix before expanding the simulation grid. New document:
+`docs/adaptive_validation_automation_20260624.md`.
+
+Next useful action remains model wiring inspection first; after that, run only
+the smallest PR-ECB validation chunk and apply the adaptive decision gate.

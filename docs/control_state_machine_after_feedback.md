@@ -153,3 +153,20 @@ Before building the derived copy, inspect:
 7. solver and time-step settings for measuring `5 ns` to `15 ns` class effects.
 
 Do not edit `.slx` XML directly. Use MATLAB APIs and save a derived model copy.
+
+## Adaptive Revision Hooks
+
+The state machine is allowed to change during validation, but only through
+explicit revision hooks:
+
+| Validation observation | State-machine revision hook |
+|---|---|
+| protection lowers first peak but causes secondary undershoot | adjust `SKIP_HOLD -> REENTRY` threshold and inhibit timer |
+| reentry causes phase disorder | add stronger `phase_realign_cmd` in `REENTRY` |
+| balance recovery is slow | adjust `BALANCE_RECOVERY` trim gains and limits |
+| `Ton_diff` hurts phase spacing | add phase-cost guard before leaving `BALANCE_RECOVERY` |
+| shed event causes overshoot | extend shed lockout after cut-load/reentry |
+| add event causes current spike | add new-phase current ramp state or integrator reset |
+
+Every such revision must be logged in a refine-log and synchronized to the
+claims/evidence matrix before further grid expansion.

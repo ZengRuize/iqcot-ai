@@ -31,6 +31,7 @@ Key planning documents:
 - `docs/auto_research_plan_after_feedback_20260624.md`
 - `docs/ai_control_oriented_model_innovation_20260624.md`
 - `docs/control_state_machine_after_feedback.md`
+- `docs/adaptive_validation_automation_20260624.md`
 
 ## Research Logs
 

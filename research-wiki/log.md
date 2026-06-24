@@ -136,3 +136,16 @@ _Append-only timeline._
   balance/reentry model + active-phase hybrid event map + AI action projection.
 - Kept the claim boundary: AI outputs low-dimensional supervisory tokens only;
   the original IQCOT inner loop remains responsible for fast pulse generation.
+
+<!-- R047B_ADAPTIVE_VALIDATION_AUTOMATION -->
+
+## 2026-06-24 R047B adaptive validation automation
+
+- Added `docs/adaptive_validation_automation_20260624.md`.
+- Added `refine-logs/LOCAL_AUDIT_R047B_ADAPTIVE_VALIDATION_AUTOMATION_20260624.md`.
+- Updated automation so every validation chunk must classify its outcome as
+  `MODEL_CONFIRMED`, `MODEL_REVISED`, `IMPLEMENTATION_ISSUE`, or
+  `CLAIM_DOWNGRADED`.
+- Added the rule that model innovation documents and claim boundaries must be
+  updated before expanding the next simulation grid whenever validation
+  contradicts the current model.

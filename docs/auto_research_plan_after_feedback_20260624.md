@@ -25,6 +25,13 @@ PR-ECB cut-load voltage stabilization
 4. Do not make AI the main claim. AI is future supervisory scheduling only.
 5. Preserve original `.slx` files. If a model change is needed, build a derived
    copy through MATLAB APIs.
+6. Treat validation as an adaptive loop, not a fixed batch. After each
+   validation chunk, classify the result as `MODEL_CONFIRMED`,
+   `MODEL_REVISED`, `IMPLEMENTATION_ISSUE`, or `CLAIM_DOWNGRADED`.
+7. If validation contradicts the current GAE-IQCOT innovation, update the model
+   innovation document and evidence matrix before running the next chunk.
+8. Prefer the smallest useful validation chunk first; expand to full grids only
+   after model behavior and logging are understood.
 
 ## Next Heartbeat Priority Order
 
@@ -47,9 +54,32 @@ Status after R047:
   AI-ready large/small-signal model interface.
 - `docs/control_state_machine_after_feedback.md` provides the first control
   state-machine and derived-signal wiring draft.
+- `docs/adaptive_validation_automation_20260624.md` defines the validation
+  feedback loop: validate, diagnose, revise the model innovation, then continue.
 - The next heartbeat should inspect the derived `.slx` model blocks/signals and
   fill the "Existing signal/block" column with actual model paths before any
   model-copy construction.
+
+### Priority 1.5: Adaptive Validation Feedback Gate
+
+Before every validation chunk, write a hypothesis block:
+
+| Field | Required content |
+|---|---|
+| Model version | current GAE-IQCOT/PR-ECB/PIS-IEK assumption |
+| Hypothesis | expected control effect |
+| Expected failure mode | what would force model revision |
+| Metrics | exact CSV/report metrics |
+| Claim boundary | what can and cannot be claimed |
+
+After every validation chunk, update the model using:
+
+| Result | Automation action |
+|---|---|
+| `MODEL_CONFIRMED` | keep current model and expand validation cautiously |
+| `MODEL_REVISED` | update `docs/ai_control_oriented_model_innovation_20260624.md` and relevant state-machine/control rules |
+| `IMPLEMENTATION_ISSUE` | stop simulation expansion and inspect `.slx` wiring/parameters |
+| `CLAIM_DOWNGRADED` | update `output/iqcot_claims_evidence_matrix.md` and safe wording |
 
 ### Priority 2: Derived Simulink Model Plan
 

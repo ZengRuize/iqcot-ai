@@ -263,6 +263,14 @@ R035 最关键的收束是修正 R034 的表述边界：`38/46/50/54/46us` 是 t
 |---|---|---|---|---|
 | R047 proposes GAE-IQCOT, a guarded AI-ready event model that exposes PR-ECB large-signal peak-risk guards, PIS-IEK small-signal balance/reentry maps, active-phase hybrid event maps, and a safety projection interface for AI/table/MPC supervision. | `docs/ai_control_oriented_model_innovation_20260624.md`; `docs/control_state_machine_after_feedback.md`; `refine-logs/LOCAL_AUDIT_R047_AI_READY_MODEL_INNOVATION_20260624.md`; R046 direction correction; R039-R043 PR-ECB evidence; existing PIS-IEK actuator-classification evidence. | Medium as a research-design contribution; controller implementation and ablation simulations are still required. | "R047 reframes AI as a constrained supervisory layer: AI proposes low-dimensional protection, balance, and active-phase tokens, and the model projects them into a safe action set before they affect the IQCOT inner loop." | "R047 proves an AI controller, hardware/HIL safety, global PR-ECB calibration, direct neural gate control, or control over the external load-current slew rate." |
 
+<!-- R047B_ADAPTIVE_VALIDATION_AUTOMATION -->
+
+### C43 / R047B: adaptive validation must revise the model innovation
+
+| Claim | Evidence | Strength | Safe wording | Do not claim |
+|---|---|---|---|---|
+| Future automated validation should be run as an adaptive loop that can revise GAE-IQCOT, PR-ECB, PIS-IEK, active-phase guards, and claim boundaries after each validation chunk. | User instruction on 2026-06-24; `docs/adaptive_validation_automation_20260624.md`; updates to `docs/auto_research_plan_after_feedback_20260624.md`, `docs/ai_control_oriented_model_innovation_20260624.md`, and `docs/control_state_machine_after_feedback.md`; `refine-logs/LOCAL_AUDIT_R047B_ADAPTIVE_VALIDATION_AUTOMATION_20260624.md`. | High as automation/process rule; not itself a converter-performance validation. | "Each validation chunk should end in `MODEL_CONFIRMED`, `MODEL_REVISED`, `IMPLEMENTATION_ISSUE`, or `CLAIM_DOWNGRADED`, and any contradiction must update the model innovation and evidence matrix before the next chunk." | "The automation has already validated the revised controller, proven hardware/HIL performance, or should continue full-grid simulation even when early chunks contradict the model." |
+
 <!-- R042_PR_ECB_PHASE_DENSE_PARTIAL -->
 
 ### C38 / R042: PR-ECB phase-dense high-side boundary validation
