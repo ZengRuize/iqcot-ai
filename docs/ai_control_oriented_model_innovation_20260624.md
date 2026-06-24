@@ -506,6 +506,44 @@ one hold-out load-drop magnitude, such as `40A -> 10A`, crossed with the same
 two offsets to test whether the active-HS Ton-truncation benefit transfers
 without creating a new reentry or secondary-oscillation penalty.
 
+### R049D Result: Ton-Truncation Hold-Out Confirms Load-Magnitude Transfer
+
+R049D copied the completed R049C command-path Ton-truncation model into a new
+hold-out derived copy and changed only the validation plan:
+
+```text
+40A -> 10A
+offsets: 0.05 us, 0.105 us
+controllers: A0 same-model no-trunc, A2 Ton truncation
+```
+
+The hold-out produced:
+
+| Offset | Phase state | A0 peak | A2 peak | Improvement | Secondary undershoot change |
+|---:|---|---:|---:|---:|---:|
+| `0.05 us` | active-HS boundary, phase-4 remaining Ton about `52 ns` | `3.9908 mV` | `3.3873 mV` | `0.6036 mV` | `+2.0279 mV` |
+| `0.105 us` | post-turnoff, remaining Ton `0 ns` | `3.7607 mV` | `3.7607 mV` | `0.0000 mV` | `0.0000 mV` |
+
+Decision:
+
+```text
+MODEL_CONFIRMED
+```
+
+Revision to the action hierarchy: no structural revision is needed.  R049D
+extends the R049C evidence from `40A -> 1A near0` to the `40A -> 10A`
+hold-out.  The safe wording is now:
+
+```text
+Ton truncation is a confirmed active-HS first-peak action in two small chunks:
+near0 and 10A targets, both at the same active-HS / post-turnoff offset pair.
+```
+
+This still must not be upgraded to hardware/HIL, full-matrix, all-offset, or
+global PR-ECB calibration evidence.  Before broadening claims, the next small
+step should either test a milder hold-out such as `40A -> 20A`, or add a
+separate reentry / pulse-inhibit validation chunk.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

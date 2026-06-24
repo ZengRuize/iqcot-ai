@@ -173,6 +173,27 @@ Status after R049C:
   hold-out load-drop validation, preferably `40A -> 10A` crossed with
   `0.05 us` and `0.105 us`, using the same A0/A2 Ton-truncation comparison.
 
+Status after R049D:
+
+- `output/iqcot_r049d_build_tontrunc_holdout_model.m` now copies the completed
+  R049C Ton-truncation model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049d_tontrunc_holdout.slx`
+  for a hold-out run, without modifying R049C.
+- `output/iqcot_r049d_pr_ecb_tontrunc_holdout_chunk.m` ran only `40A -> 10A`
+  at offsets `0.05 us` and `0.105 us`, with A0 same-model no-trunc and A2
+  Ton-trunc rows.
+- At the active-HS boundary offset `0.05 us`, A2 reduced first peak from
+  `3.9908 mV` to `3.3873 mV`, shortened phase-4 remaining Ton from about
+  `52 ns` to about `2 ns`, and improved the secondary undershoot by
+  `2.0279 mV`.
+- At the post-turnoff offset `0.105 us`, A2 left the first peak unchanged at
+  `3.7607 mV`, consistent with no remaining high-side on-time to remove.
+- Decision: `MODEL_CONFIRMED`.
+- Do not jump to the full A matrix solely from R049C/R049D.  The next smallest
+  useful step should be either one additional mild hold-out such as
+  `40A -> 20A` at the same two offsets, or a separate single-action
+  reentry/pulse-inhibit chunk for safe skip-hold recovery.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

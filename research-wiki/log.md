@@ -224,3 +224,22 @@ _Append-only timeline._
 - Decision: `MODEL_CONFIRMED`.  Ton truncation is the first confirmed
   active-HS first-peak action in the derived model; still no hardware/HIL or
   full-matrix claim.
+
+<!-- R049D_PR_ECB_TONTRUNC_HOLDOUT -->
+
+## 2026-06-24 R049D PR-ECB Ton-truncation hold-out chunk
+
+- Added `output/iqcot_r049d_build_tontrunc_holdout_model.m` and
+  `output/iqcot_r049d_pr_ecb_tontrunc_holdout_chunk.m`.
+- Built the new hold-out copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049d_tontrunc_holdout.slx`
+  from the completed R049C Ton-truncation model through MATLAB APIs.
+- Ran only `40A -> 10A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-trunc and A2 Ton-trunc rows.
+- At `0.05us`, A2 reduced first peak from `3.9908mV` to `3.3873mV`, shortened
+  phase-4 remaining Ton from about `52ns` to about `2ns`, and improved
+  secondary undershoot by `2.0279mV`.
+- At `0.105us`, remaining Ton was `0ns` and peak stayed `3.7607mV`.
+- Decision: `MODEL_CONFIRMED`.  This is hold-out confirmation of the R049C
+  active-HS mechanism, not full-matrix, hardware/HIL, or global PR-ECB
+  calibration evidence.

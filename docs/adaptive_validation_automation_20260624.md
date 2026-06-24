@@ -251,3 +251,26 @@ Adaptive revision:
 - `E_HS,rem` remains a segmentation feature, not a global additive law;
 - the next chunk should be one hold-out load-drop magnitude before any full
   A-matrix expansion.
+
+Status after R049D: the `40A -> 10A` Ton-truncation hold-out completed and
+ended in:
+
+```text
+MODEL_CONFIRMED
+```
+
+R049D used a new copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049d_tontrunc_holdout.slx`,
+made from the completed R049C Ton-truncation model.  It ran only `40A -> 10A`
+at offsets `0.05 us` and `0.105 us` with A0/A2 rows.  At the active-HS
+boundary offset, A2 reduced first peak from `3.9908 mV` to `3.3873 mV` and
+shortened phase-4 remaining Ton from about `52 ns` to about `2 ns`.  At the
+post-turnoff offset, A2 left the first peak unchanged at `3.7607 mV`.
+
+Adaptive revision:
+
+- the R049C active-HS Ton-truncation mechanism is hold-out confirmed for
+  `40A -> 10A`;
+- no model-structure revision is needed;
+- do not expand to a full A matrix yet; prefer one more mild hold-out
+  (`40A -> 20A`) or a separate reentry / pulse-inhibit recovery chunk.

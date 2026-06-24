@@ -357,3 +357,26 @@ Decision: `MODEL_CONFIRMED`.
 Next useful action: do not expand to the full A matrix yet.  Run one hold-out
 load-drop magnitude, preferably `40A->10A`, crossed with the same two offsets,
 using the same R049C Ton-truncation mechanism and A0/A2 comparison.
+
+<!-- R049D_PR_ECB_TONTRUNC_HOLDOUT -->
+
+## R049D Latest Update
+
+R049D copied the completed R049C Ton-truncation model into:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049d_tontrunc_holdout.slx`.
+The build and runner scripts are
+`output/iqcot_r049d_build_tontrunc_holdout_model.m` and
+`output/iqcot_r049d_pr_ecb_tontrunc_holdout_chunk.m`.
+
+Hold-out chunk only: `40A -> 10A` at offsets `0.05us` and `0.105us`, with A0
+same-model no-trunc and A2 Ton-trunc rows.  At `0.05us`, A2 reduced first peak
+from `3.9908mV` to `3.3873mV`, shortened phase-4 remaining Ton from about
+`52ns` to about `2ns`, and improved post-peak undershoot by `2.0279mV`.  At
+`0.105us`, remaining Ton was already zero and first peak stayed `3.7607mV`.
+
+Decision: `MODEL_CONFIRMED`.
+
+Next useful action: do not jump directly to a full A matrix.  Prefer one more
+minimal step: either a milder hold-out such as `40A->20A` at the same offsets,
+or a separate single-action reentry / pulse-inhibit chunk to test safe recovery
+after Ton truncation.
