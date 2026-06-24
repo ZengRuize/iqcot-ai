@@ -380,3 +380,27 @@ Next useful action: do not jump directly to a full A matrix.  Prefer one more
 minimal step: either a milder hold-out such as `40A->20A` at the same offsets,
 or a separate single-action reentry / pulse-inhibit chunk to test safe recovery
 after Ton truncation.
+
+<!-- R049E_PR_ECB_TONTRUNC_MILD_HOLDOUT -->
+
+## R049E Latest Update
+
+R049E copied the completed R049D hold-out model into:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049e_tontrunc_holdout.slx`.
+The build and runner scripts are
+`output/iqcot_r049e_build_tontrunc_holdout_model.m` and
+`output/iqcot_r049e_pr_ecb_tontrunc_holdout_chunk.m`.
+
+Mild hold-out chunk only: `40A -> 20A` at offsets `0.05us` and `0.105us`, with
+A0 same-model no-trunc and A2 Ton-trunc rows.  At `0.05us`, A0 and A2 both
+measured `2.1103mV`; phase-4 remaining Ton stayed about `52ns`.  The A2 trunc
+flag did assert for about `0.518us`, but first asserted around `0.228us` after
+the load step when `qh4=0`, so it was too late to remove the active high-side
+pulse.  At `0.105us`, A0/A2 both measured `2.0936mV`.
+
+Decision: `CLAIM_DOWNGRADED`.
+
+Next useful action: do not expand to a full matrix and do not keep repeating the
+same over-voltage-triggered hold-out.  Run a trigger-timing diagnostic on the
+same `40A->20A` two-offset chunk, e.g. a pre-threshold /
+load-step-synchronous active-HS Ton-truncation variant.

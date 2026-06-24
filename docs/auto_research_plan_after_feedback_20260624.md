@@ -194,6 +194,30 @@ Status after R049D:
   `40A -> 20A` at the same two offsets, or a separate single-action
   reentry/pulse-inhibit chunk for safe skip-hold recovery.
 
+Status after R049E:
+
+- `output/iqcot_r049e_build_tontrunc_holdout_model.m` copied the completed
+  R049D Ton-truncation hold-out model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049e_tontrunc_holdout.slx`
+  for a milder hold-out run.
+- `output/iqcot_r049e_pr_ecb_tontrunc_holdout_chunk.m` ran only `40A -> 20A`
+  at offsets `0.05 us` and `0.105 us`, with A0 same-model no-trunc and A2
+  Ton-trunc rows.
+- At the active-HS boundary offset `0.05 us`, A2 did not reduce first peak:
+  A0 and A2 both measured `2.1103 mV`; phase-4 remaining Ton stayed about
+  `52 ns`.
+- The A2 truncation flag did trigger for about `0.518 us`, but waveform audit
+  shows it first asserted around `0.228 us` after the load step when `qh4=0`.
+  Thus the current over-voltage-triggered command-path action was too late to
+  remove the active high-side pulse in this mild-load case.
+- At the post-turnoff offset `0.105 us`, A0/A2 both measured `2.0936 mV`.
+- Decision: `CLAIM_DOWNGRADED`.
+- Do not expand to the full A matrix and do not continue repeating the same
+  hold-out.  The next useful step is R049F: a trigger-timing diagnostic on the
+  same `40A -> 20A` two-offset chunk, using a pre-threshold /
+  load-step-synchronous active-HS truncation variant to separate action
+  capability from trigger lateness.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

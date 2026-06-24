@@ -243,3 +243,24 @@ _Append-only timeline._
 - Decision: `MODEL_CONFIRMED`.  This is hold-out confirmation of the R049C
   active-HS mechanism, not full-matrix, hardware/HIL, or global PR-ECB
   calibration evidence.
+
+<!-- R049E_PR_ECB_TONTRUNC_MILD_HOLDOUT -->
+
+## 2026-06-24 R049E PR-ECB Ton-truncation mild hold-out chunk
+
+- Added `output/iqcot_r049e_build_tontrunc_holdout_model.m` and
+  `output/iqcot_r049e_pr_ecb_tontrunc_holdout_chunk.m`.
+- Built the new mild hold-out copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049e_tontrunc_holdout.slx`
+  from the completed R049D model through MATLAB APIs.
+- Ran only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-trunc and A2 Ton-trunc rows.
+- At `0.05us`, A0 and A2 first peaks were identical: `2.1103mV`; phase-4
+  remaining Ton stayed about `52ns`.
+- The A2 truncation flag did trigger for about `0.518us`, but waveform audit
+  showed first assertion around `0.228us` after the load step with `qh4=0`, too
+  late to remove the active high-side pulse.
+- At `0.105us`, A0/A2 first peaks were identical: `2.0936mV`.
+- Decision: `CLAIM_DOWNGRADED`.  Ton truncation remains supported for larger
+  near0/10A chunks, but the current over-voltage trigger is not a general
+  active-HS first-peak action for mild `40A -> 20A`.

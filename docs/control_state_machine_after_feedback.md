@@ -168,6 +168,7 @@ explicit revision hooks:
 | shed event causes overshoot | extend shed lockout after cut-load/reentry |
 | add event causes current spike | add new-phase current ramp state or integrator reset |
 | simple OV skip inhibits requests but does not reduce first peak | keep OV skip as `SKIP_HOLD` / request-inhibit only; require `CUT_LOAD_PROTECT` to include Ton truncation or active-HS remaining-on-time truncation for first-peak protection |
+| OV-triggered Ton truncation fires after the active high-side pulse has ended | add a trigger-timing guard; distinguish pre-threshold/load-step-synchronous active-HS truncation from post-threshold skip-hold |
 
 Every such revision must be logged in a refine-log and synchronized to the
 claims/evidence matrix before further grid expansion.
@@ -222,3 +223,34 @@ SKIP_HOLD should carry later request inhibit and reentry management.
 
 The state machine should not claim that truncation helps every phase offset.
 Its first confirmed control value is phase-state selective.
+
+## R049E State-Machine Revision
+
+R049E downgrades the broader Ton-truncation generalization for the mild
+`40A -> 20A` hold-out.  At the `0.05 us` active-HS boundary, the A2 truncation
+flag asserted only after about `0.228 us`, when `qh4=0`, and the first peak was
+unchanged:
+
+```text
+0.05 us offset:
+    first peak: 2.1103 mV -> 2.1103 mV
+    remaining Ton4: about 52 ns -> about 52 ns
+    trunc flag: about 0.518 us total, but too late for the active pulse
+
+0.105 us offset:
+    remaining Ton4: 0 ns
+    first peak unchanged at 2.0936 mV
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT:
+    if active-HS risk is known early enough:
+        use pre-threshold / load-step-synchronous Ton truncation diagnostic
+    else if over-voltage is already detected after the active pulse:
+        treat as post-threshold monitoring / skip-hold, not first-peak removal
+```
+
+The state machine should now carry both phase-state and trigger-timing guards
+before claiming first-peak protection from Ton truncation.

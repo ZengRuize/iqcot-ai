@@ -274,3 +274,28 @@ Adaptive revision:
 - no model-structure revision is needed;
 - do not expand to a full A matrix yet; prefer one more mild hold-out
   (`40A -> 20A`) or a separate reentry / pulse-inhibit recovery chunk.
+
+Status after R049E: the `40A -> 20A` Ton-truncation mild hold-out completed and
+ended in:
+
+```text
+CLAIM_DOWNGRADED
+```
+
+R049E used a new copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049e_tontrunc_holdout.slx`,
+made from the completed R049D hold-out model.  It ran only `40A -> 20A` at
+offsets `0.05 us` and `0.105 us` with A0/A2 rows.  At `0.05 us`, A0 and A2
+both measured `2.1103 mV`; phase-4 remaining Ton stayed about `52 ns`.  The
+A2 truncation flag asserted for about `0.518 us`, but waveform audit shows the
+first assertion occurred around `0.228 us` after the load step when `qh4=0`.
+At `0.105 us`, A0/A2 both measured `2.0936 mV`.
+
+Adaptive revision:
+
+- the current over-voltage-triggered command-path Ton-truncation claim must be
+  narrowed to larger-drop chunks where the trigger intersects useful remaining
+  high-side energy;
+- active-HS state alone is insufficient; trigger timing is now an explicit
+  guard;
+- next chunk should be a trigger-timing diagnostic, not a full matrix.

@@ -544,6 +544,44 @@ global PR-ECB calibration evidence.  Before broadening claims, the next small
 step should either test a milder hold-out such as `40A -> 20A`, or add a
 separate reentry / pulse-inhibit validation chunk.
 
+### R049E Result: Mild Hold-Out Downgrades Trigger Generalization
+
+R049E tested the same command-path Ton-truncation mechanism on a milder
+hold-out:
+
+```text
+40A -> 20A
+offsets: 0.05 us, 0.105 us
+controllers: A0 same-model no-trunc, A2 Ton truncation
+```
+
+The result did not reproduce the R049C/R049D first-peak improvement:
+
+| Offset | Phase state | A0 peak | A2 peak | Improvement | Trigger observation |
+|---:|---|---:|---:|---:|---|
+| `0.05 us` | active-HS boundary, phase-4 remaining Ton about `52 ns` | `2.1103 mV` | `2.1103 mV` | `0.0000 mV` | trunc flag asserted only after `0.228 us`, when `qh4=0` |
+| `0.105 us` | post-turnoff, remaining Ton `0 ns` | `2.0936 mV` | `2.0936 mV` | `0.0000 mV` | no truncation |
+
+Decision:
+
+```text
+CLAIM_DOWNGRADED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+Ton truncation is phase-state and trigger-timing selective.
+The current Vout-over-threshold trigger helped near0 and 10A active-HS chunks,
+but it can be too late for mild 20A cut-load even when active-HS state exists.
+```
+
+Therefore R049C/R049D should be worded as evidence for an
+over-voltage-triggered command-path truncation mechanism in larger drops, not as
+a general active-HS law.  The next validation should diagnose trigger timing:
+use the same `40A -> 20A` offsets with a pre-threshold or
+load-step-synchronous active-HS truncation variant before any full-grid claim.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:
