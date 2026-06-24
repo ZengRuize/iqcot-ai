@@ -333,3 +333,27 @@ _Append-only timeline._
 - Decision: `MODEL_REVISED`.  Next step: R049I one minimal repaired-model
   gentle phase-selective Ton-trim chunk using R049H three-window metrics; no
   full A matrix.
+
+<!-- R049I_PR_ECB_GENTLE_TONTRIM -->
+
+## 2026-06-24 R049I PR-ECB gentle phase-selective Ton-trim chunk
+
+- Added `output/iqcot_r049i_build_gentle_tontrim_model.m`,
+  `output/iqcot_r049i_pr_ecb_gentle_tontrim_chunk.m`, and
+  `output/iqcot_r049i_waveform_metric_audit.py`.
+- Built the new gentle Ton-trim copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049i_gentle_tontrim.slx`
+  from the completed R049G repaired model through MATLAB APIs.
+- Inspected the R049G baseline Ton trace before choosing the floor:
+  `Ton_cmd4=196.5ns`, remaining Ton4 about `52ns`, elapsed active on-time about
+  `144.5ns` at the `0.05us` active-HS offset.
+- Selected `Tton_trunc_min=120ns`, the gentlest end of the suggested
+  `80-120ns` first-candidate band, while documenting that this whole-pulse Ton
+  floor is already expired at the active-HS instant.
+- Ran only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-trim and A2 gentle phase-selective Ton trim.
+- At `0.05us`, A2 reduced remaining Ton4 from about `52ns` to about `2ns` but
+  worsened early/recovery/late positive peaks by `0.2902/0.0476/0.0866mV`.
+- At `0.105us`, A2 matched A0 in all three windows.
+- Decision: `MODEL_REVISED`.  Stop Ton-min/Ton-floor variants; next action
+  should be deferred post-active pulse inhibit or controlled reentry.

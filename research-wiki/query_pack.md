@@ -488,3 +488,29 @@ Next useful action: R049I should run one minimal repaired-model gentle
 phase-selective Ton-trim chunk on the same `40A->20A` two-offset setup.  Use
 R049H's three-window metrics as the acceptance gate; do not expand to a full
 matrix.
+
+<!-- R049I_PR_ECB_GENTLE_TONTRIM -->
+
+## R049I Latest Update
+
+R049I added `output/iqcot_r049i_build_gentle_tontrim_model.m`,
+`output/iqcot_r049i_pr_ecb_gentle_tontrim_chunk.m`, and
+`output/iqcot_r049i_waveform_metric_audit.py`.  It copied the completed R049G
+model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049i_gentle_tontrim.slx`.
+
+Before choosing a floor, R049I inspected the R049G baseline Ton trace:
+`Ton_cmd4=196.5ns`, remaining Ton4 about `52ns`, elapsed active on-time about
+`144.5ns` at the `0.05us` active-HS offset.  A2 used `Tton_trunc_min=120ns`,
+the gentlest end of the suggested `80-120ns` band.  Model inspection confirmed
+this is a whole-pulse Ton command, not a remaining-on-time floor.
+
+Result: at `0.05us`, A2 shortened remaining Ton4 from about `52ns` to about
+`2ns` but worsened early/recovery/late positive peaks by
+`0.2902/0.0476/0.0866mV`.  At `0.105us`, A2 was identical to A0.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: stop Ton-min/Ton-floor variants.  Run one minimal deferred
+post-active pulse inhibit or controlled reentry chunk with the same R049H
+three-window acceptance gate.

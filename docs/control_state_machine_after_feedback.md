@@ -363,3 +363,48 @@ R049H decision:
 ```text
 MODEL_REVISED
 ```
+
+## R049I State-Machine Revision
+
+R049I tested the next candidate action from R049H:
+
+```text
+gentle_phase_selective_Ton_trim:
+    trigger = early_window AND Memory(qh_i)
+    Tton_trunc_min = 120 ns
+```
+
+Before running the chunk, R049I audited the R049G baseline Ton trace.  At the
+`40A -> 20A`, `0.05 us` active-HS offset:
+
+```text
+Ton_cmd4: 196.5 ns
+remaining Ton4: about 52 ns
+elapsed on-time before load step: about 144.5 ns
+```
+
+Because `Tton_trunc_min` feeds the COT cell as a whole-pulse Ton command, not a
+remaining-on-time floor, the `120 ns` floor is already expired when the action
+starts.  The R049I result matched that risk: remaining Ton4 fell to about
+`2 ns`, but early local peak worsened by `0.2902 mV`.
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT:
+    Ton_floor_actions:
+        do not continue scanning floors when elapsed_on_time > floor
+
+    next_action_family:
+        deferred_post_active_pulse_inhibit
+        or controlled_reentry
+
+    acceptance_gate:
+        continue using EARLY_LOCAL_PEAK, RECOVERY_PEAK, and LATE_SETTLING
+```
+
+R049I decision:
+
+```text
+MODEL_REVISED
+```

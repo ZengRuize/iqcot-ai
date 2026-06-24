@@ -382,3 +382,33 @@ Adaptive revision:
 - the next chunk should be R049I: one minimal repaired-model gentle
   phase-selective Ton-trim action, using the R049H three-window metrics, not a
   full matrix.
+
+Status after R049I: the gentle phase-selective Ton-trim chunk completed and
+ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049I copied the completed R049G repaired model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049i_gentle_tontrim.slx`
+and ran only the same `40A -> 20A` offsets `0.05 us` and `0.105 us`, with A0
+same-model no-trim and A2 gentle phase-selective Ton trim.
+
+Ton-floor selection was evidence-based: R049G baseline traces showed
+`Ton_cmd4=196.5 ns`, remaining Ton4 about `52 ns`, and elapsed active on-time
+about `144.5 ns` at the `0.05 us` load-step instant.  R049I selected
+`Tton_trunc_min=120 ns`, the gentlest end of the suggested `80-120 ns` first
+candidate band, but model inspection confirmed this floor is a whole-pulse Ton
+command, not a remaining-on-time floor.
+
+Adaptive revision:
+
+- the `120 ns` A2 action still reduces phase-4 remaining Ton from about
+  `52 ns` to about `2 ns`;
+- it still worsens the R049H early local peak by `0.2902 mV`, recovery peak by
+  `0.0476 mV`, and late peak by `0.0866 mV`;
+- at `0.105 us`, where no phase has remaining active high-side Ton, A2 is
+  unchanged from A0;
+- stop Ton-min/Ton-floor variants and move the next chunk to deferred
+  post-active pulse inhibit or controlled reentry.

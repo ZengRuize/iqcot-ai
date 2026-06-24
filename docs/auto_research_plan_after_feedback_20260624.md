@@ -289,6 +289,26 @@ Status after R049H:
   rather than hard `5 ns` Ton-min.  Use R049H's three-window metrics as the
   acceptance gate; do not expand to a full matrix.
 
+Status after R049I:
+
+- `output/iqcot_r049i_build_gentle_tontrim_model.m` copied the completed R049G
+  repaired model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049i_gentle_tontrim.slx`.
+- R049I first audited the R049G baseline Ton trace: `Ton_cmd4=196.5 ns`,
+  remaining Ton4 at the `0.05 us` active-HS load-step offset was about
+  `52.0 ns`, so the phase had already been on for about `144.5 ns`.
+- A2 used the gentlest end of the suggested first-candidate band,
+  `Tton_trunc_min=120 ns`, but model inspection confirmed this is a whole-pulse
+  Ton command, not a remaining-on-time floor.
+- Result: at `0.05 us`, A2 still shortened phase-4 remaining Ton from about
+  `52 ns` to about `2 ns` and worsened the early local peak by `0.2902 mV`;
+  recovery/late peaks also worsened by `0.0476/0.0866 mV`.  At `0.105 us`,
+  A2 remained identical to A0.
+- Decision: `MODEL_REVISED`.
+- Stop Ton-min/Ton-floor variants.  The next useful step is one minimal chunk
+  for deferred post-active pulse inhibit or controlled reentry, still using the
+  R049H three-window acceptance gate.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

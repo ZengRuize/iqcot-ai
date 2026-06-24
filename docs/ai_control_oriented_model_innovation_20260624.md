@@ -716,6 +716,49 @@ The next validation should be R049I: a single repaired-model gentle
 phase-selective Ton-trim chunk on the same `40A -> 20A` two-offset setup, using
 R049H's three-window metrics as the acceptance gate.
 
+### R049I Result: Gentle Ton Floor Still Fails the Early-Peak Gate
+
+R049I copied the completed R049G repaired model into a new derived copy and ran
+one `40A -> 20A` two-offset chunk:
+
+```text
+A0: same-model no trim
+A2: early_window AND qh_i, Tton_trunc_min = 120 ns
+```
+
+The `120 ns` floor was selected after inspecting the R049G baseline Ton trace.
+At the active-HS `0.05 us` offset, the baseline command was `196.5 ns` and
+phase 4 had about `52 ns` remaining, so the pulse had already been on for about
+`144.5 ns`.  Model inspection confirmed that `Tton_trunc_min` is a whole-pulse
+Ton command into the COT cell, not a remaining-on-time floor.  Therefore even a
+`120 ns` floor is already expired at the active-HS load-step instant.
+
+Windowed result:
+
+| Offset | Window | A2-A0 max | Interpretation |
+|---:|---|---:|---|
+| `0.050 us` | `0-2 us` early local peak | `+0.2902 mV` | fails acceptance gate |
+| `0.050 us` | `2-12 us` recovery peak | `+0.0476 mV` | slightly worse |
+| `0.050 us` | `12-80 us` late peak | `+0.0866 mV` | worse |
+| `0.105 us` | all windows | `0.0000 mV` | no active Ton to affect |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+Phase-selective Ton floors are not sufficient if the active pulse has already
+exceeded the proposed floor.  Do not keep scanning Ton-min/Ton-floor variants
+for this mild active-HS case.
+```
+
+The next validation should switch to deferred post-active pulse inhibit or
+controlled reentry, preserving the R049H three-window acceptance gate.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:
