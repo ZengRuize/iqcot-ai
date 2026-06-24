@@ -1,0 +1,4 @@
+tau_ai_us,best_slew_us,best_source,second_best_slew_us,second_best_regret,ridge_formula_us,ridge_error_us,status
+1.25,46.0,R034_partial_validation,38.0,0.1892674965034402,46.0,0.0,new derived-Simulink point
+1.5,50.0,R033_anchor_tau1p5,38.0,0.20501700496070985,50.0,0.0,inherited R033 anchor
+1.75,54.0,R034_partial_validation,38.0,0.15888991753527026,54.0,0.0,new derived-Simulink point

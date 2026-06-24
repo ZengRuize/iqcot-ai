@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="420" viewBox="0 0 1160 420">
+<rect width="100%" height="100%" fill="white"/>
+<text x="580" y="28" text-anchor="middle" font-family="Arial" font-size="18">R026 deployable risk proxy policy comparison</text>
+<text x="235.0" y="48" text-anchor="middle" font-family="Arial" font-size="13">mean regret</text>
+<line x1="70" y1="350" x2="400" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="70" y1="55" x2="70" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="66" y1="350.0" x2="400" y2="350.0" stroke="#ddd" stroke-width="1"/>
+<text x="62" y="354.0" text-anchor="end" font-family="Arial" font-size="10">0.00</text>
+<line x1="66" y1="202.5" x2="400" y2="202.5" stroke="#ddd" stroke-width="1"/>
+<text x="62" y="206.5" text-anchor="end" font-family="Arial" font-size="10">0.43</text>
+<line x1="66" y1="55.0" x2="400" y2="55.0" stroke="#ddd" stroke-width="1"/>
+<text x="62" y="59.0" text-anchor="end" font-family="Arial" font-size="10">0.86</text>
+<rect x="76.0" y="350.0" width="40.3" height="0.0" fill="#5b8ff9" opacity="0.85"/>
+<text x="96.1" y="346.0" text-anchor="middle" font-family="Arial" font-size="9">0.00</text>
+<text transform="translate(96.1,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">oracle</text>
+<rect x="122.3" y="328.0" width="40.3" height="22.0" fill="#5b8ff9" opacity="0.85"/>
+<text x="142.4" y="324.0" text-anchor="middle" font-family="Arial" font-size="9">0.06</text>
+<text transform="translate(142.4,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">posterior</text>
+<rect x="168.6" y="309.1" width="40.3" height="40.9" fill="#5b8ff9" opacity="0.85"/>
+<text x="188.7" y="305.1" text-anchor="middle" font-family="Arial" font-size="9">0.12</text>
+<text transform="translate(188.7,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">cal-proxy</text>
+<rect x="214.9" y="315.3" width="40.3" height="34.7" fill="#5b8ff9" opacity="0.85"/>
+<text x="235.0" y="311.3" text-anchor="middle" font-family="Arial" font-size="9">0.10</text>
+<text transform="translate(235.0,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">band</text>
+<rect x="261.1" y="294.0" width="40.3" height="56.0" fill="#5b8ff9" opacity="0.85"/>
+<text x="281.3" y="290.0" text-anchor="middle" font-family="Arial" font-size="9">0.16</text>
+<text transform="translate(281.3,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">dense</text>
+<rect x="307.4" y="124.8" width="40.3" height="225.2" fill="#5b8ff9" opacity="0.85"/>
+<text x="327.6" y="120.8" text-anchor="middle" font-family="Arial" font-size="9">0.65</text>
+<text transform="translate(327.6,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">naked</text>
+<rect x="353.7" y="55.0" width="40.3" height="295.0" fill="#5b8ff9" opacity="0.85"/>
+<text x="373.9" y="51.0" text-anchor="middle" font-family="Arial" font-size="9">0.86</text>
+<text transform="translate(373.9,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">param</text>
+<text x="610.0" y="48" text-anchor="middle" font-family="Arial" font-size="13">max regret</text>
+<line x1="445" y1="350" x2="775" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="445" y1="55" x2="445" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="441" y1="350.0" x2="775" y2="350.0" stroke="#ddd" stroke-width="1"/>
+<text x="437" y="354.0" text-anchor="end" font-family="Arial" font-size="10">0.00</text>
+<line x1="441" y1="202.5" x2="775" y2="202.5" stroke="#ddd" stroke-width="1"/>
+<text x="437" y="206.5" text-anchor="end" font-family="Arial" font-size="10">1.21</text>
+<line x1="441" y1="55.0" x2="775" y2="55.0" stroke="#ddd" stroke-width="1"/>
+<text x="437" y="59.0" text-anchor="end" font-family="Arial" font-size="10">2.43</text>
+<rect x="451.0" y="350.0" width="40.3" height="0.0" fill="#f4664a" opacity="0.85"/>
+<text x="471.1" y="346.0" text-anchor="middle" font-family="Arial" font-size="9">0.00</text>
+<text transform="translate(471.1,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">oracle</text>
+<rect x="497.3" y="321.5" width="40.3" height="28.5" fill="#f4664a" opacity="0.85"/>
+<text x="517.4" y="317.5" text-anchor="middle" font-family="Arial" font-size="9">0.23</text>
+<text transform="translate(517.4,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">posterior</text>
+<rect x="543.6" y="306.9" width="40.3" height="43.1" fill="#f4664a" opacity="0.85"/>
+<text x="563.7" y="302.9" text-anchor="middle" font-family="Arial" font-size="9">0.36</text>
+<text transform="translate(563.7,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">cal-proxy</text>
+<rect x="589.9" y="324.6" width="40.3" height="25.4" fill="#f4664a" opacity="0.85"/>
+<text x="610.0" y="320.6" text-anchor="middle" font-family="Arial" font-size="9">0.21</text>
+<text transform="translate(610.0,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">band</text>
+<rect x="636.1" y="290.5" width="40.3" height="59.5" fill="#f4664a" opacity="0.85"/>
+<text x="656.3" y="286.5" text-anchor="middle" font-family="Arial" font-size="9">0.49</text>
+<text transform="translate(656.3,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">dense</text>
+<rect x="682.4" y="55.0" width="40.3" height="295.0" fill="#f4664a" opacity="0.85"/>
+<text x="702.6" y="51.0" text-anchor="middle" font-family="Arial" font-size="9">2.43</text>
+<text transform="translate(702.6,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">naked</text>
+<rect x="728.7" y="57.8" width="40.3" height="292.2" fill="#f4664a" opacity="0.85"/>
+<text x="748.9" y="53.8" text-anchor="middle" font-family="Arial" font-size="9">2.41</text>
+<text transform="translate(748.9,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">param</text>
+<text x="985.0" y="48" text-anchor="middle" font-family="Arial" font-size="13">mean phase std ns</text>
+<line x1="820" y1="350" x2="1150" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="820" y1="55" x2="820" y2="350" stroke="#333" stroke-width="1"/>
+<line x1="816" y1="350.0" x2="1150" y2="350.0" stroke="#ddd" stroke-width="1"/>
+<text x="812" y="354.0" text-anchor="end" font-family="Arial" font-size="10">0.00</text>
+<line x1="816" y1="202.5" x2="1150" y2="202.5" stroke="#ddd" stroke-width="1"/>
+<text x="812" y="206.5" text-anchor="end" font-family="Arial" font-size="10">50.00</text>
+<line x1="816" y1="55.0" x2="1150" y2="55.0" stroke="#ddd" stroke-width="1"/>
+<text x="812" y="59.0" text-anchor="end" font-family="Arial" font-size="10">100.00</text>
+<rect x="826.0" y="140.6" width="40.3" height="209.4" fill="#5ad8a6" opacity="0.85"/>
+<text x="846.1" y="136.6" text-anchor="middle" font-family="Arial" font-size="9">70.99</text>
+<text transform="translate(846.1,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">oracle</text>
+<rect x="872.3" y="134.7" width="40.3" height="215.3" fill="#5ad8a6" opacity="0.85"/>
+<text x="892.4" y="130.7" text-anchor="middle" font-family="Arial" font-size="9">72.97</text>
+<text transform="translate(892.4,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">posterior</text>
+<rect x="918.6" y="130.7" width="40.3" height="219.3" fill="#5ad8a6" opacity="0.85"/>
+<text x="938.7" y="126.7" text-anchor="middle" font-family="Arial" font-size="9">74.35</text>
+<text transform="translate(938.7,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">cal-proxy</text>
+<rect x="964.9" y="127.8" width="40.3" height="222.2" fill="#5ad8a6" opacity="0.85"/>
+<text x="985.0" y="123.8" text-anchor="middle" font-family="Arial" font-size="9">75.31</text>
+<text transform="translate(985.0,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">band</text>
+<rect x="1011.1" y="130.3" width="40.3" height="219.7" fill="#5ad8a6" opacity="0.85"/>
+<text x="1031.3" y="126.3" text-anchor="middle" font-family="Arial" font-size="9">74.48</text>
+<text transform="translate(1031.3,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">dense</text>
+<rect x="1057.4" y="128.2" width="40.3" height="221.8" fill="#5ad8a6" opacity="0.85"/>
+<text x="1077.6" y="124.2" text-anchor="middle" font-family="Arial" font-size="9">75.17</text>
+<text transform="translate(1077.6,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">naked</text>
+<rect x="1103.7" y="118.7" width="40.3" height="231.3" fill="#5ad8a6" opacity="0.85"/>
+<text x="1123.9" y="114.7" text-anchor="middle" font-family="Arial" font-size="9">78.42</text>
+<text transform="translate(1123.9,364) rotate(35)" text-anchor="start" font-family="Arial" font-size="9">param</text>
+</svg>

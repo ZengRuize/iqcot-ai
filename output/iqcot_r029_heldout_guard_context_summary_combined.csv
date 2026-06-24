@@ -1,0 +1,7 @@
+﻿target_label,objective,tau_ai_us,best_policy,best_policy_family,best_slew_us,best_score,dense_anchor_slew_us,dense_anchor_regret,guarded_slew_us,guarded_regret,old_proxy_slew_us,old_proxy_regret,interpretation
+10A,score_settle005,1.5,fixed_40us_probe,fixed_probe,40,9.50196391084589,50,0.21549360442540078,,,62,0.7939235710969115,guard threshold is not supported below 2us; 40us is best at 1.5us
+10A,score_settle005,2.5,r028_guarded_candidate,guarded_candidate,34,9.26906693771289,50,0.6609377574727304,34,0.0,62,1.235564789576511,R028 34us delay guard has local held-out support
+10A,score_settle005,3.0,r028_guarded_candidate,guarded_candidate,34,9.61841110579322,50,0.337617360190821,34,0.0,62,0.3882278898691798,R028 34us delay guard has local held-out support
+near0A,score_settle010,0.0,fine_sweep_38us_probe,heldout_probe,38,19.5493064939804,30,0.23475729598910178,35,0.12388998029490139,,,35us zero-delay guard is too narrow; 38us fine-sweep probe is better
+near0A,score_settle010,0.25,fine_sweep_38us_probe,heldout_probe,38,21.3352205311964,30,0.002593761577802667,,,,,35us zero-delay guard is too narrow; 38us fine-sweep probe is better
+near0A,score_settle010,0.5,r028_dense_anchor,dense_anchor,30,18.7810436397149,30,0.0,,,,,dense/proxy 30us action remains best once delay reaches 0.5us

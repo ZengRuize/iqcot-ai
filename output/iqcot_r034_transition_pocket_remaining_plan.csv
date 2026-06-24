@@ -1,0 +1,11 @@
+r034_case_id,target_label,target_load_A,load_drop_A,objective,objective_alpha_settle,tau_ai_us,candidate_ref_slew_us,delay_events_est,priority,reason,validation_scope,ridge_predicted_best_us
+R034_0001,20A,20.0,20.0,score_settle005,0.05,1.0,38.0,2,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,42.0
+R034_0002,20A,20.0,20.0,score_settle005,0.05,1.0,46.0,2,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,42.0
+R034_0003,20A,20.0,20.0,score_settle005,0.05,1.0,50.0,2,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,42.0
+R034_0004,20A,20.0,20.0,score_settle005,0.05,1.0,54.0,2,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,42.0
+R034_0005,20A,20.0,20.0,score_settle005,0.05,1.0,58.0,2,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,42.0
+R034_0016,20A,20.0,20.0,score_settle005,0.05,2.0,38.0,4,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,58.0
+R034_0017,20A,20.0,20.0,score_settle005,0.05,2.0,46.0,4,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,58.0
+R034_0018,20A,20.0,20.0,score_settle005,0.05,2.0,50.0,4,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,58.0
+R034_0019,20A,20.0,20.0,score_settle005,0.05,2.0,54.0,4,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,58.0
+R034_0020,20A,20.0,20.0,score_settle005,0.05,2.0,58.0,4,2,resolve R033 50us transition pocket around tau_AI=1.5us,derived Simulink delayed-reference only; not hardware,58.0

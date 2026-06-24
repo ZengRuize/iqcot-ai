@@ -1,0 +1,21 @@
+target_load_A,target_label,ref_slew_us,objective_focus,r023_candidate_us,priority,reason,boundary
+20.0,20A,32,score_settle005;score_settle010,34.744,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,34,score_settle005;score_settle010,34.744,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,35,score_settle005;score_settle010,34.744,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,36,score_settle005;score_settle010,34.744,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,38,score_settle005;score_settle010,34.744,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,32,score_settle010,34.633,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,34,score_settle010,34.633,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,35,score_settle010,34.633,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,36,score_settle010,34.633,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,38,score_settle010,34.633,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,84,base,87.244,secondary,R023 local quadratic candidate around 87.244 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,86,base,87.244,secondary,R023 local quadratic candidate around 87.244 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,88,base,87.244,secondary,R023 local quadratic candidate around 87.244 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,90,base,87.244,secondary,R023 local quadratic candidate around 87.244 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+20.0,20A,92,base,87.244,secondary,R023 local quadratic candidate around 87.244 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,62,base,65.71,secondary,R023 local quadratic candidate around 65.710 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,64,base,65.71,secondary,R023 local quadratic candidate around 65.710 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,66,base,65.71,secondary,R023 local quadratic candidate around 65.710 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,68,base,65.71,secondary,R023 local quadratic candidate around 65.710 us for base score.,fine-sweep candidate only; not a global optimum or hardware result
+0.001,near0A,70,base,65.71,secondary,R023 local quadratic candidate around 65.710 us for base score.,fine-sweep candidate only; not a global optimum or hardware result

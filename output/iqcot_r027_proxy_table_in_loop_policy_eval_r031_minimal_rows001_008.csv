@@ -1,0 +1,2 @@
+policy,policy_role,online_available_inputs_only,n_cases,mean_switching_regret,max_switching_regret,mean_selected_objective_score,mean_undershoot_mV,max_undershoot_mV,mean_abs_final_vout_error_mV,mean_skip_count,mean_settle_time_us,mean_phase_spacing_std_ns,mean_base_score,mean_score_settle005,mean_score_settle010
+r031_minimal_candidate,candidate,1,8,0.0198300290537034,0.113281264268008,6.3046831138194,2.74819662078382,4.67957001179586,0.495269404402088,0.5,16.1115,61.5221044316747,5.4739081138194,6.27948311381941,7.08505811381941

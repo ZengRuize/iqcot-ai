@@ -1,0 +1,10 @@
+r037_case_id,target_label,target_load_A,load_drop_A,objective,objective_alpha_settle,tau_ai_us,candidate_ref_slew_us,delay_events_est,priority,reason,validation_scope
+R037_0001,20A,20,20,score_settle005,0.05,1.25,42,3,minimal_boundary,check left robustness between 38us near-tie and 46us R036 commit,derived_simulink_delayed_reference
+R037_0002,20A,20,20,score_settle005,0.05,1.25,44,3,minimal_boundary,check slope into 46us R036 commit,derived_simulink_delayed_reference
+R037_0003,20A,20,20,score_settle005,0.05,1.75,52,4,minimal_boundary,check slope into 54us R036 commit,derived_simulink_delayed_reference
+R037_0004,20A,20,20,score_settle005,0.05,1.75,56,4,minimal_boundary,check right robustness beyond 54us R036 commit,derived_simulink_delayed_reference
+R037_0005,20A,20,20,score_settle005,0.05,2.0,42,4,minimal_boundary,check fold-back boundary before 46us transition probe,derived_simulink_delayed_reference
+R037_0006,20A,20,20,score_settle005,0.05,2.0,44,4,minimal_boundary,check fold-back boundary before 46us transition probe,derived_simulink_delayed_reference
+R037_0007,20A,20,20,score_settle005,0.05,2.0,48,4,minimal_boundary,check 46/50us near-tie corridor against 30us fallback,derived_simulink_delayed_reference
+R037_0008,20A,20,20,score_settle005,0.05,1.5,46,3,minimal_boundary,check center-pocket left neighbor not covered by R033 anchor,derived_simulink_delayed_reference
+R037_0009,20A,20,20,score_settle005,0.05,1.5,54,3,minimal_boundary,check center-pocket right neighbor not covered by R033 anchor,derived_simulink_delayed_reference

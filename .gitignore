@@ -1,0 +1,49 @@
+# Local/editor state
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Python/MATLAB generated caches
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.asv
+*.m~
+slprj/
+output/slprj/
+output/__pycache__/
+
+# Vendored dependencies and local tool/plugin checkouts
+external/
+agent-skills-playground/
+matlab-mcp-core-server/
+simulink-agentic-toolkit/
+output/python_deps/
+
+# Installed skill links / local ARIS tool links
+.agents/
+.aris/tools/
+
+# Temporary and literature download cache
+tmp/
+*.tmp
+*.temp
+
+# Local secrets and environment files
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+id_rsa*
+id_ed25519*
+
+# Large MATLAB transient products
+*.slxc
+*.sldd.tmp
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+  <P Name="Location">[2559, -7, 6000, 1393]</P>
+  <P Name="ZoomFactor">300</P>
+  <Block BlockType="Inport" Name="Qi" SID="79">
+    <P Name="Position">[110, 103, 140, 117]</P>
+    <P Name="ZOrder">-1</P>
+  </Block>
+  <Block BlockType="Logic" Name="Logical&#xA;Operator" SID="80">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[215, 154, 245, 186]</P>
+    <P Name="ZOrder">23909</P>
+    <P Name="Operator">NOT</P>
+    <P Name="AllPortsSameDT">off</P>
+    <P Name="OutDataTypeStr">boolean</P>
+  </Block>
+  <Block BlockType="Logic" Name="Logical&#xA;Operator1" SID="81">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[505, 242, 535, 273]</P>
+    <P Name="ZOrder">23911</P>
+    <P Name="AllPortsSameDT">off</P>
+    <P Name="OutDataTypeStr">boolean</P>
+  </Block>
+  <Block BlockType="SubSystem" Name="OnDelay" SID="82">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[345, 89, 445, 131]</P>
+    <P Name="ZOrder">23908</P>
+    <P Name="LibrarySourceProduct" Ref="bdmxdata:LibrarySourceProduct_82"/>
+    <P Name="ContentPreviewEnabled">on</P>
+    <System Ref="system_82"/>
+  </Block>
+  <Block BlockType="SubSystem" Name="OnDelay1" SID="89">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[345, 149, 445, 191]</P>
+    <P Name="ZOrder">23910</P>
+    <P Name="LibrarySourceProduct" Ref="bdmxdata:LibrarySourceProduct_89"/>
+    <P Name="ContentPreviewEnabled">on</P>
+    <System Ref="system_89"/>
+  </Block>
+  <Block BlockType="Outport" Name="QHi" SID="96">
+    <P Name="Position">[570, 103, 600, 117]</P>
+    <P Name="ZOrder">-2</P>
+  </Block>
+  <Block BlockType="Outport" Name="QLi" SID="97">
+    <P Name="Position">[570, 163, 600, 177]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Port">2</P>
+  </Block>
+  <Block BlockType="Outport" Name="ShootThrough_i" SID="98">
+    <P Name="Position">[570, 253, 600, 267]</P>
+    <P Name="ZOrder">2</P>
+    <P Name="Port">3</P>
+  </Block>
+  <Line>
+    <P Name="ZOrder">1</P>
+    <P Name="Src">79#out:1</P>
+    <P Name="Points">[55, 0]</P>
+    <Branch>
+      <P Name="ZOrder">2</P>
+      <P Name="Dst">80#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">3</P>
+      <P Name="Dst">82#in:1</P>
+    </Branch>
+  </Line>
+  <Line>
+    <P Name="ZOrder">4</P>
+    <P Name="Src">82#out:1</P>
+    <P Name="Points">[61, 0]</P>
+    <Branch>
+      <P Name="ZOrder">5</P>
+      <P Name="Points">[0, 95; -30, 0; 0, 45]</P>
+      <P Name="Dst">81#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">6</P>
+      <P Name="Dst">96#in:1</P>
+    </Branch>
+  </Line>
+  <Line>
+    <P Name="ZOrder">7</P>
+    <P Name="Src">80#out:1</P>
+    <P Name="Dst">89#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">8</P>
+    <P Name="Src">89#out:1</P>
+    <P Name="Points">[13, 0]</P>
+    <Branch>
+      <P Name="ZOrder">9</P>
+      <P Name="Dst">97#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">10</P>
+      <P Name="Points">[0, 95]</P>
+      <P Name="Dst">81#in:2</P>
+    </Branch>
+  </Line>
+  <Line>
+    <P Name="ZOrder">11</P>
+    <P Name="Src">81#out:1</P>
+    <P Name="Dst">98#in:1</P>
+  </Line>
+</System>

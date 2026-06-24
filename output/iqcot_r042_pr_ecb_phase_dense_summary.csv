@@ -1,0 +1,6 @@
+target_label,n,active_hsrem_rows,energy_under_actual_count,energy_corr_under_actual_count,r_E_max_corr_min,r_E_max_corr_max,max_r042_over_actual_mean,max_corr_over_actual_mean,max_corr_over_actual_std,energy_corr_over_actual_mean,energy_corr_over_actual_std
+10A,5,2,0,0,0.618954,0.704813,1.780505,1.804811,0.023541,1.804811,0.023541
+20A,5,2,0,0,0.516182,0.602129,2.581166,2.710228,0.172846,2.710228,0.172846
+5A,5,2,0,0,0.759573,0.838608,1.670559,1.670559,0.028739,1.431511,0.012983
+near0,5,2,0,0,0.895462,0.982597,1.614425,1.614425,0.024195,1.193571,0.007810
+ALL,20,8,0,0,0.516182,0.982597,1.911664,1.950006,0.453201,1.785030,0.583490

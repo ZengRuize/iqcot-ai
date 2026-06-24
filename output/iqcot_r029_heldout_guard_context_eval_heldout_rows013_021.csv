@@ -1,0 +1,4 @@
+target_label,objective,tau_ai_us,best_policy,best_policy_family,best_slew_us,best_score,dense_anchor_regret,guarded_candidate_regret,old_proxy_regret
+near0A,score_settle010,0,fine_sweep_38us_probe,heldout_probe,38,19.5493064939804,0.234757295989073,0.123889980294884,NaN
+near0A,score_settle010,0.25,fine_sweep_38us_probe,heldout_probe,38,21.3352205311964,0.00259376157784885,NaN,NaN
+near0A,score_settle010,0.5,r028_dense_anchor,dense_anchor,30,18.7810436397149,0,NaN,NaN

@@ -1,0 +1,6 @@
+target_label,objective,tau_ai_us,observed_best_us,projected_commit_us,projection_matches_observed,second_best_us,second_best_regret,rule
+20A,score_settle005,1.0,38.0,38.0,True,46.0,2.1549024791173803,left edge: short candidate only; avoid 46us+ skip
+20A,score_settle005,1.25,46.0,46.0,True,38.0,0.1892674965034402,rising edge: 46us validated at tau=1.25us
+20A,score_settle005,1.5,50.0,50.0,True,38.0,0.20501700496070985,center anchor inherited from R033
+20A,score_settle005,1.75,54.0,54.0,True,38.0,0.15888991753527026,right edge: 54us validated at tau=1.75us
+20A,score_settle005,2.0,46.0,46.0,True,50.0,0.02674141449733014,"fold-back edge: 46us best, 50us near tie; avoid 54/58us settling"

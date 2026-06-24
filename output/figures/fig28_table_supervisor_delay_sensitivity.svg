@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620">
+<rect width="100%" height="100%" fill="white"/>
+<text x="560" y="30" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold">Table-supervisor delay sensitivity: mean score+0.05Tsettle</text>
+<line x1="80" y1="540.0" x2="910" y2="540.0" stroke="#ddd"/>
+<text x="72" y="544.0" text-anchor="end" font-family="Arial" font-size="11">0.0</text>
+<line x1="80" y1="443.0" x2="910" y2="443.0" stroke="#ddd"/>
+<text x="72" y="447.0" text-anchor="end" font-family="Arial" font-size="11">2.5</text>
+<line x1="80" y1="346.0" x2="910" y2="346.0" stroke="#ddd"/>
+<text x="72" y="350.0" text-anchor="end" font-family="Arial" font-size="11">4.9</text>
+<line x1="80" y1="249.0" x2="910" y2="249.0" stroke="#ddd"/>
+<text x="72" y="253.0" text-anchor="end" font-family="Arial" font-size="11">7.4</text>
+<line x1="80" y1="152.0" x2="910" y2="152.0" stroke="#ddd"/>
+<text x="72" y="156.0" text-anchor="end" font-family="Arial" font-size="11">9.9</text>
+<line x1="80" y1="55.0" x2="910" y2="55.0" stroke="#ddd"/>
+<text x="72" y="59.0" text-anchor="end" font-family="Arial" font-size="11">12.4</text>
+<line x1="80" y1="540" x2="910" y2="540" stroke="#333"/>
+<line x1="80" y1="55" x2="80" y2="540" stroke="#333"/>
+<line x1="80.0" y1="540" x2="80.0" y2="546" stroke="#333"/>
+<text x="80.0" y="564" text-anchor="middle" font-family="Arial" font-size="11">0</text>
+<line x1="163.0" y1="540" x2="163.0" y2="546" stroke="#333"/>
+<text x="163.0" y="564" text-anchor="middle" font-family="Arial" font-size="11">0.5</text>
+<line x1="246.0" y1="540" x2="246.0" y2="546" stroke="#333"/>
+<text x="246.0" y="564" text-anchor="middle" font-family="Arial" font-size="11">1</text>
+<line x1="412.0" y1="540" x2="412.0" y2="546" stroke="#333"/>
+<text x="412.0" y="564" text-anchor="middle" font-family="Arial" font-size="11">2</text>
+<line x1="910.0" y1="540" x2="910.0" y2="546" stroke="#333"/>
+<text x="910.0" y="564" text-anchor="middle" font-family="Arial" font-size="11">5</text>
+<polyline points="80.0,127.2 163.0,127.2 246.0,127.2 412.0,127.2 910.0,127.2" fill="none" stroke="#999999" stroke-width="2.3"/>
+<circle cx="80.0" cy="127.2" r="3.4" fill="#999999"/>
+<circle cx="163.0" cy="127.2" r="3.4" fill="#999999"/>
+<circle cx="246.0" cy="127.2" r="3.4" fill="#999999"/>
+<circle cx="412.0" cy="127.2" r="3.4" fill="#999999"/>
+<circle cx="910.0" cy="127.2" r="3.4" fill="#999999"/>
+<polyline points="80.0,107.0 163.0,107.0 246.0,107.0 412.0,107.0 910.0,107.0" fill="none" stroke="#4c78a8" stroke-width="2.3"/>
+<circle cx="80.0" cy="107.0" r="3.4" fill="#4c78a8"/>
+<circle cx="163.0" cy="107.0" r="3.4" fill="#4c78a8"/>
+<circle cx="246.0" cy="107.0" r="3.4" fill="#4c78a8"/>
+<circle cx="412.0" cy="107.0" r="3.4" fill="#4c78a8"/>
+<circle cx="910.0" cy="107.0" r="3.4" fill="#4c78a8"/>
+<polyline points="80.0,120.4 163.0,126.6 246.0,146.7 412.0,153.0 910.0,124.4" fill="none" stroke="#72b7b2" stroke-width="2.3"/>
+<circle cx="80.0" cy="120.4" r="3.4" fill="#72b7b2"/>
+<circle cx="163.0" cy="126.6" r="3.4" fill="#72b7b2"/>
+<circle cx="246.0" cy="146.7" r="3.4" fill="#72b7b2"/>
+<circle cx="412.0" cy="153.0" r="3.4" fill="#72b7b2"/>
+<circle cx="910.0" cy="124.4" r="3.4" fill="#72b7b2"/>
+<polyline points="80.0,133.9 163.0,133.0 246.0,141.7 412.0,182.8 910.0,161.3" fill="none" stroke="#f58518" stroke-width="2.3"/>
+<circle cx="80.0" cy="133.9" r="3.4" fill="#f58518"/>
+<circle cx="163.0" cy="133.0" r="3.4" fill="#f58518"/>
+<circle cx="246.0" cy="141.7" r="3.4" fill="#f58518"/>
+<circle cx="412.0" cy="182.8" r="3.4" fill="#f58518"/>
+<circle cx="910.0" cy="161.3" r="3.4" fill="#f58518"/>
+<polyline points="80.0,121.1 163.0,139.5 246.0,148.2 412.0,158.8 910.0,150.5" fill="none" stroke="#54a24b" stroke-width="2.3"/>
+<circle cx="80.0" cy="121.1" r="3.4" fill="#54a24b"/>
+<circle cx="163.0" cy="139.5" r="3.4" fill="#54a24b"/>
+<circle cx="246.0" cy="148.2" r="3.4" fill="#54a24b"/>
+<circle cx="412.0" cy="158.8" r="3.4" fill="#54a24b"/>
+<circle cx="910.0" cy="150.5" r="3.4" fill="#54a24b"/>
+<rect x="935" y="59" width="14" height="14" fill="#999999"/>
+<text x="955" y="70" font-family="Arial" font-size="12">fixed_40us_precommitted</text>
+<rect x="935" y="84" width="14" height="14" fill="#4c78a8"/>
+<text x="955" y="95" font-family="Arial" font-size="12">fixed_80us_precommitted</text>
+<rect x="935" y="109" width="14" height="14" fill="#72b7b2"/>
+<text x="955" y="120" font-family="Arial" font-size="12">oracle_base_table</text>
+<rect x="935" y="134" width="14" height="14" fill="#f58518"/>
+<text x="955" y="145" font-family="Arial" font-size="12">table_settle005</text>
+<rect x="935" y="159" width="14" height="14" fill="#54a24b"/>
+<text x="955" y="170" font-family="Arial" font-size="12">table_settle010</text>
+<text x="495.0" y="595" text-anchor="middle" font-family="Arial" font-size="12">tau_AI (us)</text>
+<text x="25" y="310" text-anchor="middle" font-family="Arial" font-size="12" transform="rotate(-90 25 310)">Mean score+0.05Tsettle</text>
+</svg>

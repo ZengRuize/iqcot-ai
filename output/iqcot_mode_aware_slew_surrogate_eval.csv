@@ -1,0 +1,5 @@
+model,split,n_rows,rmse,mae,max_abs_error,boundary
+smooth_quadratic_context,in_sample,207,0.854555203165319,0.6382564005994965,2.3687335646421896,post-processed surrogate; mode-aware metrics must be predicted before deployment
+mode_aware_score_surrogate,in_sample,207,0.10101124914814731,0.07382584990938805,0.4077095613386419,post-processed surrogate; mode-aware metrics must be predicted before deployment
+smooth_quadratic_context,leave_one_target,207,10.192203822851063,9.705823823720484,16.15921169159223,tests target extrapolation only; not AI-in-loop validation
+mode_aware_score_surrogate,leave_one_target,207,5.940479396597415,5.72019112353212,8.613800862863835,tests target extrapolation only; not AI-in-loop validation

@@ -1,0 +1,76 @@
+target_label,objective,tau_ai_us,policy,selected_policy,selected_slew_us,regret,objective_score_relative,unsafe_proxy_override_selected,rationale,deployability
+10A,score_settle010,0.0,direct_proxy_override,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+10A,score_settle010,0.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.4896433099138999,0.4896433099138999,False,always use dense-anchor baseline,deployable_baseline
+10A,score_settle010,0.0,r031_small_delta_only,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,proxy allowed only for <=2us local band,candidate_rule
+10A,score_settle010,0.0,r031_tightened_sw_projection,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,R030 near-tie subband: proxy allowed only at locally observed winning delays,switching_calibrated_candidate
+10A,score_settle010,0.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+10A,score_settle010,0.5,direct_proxy_override,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+10A,score_settle010,0.5,dense_anchor_baseline,discrete_dense_long_table,30.0,0.2554868162919987,0.2554868162919987,False,always use dense-anchor baseline,deployable_baseline
+10A,score_settle010,0.5,r031_small_delta_only,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,proxy allowed only for <=2us local band,candidate_rule
+10A,score_settle010,0.5,r031_tightened_sw_projection,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,R030 near-tie subband: proxy allowed only at locally observed winning delays,switching_calibrated_candidate
+10A,score_settle010,0.5,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+10A,score_settle010,1.0,direct_proxy_override,calibrated_risk_proxy_projection,32.0,0.6917584474484197,0.6917584474484197,True,offline proxy selected directly,deployable_negative_control
+10A,score_settle010,1.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+10A,score_settle010,1.0,r031_small_delta_only,calibrated_risk_proxy_projection,32.0,0.6917584474484197,0.6917584474484197,True,proxy allowed only for <=2us local band,candidate_rule
+10A,score_settle010,1.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+10A,score_settle010,1.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,30.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+10A,score_settle010,2.0,direct_proxy_override,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+10A,score_settle010,2.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0582396082937997,0.0582396082937997,False,always use dense-anchor baseline,deployable_baseline
+10A,score_settle010,2.0,r031_small_delta_only,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,proxy allowed only for <=2us local band,candidate_rule
+10A,score_settle010,2.0,r031_tightened_sw_projection,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,R030 near-tie subband: proxy allowed only at locally observed winning delays,switching_calibrated_candidate
+10A,score_settle010,2.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,32.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+10A,score_settle010,5.0,direct_proxy_override,calibrated_risk_proxy_projection,32.0,0.1581087802073995,0.1581087802073995,False,offline proxy selected directly,deployable_negative_control
+10A,score_settle010,5.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+10A,score_settle010,5.0,r031_small_delta_only,calibrated_risk_proxy_projection,32.0,0.1581087802073995,0.1581087802073995,False,proxy allowed only for <=2us local band,candidate_rule
+10A,score_settle010,5.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+10A,score_settle010,5.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,30.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,base,0.0,direct_proxy_override,calibrated_risk_proxy_projection,86.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+20A,base,0.0,dense_anchor_baseline,discrete_dense_long_table,80.0,0.13991530588719,0.13991530588719,False,always use dense-anchor baseline,deployable_baseline
+20A,base,0.0,r031_small_delta_only,discrete_dense_long_table,80.0,0.13991530588719,0.13991530588719,False,proxy blocked outside <=2us local band,candidate_rule
+20A,base,0.0,r031_tightened_sw_projection,discrete_dense_long_table,80.0,0.13991530588719,0.13991530588719,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,base,0.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,86.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,base,0.5,direct_proxy_override,calibrated_risk_proxy_projection,86.0,0.2794201990859299,0.2794201990859299,False,offline proxy selected directly,deployable_negative_control
+20A,base,0.5,dense_anchor_baseline,discrete_dense_long_table,80.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,base,0.5,r031_small_delta_only,discrete_dense_long_table,80.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,base,0.5,r031_tightened_sw_projection,discrete_dense_long_table,80.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,base,0.5,r031_pair_oracle_upper_bound,discrete_dense_long_table,80.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,base,1.0,direct_proxy_override,calibrated_risk_proxy_projection,86.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+20A,base,1.0,dense_anchor_baseline,discrete_dense_long_table,80.0,0.0610641088322601,0.0610641088322601,False,always use dense-anchor baseline,deployable_baseline
+20A,base,1.0,r031_small_delta_only,discrete_dense_long_table,80.0,0.0610641088322601,0.0610641088322601,False,proxy blocked outside <=2us local band,candidate_rule
+20A,base,1.0,r031_tightened_sw_projection,discrete_dense_long_table,80.0,0.0610641088322601,0.0610641088322601,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,base,1.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,86.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,base,2.0,direct_proxy_override,calibrated_risk_proxy_projection,86.0,0.1876684840164999,0.1876684840164999,False,offline proxy selected directly,deployable_negative_control
+20A,base,2.0,dense_anchor_baseline,discrete_dense_long_table,80.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,base,2.0,r031_small_delta_only,discrete_dense_long_table,80.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,base,2.0,r031_tightened_sw_projection,discrete_dense_long_table,80.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,base,2.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,80.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,base,5.0,direct_proxy_override,calibrated_risk_proxy_projection,86.0,0.1461031376588,0.1461031376588,False,offline proxy selected directly,deployable_negative_control
+20A,base,5.0,dense_anchor_baseline,discrete_dense_long_table,80.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,base,5.0,r031_small_delta_only,discrete_dense_long_table,80.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,base,5.0,r031_tightened_sw_projection,discrete_dense_long_table,80.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,base,5.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,80.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,score_settle005,0.0,direct_proxy_override,calibrated_risk_proxy_projection,66.0,0.0,0.0,False,offline proxy selected directly,deployable_negative_control
+20A,score_settle005,0.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0945000419769299,0.0945000419769299,False,always use dense-anchor baseline,deployable_baseline
+20A,score_settle005,0.0,r031_small_delta_only,discrete_dense_long_table,30.0,0.0945000419769299,0.0945000419769299,False,proxy blocked outside <=2us local band,candidate_rule
+20A,score_settle005,0.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0945000419769299,0.0945000419769299,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,score_settle005,0.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,66.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,score_settle005,0.5,direct_proxy_override,calibrated_risk_proxy_projection,66.0,2.0615990110894504,2.0615990110894504,True,offline proxy selected directly,deployable_negative_control
+20A,score_settle005,0.5,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,score_settle005,0.5,r031_small_delta_only,discrete_dense_long_table,30.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,score_settle005,0.5,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,score_settle005,0.5,r031_pair_oracle_upper_bound,discrete_dense_long_table,30.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,score_settle005,1.0,direct_proxy_override,calibrated_risk_proxy_projection,66.0,0.0,0.0,True,offline proxy selected directly,deployable_negative_control
+20A,score_settle005,1.0,dense_anchor_baseline,discrete_dense_long_table,30.0,1.6881408275567402,1.6881408275567402,False,always use dense-anchor baseline,deployable_baseline
+20A,score_settle005,1.0,r031_small_delta_only,discrete_dense_long_table,30.0,1.6881408275567402,1.6881408275567402,False,proxy blocked outside <=2us local band,candidate_rule
+20A,score_settle005,1.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,1.6881408275567402,1.6881408275567402,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,score_settle005,1.0,r031_pair_oracle_upper_bound,calibrated_risk_proxy_projection,66.0,0.0,0.0,True,pair-wise switching lower bound,non_deployable_upper_bound
+20A,score_settle005,2.0,direct_proxy_override,calibrated_risk_proxy_projection,66.0,2.79295188584671,2.79295188584671,True,offline proxy selected directly,deployable_negative_control
+20A,score_settle005,2.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,score_settle005,2.0,r031_small_delta_only,discrete_dense_long_table,30.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,score_settle005,2.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,score_settle005,2.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,30.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound
+20A,score_settle005,5.0,direct_proxy_override,calibrated_risk_proxy_projection,66.0,2.2954618032059497,2.2954618032059497,True,offline proxy selected directly,deployable_negative_control
+20A,score_settle005,5.0,dense_anchor_baseline,discrete_dense_long_table,30.0,0.0,0.0,False,always use dense-anchor baseline,deployable_baseline
+20A,score_settle005,5.0,r031_small_delta_only,discrete_dense_long_table,30.0,0.0,0.0,False,proxy blocked outside <=2us local band,candidate_rule
+20A,score_settle005,5.0,r031_tightened_sw_projection,discrete_dense_long_table,30.0,0.0,0.0,False,default dense-anchor; block delay-sensitive or large-jump proxy override,switching_calibrated_candidate
+20A,score_settle005,5.0,r031_pair_oracle_upper_bound,discrete_dense_long_table,30.0,0.0,0.0,False,pair-wise switching lower bound,non_deployable_upper_bound

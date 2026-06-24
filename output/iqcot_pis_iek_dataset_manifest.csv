@@ -1,0 +1,6 @@
+dataset,path,rows,description
+sensitivity,E:\Desktop\codex\output\iqcot_pis_iek_sensitivity_matrix.csv,32,event-phase indexed local derivatives dT/dLambda and dT/dTon
+modal_projection,E:\Desktop\codex\output\iqcot_pis_iek_modal_projection_matrix.csv,10,modal projection of local wait sensitivity vectors
+amplitude_sweep,E:\Desktop\codex\output\iqcot_pis_iek_amplitude_sweep.csv,77,"constant small-signal amplitude sweep for Lambda, Ton and mixed perturbations"
+frequency_response,E:\Desktop\codex\output\iqcot_pis_iek_frequency_response.csv,80,sinusoidal event-domain frequency response comparing nonlinear and PIS-IEK predictions
+report,E:\Desktop\codex\output\iqcot_pis_iek_comprehensive_validation_report.md,1,human-readable comprehensive validation report

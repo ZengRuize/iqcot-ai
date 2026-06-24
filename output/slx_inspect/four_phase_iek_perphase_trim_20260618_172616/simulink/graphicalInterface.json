@@ -1,0 +1,381 @@
+{
+    "GraphicalInterface":{
+        "ExternalFileReferences":[
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase1\/Compare To Constant1",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"264",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase1\/Compare To Constant2",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"272",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase1\/Compare To Constant3",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"273",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase2\/Compare To Constant1",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"282",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase2\/Compare To Constant2",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"283",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase2\/Compare To Constant3",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"284",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase3\/Compare To Constant1",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"304",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase3\/Compare To Constant2",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"305",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase3\/Compare To Constant3",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"306",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase4\/Compare To Constant1",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"326",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase4\/Compare To Constant2",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"327",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/COT_Cell_1Phase4\/Compare To Constant3",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"328",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"204",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Current Measurement",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"352",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Current Measurement1",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"354",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Current Measurement2",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"355",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Current Measurement3",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"356",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/DC Voltage Source",
+                "Reference":"spsDCVoltageSourceLib\/DC Voltage Source",
+                "SID":"2",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/DC Voltage Source1",
+                "Reference":"spsDCVoltageSourceLib\/DC Voltage Source",
+                "SID":"5",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/DC Voltage Source2",
+                "Reference":"spsDCVoltageSourceLib\/DC Voltage Source",
+                "SID":"7",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/DC Voltage Source3",
+                "Reference":"spsDCVoltageSourceLib\/DC Voltage Source",
+                "SID":"9",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Detect Rise Positive",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Detect Rise\nPositive",
+                "SID":"206",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase1\/OnDelay\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"84",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase1\/OnDelay1\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"91",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase2\/OnDelay\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"105",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase2\/OnDelay1\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"112",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase3\/OnDelay\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"126",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase3\/OnDelay1\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"133",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase4\/OnDelay\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"147",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/GateDriver_1Phase4\/OnDelay1\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"154",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Ground",
+                "Reference":"spsGroundLib\/Ground",
+                "SID":"4",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/IL_Measurement1",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"374",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/IL_Measurement2",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"375",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/IL_Measurement3",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"376",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/IL_Measurement4",
+                "Reference":"spsCurrentMeasurementLib\/Current Measurement",
+                "SID":"377",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"11",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet1",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"12",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet2",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"13",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet3",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"14",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet4",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"15",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet5",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"17",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet6",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"18",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Mosfet7",
+                "Reference":"spsMosfetLib\/Mosfet",
+                "SID":"19",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/OnDelay\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"51",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/PhaseScheduler_4Phase\/Compare To Constant",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"221",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/PhaseScheduler_4Phase\/Compare To Constant1",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"222",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/PhaseScheduler_4Phase\/Compare To Constant2",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"223",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/PhaseScheduler_4Phase\/Compare To Constant3",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"224",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/PhaseScheduler_4Phase\/Compare To Constant4",
+                "Reference":"simulink\/Logic and Bit\nOperations\/Compare\nTo Constant",
+                "SID":"235",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"20",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch1",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"30",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch2",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"31",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch3",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"32",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch4",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"34",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Series RLC Branch8",
+                "Reference":"spsSeriesRLCBranchLib\/Series RLC Branch",
+                "SID":"38",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/VCOT_Ramp_Unit",
+                "Reference":"simulink\/Sources\/Repeating\nSequence",
+                "SID":"489",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Voltage Measurement",
+                "Reference":"spsVoltageMeasurementLib\/Voltage Measurement",
+                "SID":"33",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Voltage Measurement1",
+                "Reference":"spsVoltageMeasurementLib\/Voltage Measurement",
+                "SID":"39",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Voltage Measurement2",
+                "Reference":"spsVoltageMeasurementLib\/Voltage Measurement",
+                "SID":"40",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Voltage Measurement3",
+                "Reference":"spsVoltageMeasurementLib\/Voltage Measurement",
+                "SID":"41",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/Voltage Measurement4",
+                "Reference":"spsVoltageMeasurementLib\/Voltage Measurement",
+                "SID":"42",
+                "Type":"LIBRARY_BLOCK"
+            },
+            {
+                "Path":"$bdroot\/powergui",
+                "Reference":"spspowerguiLib\/powergui",
+                "SID":"1",
+                "Type":"LIBRARY_BLOCK"
+            }
+        ],
+        "PreCompExecutionDomainType":"Unset",
+        "SimulinkSubDomainType":"Simulink",
+        "SolverName":"VariableStepAuto"
+    }
+}

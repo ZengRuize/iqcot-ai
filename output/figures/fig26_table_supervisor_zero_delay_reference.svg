@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="560" viewBox="0 0 1040 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="520" y="30" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold">Zero-delay reference ordering for table-supervisor validation</text>
+<line x1="80" y1="410.0" x2="1010" y2="410.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="414.0" text-anchor="end" font-family="Arial" font-size="11">0.0</text>
+<line x1="80" y1="341.0" x2="1010" y2="341.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="345.0" text-anchor="end" font-family="Arial" font-size="11">3.0</text>
+<line x1="80" y1="272.0" x2="1010" y2="272.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="276.0" text-anchor="end" font-family="Arial" font-size="11">6.0</text>
+<line x1="80" y1="203.0" x2="1010" y2="203.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="207.0" text-anchor="end" font-family="Arial" font-size="11">9.0</text>
+<line x1="80" y1="134.0" x2="1010" y2="134.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="138.0" text-anchor="end" font-family="Arial" font-size="11">11.9</text>
+<line x1="80" y1="65.0" x2="1010" y2="65.0" stroke="#ddd" stroke-width="1"/>
+<text x="70" y="69.0" text-anchor="end" font-family="Arial" font-size="11">14.9</text>
+<line x1="80" y1="410" x2="1010" y2="410" stroke="#333" stroke-width="1"/>
+<line x1="80" y1="65" x2="80" y2="410" stroke="#333" stroke-width="1"/>
+<rect x="117.2" y="182.2" width="37.2" height="227.8" fill="#4c78a8"><title>fixed_40us_precommitted: mean_base_score=9.856</title></rect>
+<rect x="160.0" y="166.7" width="37.2" height="243.3" fill="#f58518"><title>fixed_40us_precommitted: mean_score_settle005=10.528</title></rect>
+<rect x="202.8" y="151.2" width="37.2" height="258.8" fill="#54a24b"><title>fixed_40us_precommitted: mean_score_settle010=11.199</title></rect>
+<text x="173.0" y="434.0" text-anchor="end" font-family="Arial" font-size="10" transform="rotate(-35 173.0 434.0)">fixed 40us precommitted</text>
+<rect x="303.2" y="192.0" width="37.2" height="218.0" fill="#4c78a8"><title>fixed_80us_precommitted: mean_base_score=9.435</title></rect>
+<rect x="346.0" y="154.8" width="37.2" height="255.2" fill="#f58518"><title>fixed_80us_precommitted: mean_score_settle005=11.043</title></rect>
+<rect x="388.8" y="117.6" width="37.2" height="292.4" fill="#54a24b"><title>fixed_80us_precommitted: mean_score_settle010=12.651</title></rect>
+<text x="359.0" y="434.0" text-anchor="end" font-family="Arial" font-size="10" transform="rotate(-35 359.0 434.0)">fixed 80us precommitted</text>
+<rect x="489.2" y="195.1" width="37.2" height="214.9" fill="#4c78a8"><title>oracle_base_table: mean_base_score=9.299</title></rect>
+<rect x="532.0" y="162.7" width="37.2" height="247.3" fill="#f58518"><title>oracle_base_table: mean_score_settle005=10.700</title></rect>
+<rect x="574.8" y="130.4" width="37.2" height="279.6" fill="#54a24b"><title>oracle_base_table: mean_score_settle010=12.100</title></rect>
+<text x="545.0" y="434.0" text-anchor="end" font-family="Arial" font-size="10" transform="rotate(-35 545.0 434.0)">oracle base table</text>
+<rect x="675.2" y="192.6" width="37.2" height="217.4" fill="#4c78a8"><title>table_settle005: mean_base_score=9.409</title></rect>
+<rect x="718.0" y="170.7" width="37.2" height="239.3" fill="#f58518"><title>table_settle005: mean_score_settle005=10.356</title></rect>
+<rect x="760.8" y="148.8" width="37.2" height="261.2" fill="#54a24b"><title>table_settle005: mean_score_settle010=11.303</title></rect>
+<text x="731.0" y="434.0" text-anchor="end" font-family="Arial" font-size="10" transform="rotate(-35 731.0 434.0)">table settle005</text>
+<rect x="861.2" y="173.1" width="37.2" height="236.9" fill="#4c78a8"><title>table_settle010: mean_base_score=10.251</title></rect>
+<rect x="904.0" y="163.1" width="37.2" height="246.9" fill="#f58518"><title>table_settle010: mean_score_settle005=10.683</title></rect>
+<rect x="946.8" y="153.1" width="37.2" height="256.9" fill="#54a24b"><title>table_settle010: mean_score_settle010=11.115</title></rect>
+<text x="917.0" y="434.0" text-anchor="end" font-family="Arial" font-size="10" transform="rotate(-35 917.0 434.0)">table settle010</text>
+<rect x="80" y="513" width="14" height="14" fill="#4c78a8"/>
+<text x="100" y="525" font-family="Arial" font-size="12">base</text>
+<rect x="290" y="513" width="14" height="14" fill="#f58518"/>
+<text x="310" y="525" font-family="Arial" font-size="12">score+0.05Tsettle</text>
+<rect x="500" y="513" width="14" height="14" fill="#54a24b"/>
+<text x="520" y="525" font-family="Arial" font-size="12">score+0.10Tsettle</text>
+<text x="24" y="285" text-anchor="middle" font-family="Arial" font-size="12" transform="rotate(-90 24 285)">Mean objective score</text>
+</svg>

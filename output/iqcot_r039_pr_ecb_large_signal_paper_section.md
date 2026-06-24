@@ -1,0 +1,5 @@
+## R039 PR-ECB: large-signal first-peak boundary for delayed supervisory actions
+
+R039 adds a large-signal branch to the PIS-IEK research line. For the shared 40A->20A load-drop event, the phase-resolved energy-charge boundary model uses the load-step instant values of iL1..iL4, the active high-side phase state, Cout, ESR, and L to estimate a first-peak risk feature r_E. Across five delayed-reference derived-Simulink cases, including the R038 local anchors 46/50/54us and the tau_AI=2us 30/48us foldback near-tie pair, the first-peak state is identical because the peak occurs before the delayed T_slew command can affect the plant.
+
+The first R039 sweep gives a conservative boundary: energy estimate 4.349633 mV, charge+ESR estimate 3.903338 mV, and derived-Simulink first peak 2.235008 mV. With Delta V_allow=10 mV, r_E=0.434963. This supports the intended separation: PR-ECB handles load-drop first-peak risk, while PIS-IEK and r_hat/B_epsilon^sw handle post-peak event recovery, skip/reentry, phase spacing, and T_slew deployment. The result must not be written as hardware validation or as evidence that PIS-IEK precisely predicts the first peak.

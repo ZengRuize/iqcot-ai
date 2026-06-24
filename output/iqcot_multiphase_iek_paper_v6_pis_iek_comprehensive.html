@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>四相数字 IQCOT IEK/PIS-IEK 论文 v6</title>
+<style>
+body { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; line-height: 1.65; max-width: 980px; margin: 40px auto; padding: 0 24px; color: #111; }
+pre, code { font-family: Consolas, "Courier New", monospace; }
+pre { background: #f6f8fa; padding: 12px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+th, td { border: 1px solid #ccc; padding: 6px 8px; vertical-align: top; }
+img { max-width: 100%; display: block; margin: 16px auto; }
+h1, h2, h3 { line-height: 1.3; }
+</style>
+</head>
+<body>
+<h1>四相数字 IQCOT Buck 变换器的积分事件核与相索引盐跃小信号建模、受限均流执行量设计及仿真验证</h1>
+<h2>摘要</h2>
+<p>四相交错 Buck 变换器是低压大电流 VRM 的典型结构，COT 与 IQCOT 控制因快速瞬态和紧凑实现而具有吸引力。已有研究已经提出 IQCOT 控制律及其高频小信号模型，也已经建立 ripple-based COT sampled-data 模型、多相 COT phase-overlap 模型和多相数字积分 COT 均流方案。本文不声称首次提出 IQCOT、COT sampled-data 建模或多相数字均流，而是针对四相数字 IQCOT 中更具体的工程问题：面积阈值、检测延迟、数字量化、相位间隔和 Ton-trim 均流执行量究竟通过哪些小信号通道影响系统。</p>
+<p>本文提出积分事件核（Integral-Event Kernel, IEK）建模框架，从 IQCOT 面积事件</p>
+<pre><code class="language-math">\int_{a_k}^{t_{k+1}} [v_c(t)-R_i i_{L}(t)]dt=\Lambda
+</code></pre>
+<p>出发，用移动边界线性化保留 off-time 积分区间内的功率级状态记忆，并将四相事件扰动分解为 common-mode 与 differential-mode。已有单相验证显示，动态 IEK 对周期响应的最大幅值误差低于 0.00018%，而 He-only 局部面积刚度模型最大误差可达 771.62%。本文新增四相密集验证：在 24 个 common-mode 频点中，He-only 模型最坏相对幅值误差达到 7969.65%，但在 <code>ω/π=0.2</code> 附近误差仅为 -0.66%。执行量矩阵进一步表明，m2 差模下 Lambda_diff 的电流增益约为 0.0100 mA/(1e-13)，Ton_diff 的电流增益约为 765.07 mA/(0.1 ns)，二者相差约五个数量级；检测延迟差模主要表现为相位时序扰动。本文进一步使用用户已有四相 Simulink/Simscape COT-IQCOT 模型进行 14 点 on-time 交叉验证，m2 <code>Ton</code> 差模的电流投影斜率约为 0.482 A/ns。为补足面积阈值通道证据，本文先在模型副本中把瞬时 Relay 请求替换为面积积分请求 <code>REQ = ∫max(e_v,0)dt &gt;= Λ_area + Λ_m2 cos(π phase_idx)</code>，证明 <code>Λ_cm</code> 可闭环、<code>Λ_m2</code> 主要扰动 phase-spacing。进一步，本文构建逐相 IEK 副本，采用 <code>h_i=Varea_bias+e_v+Ri_area(Iph-IL_i)</code>，按 <code>phase_idx</code> 选择对应相面积比较结果生成 <code>REQ</code>。在 25 点扫描中，候选点 <code>Λ_area=6e-10 V·s</code>、<code>Varea_bias=2 mV</code>、<code>Ri_area=0.5 mΩ</code> 得到 <code>Vout_mean=0.999548 V</code>、<code>Vout_ripple=0.785960 mVpp</code>、平均相频率 <code>502.097 kHz</code>、相电流不均衡 <code>0.02390 A</code>；<code>Λ_m2/Λ_area=0.4</code> 时 m2 电流投影仅 <code>0.00116 A</code>。新增 20/30/40/50 A 静态负载扫点显示，逐相 IEK 副本在该范围内输出均值误差约小于 1 mV，且 <code>Λ_m2/Λ_area=0.4</code> 的跨负载最大 m2 电流投影仅约 9.4 mA。v6 进一步提出相索引盐跃 IEK（PIS-IEK），把四相面积事件、phase scheduler、积分 reset 和 <code>Λ_i/Ton_i</code> 执行量统一为周期 event-to-event Jacobian，并完成 32 行局部灵敏度、10 行模态投影、77 个幅值扫描工况和 80 个四事件提升频响工况。结果显示，<code>Λ</code> 全范围幅值扫描最大 rms wait 误差仅 <code>0.05025%</code>，<code>Ton&lt;=0.02 ns</code> 时最大 rms wait 误差为 <code>1.83345%</code>，四事件提升频响中可观测工况 wait 幅值误差低于 <code>0.004%</code>。这些结果共同支持本文关键判断：Lambda_diff 更适合 phase-spacing/ripple-cancellation 调节，Ton_diff 才是主要 DC current-sharing 执行量。</p>
+<p><strong>关键词</strong>：IQCOT；COT；四相 Buck；小信号模型；sampled-data；积分事件核；均流；phase-spacing jitter；数字量化</p>
+<h2>Abstract</h2>
+<p>Four-phase interleaved buck converters are widely used in low-voltage high-current VRMs. COT and IQCOT control are attractive for fast transient response and compact implementation. This paper does not claim to invent IQCOT, COT sampled-data modeling, or multiphase digital current balancing. Instead, it develops a focused integral-event kernel (IEK) framework for four-phase digital IQCOT converters, separating area-threshold, detection-delay, phase-spacing, and Ton-trim current-sharing channels. Starting from the IQCOT area event, the model linearizes the moving event boundary and retains the state memory accumulated during the off-time integration interval. Dense four-phase validation shows that a local He-only stiffness approximation can be accurate at some frequencies but can fail severely at others, with a worst-case amplitude error of 7969.65% in the studied operating point. The actuator matrix shows that differential area threshold is primarily a phase-spacing actuator, whereas differential on-time trim is the dominant DC current-sharing actuator. A digital jitter budget maps area-threshold bit width, detection clock, and Ton resolution into event jitter, phase-spacing jitter, and current-sharing quantization. A separate 14-case Simulink/Simscape cross-validation confirms the modal interpretation of differential on-time trim. Two copied Simulink models then replace the hysteretic Relay request by area-integral requests. The first copy validates common area triggering, and the second copy introduces a per-phase current term, h_i = Varea_bias + e_v + Ri_area(Iph-IL_i). Both copies regulate near 500 kHz per phase and show that differential area threshold has little DC current-sharing authority compared with differential on-time trim. The resulting framework provides a reproducible small-signal basis for constrained tuning of four-phase digital IQCOT buck converters.</p>
+<h2>1. 引言</h2>
+<p>处理器和 AI 加速器供电要求 VRM 在低电压、大电流、快速负载阶跃和高电流密度之间取得平衡。多相交错 Buck 通过相位错开降低输入与输出纹波，并通过相电流分担降低热应力，是 VRM 中最常见的拓扑之一。COT 控制由于不依赖固定周期调制器、瞬态响应快、轻载模式自然，长期被用于低压大电流电源。IQCOT 将 COT 的触发条件从瞬时纹波比较扩展为面积积分事件，在多相纹波抵消点附近仍能保持有效检测量，因此适合高性能 VRM。</p>
+<p>然而，在数字四相 IQCOT 实现中，设计者面对的并不是一个单一参数。面积阈值 <code>Λ</code>、积分电流系数 <code>Ri</code>、检测延迟、阈值量化、phase manager、Ton-trim 和 DCR 失配都会改变事件时刻；这些变化又同时影响输出调节、相位间隔和相电流均衡。如果把所有参数都当成“能调频率/能调电流”的经验旋钮，容易出现两个误判：一是用 Lambda_diff 试图做 DC 均流，二是为了追求 Ton 均流而破坏相位间隔。</p>
+<p>本文的核心问题是：<strong>四相数字 IQCOT 的面积事件能否被写成一个可用于执行量分类和数字预算的小信号模型？</strong> 本文给出的答案是肯定的，但边界必须清楚。已有工作已经覆盖 IQCOT 控制律、高频小信号模型、RBCOT sampled-data 模型、多相 COT phase-overlap 以及多相 DICOT 均流。本文的增量不在“首次提出控制律”，而在四相数字实现层面提出 IEK 模态化分析，用同一框架解释 <code>Λ_cm</code>、<code>Λ_diff</code>、检测延迟差模和 <code>Ton_diff</code> 的不同物理通道。</p>
+<h2>2. 相关工作与创新边界</h2>
+<p>Bari 的博士论文和后续 ECCE/JESTPE 论文已经提出 IQCOT 控制思想，并给出 IQCOT 高频小信号模型与 ultrafast transient 结果。因此，本文不把 IQCOT 控制律本身作为创新点。Yan、Ruan、Li 以及 Gabriele 等已经系统发展了 ripple-based COT sampled-data 模型，能处理事件调制、边带效应和任意纹波注入网络；本文借鉴 sampled-data 思想，但事件函数是 IQCOT 的面积积分条件，而不是一般纹波比较器的瞬时阈值交叉。</p>
+<p>多相方面，Li 等关于 DICOT 和 high-resolution current balance 的工作已经说明数字积分 COT 与高分辨率均流在工程上可行；Sridhar 和 Li 关于 multiphase COT phase-overlap 的研究也已经指出多相 COT 不能简单由单相模型外推。本文因此把创新边界收缩为一个更可辩护的问题：<strong>在四相数字 IQCOT 中，面积事件核如何区分相位执行量和均流执行量，并如何给出数字 jitter/量化预算。</strong></p>
+<p>为避免把已有工作重新包装成创新，表 1 给出本文与代表性文献的边界：</p>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>已解决的问题</th>
+<th>本文不重复声称的内容</th>
+<th>本文新增关注点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bari IQCOT</td>
+<td>IQCOT 控制律、高频小信号模型、快速瞬态</td>
+<td>不重新提出 IQCOT 控制思想</td>
+<td>面向四相数字实现的事件核记忆与执行量分类</td>
+</tr>
+<tr>
+<td>Yan/Gabriele ripple-based sampled-data</td>
+<td>一般 ripple-based COT 的 sampled-data 建模与纹波注入网络</td>
+<td>不声称 sampled-data 方法本身新</td>
+<td>把面积积分事件写成 <code>H_e+K(z)</code>，识别 off-time 积分记忆</td>
+</tr>
+<tr>
+<td>Li DICOT 均流</td>
+<td>数字积分 COT 与高分辨率均流工程方案</td>
+<td>不提出新的硬件均流电路</td>
+<td>给出 <code>Λ_diff</code> 与 <code>Ton_diff</code> 不能混用的约束依据</td>
+</tr>
+<tr>
+<td>Sridhar/Li 多相 COT</td>
+<td>多相 COT phase-overlap 小信号与稳定性</td>
+<td>不展开任意相数或重叠相区完整理论</td>
+<td>聚焦四相非重叠工作点的 common/differential 执行量矩阵</td>
+</tr>
+</tbody>
+</table>
+<p>本文贡献概括为九点：</p>
+<ol>
+<li>从 IQCOT 面积事件出发，推导保留状态记忆的 IEK 小信号模型，说明 He-only 是忽略动态事件核 <code>K(z)</code> 的退化近似。</li>
+<li>在四相固定工作点下建立 common/differential 模态解释，将 <code>Λ_cm</code>、<code>Λ_diff</code>、检测延迟差模和 <code>Ton_diff</code> 分到不同执行通道。</li>
+<li>通过密集扫频、幅值线性、执行量矩阵和 DCR 失配网格，验证 <code>Λ_diff</code> 不是有效 DC 均流执行量，<code>Ton_diff</code> 才是主要均流执行量但有相位代价。</li>
+<li>基于 IEK 灵敏度建立数字面积阈值位宽、检测时钟和 Ton 分辨率的 jitter 预算方法。</li>
+<li>使用已有四相 Simulink/Simscape COT-IQCOT 模型进行不保存模型的交叉验证，证明 <code>Ton_diff</code> 均流通道在更接近电路级的模型中仍成立。</li>
+<li>在模型副本中实现面积积分 <code>REQ</code> 触发器，首次用用户四相 Simulink 模型直接验证 <code>Λ_cm</code> 可闭环调节、<code>Λ_m2</code> 主要影响 phase-spacing 而非 DC 均流。</li>
+<li>进一步实现逐相 IEK 面积核 <code>h_i=Varea_bias+e_v+Ri_area(Iph-IL_i)</code>，验证显式相电流项加入后 <code>Λ_m2</code> 仍不是强 DC 均流执行量。</li>
+<li>在 20--50 A 静态负载范围内复核逐相 IEK 副本，补充证明该结论不是 40 A 单点调参偶然性。</li>
+<li>提出相索引盐跃 IEK，将 <code>phase_idx</code>、积分 reset、事件边界移动和 <code>Λ_i/Ton_i</code> 执行量写成四相周期 Jacobian，并用 157 个结构化仿真工况验证其小信号适用范围。</li>
+</ol>
+<h2>3. IQCOT 面积事件与 IEK 小信号推导</h2>
+<p>第 <code>k</code> 次 off-time 面积事件可写为</p>
+<pre><code class="language-math">F_k(x_k,T_{off,k},\Lambda_k)
+=\int_0^{T_{off,k}} h(x_k,\tau)d\tau-\Lambda_k=0,
+\qquad h(t)=v_c(t)-R_i i_L(t).
+</code></pre>
+<p>设 off-time 内功率级满足</p>
+<pre><code class="language-math">\dot{x}=A_{off}x+B_{off}u,\qquad
+h(t)=C_h x(t)+D_hu(t).
+</code></pre>
+<p>则</p>
+<pre><code class="language-math">x(\tau)=e^{A_{off}\tau}x_k
++\int_0^\tau e^{A_{off}(\tau-s)}B_{off}u(s)ds.
+</code></pre>
+<p>对移动事件边界线性化：</p>
+<pre><code class="language-math">\delta F
+=F_x\delta x_k+H_e\delta T_{off,k}-\delta\Lambda_k=0,
+</code></pre>
+<p>其中</p>
+<pre><code class="language-math">F_x=\int_0^{T_{off}} C_h e^{A_{off}\tau}d\tau,
+\qquad H_e=h(T_{off}^{-}).
+</code></pre>
+<p>因此</p>
+<pre><code class="language-math">\delta T_{off,k}
+=\frac{1}{H_e}(\delta\Lambda_k-F_x\delta x_k).
+</code></pre>
+<p>这一步揭示了 He-only 近似的隐含假设：若令 <code>F_x δx_k=0</code>，就得到 <code>δT≈δΛ/H_e</code>；但真实 IQCOT 面积事件中，<code>δx_k</code> 由过去事件时刻、Ton 扰动、输出电容状态和相电流状态共同决定。将事件后的状态更新写成</p>
+<pre><code class="language-math">\delta x_{k+1}=A_d\delta x_k+B_T\delta T_{off,k}+B_u\delta u_k,
+</code></pre>
+<p>代入上式得到</p>
+<pre><code class="language-math">\delta x_{k+1}
+=\left(A_d-\frac{B_TF_x}{H_e}\right)\delta x_k
++\frac{B_T}{H_e}\delta\Lambda_k+B_u\delta u_k.
+</code></pre>
+<p>定义</p>
+<pre><code class="language-math">A_{IEK}=A_d-\frac{B_TF_x}{H_e},
+</code></pre>
+<p>即可得到阈值面积到事件时刻的 sampled-data 传函</p>
+<pre><code class="language-math">G_{T\Lambda}(z)=D_{T\Lambda}+C_T(zI-A_{IEK})^{-1}B_{IEK}.
+</code></pre>
+<p>也可写成动态面积刚度形式：</p>
+<pre><code class="language-math">G_{T\Lambda}(z)=\frac{1}{H_e+K(z)}.
+</code></pre>
+<p>其中 <code>K(z)</code> 是由功率级状态记忆引起的积分事件核。He-only 模型对应 <code>K(z)=0</code>。对于自治开关系统，整体时间平移不应改变物理轨道，因此低频处满足</p>
+<pre><code class="language-math">K(1)=H_s-H_e.
+</code></pre>
+<p>该条件在已有单相脚本中已数值验证：<code>K(1)=H_s-H_e=-4.5837 mV</code>，动态 IEK 对非线性逐周期仿真的周期幅值误差低于 <code>0.00018%</code>。</p>
+<p><img alt="Figure 1. Integral-event kernel view" src="E:/Desktop/codex/output/figures/fig1_iek_event_kernel.svg" /></p>
+<h2>4. 四相 common/differential IEK 与执行量分类</h2>
+<p>四相系统中，事件按相序轮转。设当前导通相为 <code>p_k=k mod 4</code>，下一触发相为 <code>q_k=(p_k+1) mod 4</code>，则下一相 IQCOT 事件为</p>
+<pre><code class="language-math">\int_{a_k}^{t_{k+1}} [V_C-R_{i,q}i_q(t)]dt=\Lambda_q.
+</code></pre>
+<p>对匹配四相系统，小信号矩阵近似具有循环对称性，可使用 DFT/Clarke-like 变换分解为 common-mode 与 differential-mode：</p>
+<pre><code class="language-math">\tilde{\Lambda}_m=Q^{-1}\delta\boldsymbol{\Lambda},\qquad
+\tilde{T}_m=Q^{-1}\delta\boldsymbol{T}.
+</code></pre>
+<p><code>m=0</code> 为共模，主要影响总事件周期、输出调节和总 jitter；<code>m=1,2,3</code> 为差模，主要影响相位间隔、差模 jitter 和纹波抵消。本文把输出定义为</p>
+<pre><code class="language-math">y=
+\begin{bmatrix}
+\Delta I_{diff} \\
+\Delta \phi \\
+\Delta v_o
+\end{bmatrix},
+\qquad
+u=
+\begin{bmatrix}
+\Delta\Lambda_{diff} \\
+\Delta T_{on,diff} \\
+\Delta t_{d,diff}
+\end{bmatrix}.
+</code></pre>
+<p>小信号执行量矩阵为</p>
+<pre><code class="language-math">y(z)=
+\begin{bmatrix}
+G_{I\Lambda} &amp; G_{IT} &amp; G_{Id} \\
+G_{\phi\Lambda} &amp; G_{\phi T} &amp; G_{\phi d} \\
+G_{v\Lambda} &amp; G_{vT} &amp; G_{vd}
+\end{bmatrix}
+u(z).
+</code></pre>
+<p>本文的核心设计命题是</p>
+<pre><code class="language-math">|G_{I\Lambda}(1)|\ll |G_{IT}(1)|,
+\qquad
+|G_{\phi\Lambda}(1)|&gt;0,
+\qquad
+|G_{\phi T}(1)|&gt;0.
+</code></pre>
+<p>也就是说，<code>Λ_diff</code> 主要是相位间隔执行量，<code>Ton_diff</code> 是主要 DC 均流执行量，但 <code>Ton_diff</code> 同样会扰动相位间隔。</p>
+<p><img alt="Figure 3. Modal decomposition" src="E:/Desktop/codex/output/figures/fig3_multiphase_modal_channels.svg" /></p>
+<h2>5. 仿真与数据设置</h2>
+<p>四相模型参数为：<code>Vin=12.0 V</code>、<code>Vref=1.0 V</code>、<code>Iout=40.0 A</code>、每相电流 <code>Iph=10.0 A</code>、<code>L=200 nH</code>、<code>C=7.2 mF</code>、<code>DCR=1.5 mΩ</code>、<code>Ri=0.5 mΩ</code>、每相开关频率 <code>500 kHz</code>。稳态 <code>Ton=169.167 ns</code>，<code>Twait=330.833 ns</code>，<code>VC=5.0167 mV</code>，面积阈值 <code>Λ=6.343943e-10</code>。</p>
+<p>新增验证脚本为：</p>
+<pre><code class="language-text">E:/Desktop/codex/output/iqcot_four_phase_dense_validation.py
+E:/Desktop/codex/output/iqcot_digital_jitter_budget.py
+E:/Desktop/codex/output/iqcot_generate_paper_figures_v2.py
+E:/Desktop/codex/output/iqcot_export_article_v2.py
+E:/Desktop/codex/output/iqcot_simulink_modal_cross_validation.m
+E:/Desktop/codex/output/iqcot_build_iek_area_model.m
+E:/Desktop/codex/output/iqcot_iek_area_model_validation.m
+E:/Desktop/codex/output/iqcot_build_iek_perphase_model.m
+E:/Desktop/codex/output/iqcot_iek_perphase_model_validation.m
+</code></pre>
+<p>新增数据包括：</p>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th style="text-align: right;">点数</th>
+<th>文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>common-mode 密集扫频</td>
+<td style="text-align: right;">24</td>
+<td><code>iqcot_four_phase_dense_common_sweep.csv</code></td>
+</tr>
+<tr>
+<td>common-mode 幅值线性</td>
+<td style="text-align: right;">30</td>
+<td><code>iqcot_four_phase_common_amplitude_linearity.csv</code></td>
+</tr>
+<tr>
+<td>执行量扫描</td>
+<td style="text-align: right;">54</td>
+<td><code>iqcot_four_phase_actuator_sweep.csv</code></td>
+</tr>
+<tr>
+<td>执行量矩阵</td>
+<td style="text-align: right;">9</td>
+<td><code>iqcot_four_phase_actuator_matrix.csv</code></td>
+</tr>
+<tr>
+<td>DCR 失配设计网格</td>
+<td style="text-align: right;">140</td>
+<td><code>iqcot_four_phase_mismatch_grid.csv</code></td>
+</tr>
+<tr>
+<td>数字 jitter 预算</td>
+<td style="text-align: right;">80+</td>
+<td><code>iqcot_digital_*_budget.csv</code></td>
+</tr>
+<tr>
+<td>Simulink 模态交叉验证</td>
+<td style="text-align: right;">14 + 8</td>
+<td><code>iqcot_simulink_modal_cross_validation_summary.csv</code>；<code>iqcot_simulink_modal_cross_validation_highres_summary.csv</code></td>
+</tr>
+<tr>
+<td>面积触发 Simulink 副本验证</td>
+<td style="text-align: right;">13</td>
+<td><code>iqcot_iek_area_model_validation_summary.csv</code></td>
+</tr>
+<tr>
+<td>逐相 IEK 面积核副本验证</td>
+<td style="text-align: right;">25</td>
+<td><code>iqcot_iek_perphase_model_validation_summary.csv</code></td>
+</tr>
+<tr>
+<td>逐相 IEK 静态负载扫点</td>
+<td style="text-align: right;">8</td>
+<td><code>iqcot_iek_perphase_load_sweep_summary.csv</code></td>
+</tr>
+<tr>
+<td>PIS-IEK 局部灵敏度与模态投影</td>
+<td style="text-align: right;">42</td>
+<td><code>iqcot_pis_iek_sensitivity_matrix.csv</code>；<code>iqcot_pis_iek_modal_projection_matrix.csv</code></td>
+</tr>
+<tr>
+<td>PIS-IEK 幅值扫描与四事件提升频响</td>
+<td style="text-align: right;">157</td>
+<td><code>iqcot_pis_iek_amplitude_sweep.csv</code>；<code>iqcot_pis_iek_frequency_response.csv</code></td>
+</tr>
+</tbody>
+</table>
+<p>Simulink 交叉验证使用的模型为 <code>E:/Desktop/4cot/versions/v0027_20260611_135822_iqcot_optimized_final_cn_docs/four_phase.slx</code>。该模型的事实源参数与解析 IEK 脚本不同：<code>Ton_cmd=196.5 ns</code>、<code>Tblank=480 ns</code>、<code>L=200 nH</code>、<code>DCR_L1..4=10 mΩ</code>、<code>Cout=7.26 mF</code>、<code>ESR_C=90 μΩ</code>，控制链为 <code>Vout -&gt; Relay -&gt; global blanking -&gt; PhaseScheduler_4Phase -&gt; COT cells -&gt; gate drivers -&gt; MOSFETs</code>。模型中的 IQCOT 路径是每相电流误差的泄放积分去调节 <code>Ton_iqcot_i</code>，不是本文完整的输出误差面积阈值 <code>Λ</code> 触发器。因此，本文把该模型用于验证差模 on-time 均流通道和模态执行量解释，而不把它作为完整 IEK 面积核的直接证明。</p>
+<p>为了进一步验证面积阈值通道，本文在 <code>E:/Desktop/codex/output/simulink_iek/four_phase_iek_area.slx</code> 中建立了一个模型副本。副本保留功率级、global blanking、rise detector、<code>PhaseScheduler_4Phase</code>、COT cells 和 gate drivers，仅把 <code>Relay -&gt; REQ</code> 替换为面积积分请求：</p>
+<pre><code class="language-math">REQ =
+\left[
+\int \max(e_v,0)dt
+\geq
+\Lambda_{area}+\Lambda_{m2}\cos(\pi \, phase\_idx)
+\right].
+</code></pre>
+<p>为避免 <code>REQ -&gt; tr -&gt; phase_idx/reset -&gt; REQ</code> 零延迟代数环，副本在面积子系统内对 <code>tr_reset</code> 和 <code>phase_idx</code> 加入 <code>Memory</code>，这相当于数字控制中的一拍寄存器。该副本是探索验证模型，不覆盖原始 <code>.slx</code>。</p>
+<p>v5 进一步建立 <code>E:/Desktop/codex/output/simulink_iek/four_phase_iek_perphase.slx</code>。该副本把面积核改为逐相形式：</p>
+<pre><code class="language-math">h_i(t)=V_{area,bias}+e_v(t)+R_{i,area}(I_{ph}-i_{L,i}(t)).
+</code></pre>
+<p>这等价于在稳态偏置附近写 <code>v_c-R_i i_{L,i}</code> 的小信号实现，其中 <code>Varea_bias</code> 提供正平均面积，<code>R_{i,area}(I_{ph}-i_{L,i})</code> 显式引入逐相电感电流项。模型仍按 <code>phase_idx</code> 选择当前相的面积比较结果生成 <code>REQ</code>，并保留原始 global blanking 和 phase scheduler。</p>
+<h2>6. 结果一：He-only 模型的频率选择性失效</h2>
+<p>旧稿只给出少数 common-mode 频点，容易被质疑为挑点。本文新增 24 个频点，覆盖 <code>ω/π=0.002</code> 到 <code>0.85</code>。结果显示，He-only 模型并非处处错误：在 <code>ω/π=0.2</code> 附近，误差仅为 -0.66%。但在 <code>ω/π=0.008</code> 附近，相对误差达到 7969.65%。这个百分比应谨慎解读：该频点真实 wait 响应幅值接近局部谷值，因此相对误差会被放大；更可靠的读法是同时观察 Fig. 7 左侧的绝对幅值曲线和右侧的误差曲线。结论不是“He-only 永远错误”，而是它无法表达 <code>K(z)</code> 的频率选择性。</p>
+<p><img alt="Figure 7. Dense common-mode sweep" src="E:/Desktop/codex/output/figures/fig7_dense_common_sweep.png" /></p>
+<p>从工程角度看，这个结果很重要。若用 <code>δT≈δΛ/H_e</code> 直接设计面积 DAC 位宽或 dither 幅值，可能在某些频段严重低估或高估 wait jitter。IEK 模型通过 <code>H_e+K(z)</code> 描述动态面积刚度，因此能回答“在哪些频段阈值噪声最敏感”。</p>
+<h2>7. 结果二：执行量矩阵证明 Lambda_diff 与 Ton_diff 不等价</h2>
+<p>表 1 给出三种差模执行量在 <code>m2_alt</code> 模式下的关键增益。</p>
+<table>
+<thead>
+<tr>
+<th>执行量</th>
+<th style="text-align: right;">归一化幅值</th>
+<th style="text-align: right;">电流 pk-pk 增益</th>
+<th style="text-align: right;">相等待 pk-pk 增益</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lambda_diff</td>
+<td style="text-align: right;">1e-13</td>
+<td style="text-align: right;">0.00996 mA</td>
+<td style="text-align: right;">0.1322 ns</td>
+<td>基本不改变 DC 均流，主要移动事件间隔</td>
+</tr>
+<tr>
+<td>Ton_diff</td>
+<td style="text-align: right;">0.1 ns</td>
+<td style="text-align: right;">765.07 mA</td>
+<td style="text-align: right;">84.64 ns</td>
+<td>强均流执行量，但相位代价大</td>
+</tr>
+<tr>
+<td>delay_diff</td>
+<td style="text-align: right;">0.1 ns</td>
+<td style="text-align: right;">0.02325 mA</td>
+<td style="text-align: right;">0.3088 ns</td>
+<td>主要是检测时序/phase-spacing 扰动</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Figure 8. Actuator matrix" src="E:/Desktop/codex/output/figures/fig8_actuator_matrix.png" /></p>
+<p>该矩阵是本文最直接的创新证据之一。它把“Lambda_diff 不能均流、Ton_diff 可以均流”从观察性描述变成了可量化的小信号通道分离。对四相数字 IQCOT 而言，<code>Λ_diff</code> 可以用于相位间隔修正、差模 jitter shaping 或纹波抵消点附近的 phase management，但不应被当作主要 DC current-sharing 执行量。<code>Ton_diff</code> 则直接改变每相平均伏秒，因此是强均流执行量；它的代价是后续 IQCOT wait 时间被迫补偿，造成相位间隔扰动。</p>
+<h2>8. 结果三：DCR 失配网格给出受限均流设计曲线</h2>
+<p>对 DCR 失配，若各相 Ton 相同，平均相电流满足近似 DC 关系</p>
+<pre><code class="language-math">I_j=\frac{D V_{in}-V_o}{R_j},\qquad \sum_j I_j=I_{out}.
+</code></pre>
+<p>若使用 zero-mean Ton trim 补偿 DCR 差异，则解析补偿为</p>
+<pre><code class="language-math">\delta T_{on,j}=\frac{T_s I_{ref}(R_j-\bar{R})}{V_{in}}.
+</code></pre>
+<p>但工程上 Ton trim 有分辨率和范围限制，也会消耗 phase-spacing margin。因此本文新增 140 个 DCR 失配设计点，覆盖 monotonic、alternating、one-phase-high 和 one-phase-low 四类模式，以及 5% 到 25% 失配幅值。该网格用于设计扫描：电流不均由 DC algebra 计算，相位代价由名义四相 IQCOT 事件模型估计；它不是每个网格点都运行完整失配闭环。旧稿中的 selected mismatched dynamic validation 已对强单调、交替和单相失配等代表性工况验证过通道结论。结果形成一条清晰的收益-代价曲线：更大的 Ton trim 可以显著降低电流不均，但相位等待时间 pk-pk 代价快速增加。</p>
+<p><img alt="Figure 9. DCR mismatch grid" src="E:/Desktop/codex/output/figures/fig9_mismatch_grid.png" /></p>
+<p>该结果的实际价值是把均流从“尽量调平”改写为受限优化问题：</p>
+<pre><code class="language-math">\min_{\Delta T_{on},\Delta\Lambda}
+w_I\|\Delta I_{diff}\|^2+w_\phi\|\Delta\phi\|^2+w_v\|\Delta v_o\|^2
+</code></pre>
+<p>subject to</p>
+<pre><code class="language-math">|\Delta T_{on,i}|\leq T_{trim,max},
+\qquad
+|\Delta\phi_i|\leq \phi_{margin}.
+</code></pre>
+<p>这也解释了为什么未来若加入 AI/优化算法，不应让模型黑箱调全部参数，而应把动作限制在 IEK 执行量矩阵给出的物理通道中。</p>
+<h2>9. 结果四：数字面积阈值、检测时钟与 Ton 分辨率预算</h2>
+<p>数字实现中，面积阈值量化、检测时钟和 Ton 分辨率都会造成事件 jitter。设面积阈值量化步长为 <code>q_Λ</code>，白噪声近似下</p>
+<pre><code class="language-math">\sigma_\Lambda^2=\frac{q_\Lambda^2}{12}.
+</code></pre>
+<p>由 IEK 传函得到</p>
+<pre><code class="language-math">\sigma_T^2\approx \|G_{T\Lambda}\|_2^2\frac{q_\Lambda^2}{12}.
+</code></pre>
+<p>若检测时钟为 <code>T_clk</code>，则单事件检测延迟量化约为</p>
+<pre><code class="language-math">\sigma_d=\frac{T_{clk}}{\sqrt{12}},
+</code></pre>
+<p>相邻相位间隔可近似按两个独立检测误差之差估算。对于 Ton 分辨率 <code>q_T</code>，m2 差模均流量化尺度可由 <code>G_{IT}</code> 估算。</p>
+<p>本文采用 <code>2Λ</code> 作为面积阈值 full-scale 的保守预算假设。12 bit 面积阈值对应 <code>q_Λ/Λ≈0.000488</code>，估计 common wait jitter 为 0.0324 ns rms，m2 phase-spacing jitter 为 0.1183 ns。相比之下，1 ns 检测时钟的单事件延迟 rms 为 0.2887 ns，10 ps Ton 分辨率对应 m2 电流量化尺度约 22.09 mA，phase-spacing 尺度约 2.443 ns。综合 12 bit、1 ns 检测时钟和 10 ps Ton 分辨率时，估计 common wait jitter 为 0.2905 ns rms，phase-spacing jitter 为 2.4801 ns rms，均流量化尺度为 22.09 mA。</p>
+<p><img alt="Figure 10. Digital jitter budget" src="E:/Desktop/codex/output/figures/fig10_jitter_budget.png" /></p>
+<p>这部分不是硬件测量，而是设计预算。它的价值在于把“面积位宽要多少、检测时钟要多快、Ton 分辨率要多细”连接到同一个 IEK 灵敏度框架中。</p>
+<h2>10. 结果五：Simulink 模态交叉验证</h2>
+<p>为了回应“解析事件脚本是否过于同源验证”的质疑，本文进一步使用已有四相 Simulink/Simscape 模型进行交叉验证。实验不保存或修改 <code>.slx</code> 文件，而是通过 <code>SimulationInput.setBlockParameter</code> 在仿真时临时钳位四相 <code>IQCOT_Ton_Adapter/Ton_Limit1..4</code>，从而注入指定的 common-mode 与 differential-mode on-time 扰动。主扫描包含 14 个场景，仿真窗口为 <code>0.65 ms</code>，稳态统计窗口为最后 <code>50 μs</code>，最大步长为 <code>5 ns</code>，软启动时间临时设为 <code>0.18 ms</code> 以加快稳定。考虑到 sub-ns 扰动可能受到数值事件分辨率影响，本文又对 baseline、common ±4 ns、m2 1/2/4 ns、m13 和 m24 对照共 8 个关键点用 <code>MaxStep=2 ns</code> 复核；关键数值与主扫描一致。</p>
+<p>基线结果为：<code>Vout_mean=1.000015530 V</code>，<code>Vout_ripple=0.735095 mVpp</code>，四相平均电流为 <code>[9.978771, 9.993619, 10.058002, 9.980875] A</code>，相电流不均衡为 <code>0.079230 A</code>，平均相频率为 <code>499.579 kHz</code>。所有 14 个场景的相位触发顺序错误率均为 0，说明临时 on-time 钳位没有破坏四相轮转调度。</p>
+<p>Common-mode on-time 扰动主要被闭环 COT 转化为等效频率调整。以基线为参照，<code>Ton=Ton_cmd-4 ns</code> 时平均相频率升至 <code>510.683 kHz</code>，<code>Ton=Ton_cmd+4 ns</code> 时降至 <code>489.360 kHz</code>；在 <code>[-4 ns,+4 ns]</code> 范围内，频率斜率约为 <code>-2.76 kHz/ns</code>。由于输出电压仍由闭环滞环调节，<code>Vout_mean</code> 变化维持在几十微伏量级，这与 common-mode 主要调节总事件频率而不直接造成差模均流的解释一致。</p>
+<p>m2 差模 on-time 扰动则强烈放大相电流差模，而输出均值仍基本保持在 1 V 附近。<code>[+1,-1,+1,-1] ns</code> 时相电流不均衡为 <code>0.950 A</code>，m2 电流投影为 <code>0.464 A</code>；<code>[+2,-2,+2,-2] ns</code> 时相电流不均衡为 <code>2.017 A</code>，m2 投影为 <code>0.997 A</code>；<code>[+4,-4,+4,-4] ns</code> 时相电流不均衡为 <code>3.928 A</code>，m2 投影为 <code>1.943 A</code>。对 <code>1 ns</code>、<code>2 ns</code>、<code>4 ns</code> 三点进行过原点斜率估计，m2 电流投影约为 <code>0.482 A/ns</code>。这与解析 IEK 执行量矩阵在数值大小上不应直接相等，因为两者模型参数、控制器实现和扰动定义不同；但它在物理方向上独立支持了同一结论：<code>Ton_diff</code> 是有效 DC current-sharing 执行量。</p>
+<p>成对差模对照进一步验证了模态解释。<code>[+2,0,-2,0] ns</code> 主要激发相 1-3 电流差，其相 1-3 投影达到 <code>1.024 A</code>；<code>[0,+2,0,-2] ns</code> 主要激发相 2-4 电流差，其相 2-4 投影达到 <code>0.967 A</code>。这说明“哪个差模 pattern 被注入，哪个电流差模被激发”的对应关系在真实 Simulink 电路级模型中仍然成立。</p>
+<p><img alt="Figure 11. Simulink modal cross-validation" src="E:/Desktop/codex/output/figures/fig11_simulink_modal_cross_validation.png" /></p>
+<p><img alt="Figure 12. Simulink high-resolution modal cross-validation" src="E:/Desktop/codex/output/figures/fig12_simulink_modal_cross_validation_highres.png" /></p>
+<p>需要强调的是，该 Simulink 模型验证的是“差模 on-time 均流通道”和“模态执行量分类”的物理合理性，而不是完整 <code>Λ</code> 面积阈值事件核。当前模型中的 IQCOT 是每相电流误差泄放积分后修正 on-time；若要验证 <code>Λ_diff</code>、<code>Λ_cm</code> 与动态事件核 <code>K(z)</code>，下一步应在该模型中加入输出误差面积积分触发器，或搭建等效数字 IEK 控制子系统。</p>
+<h2>11. 结果六：面积触发 IEK-REQ 模型副本验证</h2>
+<p>在 v4 中，本文进一步构建 <code>four_phase_iek_area.slx</code>，将原始瞬时滞环 <code>Relay</code> 请求替换为面积积分请求。这个改动的意义在于，它把前文的 <code>Λ</code> 面积阈值从解析脚本推进到用户四相 Simulink 模型副本中，同时不改变原始模型。</p>
+<p><code>Λ_cm</code> 扫描首先验证面积触发器能否闭环工作。结果显示，在 <code>Λ_area=1e-12</code> 到 <code>3e-9 V·s</code> 范围内，模型均能保持四相轮转且相序错误率为 0。随着 <code>Λ_area</code> 增大，平均相频率从约 <code>502.8 kHz</code> 逐渐下降到 <code>498.7 kHz</code>，phase-spacing 标准差从 <code>34.5 ns</code> 降至 <code>1.31 ns</code>。这说明面积阈值不仅能替代 Relay 形成闭环请求，还能作为 common-mode 事件间隔整形参数。</p>
+<p>综合输出精度、频率和相位间隔，本文选取 <code>Λ_area=3e-10 V·s</code> 作为候选点。该点得到：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Vout_mean</code></td>
+<td style="text-align: right;"><code>0.999395652 V</code></td>
+</tr>
+<tr>
+<td><code>Vout_ripple</code></td>
+<td style="text-align: right;"><code>0.650821 mVpp</code></td>
+</tr>
+<tr>
+<td>平均相频率</td>
+<td style="text-align: right;"><code>501.707 kHz</code></td>
+</tr>
+<tr>
+<td>相电流不均衡</td>
+<td style="text-align: right;"><code>0.068008 A</code></td>
+</tr>
+<tr>
+<td>phase-spacing 标准差</td>
+<td style="text-align: right;"><code>2.876 ns</code></td>
+</tr>
+</tbody>
+</table>
+<p>随后在该候选点上扫描 <code>Λ_m2/Λ_area=0, 0.05, 0.10, 0.20, 0.40</code>。结果与解析执行量矩阵一致：<code>Λ_m2</code> 并不形成强 DC 均流通道。即使在最大扫描比值 0.40 下，m2 电流投影也只有 <code>0.00397 A</code>，相电流不均衡为 <code>0.07177 A</code>，与基线 <code>0.06801 A</code> 同量级。相反，phase-spacing 标准差从 <code>2.876 ns</code> 增加到约 <code>17.03 ns</code>。因此，在面积触发 Simulink 副本中，<code>Λ_m2</code> 的主要作用仍是事件间隔/相位扰动，而不是平均电流分配。</p>
+<p><img alt="Figure 13. IEK area-trigger Simulink validation" src="E:/Desktop/codex/output/figures/fig13_iek_area_simulink_validation.png" /></p>
+<p>这组结果把本文的创新证据链补得更完整：解析 IEK 说明 <code>Λ_diff</code> 的电流增益远小于 <code>Ton_diff</code>；on-time Simulink 交叉验证说明 <code>Ton_diff</code> 的确能强烈改变相电流；面积触发 Simulink 副本进一步说明 <code>Λ_cm</code> 可以闭环调节，而 <code>Λ_m2</code> 更像 phase-spacing 执行量。三者共同支持“受限均流执行量设计”的核心结论。</p>
+<h2>12. 结果七：逐相电流项 IEK 面积核验证</h2>
+<p>v4 面积触发副本已经把 <code>Λ</code> 通道放入 Simulink，但其积分量仍是工程化的 <code>∫max(e_v,0)dt</code>。v5 进一步加入逐相电感电流项，建立</p>
+<pre><code class="language-math">h_i=V_{area,bias}+e_v+R_{i,area}(I_{ph}-I_{L,i}).
+</code></pre>
+<p>其中 <code>R_{i,area}=0.5 mΩ</code>，<code>Varea_bias</code> 和 <code>Λ_area</code> 通过 20 点 common-mode 扫描选择。该模型保留原始功率级、global blanking、rise detector、phase scheduler 和 COT cells，仅替换请求生成器。</p>
+<p>综合输出均值、频率、相电流不均衡和 phase-spacing 标准差，本文选择候选点：</p>
+<table>
+<thead>
+<tr>
+<th>参数/指标</th>
+<th style="text-align: right;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Λ_area</code></td>
+<td style="text-align: right;"><code>6e-10 V·s</code></td>
+</tr>
+<tr>
+<td><code>Varea_bias</code></td>
+<td style="text-align: right;"><code>2.0 mV</code></td>
+</tr>
+<tr>
+<td><code>R_i,area</code></td>
+<td style="text-align: right;"><code>0.5 mΩ</code></td>
+</tr>
+<tr>
+<td><code>Vout_mean</code></td>
+<td style="text-align: right;"><code>0.999548295 V</code></td>
+</tr>
+<tr>
+<td><code>Vout_ripple</code></td>
+<td style="text-align: right;"><code>0.785960 mVpp</code></td>
+</tr>
+<tr>
+<td>平均相频率</td>
+<td style="text-align: right;"><code>502.097 kHz</code></td>
+</tr>
+<tr>
+<td>相电流不均衡</td>
+<td style="text-align: right;"><code>0.023902 A</code></td>
+</tr>
+<tr>
+<td>phase-spacing 标准差</td>
+<td style="text-align: right;"><code>21.113 ns</code></td>
+</tr>
+</tbody>
+</table>
+<p>随后在该候选点上扫描 <code>Λ_m2/Λ_area=0, 0.05, 0.10, 0.20, 0.40</code>。结果显示，即使显式引入逐相电流项，<code>Λ_m2</code> 仍不表现为强 DC 均流执行量。最大比值 0.40 时，相电流不均衡为 <code>0.039699 A</code>，m2 电流投影仅 <code>0.001163 A</code>；作为对照，<code>Ton_diff</code> 的 Simulink on-time 扫描在 <code>[+4,-4,+4,-4] ns</code> 下产生约 <code>1.943 A</code> 的 m2 电流投影。二者相差三个数量级以上。</p>
+<p><img alt="Figure 14. Per-phase IEK area-kernel Simulink validation" src="E:/Desktop/codex/output/figures/fig14_iek_perphase_simulink_validation.png" /></p>
+<p>该结果非常适合写入毕业论文的创新章节：它说明本文不是只用解析脚本声称 <code>Λ_diff</code> 不能均流，而是在用户四相 Simulink 模型副本中逐步实现了两级面积触发器，并在更接近 IQCOT 小信号形式的逐相电流面积核中复现了相同方向的结论。其工程解释是：<code>Λ_m2</code> 改变的是“何时允许下一次事件发生”的相位/间隔条件；要改变相平均伏秒和 DC 均流，仍需 <code>Ton_diff</code> 或等效 per-phase volt-second 执行量。</p>
+<h2>13. 结果八：逐相 IEK 静态负载扫点验证</h2>
+<p>审稿式自查指出，单一 40 A 工作点仍可能被质疑为“只在一个调好的点成立”。因此本文新增 <code>iqcot_iek_perphase_load_sweep.m</code>，在不保存模型的前提下，通过 <code>SimulationInput</code> 同步设置 <code>Rload</code>、<code>Iout</code> 和 <code>Iph</code>，对 20/30/40/50 A 四个负载点进行静态扫点，并比较 <code>Λ_m2/Λ_area=0</code> 与 <code>0.4</code> 两种情况。面积核参数保持为上一节候选点：<code>Λ_area=6e-10 V·s</code>、<code>Varea_bias=2 mV</code>、<code>Ri_area=0.5 mΩ</code>。</p>
+<p>8 个工况全部成功。baseline <code>Λ_m2=0</code> 下，20--50 A 范围内输出均值误差约在 <code>-0.43 mV</code> 到 <code>-0.62 mV</code>，最大相电流不均衡为 <code>0.13064 A</code>。加入最大差模面积扰动 <code>Λ_m2/Λ_area=0.4</code> 后，输出均值误差仍约小于 <code>1 mV</code>，跨负载最大 m2 电流投影仅 <code>0.00938 A</code>，最大相电流不均衡为 <code>0.10179 A</code>。这说明逐相 IEK 副本的核心判断不是 40 A 单点偶然：在 20--50 A 静态负载范围内，<code>Λ_m2</code> 仍没有表现为强 DC 均流执行量。</p>
+<p><img alt="Figure 15. Per-phase IEK static load sweep" src="E:/Desktop/codex/output/figures/fig15_iek_perphase_load_sweep.png" /></p>
+<p>该结果还给出一个更谨慎的工程解释：<code>Λ_m2</code> 可以改变相位间隔统计量，且低负载时 phase-spacing std 更敏感；但在本文工作点和模型结构下，它并不会像 <code>Ton_diff</code> 一样产生安培级的 DC 均流作用。因此，毕业论文中可以把 <code>Λ_diff</code> 定位为“相位/纹波调节受限执行量”，而不是“均流主执行量”。</p>
+<h2>14. 结果九：PIS-IEK 相索引盐跃小信号模型</h2>
+<p>v5 的 IEK 已经把 IQCOT 面积事件写成 <code>H_e+K(z)</code>，但 <code>K(z)</code> 仍是等效动态核。为进一步解释 <code>phase_idx</code>、积分 reset 和相序调度在小信号模型中的位置，本文提出相索引盐跃 IEK（PIS-IEK）。第 <code>k</code> 个事件中，当前 on-time 相为</p>
+<pre><code class="language-math">p_k=k\bmod 4,
+</code></pre>
+<p>下一触发相为</p>
+<pre><code class="language-math">q_k=(p_k+1)\bmod 4.
+</code></pre>
+<p>一次事件写成</p>
+<pre><code class="language-math">x_{k+1}=F_{p_k}(x_k,u_k,T_k),\qquad g_{q_k}(x_k,u_k,T_k)=0.
+</code></pre>
+<p>其中事件面为</p>
+<pre><code class="language-math">g_{q_k}=\int_0^{T_k}\left[v_c(t)-R_i i_{L,q_k}(t)\right]dt-\Lambda_{q_k}.
+</code></pre>
+<p>隐函数线性化给出</p>
+<pre><code class="language-math">\delta T_k=-g_T^{-1}(g_x\delta x_k+g_u\delta u_k),
+</code></pre>
+<p>代回状态更新后得到盐跃校正的周期小信号映射：</p>
+<pre><code class="language-math">\delta x_{k+1}
+=
+\left(F_x-F_Tg_T^{-1}g_x\right)\delta x_k
++
+\left(F_u-F_Tg_T^{-1}g_u\right)\delta u_k.
+</code></pre>
+<p>该模型的创新不在于重新发明 saltation matrix，而在于把混杂系统事件面线性化具体用于四相数字 IQCOT 面积积分事件，使 <code>phase_idx</code> 从工程实现变量变成事件面索引 <code>g_{q_k}</code>，并使积分 reset 成为 <code>F_{p_k}</code> 的一部分。</p>
+<p>结构化验证由 <code>iqcot_pis_iek_comprehensive_validation.py</code> 生成。局部灵敏度矩阵包含 32 行，模态投影矩阵包含 10 行，幅值扫描包含 77 个工况，四事件提升频响包含 80 个工况。局部结果表明，当前 wait 只直接受下一触发相 <code>Λ_q</code> 和当前 on-time 相 <code>Ton_p</code> 影响：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dT/dΛ_q</code></td>
+<td style="text-align: right;"><code>0.0428305 ns/(1e-13 V·s)</code></td>
+</tr>
+<tr>
+<td>非目标相 <code>Λ</code> 串扰</td>
+<td style="text-align: right;"><code>0</code></td>
+</tr>
+<tr>
+<td><code>dT/dTon_p</code></td>
+<td style="text-align: right;"><code>-0.357596 ns/ns</code></td>
+</tr>
+<tr>
+<td>非当前相 <code>Ton</code> 串扰</td>
+<td style="text-align: right;"><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<p>幅值扫描进一步给出小信号适用边界：</p>
+<table>
+<thead>
+<tr>
+<th>扫描集合</th>
+<th style="text-align: right;">工况数</th>
+<th style="text-align: right;">最大 rms wait 误差</th>
+<th style="text-align: right;">平均 rms wait 误差</th>
+<th style="text-align: right;">最大相电流误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Λ</code> 全范围</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;"><code>0.05025%</code></td>
+<td style="text-align: right;"><code>0.01189%</code></td>
+<td style="text-align: right;"><code>0.00914 mA</code></td>
+</tr>
+<tr>
+<td><code>Ton &lt;= 0.02 ns</code></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"><code>1.83345%</code></td>
+<td style="text-align: right;"><code>0.51047%</code></td>
+<td style="text-align: right;"><code>1.28022 mA</code></td>
+</tr>
+<tr>
+<td><code>Ton &lt;= 0.05 ns</code></td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;"><code>4.57963%</code></td>
+<td style="text-align: right;"><code>0.95984%</code></td>
+<td style="text-align: right;"><code>8.13116 mA</code></td>
+</tr>
+<tr>
+<td>Mixed 全范围</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"><code>1.71860%</code></td>
+<td style="text-align: right;"><code>0.75130%</code></td>
+<td style="text-align: right;"><code>1.30087 mA</code></td>
+</tr>
+</tbody>
+</table>
+<p>频率响应采用四事件提升块域，而不是逐事件直接拟合，原因是四相空间模态会与时间频率发生混叠。可观测 wait 幅值工况统计如下：</p>
+<table>
+<thead>
+<tr>
+<th>输入类型</th>
+<th style="text-align: right;">可观测工况数</th>
+<th style="text-align: right;">最大 wait 幅值误差</th>
+<th style="text-align: right;">最大 wait 绝对误差</th>
+<th style="text-align: right;">最大 wait rms 误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Λ</code></td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;"><code>0.000138%</code></td>
+<td style="text-align: right;"><code>2.60e-08 ns</code></td>
+<td style="text-align: right;"><code>0.00427%</code></td>
+</tr>
+<tr>
+<td><code>Ton</code></td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;"><code>0.003712%</code></td>
+<td style="text-align: right;"><code>9.64e-05 ns</code></td>
+<td style="text-align: right;"><code>0.01056%</code></td>
+</tr>
+<tr>
+<td>Mixed</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"><code>0.003874%</code></td>
+<td style="text-align: right;"><code>1.16e-05 ns</code></td>
+<td style="text-align: right;"><code>0.24971%</code></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Figure 16. PIS-IEK amplitude sweep" src="E:/Desktop/codex/output/figures/fig16_pis_iek_amplitude_error.svg" /></p>
+<p><img alt="Figure 17. PIS-IEK lifted frequency response" src="E:/Desktop/codex/output/figures/fig17_pis_iek_lifted_frequency_response.svg" /></p>
+<p>PIS-IEK 的实际价值是把 <code>phase_idx/reset</code> 从实现描述提升为小信号模型结构，并为后续 AI/优化调参提供更严格的物理约束：<code>B_\Lambda^s</code>、<code>B_{Ton}^s</code> 和 <code>C^s</code> 可以直接限制搜索方向，避免把 <code>Λ_diff</code> 当作 DC 均流主旋钮。</p>
+<h2>15. 实际价值与相对优势</h2>
+<p>与 He-only 局部面积刚度相比，IEK 的优势不是公式更复杂，而是保留了 off-time 面积积分区间内的状态记忆。密集扫频显示，He-only 在某些频点可接近真实响应，但在另一些频点误差非常大；因此它适合做局部直觉，不适合作为数字 jitter 预算的唯一依据。</p>
+<p>与一般 COT sampled-data 模型相比，本文的优势是面向 IQCOT 面积事件和四相数字执行量分类。传统模型更擅长回答控制到输出传函、环路增益和稳定性问题；本文更擅长回答数字实现中具体的“哪个旋钮影响哪个物理量”：<code>Λ_cm</code> 影响共模调节和总周期 jitter，<code>Λ_diff</code> 影响相位间隔，<code>Ton_diff</code> 影响平均相电流但消耗相位裕量，检测延迟差模主要是时序 jitter 源。</p>
+<p>与 DICOT 高分辨率均流方案相比，本文不提出新的硬件均流电路，而是给出约束设计依据。也就是说，已有 DICOT 证明“可以做”，本文试图回答“为什么某些执行量不能混用、怎样设定均流收益与 phase-spacing cost 的边界”。这对研究生毕设尤其重要，因为它既有理论推导，也能落到脚本、表格和设计规则。</p>
+<p>由此可以形成一个四相数字 IQCOT 的参数设计流程：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>输入</th>
+<th>IEK 输出</th>
+<th>设计动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 固定工作点</td>
+<td><code>Vin, Vo, Iout, L, Cout, ESR, DCR, Ton, Tblank</code></td>
+<td>名义事件周期、相位间隔、面积阈值尺度</td>
+<td>先保证 <code>Λ_cm</code> 能闭环维持目标频率和输出均值</td>
+</tr>
+<tr>
+<td>2. 识别面积通道</td>
+<td><code>Λ_cm</code> 与 <code>Λ_diff</code> 微扰</td>
+<td><code>G_wait,Λ</code>、<code>G_φ,Λ</code>、<code>G_I,Λ</code></td>
+<td>将 <code>Λ_diff</code> 限制为 phase-spacing/ripple-cancellation 调节量</td>
+</tr>
+<tr>
+<td>3. 识别均流通道</td>
+<td><code>Ton_diff</code> 微扰与 DCR 失配模式</td>
+<td><code>G_I,Ton</code> 与 phase-spacing 代价</td>
+<td>用受限 <code>Ton_diff</code> 或等效逐相伏秒量补偿 DC current sharing</td>
+</tr>
+<tr>
+<td>4. 做数字预算</td>
+<td>ADC/DPWM 位宽、检测时钟、Ton 分辨率</td>
+<td>wait jitter、phase jitter、电流扰动估计</td>
+<td>给 AI/优化器设置物理可解释边界和惩罚项</td>
+</tr>
+<tr>
+<td>5. 仿真复核</td>
+<td>原模型或副本中的代表性差模扰动</td>
+<td>输出均值、纹波、相电流不均、phase-spacing</td>
+<td>只接受同时满足调压、均流和相位裕量的参数组合</td>
+</tr>
+</tbody>
+</table>
+<h2>16. 局限性与后续工作</h2>
+<p>本文仍有明确局限。第一，四相 IEK/PIS-IEK 脚本采用理想开关与解析分段功率级，尚未纳入完整 MOSFET 非线性、驱动死区、PCB 寄生和采样保持。第二，v5 逐相面积核已经显式引入 <code>R_i(Iph-I_Li)</code>，但仍是围绕稳态偏置的工程实现；严格 Bari IQCOT 原式中的 <code>v_c-R_i i_L</code> 还需要把控制电压产生器、逐相 off-time window 和 reset 逻辑进一步形式化。第三，PIS-IEK 已经把 <code>phase_idx</code> 写成事件面索引，但仍需要在 Simulink 副本中提取电路级小扰动 Jacobian 进行交叉验证。第四，本文聚焦四相固定工作点，没有展开任意 N 相推广；这是根据当前课题聚焦作出的选择。第五，当前解析工作点 duty 约为 0.085，处于 <code>D&lt;1/N</code> 的非 phase-overlap 区域，不能直接外推到 <code>D&gt;1/N</code> 的重叠相区。第六，数字 jitter 预算是基于小信号灵敏度的估算，不等同于 FPGA/ASIC 或实物样机测量。第七，外环补偿器尚未完整纳入 IEK 状态空间；当前慢速 VC 适配主要用于隔离共模调压与差模均流。第八，phase-overlap 区域的稳定边界还没有严格推导，未来可将 <code>S_eff(z)=H_e+K(z)</code> 或 PIS-IEK 提升映射与 Sridhar/Li 的 critical ramp 条件联系起来。</p>
+<p>后续工作建议按三个层级推进：首先在 Simulink/Simscape 或 PLECS 中实现严格面积积分 IQCOT 控制器，验证本文事件脚本结论；其次加入外环 PI/Type-III 状态和采样保持，形成完整闭环 sampled-data 模型；最后把 IEK 执行量矩阵作为约束，让 AI 或优化算法只在物理可解释的参数空间中调节 <code>Λ_cm</code>、<code>Λ_diff</code> 和 <code>Ton_diff</code>。</p>
+<h2>17. 结论</h2>
+<p>本文面向四相数字 IQCOT Buck 变换器，提出积分事件核小信号建模、相索引盐跃 IEK 与受限均流执行量设计框架。通过移动边界线性化，IEK 将面积阈值、检测延迟、数字量化和功率级状态记忆统一到 <code>H_e+K(z)</code> 的动态面积刚度中；PIS-IEK 进一步把四相面积事件、phase scheduler、积分 reset 和 <code>Λ_i/Ton_i</code> 执行量统一到周期 event-to-event Jacobian 中。四相密集验证表明，He-only 模型在频率选择性事件记忆存在时会严重失效；执行量矩阵表明，<code>Λ_diff</code> 主要调节 phase spacing，<code>Ton_diff</code> 才是主要 DC current-sharing 执行量；DCR 失配网格和数字 jitter 预算进一步把均流收益、相位代价、面积位宽、检测时钟和 Ton 分辨率连接为可复现的设计规则。新增 on-time Simulink 交叉验证复现了 <code>Ton_diff</code> 差模均流通道；面积触发和逐相 IEK Simulink 副本进一步验证 <code>Λ_cm</code> 可作为闭环事件间隔参数，而 <code>Λ_m2</code> 即便显式加入逐相电流项，也几乎不产生 DC 均流。PIS-IEK 的 157 个幅值/频响工况进一步说明该结论不是单点经验，而是可由相索引事件面和周期 Jacobian 支撑的小信号结构。本文的创新不在于重新提出 IQCOT，而在于为四相数字 IQCOT 的小信号执行量分类和工程约束设计提供了更严谨的模型化证据链。</p>
+<h2>数据与代码可用性</h2>
+<p>本文所有脚本、CSV 和图表位于 <code>E:/Desktop/codex/output</code>。核心新增文件包括：</p>
+<pre><code class="language-text">iqcot_four_phase_dense_validation.py
+iqcot_digital_jitter_budget.py
+iqcot_generate_paper_figures_v2.py
+iqcot_export_article_v2.py
+iqcot_simulink_modal_cross_validation.m
+iqcot_four_phase_dense_common_sweep.csv
+iqcot_four_phase_actuator_matrix.csv
+iqcot_four_phase_mismatch_grid.csv
+iqcot_digital_combined_jitter_budget.csv
+iqcot_simulink_modal_cross_validation_summary.csv
+iqcot_simulink_modal_cross_validation_highres_summary.csv
+iqcot_simulink_modal_cross_validation_report.md
+iqcot_simulink_modal_cross_validation_highres_report.md
+iqcot_build_iek_area_model.m
+iqcot_iek_area_model_validation.m
+iqcot_iek_area_model_validation_summary.csv
+iqcot_iek_area_model_validation_report.md
+simulink_iek/four_phase_iek_area.slx
+iqcot_build_iek_perphase_model.m
+iqcot_iek_perphase_model_validation.m
+iqcot_iek_perphase_model_validation_summary.csv
+iqcot_iek_perphase_model_validation_report.md
+simulink_iek/four_phase_iek_perphase.slx
+iqcot_iek_perphase_load_sweep.m
+iqcot_iek_perphase_load_sweep_summary.csv
+iqcot_iek_perphase_load_sweep_report.md
+figures/fig15_iek_perphase_load_sweep.png
+iqcot_phase_indexed_saltation_iek.py
+iqcot_pis_iek_comprehensive_validation.py
+iqcot_pis_iek_generate_figures.py
+iqcot_pis_iek_sensitivity_matrix.csv
+iqcot_pis_iek_modal_projection_matrix.csv
+iqcot_pis_iek_amplitude_sweep.csv
+iqcot_pis_iek_frequency_response.csv
+iqcot_pis_iek_dataset_manifest.csv
+iqcot_pis_iek_comprehensive_validation_report.md
+iqcot_pis_iek_v6_research_note.md
+figures/fig16_pis_iek_amplitude_error.svg
+figures/fig17_pis_iek_lifted_frequency_response.svg
+</code></pre>
+<h2>AI 使用声明</h2>
+<p>本文写作、代码整理、图表生成和审稿式自查过程中使用了 AI 辅助。AI 参与包括文献边界梳理、公式组织、仿真脚本编写和语言润色；所有数值结果均由本地脚本生成，所有学术结论需由作者进一步结合原始文献、仿真模型和导师意见复核。AI 辅助不替代作者对研究诚信和技术正确性的责任。</p>
+<h2>参考文献</h2>
+<p>[1] S. M. K. Bari, <em>A Novel Inverse Charge Constant On-Time Control for High Performance Voltage Regulators</em>, Ph.D. dissertation, Virginia Tech, 2018.</p>
+<p>[2] S. M. K. Bari, Q. Li, and F. C. Lee, “High Frequency Small Signal Model for Inverse Charge Constant On-Time (IQCOT) Control,” in <em>2018 IEEE Energy Conversion Congress and Exposition (ECCE)</em>, 2018, pp. 6000-6007, doi: 10.1109/ECCE.2018.8557464.</p>
+<p>[3] S. M. K. Bari, Q. Li, and F. C. Lee, “Inverse Charge Constant-On-Time Control With Ultrafast Transient Performance,” <em>IEEE Journal of Emerging and Selected Topics in Power Electronics</em>, vol. 9, no. 1, pp. 68-78, 2021, doi: 10.1109/JESTPE.2020.2973151.</p>
+<p>[4] N. Yan, X. Ruan, and X. Li, “A general approach to sampled-data modeling for ripple-based control-Part I: Peak/valley current mode and peak/valley voltage mode,” <em>IEEE Transactions on Power Electronics</em>, vol. 37, no. 6, pp. 6371-6384, 2022, doi: 10.1109/TPEL.2021.3132619.</p>
+<p>[5] F. Gabriele et al., “A Unified Sampled-Data Small-Signal Model for a Ripple-Based COT Buck Converter With Arbitrary Ripple Injection Network,” <em>IEEE Transactions on Circuits and Systems I: Regular Papers</em>, vol. 72, no. 6, pp. 2942-2955, 2025, doi: 10.1109/TCSI.2025.3557278.</p>
+<p>[6] Y. Li et al., “Multiphase digital integration constant on-time-controlled Buck converter with high-resolution current balance scheme for ultrafast load transient,” <em>International Journal of Circuit Theory and Applications</em>, vol. 52, no. 7, pp. 3188-3212, 2024, doi: 10.1002/cta.3924.</p>
+<p>[7] S. Sridhar and Q. Li, “Multiphase constant on-time control with phase overlapping-Part I: Small-signal model,” <em>IEEE Transactions on Power Electronics</em>, vol. 39, no. 6, pp. 6703-6720, 2024, doi: 10.1109/TPEL.2024.3368343.</p>
+<p>[8] S. Sridhar and Q. Li, “Multiphase constant on-time control with phase overlapping-Part II: Stability analysis,” <em>IEEE Transactions on Power Electronics</em>, vol. 39, no. 3, pp. 3156-3174, 2024, doi: 10.1109/TPEL.2023.3345275.</p>
+<p>[9] W.-C. Liu, C.-H. Cheng, P. P. Mercier, and C. C. Mi, “Small-Signal Analysis and Design of Constant On-Time Controlled Buck Converters With Duty-Cycle-Independent Quality Factors,” <em>IEEE Transactions on Power Electronics</em>, vol. 38, no. 7, pp. 8379-8393, 2023, doi: 10.1109/TPEL.2023.3268613.</p>
+<h2>附录 A：核心论断与证据矩阵</h2>
+<table>
+<thead>
+<tr>
+<th>论断</th>
+<th>证据</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IEK 必须包含动态事件核 <code>K(z)</code>，He-only 是退化近似</td>
+<td>单相动态 IEK 验证误差 &lt;0.00018%；四相密集扫频中 He-only 最坏误差 7969.65%</td>
+<td>已由本地脚本支持</td>
+</tr>
+<tr>
+<td><code>Λ_diff</code> 不是主要 DC 均流执行量</td>
+<td>m2 模式下 <code>G_IΛ≈0.00996 mA/(1e-13)</code></td>
+<td>已由执行量矩阵支持</td>
+</tr>
+<tr>
+<td><code>Ton_diff</code> 是强均流执行量，但相位代价大</td>
+<td>m2 模式下 <code>G_IT≈765.07 mA/(0.1 ns)</code>，<code>G_φT≈84.64 ns/(0.1 ns)</code></td>
+<td>已由执行量矩阵支持</td>
+</tr>
+<tr>
+<td><code>Ton_diff</code> 均流通道在电路级四相模型中仍可观察</td>
+<td>Simulink 14 点交叉验证中 m2 电流投影斜率约 0.482 A/ns，<code>[+4,-4,+4,-4] ns</code> 引起 3.928 A 相电流不均衡</td>
+<td>已由 Simulink 交叉验证支持</td>
+</tr>
+<tr>
+<td>Simulink 关键结论不是 5 ns 步长伪影</td>
+<td>8 点精选复核使用 <code>MaxStep=2 ns</code>，baseline、common ±4 ns、m2 1/2/4 ns 与主扫描关键值一致</td>
+<td>已由高分辨率复核支持</td>
+</tr>
+<tr>
+<td>检测延迟差模主要是时序扰动</td>
+<td>m2 模式下 <code>G_φd≈0.3088 ns/(0.1 ns)</code>，电流增益很小</td>
+<td>已由执行量矩阵支持</td>
+</tr>
+<tr>
+<td>数字实现可用 IEK 灵敏度做预算</td>
+<td>12 bit、1 ns 时钟、10 ps Ton 示例预算给出 wait/phase/current 量化尺度</td>
+<td>设计估算，需硬件验证</td>
+</tr>
+<tr>
+<td><code>Λ_cm</code> 能在用户模型副本中形成面积触发闭环</td>
+<td><code>four_phase_iek_area.slx</code> 在 <code>Λ_area=3e-10 V·s</code> 时得到 <code>Vout_mean=0.999396 V</code>、<code>Vout_ripple=0.650821 mVpp</code>、平均相频率 <code>501.707 kHz</code></td>
+<td>已由面积触发 Simulink 副本支持</td>
+</tr>
+<tr>
+<td><code>Λ_m2</code> 主要扰动 phase-spacing 而不是 DC 均流</td>
+<td><code>Λ_m2/Λ_area=0.4</code> 时 m2 电流投影仅 <code>0.00397 A</code>，phase-spacing 标准差从 <code>2.876 ns</code> 增至约 <code>17.03 ns</code></td>
+<td>已由面积触发 Simulink 副本支持</td>
+</tr>
+<tr>
+<td>逐相 IEK 面积核能在用户模型副本中闭环</td>
+<td><code>four_phase_iek_perphase.slx</code> 在 <code>Λ_area=6e-10 V·s</code>、<code>Varea_bias=2 mV</code>、<code>Ri_area=0.5 mΩ</code> 时得到 <code>Vout_mean=0.999548 V</code>、<code>Vout_ripple=0.785960 mVpp</code>、平均相频率 <code>502.097 kHz</code>、相电流不均衡 <code>0.023902 A</code></td>
+<td>已由逐相 IEK Simulink 副本支持</td>
+</tr>
+<tr>
+<td><code>Λ_m2</code> 在逐相 IEK 中仍不是强 DC 均流执行量</td>
+<td><code>Λ_m2/Λ_area=0.4</code> 时 m2 电流投影仅 <code>0.001163 A</code>；同一模型体系中 <code>Ton_diff</code> 的 <code>[+4,-4,+4,-4] ns</code> 对照产生约 <code>1.943 A</code> m2 投影</td>
+<td>已由逐相 IEK Simulink 副本与 on-time 交叉验证共同支持</td>
+</tr>
+<tr>
+<td>逐相 IEK 结论不是 40 A 单点偶然</td>
+<td>20/30/40/50 A 静态负载扫点全部成功，<code>Λ_m2/Λ_area=0.4</code> 跨负载最大 m2 电流投影仅 <code>0.00938 A</code></td>
+<td>已由逐相 IEK 静态负载扫点支持</td>
+</tr>
+<tr>
+<td><code>phase_idx/reset</code> 可进入严格小信号结构</td>
+<td>PIS-IEK 将事件写成 <code>x_{k+1}=F_{p_k}(x_k,u_k,T_k)</code> 与 <code>g_{q_k}=0</code>，局部 Jacobian 显示 wait 直接受 <code>Λ_q</code> 与 <code>Ton_p</code> 影响</td>
+<td>已由 PIS-IEK 局部 Jacobian 支持</td>
+</tr>
+<tr>
+<td>PIS-IEK 不是单点验证</td>
+<td>77 个幅值扫描和 80 个四事件提升频响工况显示，<code>Λ</code> 全范围最大 rms wait 误差 <code>0.05025%</code>，可观测频响 wait 幅值误差低于 <code>0.004%</code></td>
+<td>已由结构化 PIS-IEK 仿真支持</td>
+</tr>
+<tr>
+<td>当前面积触发副本仍是工程近似</td>
+<td>v4 使用 <code>∫max(e_v,0)dt</code>；v5 已加入 <code>R_i(Iph-I_Li)</code>，但 <code>phase_idx</code> 对 next-phase 阈值选择和严格 <code>v_c-R_i i_L</code> 逐相 off-time window 仍需进一步形式化</td>
+<td>已明确为局限</td>
+</tr>
+</tbody>
+</table>
+<h2>附录 B：图表追踪</h2>
+<table>
+<thead>
+<tr>
+<th>图号</th>
+<th>文件</th>
+<th>支持内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fig. 1</td>
+<td><code>fig1_iek_event_kernel.svg</code></td>
+<td>IEK 概念与动态核</td>
+</tr>
+<tr>
+<td>Fig. 3</td>
+<td><code>fig3_multiphase_modal_channels.svg</code></td>
+<td>common/differential 执行量分类</td>
+</tr>
+<tr>
+<td>Fig. 7</td>
+<td><code>fig7_dense_common_sweep.png</code></td>
+<td>四相 common-mode 密集扫频</td>
+</tr>
+<tr>
+<td>Fig. 8</td>
+<td><code>fig8_actuator_matrix.png</code></td>
+<td><code>Λ_diff</code>、<code>Ton_diff</code>、<code>delay_diff</code> 执行量矩阵</td>
+</tr>
+<tr>
+<td>Fig. 9</td>
+<td><code>fig9_mismatch_grid.png</code></td>
+<td>DCR 失配均流收益与相位代价</td>
+</tr>
+<tr>
+<td>Fig. 10</td>
+<td><code>fig10_jitter_budget.png</code></td>
+<td>面积位宽、检测时钟、Ton 分辨率预算</td>
+</tr>
+<tr>
+<td>Fig. 11</td>
+<td><code>fig11_simulink_modal_cross_validation.png</code></td>
+<td>Simulink 四相 COT-IQCOT 模态交叉验证</td>
+</tr>
+<tr>
+<td>Fig. 12</td>
+<td><code>fig12_simulink_modal_cross_validation_highres.png</code></td>
+<td>Simulink 关键点 2 ns 高分辨率复核</td>
+</tr>
+<tr>
+<td>Fig. 13</td>
+<td><code>fig13_iek_area_simulink_validation.png</code></td>
+<td>面积触发 IEK-REQ 模型副本验证</td>
+</tr>
+<tr>
+<td>Fig. 14</td>
+<td><code>fig14_iek_perphase_simulink_validation.png</code></td>
+<td>逐相 IEK 面积核模型副本验证</td>
+</tr>
+<tr>
+<td>Fig. 15</td>
+<td><code>fig15_iek_perphase_load_sweep.png</code></td>
+<td>逐相 IEK 静态负载扫点验证</td>
+</tr>
+<tr>
+<td>Fig. 16</td>
+<td><code>fig16_pis_iek_amplitude_error.svg</code></td>
+<td>PIS-IEK 幅值扫描误差边界</td>
+</tr>
+<tr>
+<td>Fig. 17</td>
+<td><code>fig17_pis_iek_lifted_frequency_response.svg</code></td>
+<td>PIS-IEK 四事件提升频率响应</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

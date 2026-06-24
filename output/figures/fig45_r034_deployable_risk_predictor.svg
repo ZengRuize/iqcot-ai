@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="560" viewBox="0 0 1220 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="610" y="34" text-anchor="middle" font-family="Arial" font-size="18">R034 deployable risk predictor prototype</text>
+<text x="88" y="58" font-family="Arial" font-size="13">20A / score_settle005: r_hat_total_risk heatmap</text>
+<text x="169.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=0.5</text>
+<text x="223.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=0.75</text>
+<text x="277.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=1</text>
+<text x="331.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=1.25</text>
+<text x="385.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=1.5</text>
+<text x="439.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=1.75</text>
+<text x="493.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=2</text>
+<text x="547.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=2.5</text>
+<text x="601.0" y="62" text-anchor="middle" font-family="Arial" font-size="10">tau=3</text>
+<text x="78" y="96" text-anchor="end" font-family="Arial" font-size="10">30us</text>
+<rect x="142.0" y="74.0" width="51" height="31" fill="rgb(28,209,90)" stroke="#ddd"/>
+<text x="169.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.11/P</text>
+<rect x="196.0" y="74.0" width="51" height="31" fill="rgb(30,207,90)" stroke="#ddd"/>
+<text x="223.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.12/P</text>
+<rect x="250.0" y="74.0" width="51" height="31" fill="rgb(43,197,90)" stroke="#ddd"/>
+<text x="277.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.17/P</text>
+<rect x="304.0" y="74.0" width="51" height="31" fill="rgb(79,170,90)" stroke="#ddd"/>
+<text x="331.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.31/C</text>
+<rect x="358.0" y="74.0" width="51" height="31" fill="rgb(104,152,90)" stroke="#ddd"/>
+<text x="385.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.41/C</text>
+<rect x="412.0" y="74.0" width="51" height="31" fill="rgb(79,170,90)" stroke="#ddd"/>
+<text x="439.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.31/C</text>
+<rect x="466.0" y="74.0" width="51" height="31" fill="rgb(43,197,90)" stroke="#ddd"/>
+<text x="493.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.17/P</text>
+<rect x="520.0" y="74.0" width="51" height="31" fill="rgb(28,209,90)" stroke="#ddd"/>
+<text x="547.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.11/P</text>
+<rect x="574.0" y="74.0" width="51" height="31" fill="rgb(28,209,90)" stroke="#ddd"/>
+<text x="601.0" y="95.0" text-anchor="middle" font-family="Arial" font-size="9">0.11/P</text>
+<text x="78" y="130" text-anchor="end" font-family="Arial" font-size="10">38us</text>
+<rect x="142.0" y="108.0" width="51" height="31" fill="rgb(146,120,90)" stroke="#ddd"/>
+<text x="169.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.58/C</text>
+<rect x="196.0" y="108.0" width="51" height="31" fill="rgb(145,121,90)" stroke="#ddd"/>
+<text x="223.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.57/C</text>
+<rect x="250.0" y="108.0" width="51" height="31" fill="rgb(139,125,90)" stroke="#ddd"/>
+<text x="277.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.55/C</text>
+<rect x="304.0" y="108.0" width="51" height="31" fill="rgb(122,138,90)" stroke="#ddd"/>
+<text x="331.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.48/C</text>
+<rect x="358.0" y="108.0" width="51" height="31" fill="rgb(111,147,90)" stroke="#ddd"/>
+<text x="385.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.44/C</text>
+<rect x="412.0" y="108.0" width="51" height="31" fill="rgb(122,138,90)" stroke="#ddd"/>
+<text x="439.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.48/C</text>
+<rect x="466.0" y="108.0" width="51" height="31" fill="rgb(139,125,90)" stroke="#ddd"/>
+<text x="493.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.55/C</text>
+<rect x="520.0" y="108.0" width="51" height="31" fill="rgb(146,120,90)" stroke="#ddd"/>
+<text x="547.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.58/C</text>
+<rect x="574.0" y="108.0" width="51" height="31" fill="rgb(146,120,90)" stroke="#ddd"/>
+<text x="601.0" y="129.0" text-anchor="middle" font-family="Arial" font-size="9">0.58/C</text>
+<text x="78" y="164" text-anchor="end" font-family="Arial" font-size="10">46us</text>
+<rect x="142.0" y="142.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="169.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<rect x="196.0" y="142.0" width="51" height="31" fill="rgb(92,160,90)" stroke="#ddd"/>
+<text x="223.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.36/C</text>
+<rect x="250.0" y="142.0" width="51" height="31" fill="rgb(86,165,90)" stroke="#ddd"/>
+<text x="277.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.34/C</text>
+<rect x="304.0" y="142.0" width="51" height="31" fill="rgb(69,177,90)" stroke="#ddd"/>
+<text x="331.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.27/C</text>
+<rect x="358.0" y="142.0" width="51" height="31" fill="rgb(58,186,90)" stroke="#ddd"/>
+<text x="385.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.23/C</text>
+<rect x="412.0" y="142.0" width="51" height="31" fill="rgb(69,177,90)" stroke="#ddd"/>
+<text x="439.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.27/C</text>
+<rect x="466.0" y="142.0" width="51" height="31" fill="rgb(86,165,90)" stroke="#ddd"/>
+<text x="493.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.34/C</text>
+<rect x="520.0" y="142.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="547.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<rect x="574.0" y="142.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="601.0" y="163.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<text x="78" y="198" text-anchor="end" font-family="Arial" font-size="10">50us</text>
+<rect x="142.0" y="176.0" width="51" height="31" fill="rgb(67,179,90)" stroke="#ddd"/>
+<text x="169.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.26/C</text>
+<rect x="196.0" y="176.0" width="51" height="31" fill="rgb(66,180,90)" stroke="#ddd"/>
+<text x="223.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.26/C</text>
+<rect x="250.0" y="176.0" width="51" height="31" fill="rgb(60,185,90)" stroke="#ddd"/>
+<text x="277.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.24/C</text>
+<rect x="304.0" y="176.0" width="51" height="31" fill="rgb(43,197,90)" stroke="#ddd"/>
+<text x="331.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.17/C</text>
+<rect x="358.0" y="176.0" width="51" height="31" fill="rgb(31,206,90)" stroke="#ddd"/>
+<text x="385.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.12/P</text>
+<rect x="412.0" y="176.0" width="51" height="31" fill="rgb(43,197,90)" stroke="#ddd"/>
+<text x="439.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.17/C</text>
+<rect x="466.0" y="176.0" width="51" height="31" fill="rgb(60,185,90)" stroke="#ddd"/>
+<text x="493.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.24/C</text>
+<rect x="520.0" y="176.0" width="51" height="31" fill="rgb(67,179,90)" stroke="#ddd"/>
+<text x="547.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.26/C</text>
+<rect x="574.0" y="176.0" width="51" height="31" fill="rgb(67,179,90)" stroke="#ddd"/>
+<text x="601.0" y="197.0" text-anchor="middle" font-family="Arial" font-size="9">0.26/C</text>
+<text x="78" y="232" text-anchor="end" font-family="Arial" font-size="10">54us</text>
+<rect x="142.0" y="210.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="169.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<rect x="196.0" y="210.0" width="51" height="31" fill="rgb(92,160,90)" stroke="#ddd"/>
+<text x="223.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.36/C</text>
+<rect x="250.0" y="210.0" width="51" height="31" fill="rgb(86,165,90)" stroke="#ddd"/>
+<text x="277.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.34/C</text>
+<rect x="304.0" y="210.0" width="51" height="31" fill="rgb(69,177,90)" stroke="#ddd"/>
+<text x="331.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.27/C</text>
+<rect x="358.0" y="210.0" width="51" height="31" fill="rgb(58,186,90)" stroke="#ddd"/>
+<text x="385.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.23/C</text>
+<rect x="412.0" y="210.0" width="51" height="31" fill="rgb(69,177,90)" stroke="#ddd"/>
+<text x="439.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.27/C</text>
+<rect x="466.0" y="210.0" width="51" height="31" fill="rgb(86,165,90)" stroke="#ddd"/>
+<text x="493.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.34/C</text>
+<rect x="520.0" y="210.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="547.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<rect x="574.0" y="210.0" width="51" height="31" fill="rgb(93,160,90)" stroke="#ddd"/>
+<text x="601.0" y="231.0" text-anchor="middle" font-family="Arial" font-size="9">0.37/C</text>
+<text x="78" y="266" text-anchor="end" font-family="Arial" font-size="10">58us</text>
+<rect x="142.0" y="244.0" width="51" height="31" fill="rgb(120,140,90)" stroke="#ddd"/>
+<text x="169.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.47/C</text>
+<rect x="196.0" y="244.0" width="51" height="31" fill="rgb(119,141,90)" stroke="#ddd"/>
+<text x="223.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.47/C</text>
+<rect x="250.0" y="244.0" width="51" height="31" fill="rgb(113,145,90)" stroke="#ddd"/>
+<text x="277.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.44/C</text>
+<rect x="304.0" y="244.0" width="51" height="31" fill="rgb(96,158,90)" stroke="#ddd"/>
+<text x="331.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.38/C</text>
+<rect x="358.0" y="244.0" width="51" height="31" fill="rgb(84,166,90)" stroke="#ddd"/>
+<text x="385.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.33/C</text>
+<rect x="412.0" y="244.0" width="51" height="31" fill="rgb(96,158,90)" stroke="#ddd"/>
+<text x="439.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.38/C</text>
+<rect x="466.0" y="244.0" width="51" height="31" fill="rgb(113,145,90)" stroke="#ddd"/>
+<text x="493.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.44/C</text>
+<rect x="520.0" y="244.0" width="51" height="31" fill="rgb(120,140,90)" stroke="#ddd"/>
+<text x="547.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.47/C</text>
+<rect x="574.0" y="244.0" width="51" height="31" fill="rgb(120,140,90)" stroke="#ddd"/>
+<text x="601.0" y="265.0" text-anchor="middle" font-family="Arial" font-size="9">0.47/C</text>
+<text x="78" y="300" text-anchor="end" font-family="Arial" font-size="10">66us</text>
+<rect x="142.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="169.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="196.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="223.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="250.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="277.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="304.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="331.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="358.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="385.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="412.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="439.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="466.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="493.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="520.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="547.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<rect x="574.0" y="278.0" width="51" height="31" fill="rgb(191,87,90)" stroke="#ddd"/>
+<text x="601.0" y="299.0" text-anchor="middle" font-family="Arial" font-size="9">0.75/B</text>
+<text x="690" y="76" font-family="Arial" font-size="13">Policy surface excerpts</text>
+<text x="690" y="106" font-family="Arial" font-size="11">tau=0.5: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="690" y="131" font-family="Arial" font-size="11">tau=0.75: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="690" y="156" font-family="Arial" font-size="11">tau=1: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="690" y="181" font-family="Arial" font-size="11">tau=1.25: q=50us, plant=30us, fallback_or_validation_needed</text>
+<text x="690" y="206" font-family="Arial" font-size="11">tau=1.5: q=50us, plant=50us, plant_admissible_with_current_evidence</text>
+<text x="690" y="231" font-family="Arial" font-size="11">tau=1.75: q=50us, plant=30us, fallback_or_validation_needed</text>
+<text x="690" y="256" font-family="Arial" font-size="11">tau=2: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="690" y="281" font-family="Arial" font-size="11">tau=2.5: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="690" y="306" font-family="Arial" font-size="11">tau=3: q=50us, plant=30us, plant_admissible_with_current_evidence</text>
+<text x="88" y="520" font-family="Arial" font-size="11" fill="#555">Legend: P=plant-admissible under current evidence, C=candidate-only, B=blocked. Derived-model calibrated; not hardware validation.</text>
+</svg>

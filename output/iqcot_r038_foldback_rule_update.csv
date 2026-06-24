@@ -1,0 +1,5 @@
+scope,tau_ai_us,previous_rule,r038_result,updated_safe_rule,boundary
+20A/score_settle005,1.25,46us folded commit after R036 dense-paired validation,42/44us do not beat 46us,keep 46us as local folded candidate,derived Simulink only; not hardware validation
+20A/score_settle005,1.5,50us center pocket anchor,46us skip risk; 54us long-settling/worse score,keep 50us as local center-pocket candidate,derived Simulink only; not hardware validation
+20A/score_settle005,1.75,54us folded commit after R036 dense-paired validation,52/56us do not beat 54us,keep 54us as local folded candidate,derived Simulink only; not hardware validation
+20A/score_settle005,2.0,30us dense-inclusive foldback guard,44/48us near-tie with 30us; 48us improves score by about 0.020,write as 30/44/48us near-tie foldback band; keep dense fallback until broader validation,"near-tie local evidence, not a new global optimum"

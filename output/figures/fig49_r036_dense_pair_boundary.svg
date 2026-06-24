@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="34" font-family="Arial" font-size="21" font-weight="bold">R036 dense-paired boundary validation</text>
+<text x="70" y="55" font-family="Arial" font-size="13" fill="#555">20A / score+0.05Tsettle: folded probes vs newly simulated 30us dense fallback</text>
+<rect x="90" y="70" width="720" height="340" fill="#fbfbfb" stroke="#222"/>
+<line x1="168.8" y1="70" x2="168.8" y2="410" stroke="#e5e7eb"/>
+<text x="168.8" y="433" font-family="Arial" font-size="12" text-anchor="middle">1.25us</text>
+<line x1="731.2" y1="70" x2="731.2" y2="410" stroke="#e5e7eb"/>
+<text x="731.2" y="433" font-family="Arial" font-size="12" text-anchor="middle">1.75us</text>
+<line x1="90" y1="370.0" x2="810" y2="370.0" stroke="#eee"/>
+<text x="45" y="374.0" font-family="Arial" font-size="12">30us</text>
+<line x1="90" y1="290.0" x2="810" y2="290.0" stroke="#eee"/>
+<text x="45" y="294.0" font-family="Arial" font-size="12">38us</text>
+<line x1="90" y1="210.0" x2="810" y2="210.0" stroke="#eee"/>
+<text x="45" y="214.0" font-family="Arial" font-size="12">46us</text>
+<line x1="90" y1="170.0" x2="810" y2="170.0" stroke="#eee"/>
+<text x="45" y="174.0" font-family="Arial" font-size="12">50us</text>
+<line x1="90" y1="130.0" x2="810" y2="130.0" stroke="#eee"/>
+<text x="45" y="134.0" font-family="Arial" font-size="12">54us</text>
+<line x1="90" y1="90.0" x2="810" y2="90.0" stroke="#eee"/>
+<text x="45" y="94.0" font-family="Arial" font-size="12">58us</text>
+<circle cx="168.8" cy="370.0" r="9.0" fill="#c53030" opacity="0.82"/>
+<text x="177.8" y="362.0" font-family="Arial" font-size="10">4.989</text>
+<circle cx="168.8" cy="290.0" r="5.3" fill="#f28e2b" opacity="0.82"/>
+<text x="177.8" y="282.0" font-family="Arial" font-size="10">2.335</text>
+<circle cx="168.8" cy="210.0" r="6.5" fill="#2f855a" opacity="0.82"/>
+<text x="177.8" y="202.0" font-family="Arial" font-size="10">2.146</text>
+<circle cx="168.8" cy="170.0" r="8.6" fill="#f28e2b" opacity="0.82"/>
+<text x="177.8" y="162.0" font-family="Arial" font-size="10">4.714</text>
+<circle cx="168.8" cy="130.0" r="6.4" fill="#f28e2b" opacity="0.82"/>
+<text x="177.8" y="122.0" font-family="Arial" font-size="10">3.140</text>
+<circle cx="168.8" cy="90.0" r="6.0" fill="#f28e2b" opacity="0.82"/>
+<text x="177.8" y="82.0" font-family="Arial" font-size="10">2.846</text>
+<circle cx="731.2" cy="370.0" r="8.1" fill="#c53030" opacity="0.82"/>
+<text x="740.2" y="362.0" font-family="Arial" font-size="10">4.317</text>
+<circle cx="731.2" cy="290.0" r="5.2" fill="#f28e2b" opacity="0.82"/>
+<text x="740.2" y="282.0" font-family="Arial" font-size="10">2.301</text>
+<circle cx="731.2" cy="210.0" r="7.9" fill="#f28e2b" opacity="0.82"/>
+<text x="740.2" y="202.0" font-family="Arial" font-size="10">4.178</text>
+<circle cx="731.2" cy="170.0" r="6.0" fill="#f28e2b" opacity="0.82"/>
+<text x="740.2" y="162.0" font-family="Arial" font-size="10">2.886</text>
+<circle cx="731.2" cy="130.0" r="6.5" fill="#2f855a" opacity="0.82"/>
+<text x="740.2" y="122.0" font-family="Arial" font-size="10">2.142</text>
+<circle cx="731.2" cy="90.0" r="6.2" fill="#f28e2b" opacity="0.82"/>
+<text x="740.2" y="82.0" font-family="Arial" font-size="10">2.992</text>
+<polyline points="168.8,210.0 731.2,130.0" fill="none" stroke="#1a365d" stroke-width="3"/>
+<text x="420.0" y="460" font-family="Arial" font-size="14">tau_AI</text>
+<text x="18" y="240.0" font-family="Arial" font-size="14" transform="rotate(-90 18,240.0)">T_slew</text>
+<text x="840" y="95" font-family="Arial" font-size="14" font-weight="bold">R036 update</text>
+<text x="840" y="125" font-family="Arial" font-size="12">tau=1.25: folded 46us beats dense by 2.843</text>
+<text x="840" y="161" font-family="Arial" font-size="12">tau=1.75: folded 54us beats dense by 2.175</text>
+<text x="840" y="230" font-family="Arial" font-size="12" fill="#555">Red: dense fallback loses with skip=1.</text>
+<text x="840" y="252" font-family="Arial" font-size="12" fill="#555">Green: local paired winner.</text>
+<text x="70" y="520" font-family="Arial" font-size="11" fill="#555">Boundary: derived Simulink only; no hardware/HIL or global optimum claim.</text>
+</svg>

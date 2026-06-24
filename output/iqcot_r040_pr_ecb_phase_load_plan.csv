@@ -1,0 +1,9 @@
+case_id,target_label,objective,base_load_A,target_load_A,load_drop_A,load_step_offset_us,tau_ai_us,selected_ref_slew_us,delta_v_allow_mV,role
+r040_20A_off0p000,20A,pr_ecb_calibration,40,20,20,0,1.25,46,10,phase_baseline
+r040_20A_off0p125,20A,pr_ecb_calibration,40,20,20,0.125,1.25,46,10,phase_offset
+r040_20A_off0p250,20A,pr_ecb_calibration,40,20,20,0.25,1.25,46,10,phase_offset
+r040_20A_off0p375,20A,pr_ecb_calibration,40,20,20,0.375,1.25,46,10,phase_offset
+r040_10A_off0p000,10A,pr_ecb_calibration,40,10,30,0,1.25,60,10,load_magnitude
+r040_10A_off0p250,10A,pr_ecb_calibration,40,10,30,0.25,1.25,60,10,load_phase_cross
+r040_near0_off0p000,near0,pr_ecb_calibration,40,1,39,0,1.25,60,10,load_magnitude
+r040_near0_off0p250,near0,pr_ecb_calibration,40,1,39,0.25,1.25,60,10,load_phase_cross

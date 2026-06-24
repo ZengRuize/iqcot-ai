@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#111} .axis{stroke:#111;stroke-width:1.4} .grid{stroke:#ddd;stroke-width:1} .thin{stroke:#555;stroke-width:1.2} .main{stroke:#1f4e79;stroke-width:2.4;fill:none} .alt{stroke:#a23b2a;stroke-width:2.4;fill:none} .green{stroke:#2d6a4f;stroke-width:2.4;fill:none} .dash{stroke-dasharray:6 4}</style>
+<line x1="92" y1="406" x2="452" y2="406" class="axis" />
+<line x1="92" y1="76" x2="92" y2="406" class="axis" />
+<text x="272.0" y="34" font-size="20" text-anchor="middle" font-weight="bold">Period response</text>
+<text x="92" y="61" font-size="14" text-anchor="start" font-weight="normal">amplitude (ns)</text>
+<text x="272.0" y="454" font-size="16" text-anchor="middle" font-weight="normal">normalized frequency (ω/π)</text>
+<line x1="92.0" y1="76" x2="92.0" y2="406" class="grid" />
+<text x="92.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.0</text>
+<line x1="188.0" y1="76" x2="188.0" y2="406" class="grid" />
+<text x="188.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.2</text>
+<line x1="284.0" y1="76" x2="284.0" y2="406" class="grid" />
+<text x="284.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.4</text>
+<line x1="380.0" y1="76" x2="380.0" y2="406" class="grid" />
+<text x="380.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.6</text>
+<line x1="92" y1="406.0" x2="452" y2="406.0" class="grid" />
+<text x="82" y="410.0" font-size="13" text-anchor="end" font-weight="normal">0</text>
+<line x1="92" y1="346.15742914047286" x2="452" y2="346.15742914047286" class="grid" />
+<text x="82" y="350.15742914047286" font-size="13" text-anchor="end" font-weight="normal">1</text>
+<line x1="92" y1="286.3148582809457" x2="452" y2="286.3148582809457" class="grid" />
+<text x="82" y="290.3148582809457" font-size="13" text-anchor="end" font-weight="normal">2</text>
+<line x1="92" y1="226.47228742141863" x2="452" y2="226.47228742141863" class="grid" />
+<text x="82" y="230.47228742141863" font-size="13" text-anchor="end" font-weight="normal">3</text>
+<line x1="92" y1="166.62971656189148" x2="452" y2="166.62971656189148" class="grid" />
+<text x="82" y="170.62971656189148" font-size="13" text-anchor="end" font-weight="normal">4</text>
+<line x1="92" y1="106.78714570236434" x2="452" y2="106.78714570236434" class="grid" />
+<text x="82" y="110.78714570236434" font-size="13" text-anchor="end" font-weight="normal">5</text>
+<polyline points="96.80,325.61 101.60,376.49 116.00,383.43 140.00,335.32 188.00,261.46 260.00,184.27 332.00,138.05 428.00,106.00" class="main" />
+<polyline points="96.80,325.61 101.60,376.49 116.00,383.43 140.00,335.32 188.00,261.46 260.00,184.27 332.00,138.05 428.00,106.00" class="alt dash" />
+<text x="190" y="448" font-size="14" text-anchor="start" font-weight="normal">nonlinear event simulation</text>
+<line x1="150" y1="443" x2="180" y2="443" class="main" />
+<text x="190" y="474" font-size="14" text-anchor="start" font-weight="normal">dynamic IEK</text>
+<line x1="150" y1="469" x2="180" y2="469" class="alt dash" />
+<line x1="585" y1="406" x2="885" y2="406" class="axis" />
+<line x1="585" y1="76" x2="585" y2="406" class="axis" />
+<text x="735.0" y="34" font-size="20" text-anchor="middle" font-weight="bold">Dynamic IEK error</text>
+<text x="585" y="61" font-size="14" text-anchor="start" font-weight="normal">|error| (%)</text>
+<text x="735.0" y="454" font-size="16" text-anchor="middle" font-weight="normal">normalized frequency (ω/π)</text>
+<line x1="585.0" y1="76" x2="585.0" y2="406" class="grid" />
+<text x="585.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.0</text>
+<line x1="665.0" y1="76" x2="665.0" y2="406" class="grid" />
+<text x="665.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.2</text>
+<line x1="745.0" y1="76" x2="745.0" y2="406" class="grid" />
+<text x="745.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.4</text>
+<line x1="825.0" y1="76" x2="825.0" y2="406" class="grid" />
+<text x="825.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0.6</text>
+<line x1="585" y1="406.0" x2="885" y2="406.0" class="grid" />
+<text x="575" y="410.0" font-size="12" text-anchor="end" font-weight="normal">0.00000</text>
+<line x1="585" y1="340.19433020111023" x2="885" y2="340.19433020111023" class="grid" />
+<text x="575" y="344.19433020111023" font-size="12" text-anchor="end" font-weight="normal">0.00005</text>
+<line x1="585" y1="274.38866040222047" x2="885" y2="274.38866040222047" class="grid" />
+<text x="575" y="278.38866040222047" font-size="12" text-anchor="end" font-weight="normal">0.00010</text>
+<line x1="585" y1="208.58299060333076" x2="885" y2="208.58299060333076" class="grid" />
+<text x="575" y="212.58299060333076" font-size="12" text-anchor="end" font-weight="normal">0.00015</text>
+<line x1="585" y1="142.77732080444093" x2="885" y2="142.77732080444093" class="grid" />
+<text x="575" y="146.77732080444093" font-size="12" text-anchor="end" font-weight="normal">0.00020</text>
+<polyline points="589.00,170.29 593.00,199.40 605.00,394.13 625.00,394.38 665.00,393.70 725.00,398.75 785.00,346.42 865.00,317.78" class="green" />
+<text x="490" y="525" font-size="16" text-anchor="middle" font-weight="normal">Validation: maximum period-amplitude error is below 0.00018%.</text>
+</svg>

@@ -1,0 +1,3 @@
+r036_case_id,target_label,target_load_A,load_drop_A,objective,objective_alpha_settle,tau_ai_us,candidate_ref_slew_us,delay_events_est,priority,reason,validation_scope
+R036_0001,20A,20,20,score_settle005,0.05,1.25,30,3,high,dense fallback pair for R034 tau=1.25us folded 46us probe,derived_simulink_delayed_reference
+R036_0002,20A,20,20,score_settle005,0.05,1.75,30,4,high,dense fallback pair for R034 tau=1.75us folded 54us probe,derived_simulink_delayed_reference

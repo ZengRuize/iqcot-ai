@@ -1,0 +1,4 @@
+target_label,objective,tau_ai_us,n_candidates,best_slew_us,best_score,best_source,best_undershoot_mV,best_settle_time_us,best_skip_count_est,best_phase_std_ns,second_best_slew_us,second_best_regret
+20A,score_settle005,1.25,5,46.0,2.1458679818901,R034_partial_validation,1.00107392878601,0.938000000000024,0.0,32.9599564653042,38.0,0.1892674965034402
+20A,score_settle005,1.5,3,50.0,2.14124057585513,R033_anchor_tau1p5,0.991779598240816,0.938000000000024,0.0,33.4676816392218,38.0,0.20501700496070985
+20A,score_settle005,1.75,5,54.0,2.14184679648936,R034_partial_validation,1.00803410686667,0.938000000000024,0.0,32.6242192638823,38.0,0.15888991753527026

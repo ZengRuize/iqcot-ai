@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="560" viewBox="0 0 1160 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="580" y="34" text-anchor="middle" font-family="Arial" font-size="18">R034 full transition-pocket validation</text>
+<rect x="88" y="70" width="700" height="330" fill="#fbfbfb" stroke="#ddd"/>
+<text x="88" y="55" font-family="Arial" font-size="13">Best candidates form a folded local band, not a monotonic ridge</text>
+<line x1="119.8" y1="70" x2="119.8" y2="400" stroke="#eee"/>
+<text x="119.8" y="420" text-anchor="middle" font-family="Arial" font-size="10">1</text>
+<line x1="278.9" y1="70" x2="278.9" y2="400" stroke="#eee"/>
+<text x="278.9" y="420" text-anchor="middle" font-family="Arial" font-size="10">1.25</text>
+<line x1="438.0" y1="70" x2="438.0" y2="400" stroke="#eee"/>
+<text x="438.0" y="420" text-anchor="middle" font-family="Arial" font-size="10">1.5</text>
+<line x1="597.1" y1="70" x2="597.1" y2="400" stroke="#eee"/>
+<text x="597.1" y="420" text-anchor="middle" font-family="Arial" font-size="10">1.75</text>
+<line x1="756.2" y1="70" x2="756.2" y2="400" stroke="#eee"/>
+<text x="756.2" y="420" text-anchor="middle" font-family="Arial" font-size="10">2</text>
+<line x1="88" y1="349.2" x2="788" y2="349.2" stroke="#eee"/>
+<text x="78" y="353.2" text-anchor="end" font-family="Arial" font-size="10">38</text>
+<line x1="88" y1="247.7" x2="788" y2="247.7" stroke="#eee"/>
+<text x="78" y="251.7" text-anchor="end" font-family="Arial" font-size="10">46</text>
+<line x1="88" y1="196.9" x2="788" y2="196.9" stroke="#eee"/>
+<text x="78" y="200.9" text-anchor="end" font-family="Arial" font-size="10">50</text>
+<line x1="88" y1="146.2" x2="788" y2="146.2" stroke="#eee"/>
+<text x="78" y="150.2" text-anchor="end" font-family="Arial" font-size="10">54</text>
+<line x1="88" y1="95.4" x2="788" y2="95.4" stroke="#eee"/>
+<text x="78" y="99.4" text-anchor="end" font-family="Arial" font-size="10">58</text>
+<circle cx="119.8" cy="349.2" r="12.7" fill="#2F855A" opacity="0.78"/>
+<circle cx="119.8" cy="247.7" r="5.6" fill="#C53030" opacity="0.78"/>
+<circle cx="119.8" cy="196.9" r="5.5" fill="#C53030" opacity="0.78"/>
+<circle cx="119.8" cy="146.2" r="5.6" fill="#C53030" opacity="0.78"/>
+<circle cx="119.8" cy="95.4" r="5.3" fill="#C53030" opacity="0.78"/>
+<circle cx="278.9" cy="349.2" r="12.4" fill="#C53030" opacity="0.78"/>
+<circle cx="278.9" cy="247.7" r="13.0" fill="#2F855A" opacity="0.78"/>
+<circle cx="278.9" cy="196.9" r="4.5" fill="#C53030" opacity="0.78"/>
+<circle cx="278.9" cy="146.2" r="9.7" fill="#C53030" opacity="0.78"/>
+<circle cx="278.9" cy="95.4" r="10.7" fill="#C53030" opacity="0.78"/>
+<circle cx="438.0" cy="349.2" r="12.3" fill="#805AD5" opacity="0.78"/>
+<circle cx="438.0" cy="196.9" r="13.0" fill="#4C78A8" opacity="0.78"/>
+<circle cx="438.0" cy="95.4" r="10.3" fill="#805AD5" opacity="0.78"/>
+<circle cx="597.1" cy="349.2" r="12.5" fill="#C53030" opacity="0.78"/>
+<circle cx="597.1" cy="247.7" r="6.3" fill="#C53030" opacity="0.78"/>
+<circle cx="597.1" cy="196.9" r="10.5" fill="#C53030" opacity="0.78"/>
+<circle cx="597.1" cy="146.2" r="13.0" fill="#2F855A" opacity="0.78"/>
+<circle cx="597.1" cy="95.4" r="10.2" fill="#C53030" opacity="0.78"/>
+<circle cx="756.2" cy="349.2" r="11.6" fill="#C53030" opacity="0.78"/>
+<circle cx="756.2" cy="247.7" r="12.6" fill="#2F855A" opacity="0.78"/>
+<circle cx="756.2" cy="196.9" r="12.5" fill="#C53030" opacity="0.78"/>
+<circle cx="756.2" cy="146.2" r="10.9" fill="#C53030" opacity="0.78"/>
+<circle cx="756.2" cy="95.4" r="10.3" fill="#C53030" opacity="0.78"/>
+<polyline points="119.8,349.2 278.9,247.7 438.0,196.9 597.1,146.2 756.2,247.7" fill="none" stroke="#1A365D" stroke-width="3"/>
+<text x="835" y="85" font-family="Arial" font-size="13">Context best sequence</text>
+<text x="835" y="115" font-family="Arial" font-size="11">tau=1: 38us, second=46us (+2.155)</text>
+<text x="835" y="143" font-family="Arial" font-size="11">tau=1.25: 46us, second=38us (+0.189)</text>
+<text x="835" y="171" font-family="Arial" font-size="11">tau=1.5: 50us, second=38us (+0.205)</text>
+<text x="835" y="199" font-family="Arial" font-size="11">tau=1.75: 54us, second=38us (+0.159)</text>
+<text x="835" y="227" font-family="Arial" font-size="11">tau=2: 46us, second=50us (+0.027)</text>
+<text x="88" y="520" font-family="Arial" font-size="11" fill="#555">Green=new R034 best, blue=R033 anchor best, red/purple=non-best. Derived Simulink only.</text>
+</svg>

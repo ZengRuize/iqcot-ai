@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="620" viewBox="0 0 1180 620">
+<rect width="100%" height="100%" fill="white"/>
+<text x="60" y="34" font-family="Arial" font-size="21" font-weight="bold">R037 short-horizon r_hat predictor prototype</text>
+<text x="60" y="56" font-family="Arial" font-size="13" fill="#555">Local derived-Simulink risk labels for 20A / score+0.05Tsettle; not hardware validation</text>
+<rect x="90" y="75" width="760" height="380" fill="#fbfbfb" stroke="#222"/>
+<line x1="98.3" y1="75" x2="98.3" y2="455" stroke="#eee"/>
+<text x="98.3" y="475" font-family="Arial" font-size="10" text-anchor="middle">0.5</text>
+<line x1="139.6" y1="75" x2="139.6" y2="455" stroke="#eee"/>
+<text x="139.6" y="475" font-family="Arial" font-size="10" text-anchor="middle">0.75</text>
+<line x1="180.9" y1="75" x2="180.9" y2="455" stroke="#eee"/>
+<text x="180.9" y="475" font-family="Arial" font-size="10" text-anchor="middle">1</text>
+<line x1="222.2" y1="75" x2="222.2" y2="455" stroke="#eee"/>
+<text x="222.2" y="475" font-family="Arial" font-size="10" text-anchor="middle">1.25</text>
+<line x1="263.5" y1="75" x2="263.5" y2="455" stroke="#eee"/>
+<text x="263.5" y="475" font-family="Arial" font-size="10" text-anchor="middle">1.5</text>
+<line x1="304.8" y1="75" x2="304.8" y2="455" stroke="#eee"/>
+<text x="304.8" y="475" font-family="Arial" font-size="10" text-anchor="middle">1.75</text>
+<line x1="346.1" y1="75" x2="346.1" y2="455" stroke="#eee"/>
+<text x="346.1" y="475" font-family="Arial" font-size="10" text-anchor="middle">2</text>
+<line x1="511.3" y1="75" x2="511.3" y2="455" stroke="#eee"/>
+<text x="511.3" y="475" font-family="Arial" font-size="10" text-anchor="middle">3</text>
+<line x1="841.7" y1="75" x2="841.7" y2="455" stroke="#eee"/>
+<text x="841.7" y="475" font-family="Arial" font-size="10" text-anchor="middle">5</text>
+<line x1="90" y1="420.5" x2="850" y2="420.5" stroke="#eee"/>
+<text x="48" y="424.5" font-family="Arial" font-size="11">30us</text>
+<line x1="90" y1="351.4" x2="850" y2="351.4" stroke="#eee"/>
+<text x="48" y="355.4" font-family="Arial" font-size="11">38us</text>
+<line x1="90" y1="282.3" x2="850" y2="282.3" stroke="#eee"/>
+<text x="48" y="286.3" font-family="Arial" font-size="11">46us</text>
+<line x1="90" y1="247.7" x2="850" y2="247.7" stroke="#eee"/>
+<text x="48" y="251.7" font-family="Arial" font-size="11">50us</text>
+<line x1="90" y1="213.2" x2="850" y2="213.2" stroke="#eee"/>
+<text x="48" y="217.2" font-family="Arial" font-size="11">54us</text>
+<line x1="90" y1="178.6" x2="850" y2="178.6" stroke="#eee"/>
+<text x="48" y="182.6" font-family="Arial" font-size="11">58us</text>
+<line x1="90" y1="109.5" x2="850" y2="109.5" stroke="#eee"/>
+<text x="48" y="113.5" font-family="Arial" font-size="11">66us</text>
+<circle cx="98.3" cy="420.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="98.3" cy="351.4" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="98.3" cy="247.7" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="98.3" cy="178.6" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="98.3" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="139.6" cy="420.5" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="139.6" cy="351.4" r="5.8" fill="#2f855a" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="139.6" cy="247.7" r="5.8" fill="#2f855a" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="139.6" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="139.6" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="420.5" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="351.4" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="282.3" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="247.7" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="213.2" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="180.9" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="420.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="351.4" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="282.3" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="247.7" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="213.2" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="222.2" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="263.5" cy="420.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="263.5" cy="351.4" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="263.5" cy="247.7" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="263.5" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="263.5" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="420.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="351.4" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="282.3" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="247.7" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="213.2" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="304.8" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="420.5" r="5.8" fill="#2f855a" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="351.4" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="282.3" r="5.8" fill="#2f855a" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="247.7" r="5.8" fill="#2f855a" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="213.2" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="346.1" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="511.3" cy="420.5" r="5.8" fill="#2f855a" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="511.3" cy="351.4" r="5.8" fill="#f28e2b" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="511.3" cy="247.7" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="511.3" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="511.3" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="841.7" cy="420.5" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="841.7" cy="351.4" r="5.8" fill="#c53030" stroke="none" stroke-width="1.4" opacity="0.82"/>
+<circle cx="841.7" cy="247.7" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="841.7" cy="178.6" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<circle cx="841.7" cy="109.5" r="5.8" fill="#c53030" stroke="#111" stroke-width="1.4" opacity="0.82"/>
+<polyline points="98.3,247.7 139.6,420.5 180.9,351.4 222.2,282.3 263.5,247.7 304.8,213.2 346.1,420.5 511.3,420.5 841.7,420.5" fill="none" stroke="#1a365d" stroke-width="3"/>
+<text x="890" y="95" font-family="Arial" font-size="14" font-weight="bold">Legend</text>
+<circle cx="900" cy="125" r="6" fill="#2f855a" opacity="0.82"/>
+<text x="928" y="129" font-family="Arial" font-size="12">near-best and no observed risk</text>
+<circle cx="900" cy="153" r="6" fill="#f28e2b" opacity="0.82"/>
+<text x="928" y="157" font-family="Arial" font-size="12">not near-best but no hard risk</text>
+<circle cx="900" cy="181" r="6" fill="#c53030" opacity="0.82"/>
+<text x="928" y="185" font-family="Arial" font-size="12">observed skip/settling/phase risk</text>
+<line x1="890" y1="209" x2="916" y2="209" stroke="#1a365d" stroke-width="3"/>
+<text x="928" y="213" font-family="Arial" font-size="12">R037 representative projection</text>
+<text x="70" y="585" font-family="Arial" font-size="11" fill="#555">Black stroke means rejected by the leave-one-delay r_hat + B_epsilon^sw gate. The line is a local projection prototype, not a final deployable optimum.</text>
+</svg>

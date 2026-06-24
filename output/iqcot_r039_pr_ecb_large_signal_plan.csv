@@ -1,0 +1,6 @@
+case_id,target_label,objective,base_load_A,target_load_A,load_drop_A,tau_ai_us,selected_ref_slew_us,role,source,delta_v_allow_mV
+r039_20A_tau1p25_slew46,20A,score_settle005,40,20,20,1.25,46,folded_anchor,R036/R038,10
+r039_20A_tau1p50_slew50,20A,score_settle005,40,20,20,1.5,50,folded_anchor,R037/R038,10
+r039_20A_tau1p75_slew54,20A,score_settle005,40,20,20,1.75,54,folded_anchor,R036/R038,10
+r039_20A_tau2p00_slew30,20A,score_settle005,40,20,20,2,30,dense_fallback,R031/R038,10
+r039_20A_tau2p00_slew48,20A,score_settle005,40,20,20,2,48,r038_near_tie_probe,R038,10

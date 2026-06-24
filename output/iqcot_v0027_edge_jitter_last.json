@@ -1,0 +1,70 @@
+{
+  "modelRoot": "E:/Desktop/4cot/versions/v0027_20260611_135822_iqcot_optimized_final_cn_docs",
+  "stopTime": 0.0005,
+  "steadyStart": 0.00042,
+  "Kiqcot": 0,
+  "Tiqcot_leak": 8E-5,
+  "req": {
+    "edge_count": 161,
+    "frequency_mean_Hz": 2.0080321285140566E+6,
+    "period_mean_s": 4.9799999999999993E-7,
+    "period_std_s": 1.9899748742133368E-8,
+    "period_pp_s": 4.0000000000087708E-8,
+    "period_jitter_norm": 0.039959334823560982
+  },
+  "trigger": {
+    "edge_count": 161,
+    "frequency_mean_Hz": 2.0080321285141422E+6,
+    "period_mean_s": 4.9799999999997865E-7,
+    "period_std_s": 1.7711578132521826E-8,
+    "period_pp_s": 3.8000000000056218E-8,
+    "period_jitter_norm": 0.03556541793679234
+  },
+  "qh": [
+    {
+      "edge_count": 41,
+      "frequency_mean_Hz": 502008.03212853591,
+      "period_mean_s": 1.9919999999999133E-6,
+      "period_std_s": 1.4567086187641161E-8,
+      "period_pp_s": 4.0000000003448735E-8,
+      "period_jitter_norm": 0.007312794270904515
+    },
+    {
+      "edge_count": 40,
+      "frequency_mean_Hz": 502059.73223478743,
+      "period_mean_s": 1.9917948717949593E-6,
+      "period_std_s": 1.4534096934564724E-8,
+      "period_pp_s": 3.8000000006886692E-8,
+      "period_jitter_norm": 0.00729698481524201
+    },
+    {
+      "edge_count": 40,
+      "frequency_mean_Hz": 501814.25152476563,
+      "period_mean_s": 1.9927692307691421E-6,
+      "period_std_s": 1.836728074532606E-8,
+      "period_pp_s": 7.6000000000004016E-8,
+      "period_jitter_norm": 0.0092169632397610356
+    },
+    {
+      "edge_count": 40,
+      "frequency_mean_Hz": 502046.806209955,
+      "period_mean_s": 1.9918461538460658E-6,
+      "period_std_s": 1.7242669882797833E-8,
+      "period_pp_s": 7.3999999996557288E-8,
+      "period_jitter_norm": 0.0086566273451912316
+    }
+  ],
+  "il_mean_A": [
+    10.003341682567928,
+    9.9893233571372537,
+    9.9972096829336135,
+    10.009705439135024
+  ],
+  "il_ripple_pp_A": [
+    10.311398765380318,
+    10.378419472198361,
+    10.411575256183413,
+    10.391585955682938
+  ],
+  "il_phase_imbalance_A": 0.02038208199777003
+}

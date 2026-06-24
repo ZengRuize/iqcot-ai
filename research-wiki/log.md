@@ -1,0 +1,117 @@
+# Research Wiki Log
+
+_Append-only timeline._
+- `2026-06-20T03:31:50Z` Wiki initialized
+- `2026-06-20T03:32:02Z` upsert_idea: added idea:iqcot-pis-iek-four-phase [stage=active outcome=mixed]
+- `2026-06-20T03:32:14Z` add_experiment: added exp:ref-slew-dense-long-sweep [verdict=partial confidence=high]
+- `2026-06-20T03:32:25Z` add_claim: added claim:objective-sensitive-ref-slew [status=drafted] prov=output/iqcot_dynamic_ref_slew_dense_long_combined_scores.csv; output/iqcot_dynamic_ref_slew_settle_penalty_best.csv
+- `2026-06-20T03:38:10Z` add_experiment: added exp:ref-slew-scheduler-policy-eval [verdict=partial confidence=high]
+- `2026-06-20T05:37:20Z` add_experiment: added exp:ai-supervisor-training-interface [verdict=partial confidence=medium]
+- `2026-06-20T06:42:00Z` add_experiment: added exp:table-supervisor-delayed-switching [verdict=partial confidence=medium-high]
+- `2026-06-20T07:05:00Z` add_experiment: added exp:table-supervisor-delay-sensitivity [verdict=partial confidence=medium-high]
+- `2026-06-20T07:15:00Z` add_experiment: added exp:ai-supervisor-regressor-baseline [verdict=partial confidence=medium]
+- `2026-06-20T07:42:00Z` add_experiment: added exp:ref-slew-continuous-landscape [verdict=partial confidence=medium]
+- `2026-06-20T11:10:00Z` add_experiment: added exp:ref-slew-fine-sweep [verdict=partial confidence=medium-high]
+- `2026-06-20T11:45:00Z` add_experiment: added exp:mode-aware-slew-surrogate [verdict=partial confidence=medium]
+- `2026-06-20T12:30:27Z` add_experiment: updated exp:deployable-risk-proxy [verdict=partial confidence=medium]
+- `2026-06-20T12:50:00Z` add_experiment: added exp:proxy-table-in-loop-plan [verdict=partial confidence=medium]
+- `2026-06-20T13:50:00Z` update_experiment: exp:proxy-table-in-loop-plan completed 48/48 priority switching cases; calibrated proxy did not beat dense-long table in stress replay
+- `2026-06-20T14:20:00Z` add_experiment: added exp:switching-calibrated-proxy [verdict=partial confidence=medium]; dense-anchor projection fixes known proxy stress failure, guarded rule requires held-out validation
+- `2026-06-20T14:45:00Z` add_experiment: added exp:heldout-guard-validation [verdict=partial confidence=medium-high]; 21/21 held-out derived Simulink cases completed, supporting 10A delay guard and revising near0A guard to a 30-38us band
+- `2026-06-21T02:30:00Z` add_experiment: added exp:refined-band-policy [verdict=partial confidence=medium]; R030 synthesizes R029 local guard evidence into a refined band policy and creates a 30-row dense/proxy challenge plan
+- `2026-06-21T04:10:00Z` add_experiment: added exp:tightened-bepsilon-sw [verdict=partial confidence=medium]; R031 converts R030 challenge negative samples into tightened B_epsilon^sw calibration and a 22-row minimal held-out validation plan
+- `2026-06-21T07:40:00Z` update_experiment: exp:tightened-bepsilon-sw completed 22/22 minimal held-out derived Simulink cases; result supports delay-aware local band with dense fallback rather than proxy direct override
+- `2026-06-21T08:20:00Z` add_experiment: added exp:delay-aware-band-r032 [verdict=partial confidence=medium]; R032 converts R031 held-out evidence into short-horizon risk interface and 31-row next validation plan
+- `2026-06-21T00:35:00Z` add_experiment: completed exp:delay-band-validation-r033 [verdict=partial confidence=medium]; 31 derived-Simulink delayed-reference cases refine R032 band projection
+- `2026-06-21T01:00:00Z` add_experiment: added exp:deployable-risk-predictor-r034 [verdict=planned confidence=medium]; created risk predictor prototype and 20-row transition-pocket plan
+- `2026-06-21T01:20:00Z` add_experiment: completed partial exp:transition-pocket-partial-r034 [verdict=partial confidence=medium]; 10 cases revise fixed 50us pocket into moving ridge hypothesis
+- `2026-06-21T01:35:00Z` add_experiment: completed exp:transition-pocket-full-r034 [verdict=partial confidence=medium]; 20 cases support folded transition band, not fixed 50us pocket
+- `2026-06-21T04:35:00Z` add_experiment: added exp:folded-band-projection-r035 [verdict=partial confidence=medium]; R035 separates R034 folded transition candidate band from dense-inclusive plant commit and keeps `tau_AI=2us` on `30us` fallback.
+<!-- R036_DENSE_PAIR_BOUNDARY -->
+
+## 2026-06-21 R036 dense-paired boundary
+
+- Added two derived-Simulink dense fallback rows for `20A/score_settle005`.
+- `46us@1.25us` and `54us@1.75us` beat `30us` fallback locally.
+- Updated paper, evidence matrix, derivation package, AI validation design, query pack, and wiki experiment note.
+<!-- R037_SHORT_HORIZON_RHAT -->
+
+## 2026-06-21 R037 short-horizon r_hat
+
+- Built local risk dataset for `20A/score_settle005`.
+- Added leave-one-delay risk check, representative projection replay, SVG figure, report and minimal extrapolation plan.
+- Kept claims bounded to derived-Simulink/post-processing evidence.
+<!-- R038_MINIMAL_EXTRAPOLATION_DRYRUN -->
+
+## 2026-06-21 R038 minimal extrapolation dry run
+
+- Added `r037_minimal_extrapolation` support to the common R027 delayed-reference runner.
+- Added wrapper `output/iqcot_r037_minimal_extrapolation_validation.m`.
+- Dry-run loaded 9 rows and generated `output/iqcot_r027_proxy_table_in_loop_matlab_plan_r037_minimal_extrapolation.csv`.
+- No new Simulink switching cases were executed; this is only executable-plan validation.
+<!-- R038_MINIMAL_EXTRAPOLATION_VALIDATION -->
+
+## 2026-06-21 R038 minimal extrapolation validation
+
+- Ran all 9 derived-Simulink delayed-reference cases in three chunks.
+- Confirmed `46/50/54us` anchors at `tau_AI=1.25/1.5/1.75us`.
+- Revised `tau_AI=2us` from hard `30us` fallback to a local `30/44/48us` near-tie foldback band.
+- Kept boundary claims: derived model only, not hardware validation or global optimum.
+<!-- R039_PR_ECB_LARGE_SIGNAL -->
+
+## 2026-06-21 R039 PR-ECB large-signal boundary probe
+
+- Added output/iqcot_r039_pr_ecb_large_signal_probe.m for derived-model first-peak wave export and PR-ECB post-processing.
+- Ran 5/5 derived-Simulink delayed-reference cases for 40A->20A score_settle005 anchors and tau_AI=2us near-tie probes.
+- Generated combined results, summary, report, paper section, and five waveform CSV files under output/data.
+- Key result: energy bound 4.350 mV, charge+ESR bound 3.903 mV, actual first peak 2.235 mV, r_E=0.435 for a 10 mV allowance.
+- Interpretation boundary: PR-ECB is a first-peak risk feature, not hardware validation and not a replacement for PIS-IEK/r_hat/B_epsilon post-peak recovery logic.
+<!-- R041_PR_ECB_HSREM_CORRECTION -->
+
+## 2026-06-22 R041 PR-ECB remaining high-side on-time correction
+
+- Added `output/iqcot_r041_pr_ecb_hsrem_correction.py` and reprocessed the completed 8-row R040 matrix without new `.slx` runs.
+- Nonzero `E_HS,rem` appears only in the three offset-0 rows where phase 4 has about `102 ns` remaining high-side on-time.
+- Corrected-energy fixes the near0 offset-0 energy-only under-estimation (`0.876x` to `1.169x` actual), while original `max(energy, charge+ESR)` was already conservative across all rows.
+- Kept boundary claims: `E_HS,rem` is a phase-state/segmented-calibration feature, not a global correction law or hardware/HIL validation.
+<!-- R042_PR_ECB_PHASE_DENSE_PARTIAL -->
+
+## 2026-06-22 R042 PR-ECB phase-dense partial validation
+
+- Added R042 phase-dense MATLAB runner and Python postprocess.
+- Generated a 20-row plan over `near0/5A/10A/20A` and offsets `0.05/0.09/0.105/0.125/0.20us`.
+- Ran 8/20 derived-Simulink rows: near0 rows `1-4` and 5A rows `6-9`.
+- Localized phase-4 high-side turn-off between `0.09us` and `0.105us`; remaining on-time drops from `52ns` at `0.05us` to `12ns` at `0.09us` and `0ns` at `0.105us`.
+- Current conclusion: charge+ESR remains dominant for near0/5A, while `E_HS,rem` is a useful segmentation feature, not a global correction law.
+
+## 2026-06-22 R042 PR-ECB phase-dense full completion
+
+- Completed all 20/20 planned derived-Simulink rows, adding 10A, 20A, and `0.20us` reference cases.
+- Confirmed phase-4 remaining-on-time boundary across all target loads: `52ns` at `0.05us`, `12ns` at `0.09us`, and `0ns` from `0.105us` onward.
+- Final load segmentation: charge+ESR dominates near0/5A; corrected-energy/raw energy dominates most 10A/20A rows.
+- Next step is R043 segmented PR-ECB calibration surface and conservative ratio bands, still derived-Simulink/offline only.
+<!-- R043_PR_ECB_SEGMENTED_CALIBRATION -->
+
+## 2026-06-22 R043 segmented PR-ECB calibration surface
+
+- Reprocessed the completed R040/R041/R042 evidence offline; no new Simulink run and no original `.slx` edit.
+- Generated `output/iqcot_r043_pr_ecb_segmented_rows.csv`, `output/iqcot_r043_pr_ecb_segmented_rules.csv`, `output/iqcot_r043_pr_ecb_segmented_report.md`, and `output/iqcot_r043_pr_ecb_segmented_paper_section.md`.
+- Fitted six segment rules over load-drop magnitude, active high-side remaining-on-time, and recommended bound class.
+- Key rule: near0/5A use charge+ESR; 10A uses corrected energy only for active-HS rows and raw energy after turn-off; 20A uses energy/corrected-energy with higher conservatism.
+- Kept claim boundary: `E_HS,rem` is a segmentation feature, not a global additive law; evidence is derived-Simulink/offline only, not hardware/HIL validation.
+<!-- R044_V8_PR_ECB_INTEGRATED_PAPER -->
+
+## 2026-06-22 R044 v8 PR-ECB integrated paper draft
+
+- Updated automation `iqcot` from R043 post-processing to manuscript drafting and audit continuation.
+- Generated `output/iqcot_multiphase_iek_paper_v8_pr_ecb_integrated.md` and copied it to `output/iqcot_multiphase_iek_paper_latest.md`.
+- Added v8 Sections 20-25 covering PR-ECB first-peak boundary, R043 segmented calibration surface, claim/evidence matrix, reviewer-style risks, data/script supplement, and conclusion supplement.
+- Kept boundary: this is a rigorous manuscript draft, not a submission-complete PDF; claim/citation/format audits remain required before submission-ready status.
+<!-- R045_V8_FIGURE_TABLE_AUDIT_PLAN -->
+
+## 2026-06-22 R045 v8 figure/table/audit plan
+
+- Added `output/iqcot_v8_pr_ecb_figure_table_audit_plan.md`.
+- Planned required v8 figures: two-layer supervisory architecture, R042 active-HS boundary, R043 conservative ratio bands, R043 dominant-bound family, and existing PIS-IEK validation panel.
+- Listed blocking submission audits: numeric claim audit, citation audit, structure audit, figure audit, and formatting/compile audit.
+- No new Simulink run and no R042/R043 post-processing repeat.

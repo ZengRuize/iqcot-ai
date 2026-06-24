@@ -1,0 +1,88 @@
+target_label,objective,objective_alpha_settle,tau_ai_us,candidate_ref_slew_us,dense_fallback_us,delta_from_dense_us,q_phi_rank_score,r_hat_skip_risk,r_hat_settle_risk,r_hat_phase_risk,r_hat_total_risk,bepsilon_label,plant_commit_allowed,derived_simulink_validated_point,projection_reason,predicted_block,predicted_candidate_only
+10A,score_settle010,0.1,1.0,30.0,30.0,0.0,0.7866666666666666,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,1.0,32.0,30.0,2.0,0.12,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,1.0,33.0,30.0,3.0,0.4533333333333333,0.55,0.43,0.35,0.462,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,1.0,34.0,30.0,4.0,0.7866666666666666,0.55,0.51,0.35,0.49400000000000005,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,2.0,30.0,30.0,0.0,0.7066666666666667,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,2.0,32.0,30.0,2.0,0.04,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,2.0,33.0,30.0,3.0,0.3733333333333333,0.55,0.43,0.35,0.462,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,2.0,34.0,30.0,4.0,0.7066666666666667,0.55,0.51,0.35,0.49400000000000005,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,3.0,30.0,30.0,0.0,1.04,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,3.0,32.0,30.0,2.0,0.3733333333333333,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,3.0,33.0,30.0,3.0,0.04,0.55,0.43,0.35,0.462,plant_admissible,True,True,R033 tau=3us derived-Simulink point supports 33us locally,False,False
+10A,score_settle010,0.1,3.0,34.0,30.0,4.0,0.3733333333333333,0.55,0.51,0.35,0.49400000000000005,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,5.0,30.0,30.0,0.0,1.2,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,5.0,32.0,30.0,2.0,0.5333333333333333,0.55,0.35,0.35,0.43,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,5.0,33.0,30.0,3.0,0.2,0.55,0.43,0.35,0.462,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+10A,score_settle010,0.1,5.0,34.0,30.0,4.0,0.5333333333333333,0.55,0.51,0.35,0.49400000000000005,near_tie_band,False,False,R033 supports a 30-34us delay-sensitive near-tie band,False,True
+20A,base,0.0,1.0,80.0,80.0,0.0,0.75,0.25,0.25,0.25,0.25,dense_fallback,True,True,80us remains the conservative validated fallback,False,False
+20A,base,0.0,1.0,82.0,80.0,2.0,0.5,0.25,0.49,0.41000000000000003,0.37800000000000006,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,base,0.0,1.0,84.0,80.0,4.0,0.25,0.25,0.73,0.5700000000000001,0.506,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,base,0.0,1.0,86.0,80.0,6.0,0.0,0.25,0.97,0.73,0.634,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,base,0.0,3.0,80.0,80.0,0.0,0.1,0.25,0.25,0.25,0.25,dense_fallback,True,True,80us remains the conservative validated fallback,False,False
+20A,base,0.0,3.0,82.0,80.0,2.0,0.35,0.25,0.49,0.41000000000000003,0.37800000000000006,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,base,0.0,3.0,84.0,80.0,4.0,0.6,0.25,0.73,0.5700000000000001,0.506,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,base,0.0,3.0,86.0,80.0,6.0,0.85,0.25,0.97,0.73,0.634,objective_probe,False,False,"base objective can favor longer slew, but plant commit needs settling-aware guard",False,True
+20A,score_settle005,0.05,0.5,30.0,30.0,0.0,0.051529351428997394,0.0812744595241645,0.12,0.15,0.11050978380966581,dense_fallback,True,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,0.5,38.0,30.0,8.0,0.5978759007930592,0.08,1.0,0.54,0.5757621008888227,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.5,46.0,30.0,16.0,0.1978759007930592,0.08,0.6894052522220566,0.3,0.3677621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.5,50.0,30.0,20.0,-0.0021240992069408234,0.08,0.48940525222205655,0.18,0.2637621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.5,54.0,30.0,24.0,0.1978759007930592,0.08,0.6894052522220566,0.3,0.3677621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.5,58.0,30.0,28.0,0.3978759007930592,0.08,0.8894052522220566,0.42,0.4717621008888227,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.5,66.0,30.0,36.0,2.0,0.75,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,0.75,30.0,30.0,0.0,0.07490384761800578,0.10075320634833815,0.12,0.15,0.11830128253933526,dense_fallback,True,True,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,0.75,38.0,30.0,8.0,0.5654113227527697,0.08,1.0,0.54,0.5721260681483102,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.75,46.0,30.0,16.0,0.16541132275276976,0.08,0.6803151703707755,0.3,0.3641260681483102,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.75,50.0,30.0,20.0,-0.034588677247230255,0.08,0.48031517037077553,0.18,0.26012606814831024,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.75,54.0,30.0,24.0,0.16541132275276976,0.08,0.6803151703707755,0.3,0.3641260681483102,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.75,58.0,30.0,28.0,0.3654113227527698,0.08,0.8803151703707756,0.42,0.4681260681483103,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,0.75,66.0,30.0,36.0,2.0,0.75,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,1.0,30.0,30.0,0.0,0.23272951662602415,0.23227459718835347,0.12,0.15,0.1709098388753414,dense_fallback,True,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,1.0,38.0,30.0,8.0,0.3462090046860775,0.08,1.0,0.54,0.5475754085248408,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.0,46.0,30.0,16.0,-0.05379099531392245,0.08,0.6189385213121017,0.3,0.3395754085248407,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.0,50.0,30.0,20.0,-0.25379099531392246,0.08,0.4189385213121017,0.18,0.23557540852484068,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.0,54.0,30.0,24.0,-0.05379099531392245,0.08,0.6189385213121017,0.3,0.3395754085248407,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.0,58.0,30.0,28.0,0.14620900468607756,0.08,0.8189385213121017,0.42,0.44357540852484073,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.0,66.0,30.0,36.0,2.0,0.75,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,1.25,30.0,30.0,0.0,0.16092349225187552,0.5834459046488747,0.12,0.15,0.3113783618595499,dense_fallback,False,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,1.25,38.0,30.0,8.0,-0.2390765077481245,0.08,0.8550585778305252,0.54,0.48202343113221013,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.25,46.0,30.0,16.0,-0.6390765077481244,0.08,0.45505857783052517,0.3,0.27402343113221006,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.25,50.0,30.0,20.0,-0.8390765077481245,0.08,0.25505857783052516,0.18,0.17002343113221008,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.25,54.0,30.0,24.0,-0.6390765077481244,0.08,0.45505857783052517,0.3,0.27402343113221006,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.25,58.0,30.0,28.0,-0.43907650774812446,0.08,0.6550585778305251,0.42,0.3780234311322101,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.25,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,1.5,30.0,30.0,0.0,-0.25,0.83,0.12,0.15,0.41000000000000003,dense_fallback,False,True,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,1.5,38.0,30.0,8.0,-0.65,0.08,0.7400000000000001,0.54,0.43600000000000005,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.5,46.0,30.0,16.0,-1.05,0.08,0.34,0.3,0.228,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.5,50.0,30.0,20.0,-1.25,0.08,0.14,0.18,0.124,transition_pocket,True,True,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.5,54.0,30.0,24.0,-1.05,0.08,0.34,0.3,0.228,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.5,58.0,30.0,28.0,-0.85,0.08,0.54,0.42,0.332,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.5,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,1.75,30.0,30.0,0.0,0.16092349225187552,0.5834459046488747,0.12,0.15,0.3113783618595499,dense_fallback,False,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,1.75,38.0,30.0,8.0,-0.2390765077481245,0.08,0.8550585778305252,0.54,0.48202343113221013,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.75,46.0,30.0,16.0,-0.6390765077481244,0.08,0.45505857783052517,0.3,0.27402343113221006,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.75,50.0,30.0,20.0,-0.8390765077481245,0.08,0.25505857783052516,0.18,0.17002343113221008,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.75,54.0,30.0,24.0,-0.6390765077481244,0.08,0.45505857783052517,0.3,0.27402343113221006,transition_pocket,False,False,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation,False,True
+20A,score_settle005,0.05,1.75,58.0,30.0,28.0,-0.43907650774812446,0.08,0.6550585778305251,0.42,0.3780234311322101,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,1.75,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,2.0,30.0,30.0,0.0,0.23272951662602415,0.23227459718835347,0.12,0.15,0.1709098388753414,dense_fallback,True,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,2.0,38.0,30.0,8.0,0.3462090046860775,0.08,1.0,0.54,0.5475754085248408,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.0,46.0,30.0,16.0,-0.05379099531392245,0.08,0.6189385213121017,0.3,0.3395754085248407,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.0,50.0,30.0,20.0,-0.25379099531392246,0.08,0.4189385213121017,0.18,0.23557540852484068,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.0,54.0,30.0,24.0,-0.05379099531392245,0.08,0.6189385213121017,0.3,0.3395754085248407,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.0,58.0,30.0,28.0,0.14620900468607756,0.08,0.8189385213121017,0.42,0.44357540852484073,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.0,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,2.5,30.0,30.0,0.0,0.051529351428997394,0.0812744595241645,0.12,0.15,0.11050978380966581,dense_fallback,True,False,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,2.5,38.0,30.0,8.0,0.5978759007930592,0.08,1.0,0.54,0.5757621008888227,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.5,46.0,30.0,16.0,0.1978759007930592,0.08,0.6894052522220566,0.3,0.3677621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.5,50.0,30.0,20.0,-0.0021240992069408234,0.08,0.48940525222205655,0.18,0.2637621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.5,54.0,30.0,24.0,0.1978759007930592,0.08,0.6894052522220566,0.3,0.3677621008888226,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.5,58.0,30.0,28.0,0.3978759007930592,0.08,0.8894052522220566,0.42,0.4717621008888227,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,2.5,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False
+20A,score_settle005,0.05,3.0,30.0,30.0,0.0,0.05000052764068192,0.08000043970056826,0.12,0.15,0.11000017588022731,dense_fallback,True,True,30us is the fallback; R033 shows it can skip near tau=1.5us,False,False
+20A,score_settle005,0.05,3.0,38.0,30.0,8.0,0.5999992671657195,0.08,1.0,0.54,0.5759999179225607,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,3.0,46.0,30.0,16.0,0.19999926716571956,0.08,0.6899997948064014,0.3,0.36799991792256054,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,3.0,50.0,30.0,20.0,-7.328342804400504e-07,0.08,0.48999979480640143,0.18,0.26399991792256056,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,3.0,54.0,30.0,24.0,0.19999926716571956,0.08,0.6899997948064014,0.3,0.36799991792256054,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,3.0,58.0,30.0,28.0,0.3999992671657196,0.08,0.8899997948064015,0.42,0.47199991792256063,candidate_only,False,False,intermediate candidate for transition-pocket validation,False,True
+20A,score_settle005,0.05,3.0,66.0,30.0,36.0,2.0,0.3,0.85,0.5,0.75,blocked,False,False,66us-class large jump remains blocked by R033 negative control,True,False

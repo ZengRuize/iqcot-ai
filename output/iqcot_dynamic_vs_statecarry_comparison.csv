@@ -1,0 +1,4 @@
+target_load_A,dynamic_overshoot_mV,statecarry_overshoot_mV,dynamic_undershoot_mV,statecarry_undershoot_mV,dynamic_skip,statecarry_skip,dynamic_phase_std_ns,statecarry_phase_std_ns,dynamic_current_imbalance_A,statecarry_current_imbalance_A
+20,2.475,2.488,0.992,-0.996,1,0,40.094,49.762,0.166,0.235
+10,4.196,3.795,4.292,-2.248,1,1,79.875,92.780,0.184,0.307
+0.001,6.817,5.810,9.451,-2.872,2,1,103.595,108.984,0.569,0.500

@@ -1,0 +1,2 @@
+policy,policy_role,online_available_inputs_only,n_cases,mean_switching_regret,max_switching_regret,mean_selected_objective_score,mean_undershoot_mV,max_undershoot_mV,mean_abs_final_vout_error_mV,mean_skip_count,mean_settle_time_us,mean_phase_spacing_std_ns,mean_base_score,mean_score_settle005,mean_score_settle010
+r032_delay_band_candidate,candidate,1,5,0.584128929659398,2.32360310569512,2.85162792168623,1.05094194280286,1.0943598016524,0.437912065307078,0.2,3.19200000000003,40.1586956788146,2.69202792168623,2.85162792168623,3.01122792168624

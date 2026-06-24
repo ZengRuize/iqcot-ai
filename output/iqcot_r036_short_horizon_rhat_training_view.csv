@@ -1,0 +1,13 @@
+r027_case_id,target_label,target_load_A,load_drop_norm,objective_alpha_settle,tau_ai_us,delay_events_est,selected_ref_slew_us,candidate_minus_dense_us,selected_objective_score,context_regret,skip_risk_label,settling_risk_label,phase_risk_label,rhat_target_vector,candidate_role,evidence_source
+R036_0001,20A,20,0.5,0.05,1.25,3,30,0.0,4.98873558845283,2.84286760656273,1,0,1,"skip=1,settle=0,phase=1",dense_30us_fallback,R036_dense_pair_validation
+R034_0006,20A,20,0.5,0.05,1.25,3,38,8.0,2.33513547839354,0.1892674965034402,0,0,0,"skip=0,settle=0,phase=0",folded_transition_probe,R034_full_validation
+R034_0007,20A,20,0.5,0.05,1.25,3,46,16.0,2.1458679818901,0.0,0,0,0,"skip=0,settle=0,phase=0",folded_transition_probe,R034_full_validation
+R034_0008,20A,20,0.5,0.05,1.25,3,50,20.0,4.71402088199863,2.5681529001085304,1,1,0,"skip=1,settle=1,phase=0",folded_transition_probe,R034_full_validation
+R034_0009,20A,20,0.5,0.05,1.25,3,54,24.0,3.1397379481676,0.9938699662775003,0,1,1,"skip=0,settle=1,phase=1",folded_transition_probe,R034_full_validation
+R034_0010,20A,20,0.5,0.05,1.25,3,58,28.0,2.84642417958964,0.70055619769954,0,1,0,"skip=0,settle=1,phase=0",folded_transition_probe,R034_full_validation
+R036_0002,20A,20,0.5,0.05,1.75,4,30,0.0,4.31719138789756,2.1753445914081997,1,0,0,"skip=1,settle=0,phase=0",dense_30us_fallback,R036_dense_pair_validation
+R034_0011,20A,20,0.5,0.05,1.75,4,38,8.0,2.30073671402463,0.15888991753527026,0,0,0,"skip=0,settle=0,phase=0",folded_transition_probe,R034_full_validation
+R034_0012,20A,20,0.5,0.05,1.75,4,46,16.0,4.17839615172919,2.0365493552398304,1,0,0,"skip=1,settle=0,phase=0",folded_transition_probe,R034_full_validation
+R034_0013,20A,20,0.5,0.05,1.75,4,50,20.0,2.88593932063923,0.7440925241498699,0,1,0,"skip=0,settle=1,phase=0",folded_transition_probe,R034_full_validation
+R034_0014,20A,20,0.5,0.05,1.75,4,54,24.0,2.14184679648936,0.0,0,0,0,"skip=0,settle=0,phase=0",folded_transition_probe,R034_full_validation
+R034_0015,20A,20,0.5,0.05,1.75,4,58,28.0,2.99182104466666,0.8499742481773,0,1,0,"skip=0,settle=1,phase=0",folded_transition_probe,R034_full_validation

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="28" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700">PIS-IEK amplitude sweep: worst rms wait error</text>
+<line x1="78" y1="448" x2="872" y2="448" stroke="#222"/>
+<line x1="78" y1="54" x2="78" y2="448" stroke="#222"/>
+<line x1="78.00" y1="448" x2="78.00" y2="453" stroke="#222"/>
+<text x="78.00" y="470" text-anchor="middle" font-family="Arial" font-size="11">0.002</text>
+<line x1="236.80" y1="448" x2="236.80" y2="453" stroke="#222"/>
+<text x="236.80" y="470" text-anchor="middle" font-family="Arial" font-size="11">3.2</text>
+<line x1="395.60" y1="448" x2="395.60" y2="453" stroke="#222"/>
+<text x="395.60" y="470" text-anchor="middle" font-family="Arial" font-size="11">6.4</text>
+<line x1="554.40" y1="448" x2="554.40" y2="453" stroke="#222"/>
+<text x="554.40" y="470" text-anchor="middle" font-family="Arial" font-size="11">9.6</text>
+<line x1="713.20" y1="448" x2="713.20" y2="453" stroke="#222"/>
+<text x="713.20" y="470" text-anchor="middle" font-family="Arial" font-size="11">12.8</text>
+<line x1="872.00" y1="448" x2="872.00" y2="453" stroke="#222"/>
+<text x="872.00" y="470" text-anchor="middle" font-family="Arial" font-size="11">16</text>
+<line x1="73" y1="448.00" x2="78" y2="448.00" stroke="#222"/>
+<line x1="78" y1="448.00" x2="872" y2="448.00" stroke="#ddd"/>
+<text x="69" y="452.00" text-anchor="end" font-family="Arial" font-size="11">0</text>
+<line x1="73" y1="369.20" x2="78" y2="369.20" stroke="#222"/>
+<line x1="78" y1="369.20" x2="872" y2="369.20" stroke="#ddd"/>
+<text x="69" y="373.20" text-anchor="end" font-family="Arial" font-size="11">1.97</text>
+<line x1="73" y1="290.40" x2="78" y2="290.40" stroke="#222"/>
+<line x1="78" y1="290.40" x2="872" y2="290.40" stroke="#ddd"/>
+<text x="69" y="294.40" text-anchor="end" font-family="Arial" font-size="11">3.94</text>
+<line x1="73" y1="211.60" x2="78" y2="211.60" stroke="#222"/>
+<line x1="78" y1="211.60" x2="872" y2="211.60" stroke="#ddd"/>
+<text x="69" y="215.60" text-anchor="end" font-family="Arial" font-size="11">5.92</text>
+<line x1="73" y1="132.80" x2="78" y2="132.80" stroke="#222"/>
+<line x1="78" y1="132.80" x2="872" y2="132.80" stroke="#ddd"/>
+<text x="69" y="136.80" text-anchor="end" font-family="Arial" font-size="11">7.89</text>
+<line x1="73" y1="54.00" x2="78" y2="54.00" stroke="#222"/>
+<line x1="78" y1="54.00" x2="872" y2="54.00" stroke="#ddd"/>
+<text x="69" y="58.00" text-anchor="end" font-family="Arial" font-size="11">9.86</text>
+<text x="475.0" y="498" text-anchor="middle" font-family="Arial" font-size="13">normalized amplitude: Lambda/(1e-13 V*s), Ton(ns), Mixed index</text>
+<text x="18" y="251.0" transform="rotate(-90 18 251.0)" text-anchor="middle" font-family="Arial" font-size="13">max rms wait error (%)</text>
+<polyline points="90.31,447.96 102.72,447.94 127.53,447.87 177.16,447.75 276.43,447.50 474.95,447.00 872.00,445.99" fill="none" stroke="#1f77b4" stroke-width="2.2"/>
+<circle cx="90.31" cy="447.96" r="3.2" fill="#1f77b4"/>
+<circle cx="102.72" cy="447.94" r="3.2" fill="#1f77b4"/>
+<circle cx="127.53" cy="447.87" r="3.2" fill="#1f77b4"/>
+<circle cx="177.16" cy="447.75" r="3.2" fill="#1f77b4"/>
+<circle cx="276.43" cy="447.50" r="3.2" fill="#1f77b4"/>
+<circle cx="474.95" cy="447.00" r="3.2" fill="#1f77b4"/>
+<circle cx="872.00" cy="445.99" r="3.2" fill="#1f77b4"/>
+<line x1="682" y1="66" x2="710" y2="66" stroke="#1f77b4" stroke-width="2.2"/>
+<text x="718" y="70" font-family="Arial" font-size="12">Lambda</text>
+<polyline points="78.00,440.67 78.15,429.68 78.40,411.37 78.89,374.74 80.38,265.01 82.86,83.18" fill="none" stroke="#d62728" stroke-width="2.2"/>
+<circle cx="78.00" cy="440.67" r="3.2" fill="#d62728"/>
+<circle cx="78.15" cy="429.68" r="3.2" fill="#d62728"/>
+<circle cx="78.40" cy="411.37" r="3.2" fill="#d62728"/>
+<circle cx="78.89" cy="374.74" r="3.2" fill="#d62728"/>
+<circle cx="80.38" cy="265.01" r="3.2" fill="#d62728"/>
+<circle cx="82.86" cy="83.18" r="3.2" fill="#d62728"/>
+<line x1="682" y1="86" x2="710" y2="86" stroke="#d62728" stroke-width="2.2"/>
+<text x="718" y="90" font-family="Arial" font-size="12">Ton</text>
+<polyline points="102.72,430.83 102.72,413.70 102.74,379.45 127.53,430.80 127.53,413.66 127.54,379.41 177.16,430.75 177.16,413.59 177.17,379.33" fill="none" stroke="#2ca02c" stroke-width="2.2"/>
+<circle cx="102.72" cy="430.83" r="3.2" fill="#2ca02c"/>
+<circle cx="102.72" cy="413.70" r="3.2" fill="#2ca02c"/>
+<circle cx="102.74" cy="379.45" r="3.2" fill="#2ca02c"/>
+<circle cx="127.53" cy="430.80" r="3.2" fill="#2ca02c"/>
+<circle cx="127.53" cy="413.66" r="3.2" fill="#2ca02c"/>
+<circle cx="127.54" cy="379.41" r="3.2" fill="#2ca02c"/>
+<circle cx="177.16" cy="430.75" r="3.2" fill="#2ca02c"/>
+<circle cx="177.16" cy="413.59" r="3.2" fill="#2ca02c"/>
+<circle cx="177.17" cy="379.33" r="3.2" fill="#2ca02c"/>
+<line x1="682" y1="106" x2="710" y2="106" stroke="#2ca02c" stroke-width="2.2"/>
+<text x="718" y="110" font-family="Arial" font-size="12">Mixed</text>
+</svg>

@@ -1,0 +1,16 @@
+target_label,objective,tau_ai_us,q_phi_candidate_us,q_phi_candidate_label,candidate_total_risk,plant_commit_us,plant_commit_label,plant_total_risk,deployment_status,boundary_note
+10A,score_settle010,1.0,32.0,near_tie_band,0.43,30.0,near_tie_band,0.43,fallback_or_validation_needed,R033 supports a 30-34us delay-sensitive near-tie band
+10A,score_settle010,2.0,32.0,near_tie_band,0.43,30.0,near_tie_band,0.43,fallback_or_validation_needed,R033 supports a 30-34us delay-sensitive near-tie band
+10A,score_settle010,3.0,33.0,plant_admissible,0.462,33.0,plant_admissible,0.462,plant_admissible_with_current_evidence,R033 tau=3us derived-Simulink point supports 33us locally
+10A,score_settle010,5.0,33.0,near_tie_band,0.462,30.0,near_tie_band,0.43,fallback_or_validation_needed,R033 supports a 30-34us delay-sensitive near-tie band
+20A,base,1.0,86.0,objective_probe,0.634,80.0,dense_fallback,0.25,plant_admissible_with_current_evidence,"base objective can favor longer slew, but plant commit needs settling-aware guard"
+20A,base,3.0,80.0,dense_fallback,0.25,80.0,dense_fallback,0.25,plant_admissible_with_current_evidence,80us remains the conservative validated fallback
+20A,score_settle005,0.5,50.0,candidate_only,0.2637621008888226,30.0,dense_fallback,0.11050978380966581,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation
+20A,score_settle005,0.75,50.0,candidate_only,0.26012606814831024,30.0,dense_fallback,0.11830128253933526,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation
+20A,score_settle005,1.0,50.0,candidate_only,0.23557540852484068,30.0,dense_fallback,0.1709098388753414,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation
+20A,score_settle005,1.25,50.0,transition_pocket,0.17002343113221008,30.0,dense_fallback,0.3113783618595499,fallback_or_validation_needed,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation
+20A,score_settle005,1.5,50.0,transition_pocket,0.124,50.0,transition_pocket,0.124,plant_admissible_with_current_evidence,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation
+20A,score_settle005,1.75,50.0,transition_pocket,0.17002343113221008,30.0,dense_fallback,0.3113783618595499,fallback_or_validation_needed,R033 supports a narrow 50us pocket at tau=1.5us; neighbors need R034 validation
+20A,score_settle005,2.0,50.0,candidate_only,0.23557540852484068,30.0,dense_fallback,0.1709098388753414,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation
+20A,score_settle005,2.5,50.0,candidate_only,0.2637621008888226,30.0,dense_fallback,0.11050978380966581,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation
+20A,score_settle005,3.0,50.0,candidate_only,0.26399991792256056,30.0,dense_fallback,0.11000017588022731,plant_admissible_with_current_evidence,intermediate candidate for transition-pocket validation

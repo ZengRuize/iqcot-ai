@@ -1,0 +1,46 @@
+target_load_A,target_label,ref_slew_us,matlab_entry,expected_summary,priority,reason
+20.0,20A,32,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.
+20.0,20A,34,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.
+20.0,20A,35,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.
+20.0,20A,36,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.
+20.0,20A,38,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.744 us for settling-aware objectives.
+20.0,20A,62,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+20.0,20A,64,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+20.0,20A,66,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+20.0,20A,68,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+20.0,20A,70,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+20.0,20A,84,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 87.244 us for base score.
+20.0,20A,86,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 87.244 us for base score.
+20.0,20A,88,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 87.244 us for base score.
+20.0,20A,90,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 87.244 us for base score.
+20.0,20A,92,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 87.244 us for base score.
+10.0,10A,32,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,34,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,35,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,36,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,38,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,62,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,64,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,66,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,68,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,70,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,84,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,86,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,88,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,90,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+10.0,10A,92,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+0.001,near0A,32,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.
+0.001,near0A,34,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.
+0.001,near0A,35,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.
+0.001,near0A,36,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.
+0.001,near0A,38,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,primary,R023 local quadratic candidate around 34.633 us for strong settling penalty.
+0.001,near0A,62,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 65.710 us for base score.
+0.001,near0A,64,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 65.710 us for base score.
+0.001,near0A,66,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 65.710 us for base score.
+0.001,near0A,68,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 65.710 us for base score.
+0.001,near0A,70,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,secondary,R023 local quadratic candidate around 65.710 us for base score.
+0.001,near0A,84,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+0.001,near0A,86,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+0.001,near0A,88,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+0.001,near0A,90,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid
+0.001,near0A,92,iqcot_dynamic_ref_slew_fine_sweep,E:/Desktop/codex/output/iqcot_dynamic_ref_slew_fine_summary.csv,observer,collected because wrapper sweep runs all three targets on the shared fine grid

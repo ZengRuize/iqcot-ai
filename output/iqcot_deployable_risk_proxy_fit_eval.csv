@@ -1,0 +1,17 @@
+model,target,split,n_rows,rmse,mae,accuracy,precision,recall,boundary,tp,fp,tn,fn
+deployable_score_smooth,objective_score,in_sample,207,0.8545552031653192,0.6382564005994961,,,,uses deployable context only; smooth fit cannot represent mode jumps,,,,
+parametric_phase_proxy,final_phase_spacing_std_ns,in_sample,69,9.580343166343894,7.393445592808831,,,,parametric proxy only; discontinuities still require calibrated table or short-horizon predictor,,,,
+parametric_settle_proxy,settle_time_us,in_sample,69,2.225509841065242,1.4799045822418595,,,,parametric proxy only; discontinuities still require calibrated table or short-horizon predictor,,,,
+parametric_excess_skip_proxy,excess_skip_count,in_sample,69,0.3188133695036157,0.2215668561407588,0.855072463768116,0.625,0.4166666666666667,"linear probability proxy; kept as ablation, not final safety evidence",5.0,3.0,54.0,7.0
+deployable_score_smooth,objective_score,leave_one_target:20A,69,10.613333780011638,10.50505315352619,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_phase_proxy,final_phase_spacing_std_ns,leave_one_target:20A,23,36.61683816862574,35.08474932111218,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_settle_proxy,settle_time_us,leave_one_target:20A,23,17.685550817919665,17.3363207739259,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_excess_skip_proxy,excess_skip_count,leave_one_target:20A,23,0.6088673242903173,0.4513188172262639,0.5652173913043478,0.0,0.0,target extrapolation check; high error means calibration is required,0.0,0.0,13.0,10.0
+deployable_score_smooth,objective_score,leave_one_target:10A,69,5.833591498325387,5.819038867676106,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_phase_proxy,final_phase_spacing_std_ns,leave_one_target:10A,23,9.734091551375293,8.147199115690336,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_settle_proxy,settle_time_us,leave_one_target:10A,23,3.6046756111551774,3.07298338516911,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_excess_skip_proxy,excess_skip_count,leave_one_target:10A,23,0.16895359891359454,0.1451334797919993,1.0,0.0,0.0,target extrapolation check; high error means calibration is required,0.0,0.0,23.0,0.0
+deployable_score_smooth,objective_score,leave_one_target:near0A,69,12.844041910720662,12.793379449959144,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_phase_proxy,final_phase_spacing_std_ns,leave_one_target:near0A,23,48.5237678064787,47.24037864273249,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_settle_proxy,settle_time_us,leave_one_target:near0A,23,19.42225905254186,19.145837440227357,,,,target extrapolation check; high error means calibration is required,,,,
+parametric_excess_skip_proxy,excess_skip_count,leave_one_target:near0A,23,0.3329225170794092,0.21681474072523876,0.9130434782608695,0.0,0.0,target extrapolation check; high error means calibration is required,0.0,0.0,21.0,2.0

@@ -1,0 +1,4 @@
+target_load_A,best_ref_slew_us,undershoot_mV,final_vout_error_mV,skip_count_est,settle_time_us,final_phase_spacing_std_ns,tradeoff_score
+20,40,1.199,-0.434,0,0.938,43.336,2.500
+10,40,5.010,-0.549,1,17.534,91.296,9.385
+0.001,40,10.897,-0.569,2,21.822,110.846,17.684

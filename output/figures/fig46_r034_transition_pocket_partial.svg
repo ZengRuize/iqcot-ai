@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="540" viewBox="0 0 1100 540">
+<rect width="100%" height="100%" fill="white"/>
+<text x="550" y="34" text-anchor="middle" font-family="Arial" font-size="18">R034 partial transition-pocket validation</text>
+<rect x="90" y="70" width="650" height="320" fill="#fbfbfb" stroke="#ddd"/>
+<text x="90" y="55" font-family="Arial" font-size="13">Score landscape samples and tentative moving ridge</text>
+<line x1="90.0" y1="70" x2="90.0" y2="390" stroke="#eee"/>
+<text x="90.0" y="410" text-anchor="middle" font-family="Arial" font-size="10">1</text>
+<line x1="252.5" y1="70" x2="252.5" y2="390" stroke="#eee"/>
+<text x="252.5" y="410" text-anchor="middle" font-family="Arial" font-size="10">1.25</text>
+<line x1="415.0" y1="70" x2="415.0" y2="390" stroke="#eee"/>
+<text x="415.0" y="410" text-anchor="middle" font-family="Arial" font-size="10">1.5</text>
+<line x1="577.5" y1="70" x2="577.5" y2="390" stroke="#eee"/>
+<text x="577.5" y="410" text-anchor="middle" font-family="Arial" font-size="10">1.75</text>
+<line x1="740.0" y1="70" x2="740.0" y2="390" stroke="#eee"/>
+<text x="740.0" y="410" text-anchor="middle" font-family="Arial" font-size="10">2</text>
+<line x1="90" y1="340.8" x2="740" y2="340.8" stroke="#eee"/>
+<text x="80" y="344.8" text-anchor="end" font-family="Arial" font-size="10">38</text>
+<line x1="90" y1="242.3" x2="740" y2="242.3" stroke="#eee"/>
+<text x="80" y="246.3" text-anchor="end" font-family="Arial" font-size="10">46</text>
+<line x1="90" y1="193.1" x2="740" y2="193.1" stroke="#eee"/>
+<text x="80" y="197.1" text-anchor="end" font-family="Arial" font-size="10">50</text>
+<line x1="90" y1="143.8" x2="740" y2="143.8" stroke="#eee"/>
+<text x="80" y="147.8" text-anchor="end" font-family="Arial" font-size="10">54</text>
+<line x1="90" y1="94.6" x2="740" y2="94.6" stroke="#eee"/>
+<text x="80" y="98.6" text-anchor="end" font-family="Arial" font-size="10">58</text>
+<circle cx="252.5" cy="340.8" r="12.4" fill="#C53030" opacity="0.78"/>
+<circle cx="252.5" cy="242.3" r="13.0" fill="#2F855A" opacity="0.78"/>
+<circle cx="252.5" cy="193.1" r="5.0" fill="#C53030" opacity="0.78"/>
+<circle cx="252.5" cy="143.8" r="9.9" fill="#C53030" opacity="0.78"/>
+<circle cx="252.5" cy="94.6" r="10.8" fill="#C53030" opacity="0.78"/>
+<circle cx="415.0" cy="340.8" r="12.4" fill="#4C78A8" opacity="0.78"/>
+<circle cx="415.0" cy="193.1" r="13.0" fill="#4C78A8" opacity="0.78"/>
+<circle cx="415.0" cy="94.6" r="10.5" fill="#4C78A8" opacity="0.78"/>
+<circle cx="577.5" cy="340.8" r="12.5" fill="#C53030" opacity="0.78"/>
+<circle cx="577.5" cy="242.3" r="6.7" fill="#C53030" opacity="0.78"/>
+<circle cx="577.5" cy="193.1" r="10.7" fill="#C53030" opacity="0.78"/>
+<circle cx="577.5" cy="143.8" r="13.0" fill="#2F855A" opacity="0.78"/>
+<circle cx="577.5" cy="94.6" r="10.4" fill="#C53030" opacity="0.78"/>
+<polyline points="252.5,242.3 415.0,193.1 577.5,143.8" fill="none" stroke="#1A365D" stroke-width="3"/>
+<text x="790" y="82" font-family="Arial" font-size="13">Observed best ridge</text>
+<text x="790" y="112" font-family="Arial" font-size="11">tau=1.25: best=46us, formula err=+0.0us</text>
+<text x="790" y="138" font-family="Arial" font-size="11">tau=1.5: best=50us, formula err=+0.0us</text>
+<text x="790" y="164" font-family="Arial" font-size="11">tau=1.75: best=54us, formula err=+0.0us</text>
+<text x="90" y="500" font-family="Arial" font-size="11" fill="#555">Green=new R034 best, blue=R033 anchor, red=non-best. Derived Simulink only.</text>
+</svg>

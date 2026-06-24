@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="590" viewBox="0 0 1240 590">
+<rect width="100%" height="100%" fill="white"/>
+<text x="620" y="34" text-anchor="middle" font-family="Arial" font-size="18">R033 delay-band derived-Simulink validation</text>
+<rect x="86" y="76" width="760" height="300" fill="#fbfbfb" stroke="#ddd"/>
+<line x1="86" y1="226.0" x2="846" y2="226.0" stroke="#333"/>
+<text x="86" y="56" font-family="Arial" font-size="13">Best non-dense candidate minus dense score (negative is better)</text>
+<line x1="82" y1="376.0" x2="846" y2="376.0" stroke="#eee"/>
+<text x="76" y="380.0" text-anchor="end" font-family="Arial" font-size="10">-2.61</text>
+<line x1="82" y1="301.0" x2="846" y2="301.0" stroke="#eee"/>
+<text x="76" y="305.0" text-anchor="end" font-family="Arial" font-size="10">-1.30</text>
+<line x1="82" y1="226.0" x2="846" y2="226.0" stroke="#eee"/>
+<text x="76" y="230.0" text-anchor="end" font-family="Arial" font-size="10">0.00</text>
+<line x1="82" y1="151.0" x2="846" y2="151.0" stroke="#eee"/>
+<text x="76" y="155.0" text-anchor="end" font-family="Arial" font-size="10">1.30</text>
+<line x1="82" y1="76.0" x2="846" y2="76.0" stroke="#eee"/>
+<text x="76" y="80.0" text-anchor="end" font-family="Arial" font-size="10">2.61</text>
+<rect x="113.3" y="222.6" width="54.0" height="3.4" fill="#2F855A"/>
+<text x="140.3" y="239.0" text-anchor="middle" font-family="Arial" font-size="9">-0.06</text>
+<text x="140.3" y="400.0" text-anchor="end" transform="rotate(-45 140.3,400.0)" font-family="Arial" font-size="9">10A/settle010/tau=2</text>
+<rect x="221.9" y="215.9" width="54.0" height="10.1" fill="#2F855A"/>
+<text x="248.9" y="239.0" text-anchor="middle" font-family="Arial" font-size="9">-0.18</text>
+<text x="248.9" y="400.0" text-anchor="end" transform="rotate(-45 248.9,400.0)" font-family="Arial" font-size="9">10A/settle010/tau=3</text>
+<rect x="330.4" y="222.5" width="54.0" height="3.5" fill="#2F855A"/>
+<text x="357.4" y="239.0" text-anchor="middle" font-family="Arial" font-size="9">-0.06</text>
+<text x="357.4" y="400.0" text-anchor="end" transform="rotate(-45 357.4,400.0)" font-family="Arial" font-size="9">20A/base/tau=1</text>
+<rect x="439.0" y="226.0" width="54.0" height="1.4" fill="#C53030"/>
+<text x="466.0" y="220.0" text-anchor="middle" font-family="Arial" font-size="9">0.02</text>
+<text x="466.0" y="400.0" text-anchor="end" transform="rotate(-45 466.0,400.0)" font-family="Arial" font-size="9">20A/base/tau=3</text>
+<rect x="547.6" y="226.0" width="54.0" height="2.9" fill="#C53030"/>
+<text x="574.6" y="220.0" text-anchor="middle" font-family="Arial" font-size="9">0.05</text>
+<text x="574.6" y="400.0" text-anchor="end" transform="rotate(-45 574.6,400.0)" font-family="Arial" font-size="9">20A/settle005/tau=0.75</text>
+<rect x="656.1" y="101.0" width="54.0" height="125.0" fill="#2F855A"/>
+<text x="683.1" y="239.0" text-anchor="middle" font-family="Arial" font-size="9">-2.17</text>
+<text x="683.1" y="400.0" text-anchor="end" transform="rotate(-45 683.1,400.0)" font-family="Arial" font-size="9">20A/settle005/tau=1.5</text>
+<rect x="764.7" y="226.0" width="54.0" height="17.4" fill="#C53030"/>
+<text x="791.7" y="220.0" text-anchor="middle" font-family="Arial" font-size="9">0.30</text>
+<text x="791.7" y="400.0" text-anchor="end" transform="rotate(-45 791.7,400.0)" font-family="Arial" font-size="9">20A/settle005/tau=3</text>
+<text x="900" y="92" font-family="Arial" font-size="13">Context best T_slew</text>
+<circle cx="910" cy="120" r="5" fill="#2F855A"/>
+<text x="924" y="124" font-family="Arial" font-size="11">10A/score_settle010/tau=2: 32us (near_tie_probe)</text>
+<circle cx="910" cy="144" r="5" fill="#2F855A"/>
+<text x="924" y="148" font-family="Arial" font-size="11">10A/score_settle010/tau=3: 33us (near_tie_probe)</text>
+<circle cx="910" cy="168" r="5" fill="#2F855A"/>
+<text x="924" y="172" font-family="Arial" font-size="11">20A/base/tau=1: 86us (direct_override_probe)</text>
+<circle cx="910" cy="192" r="5" fill="#4C78A8"/>
+<text x="924" y="196" font-family="Arial" font-size="11">20A/base/tau=3: 80us (dense_fallback)</text>
+<circle cx="910" cy="216" r="5" fill="#4C78A8"/>
+<text x="924" y="220" font-family="Arial" font-size="11">20A/score_settle005/tau=0.75: 30us (dense_fallback)</text>
+<circle cx="910" cy="240" r="5" fill="#2F855A"/>
+<text x="924" y="244" font-family="Arial" font-size="11">20A/score_settle005/tau=1.5: 50us (intermediate_band)</text>
+<circle cx="910" cy="264" r="5" fill="#4C78A8"/>
+<text x="924" y="268" font-family="Arial" font-size="11">20A/score_settle005/tau=3: 30us (dense_fallback)</text>
+<text x="86" y="550" font-family="Arial" font-size="11" fill="#555">Derived Simulink only; not hardware validation or global optimum proof.</text>
+</svg>

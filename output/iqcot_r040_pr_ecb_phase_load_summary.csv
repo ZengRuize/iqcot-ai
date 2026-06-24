@@ -1,0 +1,4 @@
+target_label,n_success,offset_min_us,offset_max_us,energy_mV_min,energy_mV_max,charge_esr_mV_min,charge_esr_mV_max,actual_peak_mV_min,actual_peak_mV_max,r_E_min,r_E_max,energy_over_actual_mean,charge_esr_over_actual_mean,energy_over_actual_std,charge_esr_over_actual_std
+10A,2,0.000000,0.250000,5.378187,5.872365,5.733410,6.778560,3.168658,4.196235,0.587237,0.677856,1.567468,1.712402,0.285798,0.097011
+20A,4,0.000000,0.375000,4.085182,5.648852,3.198815,3.903338,2.134350,2.244088,0.408518,0.564885,2.168392,1.640516,0.319242,0.129897
+near0,2,0.000000,0.250000,5.717379,6.211390,8.579882,9.929436,5.192687,6.524852,0.857988,0.992944,1.036213,1.587044,0.159967,0.065257

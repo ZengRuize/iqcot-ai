@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+  <P Name="Location">[-1, -7, 1707, 1020]</P>
+  <Block BlockType="Inport" Name="IL_sample1" SID="496">
+    <P Name="Position">[20, 40, 50, 60]</P>
+    <P Name="ZOrder">3</P>
+  </Block>
+  <Block BlockType="Inport" Name="IL_sample2" SID="505">
+    <P Name="Position">[20, 170, 50, 190]</P>
+    <P Name="ZOrder">12</P>
+    <P Name="Port">2</P>
+  </Block>
+  <Block BlockType="Inport" Name="IL_sample3" SID="514">
+    <P Name="Position">[20, 300, 50, 320]</P>
+    <P Name="ZOrder">21</P>
+    <P Name="Port">3</P>
+  </Block>
+  <Block BlockType="Inport" Name="IL_sample4" SID="523">
+    <P Name="Position">[20, 430, 50, 450]</P>
+    <P Name="ZOrder">30</P>
+    <P Name="Port">4</P>
+  </Block>
+  <Block BlockType="DataTypeConversion" Name="ADC_Double1" SID="540">
+    <P Name="Position">[135, 35, 165, 65]</P>
+    <P Name="ZOrder">39</P>
+    <P Name="OutDataTypeStr">double</P>
+    <P Name="RndMeth">Floor</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="DataTypeConversion" Name="ADC_Double2" SID="541">
+    <P Name="Position">[135, 165, 165, 195]</P>
+    <P Name="ZOrder">40</P>
+    <P Name="OutDataTypeStr">double</P>
+    <P Name="RndMeth">Floor</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="DataTypeConversion" Name="ADC_Double3" SID="542">
+    <P Name="Position">[135, 295, 165, 325]</P>
+    <P Name="ZOrder">41</P>
+    <P Name="OutDataTypeStr">double</P>
+    <P Name="RndMeth">Floor</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="DataTypeConversion" Name="ADC_Double4" SID="543">
+    <P Name="Position">[135, 425, 165, 455]</P>
+    <P Name="ZOrder">42</P>
+    <P Name="OutDataTypeStr">double</P>
+    <P Name="RndMeth">Floor</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="Gain" Name="ADC_to_A1" SID="498">
+    <P Name="Position">[145, 35, 215, 65]</P>
+    <P Name="ZOrder">5</P>
+    <P Name="Gain">1 / IL_adc_counts_per_A</P>
+    <P Name="OutDataTypeStr">double</P>
+  </Block>
+  <Block BlockType="Gain" Name="ADC_to_A2" SID="507">
+    <P Name="Position">[145, 165, 215, 195]</P>
+    <P Name="ZOrder">14</P>
+    <P Name="Gain">1 / IL_adc_counts_per_A</P>
+    <P Name="OutDataTypeStr">double</P>
+  </Block>
+  <Block BlockType="Gain" Name="ADC_to_A3" SID="516">
+    <P Name="Position">[145, 295, 215, 325]</P>
+    <P Name="ZOrder">23</P>
+    <P Name="Gain">1 / IL_adc_counts_per_A</P>
+    <P Name="OutDataTypeStr">double</P>
+  </Block>
+  <Block BlockType="Gain" Name="ADC_to_A4" SID="525">
+    <P Name="Position">[145, 425, 215, 455]</P>
+    <P Name="ZOrder">32</P>
+    <P Name="Gain">1 / IL_adc_counts_per_A</P>
+    <P Name="OutDataTypeStr">double</P>
+  </Block>
+  <Block BlockType="Abs" Name="Abs1" SID="497">
+    <P Name="Position">[90, 35, 120, 65]</P>
+    <P Name="ZOrder">4</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="Abs" Name="Abs2" SID="506">
+    <P Name="Position">[90, 165, 120, 195]</P>
+    <P Name="ZOrder">13</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="Abs" Name="Abs3" SID="515">
+    <P Name="Position">[90, 295, 120, 325]</P>
+    <P Name="ZOrder">22</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="Abs" Name="Abs4" SID="524">
+    <P Name="Position">[90, 425, 120, 455]</P>
+    <P Name="ZOrder">31</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ierr1" SID="499">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[255, 30, 285, 70]</P>
+    <P Name="ZOrder">6</P>
+    <P Name="Inputs">+-</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ierr2" SID="508">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[255, 160, 285, 200]</P>
+    <P Name="ZOrder">15</P>
+    <P Name="Inputs">+-</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ierr3" SID="517">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[255, 290, 285, 330]</P>
+    <P Name="ZOrder">24</P>
+    <P Name="Inputs">+-</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ierr4" SID="526">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[255, 420, 285, 460]</P>
+    <P Name="ZOrder">33</P>
+    <P Name="Inputs">+-</P>
+  </Block>
+  <Block BlockType="TransferFcn" Name="Iq_Filter1" SID="500">
+    <P Name="Position">[310, 30, 395, 70]</P>
+    <P Name="ZOrder">7</P>
+    <P Name="Numerator">1</P>
+    <P Name="Denominator">[1 1/Tiqcot_leak]</P>
+  </Block>
+  <Block BlockType="TransferFcn" Name="Iq_Filter2" SID="509">
+    <P Name="Position">[310, 160, 395, 200]</P>
+    <P Name="ZOrder">16</P>
+    <P Name="Numerator">1</P>
+    <P Name="Denominator">[1 1/Tiqcot_leak]</P>
+  </Block>
+  <Block BlockType="TransferFcn" Name="Iq_Filter3" SID="518">
+    <P Name="Position">[310, 290, 395, 330]</P>
+    <P Name="ZOrder">25</P>
+    <P Name="Numerator">1</P>
+    <P Name="Denominator">[1 1/Tiqcot_leak]</P>
+  </Block>
+  <Block BlockType="TransferFcn" Name="Iq_Filter4" SID="527">
+    <P Name="Position">[310, 420, 395, 460]</P>
+    <P Name="ZOrder">34</P>
+    <P Name="Numerator">1</P>
+    <P Name="Denominator">[1 1/Tiqcot_leak]</P>
+  </Block>
+  <Block BlockType="Constant" Name="Iref_Phase" SID="494">
+    <P Name="Position">[70, 70, 135, 100]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Value">Iph</P>
+  </Block>
+  <Block BlockType="Gain" Name="Kiqcot1" SID="501">
+    <P Name="Position">[425, 30, 500, 70]</P>
+    <P Name="ZOrder">8</P>
+    <P Name="Gain">Iqcot_enable * Kiqcot</P>
+  </Block>
+  <Block BlockType="Gain" Name="Kiqcot2" SID="510">
+    <P Name="Position">[425, 160, 500, 200]</P>
+    <P Name="ZOrder">17</P>
+    <P Name="Gain">Iqcot_enable * Kiqcot</P>
+  </Block>
+  <Block BlockType="Gain" Name="Kiqcot3" SID="519">
+    <P Name="Position">[425, 290, 500, 330]</P>
+    <P Name="ZOrder">26</P>
+    <P Name="Gain">Iqcot_enable * Kiqcot</P>
+  </Block>
+  <Block BlockType="Gain" Name="Kiqcot4" SID="528">
+    <P Name="Position">[425, 420, 500, 460]</P>
+    <P Name="ZOrder">35</P>
+    <P Name="Gain">Iqcot_enable * Kiqcot</P>
+  </Block>
+  <Block BlockType="Constant" Name="Ton_Base" SID="495">
+    <P Name="Position">[70, 125, 135, 155]</P>
+    <P Name="ZOrder">2</P>
+    <P Name="Value">Ton_cmd</P>
+  </Block>
+  <Block BlockType="Saturate" Name="Ton_Limit1" SID="503">
+    <P Name="Position">[595, 30, 675, 70]</P>
+    <P Name="ZOrder">10</P>
+    <P Name="UpperLimit">Ton_iq_max</P>
+    <P Name="LowerLimit">Ton_iq_min</P>
+  </Block>
+  <Block BlockType="Saturate" Name="Ton_Limit2" SID="512">
+    <P Name="Position">[595, 160, 675, 200]</P>
+    <P Name="ZOrder">19</P>
+    <P Name="UpperLimit">Ton_iq_max</P>
+    <P Name="LowerLimit">Ton_iq_min</P>
+  </Block>
+  <Block BlockType="Saturate" Name="Ton_Limit3" SID="521">
+    <P Name="Position">[595, 290, 675, 330]</P>
+    <P Name="ZOrder">28</P>
+    <P Name="UpperLimit">Ton_iq_max</P>
+    <P Name="LowerLimit">Ton_iq_min</P>
+  </Block>
+  <Block BlockType="Saturate" Name="Ton_Limit4" SID="530">
+    <P Name="Position">[595, 420, 675, 460]</P>
+    <P Name="ZOrder">37</P>
+    <P Name="UpperLimit">Ton_iq_max</P>
+    <P Name="LowerLimit">Ton_iq_min</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ton_Sum1" SID="502">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[535, 30, 565, 70]</P>
+    <P Name="ZOrder">9</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ton_Sum2" SID="511">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[535, 160, 565, 200]</P>
+    <P Name="ZOrder">18</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ton_Sum3" SID="520">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[535, 290, 565, 330]</P>
+    <P Name="ZOrder">27</P>
+  </Block>
+  <Block BlockType="Sum" Name="Ton_Sum4" SID="529">
+    <PortCounts in="2" out="1"/>
+    <P Name="Position">[535, 420, 565, 460]</P>
+    <P Name="ZOrder">36</P>
+  </Block>
+  <Block BlockType="Outport" Name="Ton_iqcot1" SID="504">
+    <P Name="Position">[715, 40, 745, 60]</P>
+    <P Name="ZOrder">11</P>
+  </Block>
+  <Block BlockType="Outport" Name="Ton_iqcot2" SID="513">
+    <P Name="Position">[715, 170, 745, 190]</P>
+    <P Name="ZOrder">20</P>
+    <P Name="Port">2</P>
+  </Block>
+  <Block BlockType="Outport" Name="Ton_iqcot3" SID="522">
+    <P Name="Position">[715, 300, 745, 320]</P>
+    <P Name="ZOrder">29</P>
+    <P Name="Port">3</P>
+  </Block>
+  <Block BlockType="Outport" Name="Ton_iqcot4" SID="531">
+    <P Name="Position">[715, 430, 745, 450]</P>
+    <P Name="ZOrder">38</P>
+    <P Name="Port">4</P>
+  </Block>
+  <Line>
+    <P Name="ZOrder">1</P>
+    <P Name="Points">[145, 110; 210, 0]</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">2</P>
+    <P Name="Src">496#out:1</P>
+    <P Name="Dst">497#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">74</P>
+    <P Name="Src">497#out:1</P>
+    <P Name="Dst">540#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">4</P>
+    <P Name="Src">498#out:1</P>
+    <P Name="Points">[30, 0; 0, 35]</P>
+    <P Name="Dst">499#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">15</P>
+    <P Name="Src">494#out:1</P>
+    <P Name="Points">[0, 0]</P>
+    <Branch>
+      <P Name="ZOrder">5</P>
+      <P Name="Points">[110, 0; 0, -70]</P>
+      <P Name="Dst">499#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">16</P>
+      <P Name="Points">[120, 0; 0, 60]</P>
+      <P Name="Dst">508#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">27</P>
+      <P Name="Points">[110, 0; 0, 190]</P>
+      <P Name="Dst">517#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">37</P>
+      <P Name="Points">[110, 0; 0, 320]</P>
+      <P Name="Dst">526#in:1</P>
+    </Branch>
+  </Line>
+  <Line>
+    <P Name="ZOrder">6</P>
+    <P Name="Src">499#out:1</P>
+    <P Name="Dst">500#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">7</P>
+    <P Name="Src">500#out:1</P>
+    <P Name="Dst">501#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">8</P>
+    <P Name="Src">501#out:1</P>
+    <P Name="Points">[25, 0; 0, 35]</P>
+    <P Name="Dst">502#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">20</P>
+    <P Name="Src">495#out:1</P>
+    <P Name="Points">[0, 0]</P>
+    <Branch>
+      <P Name="ZOrder">9</P>
+      <P Name="Points">[435, 0; 0, -125]</P>
+      <P Name="Dst">502#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">21</P>
+      <P Name="Points">[410, 0]</P>
+      <P Name="Dst">511#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">31</P>
+      <P Name="Points">[390, 0; 0, 135]</P>
+      <P Name="Dst">520#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">41</P>
+      <P Name="Points">[390, 0; 0, 265]</P>
+      <P Name="Dst">529#in:1</P>
+    </Branch>
+  </Line>
+  <Line>
+    <P Name="ZOrder">10</P>
+    <P Name="Src">502#out:1</P>
+    <P Name="Dst">503#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">11</P>
+    <P Name="Src">503#out:1</P>
+    <P Name="Dst">504#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">12</P>
+    <P Name="Src">505#out:1</P>
+    <P Name="Dst">506#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">78</P>
+    <P Name="Src">506#out:1</P>
+    <P Name="Dst">541#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">14</P>
+    <P Name="Src">507#out:1</P>
+    <P Name="Points">[30, 0; 0, 35]</P>
+    <P Name="Dst">508#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">17</P>
+    <P Name="Src">508#out:1</P>
+    <P Name="Dst">509#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">18</P>
+    <P Name="Src">509#out:1</P>
+    <P Name="Dst">510#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">19</P>
+    <P Name="Src">510#out:1</P>
+    <P Name="Points">[25, 0; 0, 35]</P>
+    <P Name="Dst">511#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">22</P>
+    <P Name="Src">511#out:1</P>
+    <P Name="Dst">512#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">23</P>
+    <P Name="Src">512#out:1</P>
+    <P Name="Dst">513#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">24</P>
+    <P Name="Src">514#out:1</P>
+    <P Name="Dst">515#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">82</P>
+    <P Name="Src">515#out:1</P>
+    <P Name="Dst">542#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">26</P>
+    <P Name="Src">516#out:1</P>
+    <P Name="Points">[30, 0; 0, 35]</P>
+    <P Name="Dst">517#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">28</P>
+    <P Name="Src">517#out:1</P>
+    <P Name="Dst">518#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">29</P>
+    <P Name="Src">518#out:1</P>
+    <P Name="Dst">519#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">30</P>
+    <P Name="Src">519#out:1</P>
+    <P Name="Points">[25, 0; 0, 35]</P>
+    <P Name="Dst">520#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">32</P>
+    <P Name="Src">520#out:1</P>
+    <P Name="Dst">521#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">33</P>
+    <P Name="Src">521#out:1</P>
+    <P Name="Dst">522#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">34</P>
+    <P Name="Src">523#out:1</P>
+    <P Name="Dst">524#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">86</P>
+    <P Name="Src">524#out:1</P>
+    <P Name="Dst">543#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">36</P>
+    <P Name="Src">525#out:1</P>
+    <P Name="Points">[30, 0; 0, 35]</P>
+    <P Name="Dst">526#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">38</P>
+    <P Name="Src">526#out:1</P>
+    <P Name="Dst">527#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">39</P>
+    <P Name="Src">527#out:1</P>
+    <P Name="Dst">528#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">40</P>
+    <P Name="Src">528#out:1</P>
+    <P Name="Points">[25, 0; 0, 35]</P>
+    <P Name="Dst">529#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">42</P>
+    <P Name="Src">529#out:1</P>
+    <P Name="Dst">530#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">43</P>
+    <P Name="Src">530#out:1</P>
+    <P Name="Dst">531#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">75</P>
+    <P Name="Src">540#out:1</P>
+    <P Name="Dst">498#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">79</P>
+    <P Name="Src">541#out:1</P>
+    <P Name="Dst">507#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">83</P>
+    <P Name="Src">542#out:1</P>
+    <P Name="Dst">516#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">87</P>
+    <P Name="Src">543#out:1</P>
+    <P Name="Dst">525#in:1</P>
+  </Line>
+</System>

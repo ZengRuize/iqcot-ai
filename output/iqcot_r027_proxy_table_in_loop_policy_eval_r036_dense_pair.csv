@@ -1,0 +1,2 @@
+policy,policy_role,online_available_inputs_only,n_cases,mean_switching_regret,max_switching_regret,mean_selected_objective_score,mean_undershoot_mV,max_undershoot_mV,mean_abs_final_vout_error_mV,mean_skip_count,mean_settle_time_us,mean_phase_spacing_std_ns,mean_base_score,mean_score_settle005,mean_score_settle010
+r036_dense_fallback_pair,dense_fallback,1,2,0,0,4.6529634881752,1.02258396389504,1.05338832954927,0.463233037058364,1,0.938000000000024,56.0123243610896,4.6060634881752,4.6529634881752,4.6998634881752

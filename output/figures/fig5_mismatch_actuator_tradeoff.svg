@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#111} .axis{stroke:#111;stroke-width:1.4} .grid{stroke:#ddd;stroke-width:1} .thin{stroke:#555;stroke-width:1.2} .main{stroke:#1f4e79;stroke-width:2.4;fill:none} .alt{stroke:#a23b2a;stroke-width:2.4;fill:none} .green{stroke:#2d6a4f;stroke-width:2.4;fill:none} .dash{stroke-dasharray:6 4}</style>
+<text x="490" y="42" font-size="22" text-anchor="middle" font-weight="bold">DCR mismatch: current balance benefit versus phase-spacing cost</text>
+<line x1="95" y1="410" x2="855" y2="410" class="axis" />
+<line x1="95" y1="100" x2="95" y2="410" class="axis" />
+<line x1="855" y1="100" x2="855" y2="410" class="axis" />
+<text x="77" y="255.0" font-size="15" text-anchor="middle" font-weight="normal">current pk-pk (A)</text>
+<text x="913" y="255.0" font-size="15" text-anchor="middle" font-weight="normal">phase wait pk-pk (ns)</text>
+<rect x="145.0" y="140.434861877181" width="56" height="269.565138122819" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<rect x="207.0" y="140.43478260869563" width="56" height="269.5652173913044" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="201.0" y="442" font-size="12" text-anchor="middle" font-weight="normal">no trim</text>
+<text x="169" y="132.434861877181" font-size="12" text-anchor="middle" font-weight="normal">4.09</text>
+<text x="259" y="132.43478260869563" font-size="12" text-anchor="middle" font-weight="normal">492</text>
+<rect x="291.0" y="140.43478260869563" width="56" height="269.5652173913044" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<rect x="353.0" y="140.52099585282548" width="56" height="269.4790041471745" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="347.0" y="442" font-size="12" text-anchor="middle" font-weight="normal">Λdiff</text>
+<text x="315" y="132.43478260869563" font-size="12" text-anchor="middle" font-weight="normal">4.09</text>
+<text x="405" y="132.52099585282548" font-size="12" text-anchor="middle" font-weight="normal">492</text>
+<rect x="437.0" y="193.58975603518468" width="56" height="216.41024396481532" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<rect x="499.0" y="185.93839040756333" width="56" height="224.06160959243667" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="493.0" y="442" font-size="12" text-anchor="middle" font-weight="normal">Ton ±0.1 ns</text>
+<text x="461" y="185.58975603518468" font-size="12" text-anchor="middle" font-weight="normal">3.28</text>
+<text x="551" y="177.93839040756333" font-size="12" text-anchor="middle" font-weight="normal">409</text>
+<rect x="583.0" y="246.84047763945406" width="56" height="163.15952236054594" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<rect x="645.0" y="241.00180386991258" width="56" height="168.99819613008742" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="639.0" y="442" font-size="12" text-anchor="middle" font-weight="normal">Ton ±0.2 ns</text>
+<text x="607" y="238.84047763945406" font-size="12" text-anchor="middle" font-weight="normal">2.47</text>
+<text x="697" y="233.00180386991258" font-size="12" text-anchor="middle" font-weight="normal">309</text>
+<rect x="729.0" y="408.08771428040586" width="56" height="1.9122857195941136" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<rect x="791.0" y="407.19905942091054" width="56" height="2.8009405790894344" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="785.0" y="442" font-size="12" text-anchor="middle" font-weight="normal">full Ton</text>
+<text x="753" y="400.08771428040586" font-size="12" text-anchor="middle" font-weight="normal">0.03</text>
+<text x="843" y="399.19905942091054" font-size="12" text-anchor="middle" font-weight="normal">5</text>
+<line x1="95" y1="410.0" x2="855" y2="410.0" class="grid" />
+<text x="85" y="414.0" font-size="13" text-anchor="end" font-weight="normal">0</text>
+<line x1="95" y1="344.0315865080216" x2="855" y2="344.0315865080216" class="grid" />
+<text x="85" y="348.0315865080216" font-size="13" text-anchor="end" font-weight="normal">1</text>
+<line x1="95" y1="278.06317301604315" x2="855" y2="278.06317301604315" class="grid" />
+<text x="85" y="282.06317301604315" font-size="13" text-anchor="end" font-weight="normal">2</text>
+<line x1="95" y1="212.09475952406473" x2="855" y2="212.09475952406473" class="grid" />
+<text x="85" y="216.09475952406473" font-size="13" text-anchor="end" font-weight="normal">3</text>
+<line x1="95" y1="146.1263460320863" x2="855" y2="146.1263460320863" class="grid" />
+<text x="85" y="150.1263460320863" font-size="13" text-anchor="end" font-weight="normal">4</text>
+<text x="865" y="414.0" font-size="13" text-anchor="start" font-weight="normal">0</text>
+<text x="865" y="345.5736934100812" font-size="13" text-anchor="start" font-weight="normal">125</text>
+<text x="865" y="277.1473868201624" font-size="13" text-anchor="start" font-weight="normal">250</text>
+<text x="865" y="208.72108023024362" font-size="13" text-anchor="start" font-weight="normal">375</text>
+<text x="865" y="140.29477364032482" font-size="13" text-anchor="start" font-weight="normal">500</text>
+<rect x="250" y="455" width="24" height="14" rx="8" fill="#4f81bd" stroke="#4f81bd" stroke-width="1.2" />
+<text x="282" y="468" font-size="14" text-anchor="start" font-weight="normal">current imbalance</text>
+<rect x="430" y="455" width="24" height="14" rx="8" fill="#c0504d" stroke="#c0504d" stroke-width="1.2" />
+<text x="462" y="468" font-size="14" text-anchor="start" font-weight="normal">mean phase-wait cost</text>
+<text x="490" y="520" font-size="15" text-anchor="middle" font-weight="normal">Λdiff alone leaves current imbalance unchanged; Ton trim balances current but consumes phase-spacing margin.</text>
+</svg>

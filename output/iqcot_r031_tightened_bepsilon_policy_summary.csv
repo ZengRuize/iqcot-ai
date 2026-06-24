@@ -1,0 +1,6 @@
+policy,deployability,n_contexts,mean_regret,max_regret,proxy_selected_count,unsafe_proxy_selected_count,zero_regret_context_count
+r031_pair_oracle_upper_bound,non_deployable_upper_bound,15,0.0,0.0,7,1,15
+r031_tightened_sw_projection,switching_calibrated_candidate,15,0.13224135228354136,1.6881408275567402,3,0,11
+dense_anchor_baseline,deployable_baseline,15,0.18579933458352121,1.6881408275567402,0,0,8
+r031_small_delta_only,candidate_rule,15,0.18889916746059596,1.6881408275567402,5,1,9
+direct_proxy_override,deployable_negative_control,15,0.5742047832372773,2.79295188584671,15,5,7

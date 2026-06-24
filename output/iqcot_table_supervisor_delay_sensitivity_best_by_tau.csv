@@ -1,0 +1,16 @@
+tau_ai_us,objective,best_policy,best_score,mean_undershoot_mV,mean_settle_time_us,source
+0.0,base,oracle_base_table,9.299476554505928,5.39241975798055,28.008666666666667,zero_delay_reference_from_dense_long_sweep
+0.0,score_settle005,table_settle005,10.35598591595399,5.5222383480854065,18.935333333333375,zero_delay_reference_from_dense_long_sweep
+0.0,score_settle010,table_settle010,11.115126647154124,6.0380343159471535,8.640000000000008,zero_delay_reference_from_dense_long_sweep
+0.5,base,oracle_base_table,9.132586070610884,5.2416913187583,28.1973333333334,derived_simulink_delayed_reference
+0.5,score_settle005,table_settle010,10.212330369245297,5.668236339377296,8.350666666666719,derived_simulink_delayed_reference
+0.5,score_settle010,table_settle010,10.629863702578616,5.668236339377296,8.350666666666719,derived_simulink_delayed_reference
+1.0,base,oracle_base_table,8.59805465038453,5.1336367143425266,28.615333333333332,derived_simulink_delayed_reference
+1.0,score_settle005,table_settle010,9.991500030750784,5.41982737269971,8.241333333333358,derived_simulink_delayed_reference
+1.0,score_settle010,table_settle010,10.403566697417453,5.41982737269971,8.241333333333358,derived_simulink_delayed_reference
+2.0,base,table_settle005,8.104277334500473,5.000154006638782,20.12133333333341,derived_simulink_delayed_reference
+2.0,score_settle005,table_settle005,9.110344001167139,5.000154006638782,20.12133333333341,derived_simulink_delayed_reference
+2.0,score_settle010,table_settle005,10.11641066783382,5.000154006638782,20.12133333333341,derived_simulink_delayed_reference
+5.0,base,table_settle005,8.383184143948593,4.92496885713367,25.476666666666713,derived_simulink_delayed_reference
+5.0,score_settle005,table_settle005,9.65701747728193,4.92496885713367,25.476666666666713,derived_simulink_delayed_reference
+5.0,score_settle010,table_settle010,10.785340712904947,4.92496885713367,17.06466666666668,derived_simulink_delayed_reference

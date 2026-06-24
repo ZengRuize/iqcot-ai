@@ -1,0 +1,7 @@
+﻿target_label,objective,tau_ai_us,n_slew_candidates,candidate_slews_us,policy_families
+10A,score_settle005,1.5,4,34/40/50/62,heldout_probe/fixed_probe/dense_anchor/old_proxy_failure_probe
+10A,score_settle005,2.5,4,34/40/50/62,guarded_candidate/fixed_probe/dense_anchor/old_proxy_failure_probe
+10A,score_settle005,3.0,4,34/40/50/62,guarded_candidate/fixed_probe/dense_anchor/old_proxy_failure_probe
+near0A,score_settle010,0.0,3,30/35/38,dense_anchor/guarded_candidate/heldout_probe
+near0A,score_settle010,0.25,3,30/35/38,dense_anchor/heldout_probe
+near0A,score_settle010,0.5,3,30/35/38,dense_anchor/heldout_probe

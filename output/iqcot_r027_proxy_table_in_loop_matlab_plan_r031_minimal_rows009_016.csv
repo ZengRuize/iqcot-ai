@@ -1,0 +1,9 @@
+r027_case_id,target_label,objective,policy,source_policy,policy_kind,policy_role,online_available_inputs_only,objective_alpha_settle,target_load_A,load_drop_A,selected_ref_slew_us,realized_ref_slew_us_in_offline_grid,tau_ai_us,delay_events,ref_start_delay_us_for_simulink,delay_mode,offline_objective_score,offline_regret_vs_oracle,offline_undershoot_mV,offline_settle_time_us,offline_skip_count_est,offline_phase_std_ns
+R031_0009,20A,base,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0,20,20,82,82,5,10,5,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0010,20A,base,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0,20,20,84,84,5,10,5,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0011,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,38,38,0.5,1,0.5,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0012,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,50,50,0.5,1,0.5,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0013,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,58,58,0.5,1,0.5,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0014,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,38,38,1,2,1,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0015,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,50,50,1,2,1,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN
+R031_0016,20A,score_settle005,r031_minimal_candidate,r031_tightened_bepsilon_sw,heldout_validation_candidate,candidate,1,0.05,20,20,58,58,1,2,1,delayed_reference,NaN,NaN,NaN,NaN,NaN,NaN

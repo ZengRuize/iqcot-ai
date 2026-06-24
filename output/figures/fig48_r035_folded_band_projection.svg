@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="36" font-size="22" font-family="Arial" font-weight="bold">R035 folded candidate band with dense-inclusive projection</text>
+<text x="70" y="58" font-size="13" font-family="Arial" fill="#555">Derived-Simulink evidence only; not hardware validation or global optimum proof</text>
+<rect x="90" y="75" width="720" height="330" fill="#fafafa" stroke="#222"/>
+<line x1="97.8" y1="75" x2="97.8" y2="405" stroke="#eee"/>
+<text x="83.8" y="430" font-size="12" font-family="Arial">0.5</text>
+<line x1="176.1" y1="75" x2="176.1" y2="405" stroke="#eee"/>
+<text x="162.1" y="430" font-size="12" font-family="Arial">1</text>
+<line x1="254.3" y1="75" x2="254.3" y2="405" stroke="#eee"/>
+<text x="240.3" y="430" font-size="12" font-family="Arial">1.5</text>
+<line x1="332.6" y1="75" x2="332.6" y2="405" stroke="#eee"/>
+<text x="318.6" y="430" font-size="12" font-family="Arial">2</text>
+<line x1="489.1" y1="75" x2="489.1" y2="405" stroke="#eee"/>
+<text x="475.1" y="430" font-size="12" font-family="Arial">3</text>
+<line x1="802.2" y1="75" x2="802.2" y2="405" stroke="#eee"/>
+<text x="788.2" y="430" font-size="12" font-family="Arial">5</text>
+<line x1="90" y1="375.0" x2="810" y2="375.0" stroke="#eee"/>
+<text x="46" y="379.0" font-size="12" font-family="Arial">30us</text>
+<line x1="90" y1="315.0" x2="810" y2="315.0" stroke="#eee"/>
+<text x="46" y="319.0" font-size="12" font-family="Arial">38us</text>
+<line x1="90" y1="255.0" x2="810" y2="255.0" stroke="#eee"/>
+<text x="46" y="259.0" font-size="12" font-family="Arial">46us</text>
+<line x1="90" y1="225.0" x2="810" y2="225.0" stroke="#eee"/>
+<text x="46" y="229.0" font-size="12" font-family="Arial">50us</text>
+<line x1="90" y1="195.0" x2="810" y2="195.0" stroke="#eee"/>
+<text x="46" y="199.0" font-size="12" font-family="Arial">54us</text>
+<line x1="90" y1="165.0" x2="810" y2="165.0" stroke="#eee"/>
+<text x="46" y="169.0" font-size="12" font-family="Arial">58us</text>
+<line x1="90" y1="105.0" x2="810" y2="105.0" stroke="#eee"/>
+<text x="46" y="109.0" font-size="12" font-family="Arial">66us</text>
+<text x="415.0" y="455" font-size="14" font-family="Arial">tau_AI (us)</text>
+<text x="18" y="240.0" font-size="14" font-family="Arial" transform="rotate(-90 18,240.0)">T_slew (us)</text>
+<path d="M 176.1 315.0 L 215.2 255.0 L 254.3 225.0 L 293.5 195.0 L 332.6 255.0" fill="none" stroke="#f28e2b" stroke-width="3" stroke-dasharray="7 5"/>
+<circle cx="176.1" cy="315.0" r="5" fill="#f28e2b"/>
+<circle cx="215.2" cy="255.0" r="5" fill="#f28e2b"/>
+<circle cx="254.3" cy="225.0" r="5" fill="#f28e2b"/>
+<circle cx="293.5" cy="195.0" r="5" fill="#f28e2b"/>
+<circle cx="332.6" cy="255.0" r="5" fill="#f28e2b"/>
+<path d="M 97.8 225.0 L 137.0 375.0 L 176.1 315.0 L 254.3 225.0 L 332.6 375.0 L 489.1 375.0 L 802.2 375.0" fill="none" stroke="#1f77b4" stroke-width="3"/>
+<circle cx="97.8" cy="225.0" r="6" fill="#1f77b4"/>
+<circle cx="137.0" cy="375.0" r="6" fill="#1f77b4"/>
+<circle cx="176.1" cy="315.0" r="6" fill="#1f77b4"/>
+<circle cx="254.3" cy="225.0" r="6" fill="#1f77b4"/>
+<circle cx="332.6" cy="375.0" r="6" fill="#1f77b4"/>
+<circle cx="489.1" cy="375.0" r="6" fill="#1f77b4"/>
+<circle cx="802.2" cy="375.0" r="6" fill="#1f77b4"/>
+<circle cx="215.2" cy="255.0" r="7" fill="white" stroke="#1f77b4" stroke-width="3"/>
+<circle cx="293.5" cy="195.0" r="7" fill="white" stroke="#1f77b4" stroke-width="3"/>
+<line x1="90" y1="105.0" x2="810" y2="105.0" stroke="#d62728" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="825" y="109.0" font-size="13" font-family="Arial" fill="#d62728">66us blocked direct override</text>
+<line x1="820" y1="110" x2="850" y2="110" stroke="#f28e2b" stroke-width="3" stroke-dasharray="6 4"/>
+<text x="860" y="115" font-size="13" font-family="Arial">R034 transition-candidate best</text>
+<line x1="820" y1="140" x2="850" y2="140" stroke="#1f77b4" stroke-width="3"/>
+<text x="860" y="145" font-size="13" font-family="Arial">dense-inclusive deployable commit</text>
+<circle cx="835" cy="170" r="6" fill="white" stroke="#1f77b4" stroke-width="3"/>
+<text x="860" y="175" font-size="13" font-family="Arial">candidate-only probe</text>
+<line x1="820" y1="200" x2="850" y2="200" stroke="#d62728" stroke-width="3" stroke-dasharray="6 4"/>
+<text x="860" y="205" font-size="13" font-family="Arial">blocked negative control</text>
+<text x="835" y="260" font-size="13" font-family="Arial" fill="#444">Key reviewer correction:</text>
+<text x="835" y="282" font-size="13" font-family="Arial" fill="#444">folded band is a candidate</text>
+<text x="835" y="304" font-size="13" font-family="Arial" fill="#444">generator; plant commit keeps</text>
+<text x="835" y="326" font-size="13" font-family="Arial" fill="#444">dense fallback unless paired</text>
+<text x="835" y="348" font-size="13" font-family="Arial" fill="#444">switching evidence supports it.</text>
+</svg>

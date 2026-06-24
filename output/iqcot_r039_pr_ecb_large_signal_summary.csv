@@ -1,0 +1,2 @@
+target_label,objective,n_cases,n_success,load_step_A,delta_v_energy_mV_mean,delta_v_charge_esr_mV_mean,delta_v_actual_peak_mV_mean,r_E_mean,energy_over_actual,charge_esr_over_actual,first_peak_invariant_across_delayed_slew,interpretation
+20A,score_settle005,5,5,40.0->20.0,4.349633,3.903338,2.235008,0.434963,1.946138,1.746454,true,PR-ECB gives a conservative first-peak risk bound for the shared 40A->20A cut-load event; the first peak is invariant across these delayed T_slew cases because the supervisory reference action occurs after the peak-forming interval.

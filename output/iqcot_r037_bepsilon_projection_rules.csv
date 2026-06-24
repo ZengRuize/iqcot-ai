@@ -1,0 +1,5 @@
+rule_id,scope,condition,action,reason
+R037-1,20A/score_settle005,T_slew >= 66us,block direct override,R030/R033/R031 rows repeatedly show skip or long-settling risk for 66us
+R037-2,20A/score_settle005,candidate far from q_phi folded center and r_hat predicts skip/settling/phase risk,reject candidate and fall back to dense or nearest low-risk candidate,R034/R036 failures occur on both short-delay skip edge and long-slew settling edge
+R037-3,20A/score_settle005,dense fallback itself has predicted skip/phase risk in the folded transition window,allow local folded candidate after dense-paired evidence,R036 shows 30us fallback loses at tau=1.25/1.75us due to skip/phase risk
+R037-4,20A/score_settle005,tau_AI around 2us and dense fallback has low risk,keep dense fallback unless new paired validation proves otherwise,R031/R035 keep 30us at tau=2us although R034 transition probes are close

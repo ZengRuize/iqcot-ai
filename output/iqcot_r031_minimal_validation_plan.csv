@@ -1,0 +1,23 @@
+r031_case_id,target_label,target_load_A,load_drop_A,objective,objective_alpha_settle,tau_ai_us,candidate_ref_slew_us,reference_baseline_slew_us,priority,reason,expected_information
+R031_0001,10A,10.0,30.0,score_settle010,0.1,1.0,31.0,30.0,2,Resolve 30-32us near-tie non-monotonic delay behavior.,derived Simulink delayed-reference validation only; not hardware
+R031_0002,10A,10.0,30.0,score_settle010,0.1,1.0,33.0,30.0,2,Resolve 30-32us near-tie non-monotonic delay behavior.,derived Simulink delayed-reference validation only; not hardware
+R031_0003,10A,10.0,30.0,score_settle010,0.1,5.0,31.0,30.0,2,Resolve 30-32us near-tie non-monotonic delay behavior.,derived Simulink delayed-reference validation only; not hardware
+R031_0004,10A,10.0,30.0,score_settle010,0.1,5.0,33.0,30.0,2,Resolve 30-32us near-tie non-monotonic delay behavior.,derived Simulink delayed-reference validation only; not hardware
+R031_0005,20A,20.0,20.0,base,0.0,0.5,82.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0006,20A,20.0,20.0,base,0.0,0.5,84.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0007,20A,20.0,20.0,base,0.0,2.0,82.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0008,20A,20.0,20.0,base,0.0,2.0,84.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0009,20A,20.0,20.0,base,0.0,5.0,82.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0010,20A,20.0,20.0,base,0.0,5.0,84.0,80.0,2,Check whether 82/84us intermediate points avoid 86us delay-sensitive ranking flips.,derived Simulink delayed-reference validation only; not hardware
+R031_0011,20A,20.0,20.0,score_settle005,0.05,0.5,38.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0012,20A,20.0,20.0,score_settle005,0.05,0.5,50.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0013,20A,20.0,20.0,score_settle005,0.05,0.5,58.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0014,20A,20.0,20.0,score_settle005,0.05,1.0,38.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0015,20A,20.0,20.0,score_settle005,0.05,1.0,50.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0016,20A,20.0,20.0,score_settle005,0.05,1.0,58.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0017,20A,20.0,20.0,score_settle005,0.05,2.0,38.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0018,20A,20.0,20.0,score_settle005,0.05,2.0,50.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0019,20A,20.0,20.0,score_settle005,0.05,2.0,58.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0020,20A,20.0,20.0,score_settle005,0.05,5.0,38.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0021,20A,20.0,20.0,score_settle005,0.05,5.0,50.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware
+R031_0022,20A,20.0,20.0,score_settle005,0.05,5.0,58.0,30.0,1,Map safer intermediate band between dense 30us and high-risk proxy 66us.,derived Simulink delayed-reference validation only; not hardware

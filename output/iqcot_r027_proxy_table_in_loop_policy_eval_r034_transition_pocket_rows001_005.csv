@@ -1,0 +1,2 @@
+policy,policy_role,online_available_inputs_only,n_cases,mean_switching_regret,max_switching_regret,mean_selected_objective_score,mean_undershoot_mV,max_undershoot_mV,mean_abs_final_vout_error_mV,mean_skip_count,mean_settle_time_us,mean_phase_spacing_std_ns,mean_base_score,mean_score_settle005,mean_score_settle010
+r034_transition_pocket_candidate,candidate,1,5,1.7519272864948,2.25054480427306,3.97295389940649,1.02562114485432,1.03994639868477,0.442077638923077,0.8,0.938000000000024,42.9177557814547,3.92605389940649,3.97295389940649,4.01985389940649

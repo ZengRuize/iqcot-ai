@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="490" y="28" text-anchor="middle" font-family="Arial" font-size="18">R030 dense-anchor challenge derived-Simulink replay</text>
+<line x1="95" y1="365" x2="465" y2="365" stroke="#333"/>
+<line x1="95" y1="55" x2="95" y2="365" stroke="#333"/>
+<text x="280" y="495" text-anchor="middle" font-family="Arial" font-size="13">Policy mean regret over 15 paired contexts</text>
+<line x1="91" y1="365.0" x2="465" y2="365.0" stroke="#eee"/>
+<text x="85" y="369.0" text-anchor="end" font-family="Arial" font-size="11">0.00</text>
+<line x1="91" y1="287.5" x2="465" y2="287.5" stroke="#eee"/>
+<text x="85" y="291.5" text-anchor="end" font-family="Arial" font-size="11">0.17</text>
+<line x1="91" y1="210.0" x2="465" y2="210.0" stroke="#eee"/>
+<text x="85" y="214.0" text-anchor="end" font-family="Arial" font-size="11">0.34</text>
+<line x1="91" y1="132.5" x2="465" y2="132.5" stroke="#eee"/>
+<text x="85" y="136.5" text-anchor="end" font-family="Arial" font-size="11">0.52</text>
+<line x1="91" y1="55.0" x2="465" y2="55.0" stroke="#eee"/>
+<text x="85" y="59.0" text-anchor="end" font-family="Arial" font-size="11">0.69</text>
+<rect x="170" y="281.4" width="90" height="83.6" fill="#4C78A8"/>
+<text x="215.0" y="274.4" text-anchor="middle" font-family="Arial" font-size="12">0.186</text>
+<text x="215.0" y="387" text-anchor="middle" font-family="Arial" font-size="12">dense-anchor</text>
+<rect x="320" y="106.7" width="90" height="258.3" fill="#E45756"/>
+<text x="365.0" y="99.7" text-anchor="middle" font-family="Arial" font-size="12">0.574</text>
+<text x="365.0" y="387" text-anchor="middle" font-family="Arial" font-size="12">proxy</text>
+<text x="26" y="210.0" text-anchor="middle" transform="rotate(-90 26,210.0)" font-family="Arial" font-size="13">Mean switching regret</text>
+<text x="740" y="55" text-anchor="middle" font-family="Arial" font-size="14">Proxy minus dense score by motif</text>
+<line x1="760" y1="45" x2="760" y2="292" stroke="#333"/>
+<text x="760" y="316" text-anchor="middle" font-family="Arial" font-size="11">0</text>
+<text x="610" y="316" text-anchor="middle" font-family="Arial" font-size="11">proxy better</text>
+<text x="910" y="316" text-anchor="middle" font-family="Arial" font-size="11">dense better</text>
+<text x="570" y="76" text-anchor="start" font-family="Arial" font-size="12">10A / score_settle010</text>
+<rect x="760.0" y="56" width="1.0" height="24" fill="#4C78A8"/>
+<text x="769.0" y="74" text-anchor="start" font-family="Arial" font-size="12">0.009</text>
+<text x="570" y="95" text-anchor="start" font-family="Arial" font-size="10" fill="#555">proxy wins 3, dense wins 2</text>
+<text x="570" y="150" text-anchor="start" font-family="Arial" font-size="12">20A / base</text>
+<rect x="760.0" y="130" width="9.2" height="24" fill="#4C78A8"/>
+<text x="777.2" y="148" text-anchor="start" font-family="Arial" font-size="12">0.082</text>
+<text x="570" y="169" text-anchor="start" font-family="Arial" font-size="10" fill="#555">proxy wins 2, dense wins 3</text>
+<text x="570" y="224" text-anchor="start" font-family="Arial" font-size="12">20A / score_settle005</text>
+<rect x="760.0" y="204" width="120.0" height="24" fill="#4C78A8"/>
+<text x="888.0" y="222" text-anchor="start" font-family="Arial" font-size="12">1.073</text>
+<text x="570" y="243" text-anchor="start" font-family="Arial" font-size="10" fill="#555">proxy wins 2, dense wins 3</text>
+</svg>

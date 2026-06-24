@@ -1,0 +1,6 @@
+policy,deployability,n_contexts,mean_regret,max_regret,mean_margin_vs_dense,non_dense_selected_count,mean_r_hat_total_risk,zero_regret_context_count
+r032_delay_aware_band_projection,calibrated_candidate,9,0.0,0.0,-0.3371849811461345,3,0.1,9
+r031_best_intermediate_only,nondeployable_upper_candidate,9,0.14286316307527325,0.5317889963800191,-0.19432181807086124,9,0.4222222222222223,3
+dense_fallback,deployable_baseline,9,0.3371849811461345,2.3383887077047003,0.0,0,0.05,6
+nearest_tau_loto_predictor,leave_one_tau_stress,9,0.5885375966960356,2.1894482597783,0.251352615549901,4,0.31666666666666665,4
+direct_proxy_override,negative_control,9,1.1066217501464033,2.79295188584671,0.7694367690002688,9,0.7611111111111111,0

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="540" viewBox="0 0 900 540">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#111} .axis{stroke:#111;stroke-width:1.4} .grid{stroke:#ddd;stroke-width:1} .thin{stroke:#555;stroke-width:1.2} .main{stroke:#1f4e79;stroke-width:2.4;fill:none} .alt{stroke:#a23b2a;stroke-width:2.4;fill:none} .green{stroke:#2d6a4f;stroke-width:2.4;fill:none} .dash{stroke-dasharray:6 4}</style>
+<line x1="95" y1="406" x2="745" y2="406" class="axis" />
+<line x1="95" y1="76" x2="95" y2="406" class="axis" />
+<text x="420.0" y="34" font-size="20" text-anchor="middle" font-weight="bold">Limited Ton-trim design curve</text>
+<text x="95" y="61" font-size="14" text-anchor="start" font-weight="normal">current pk-pk reduction (%)</text>
+<text x="420.0" y="454" font-size="16" text-anchor="middle" font-weight="normal">phase-spacing cost, wait pk-pk (ns)</text>
+<line x1="95.0" y1="76" x2="95.0" y2="406" class="grid" />
+<text x="95.0" y="430" font-size="13" text-anchor="middle" font-weight="normal">0</text>
+<line x1="252.64901904209282" y1="76" x2="252.64901904209282" y2="406" class="grid" />
+<text x="252.64901904209282" y="430" font-size="13" text-anchor="middle" font-weight="normal">250</text>
+<line x1="410.29803808418563" y1="76" x2="410.29803808418563" y2="406" class="grid" />
+<text x="410.29803808418563" y="430" font-size="13" text-anchor="middle" font-weight="normal">500</text>
+<line x1="567.9470571262784" y1="76" x2="567.9470571262784" y2="406" class="grid" />
+<text x="567.9470571262784" y="430" font-size="13" text-anchor="middle" font-weight="normal">750</text>
+<line x1="725.5960761683713" y1="76" x2="725.5960761683713" y2="406" class="grid" />
+<text x="725.5960761683713" y="430" font-size="13" text-anchor="middle" font-weight="normal">1000</text>
+<line x1="95" y1="406.0" x2="745" y2="406.0" class="grid" />
+<text x="85" y="410.0" font-size="13" text-anchor="end" font-weight="normal">0</text>
+<line x1="95" y1="327.42857142857144" x2="745" y2="327.42857142857144" class="grid" />
+<text x="85" y="331.42857142857144" font-size="13" text-anchor="end" font-weight="normal">25</text>
+<line x1="95" y1="248.85714285714286" x2="745" y2="248.85714285714286" class="grid" />
+<text x="85" y="252.85714285714286" font-size="13" text-anchor="end" font-weight="normal">50</text>
+<line x1="95" y1="170.28571428571428" x2="745" y2="170.28571428571428" class="grid" />
+<text x="85" y="174.28571428571428" font-size="13" text-anchor="end" font-weight="normal">75</text>
+<line x1="95" y1="91.71428571428572" x2="745" y2="91.71428571428572" class="grid" />
+<text x="85" y="95.71428571428572" font-size="13" text-anchor="end" font-weight="normal">100</text>
+<polyline points="122.85,374.72 151.15,343.43 211.69,280.75 696.85,91.71" class="main" />
+<circle cx="122.85026594244187" cy="374.71513272176935" r="5" fill="#1f4e79"/>
+<text x="130.85026594244187" y="366.71513272176935" font-size="13" text-anchor="start" font-weight="normal">0.05 ns</text>
+<circle cx="151.15460606848904" cy="343.43026544353864" r="5" fill="#1f4e79"/>
+<text x="159.15460606848904" y="335.43026544353864" font-size="13" text-anchor="start" font-weight="normal">0.10 ns</text>
+<circle cx="211.68988682773278" cy="280.74998923294527" r="5" fill="#1f4e79"/>
+<text x="219.68988682773278" y="272.74998923294527" font-size="13" text-anchor="start" font-weight="normal">0.20 ns</text>
+<circle cx="696.8518518518517" cy="91.71428571429158" r="5" fill="#1f4e79"/>
+<text x="704.8518518518517" y="83.71428571429158" font-size="13" text-anchor="start" font-weight="normal">0.50 ns</text>
+<text x="450" y="500" font-size="15" text-anchor="middle" font-weight="normal">This curve turns current-balance tuning into a constrained design problem instead of a single-objective trim.</text>
+</svg>
