@@ -257,3 +257,30 @@ matrix before expanding the simulation grid. New document:
 
 Next useful action remains model wiring inspection first; after that, run only
 the smallest PR-ECB validation chunk and apply the adaptive decision gate.
+
+<!-- R048_MODEL_WIRING_AUDIT -->
+
+## R048 Latest Update
+
+R048 completed the read-only preflight wiring audit for
+`output/simulink_iek/four_phase_iek_dynamic_load_refslew.slx` and wrote
+`docs/model_wiring_audit_after_r047.md` plus
+`refine-logs/LOCAL_AUDIT_R048_MODEL_WIRING_20260624.md`.  No switching matrix
+was run, no original `.slx` file was modified, and no raw `.slx` XML was edited.
+
+Decision: `MODEL_CONFIRMED`.
+
+Key wiring facts: active `REQ` is `IEK_PerPhase_Request -> Goto14(tag=REQ)`;
+the original Relay is `commented=through`; `PhaseScheduler_4Phase` exposes
+`phase_idx`; `IQCOT_Ton_Adapter` sends `Ton_iqcot1..4` into the four COT cells;
+`IL_Measurement1..4`, `Voltage Measurement`, and `GateDriver_1Phase1..4` are
+the current `il1..4`, `vout`, and `qh1..4` logging tap points.  MOSFET `Ron`,
+`L/DCR`, `Cout/ESR`, `Ton`, `Tblank`, `Toff_min`, and `Tdead` are variable
+references rather than hard-coded literals.
+
+Implementation notes: standalone model load does not populate required base
+variables, and saved line logging count is zero; existing runners inject
+variables and mark `vout/qh1..4/il1..4` at run time.  Before the next PR-ECB
+chunk, build or modify only a derived copy through MATLAB APIs and add explicit
+logging for `REQ`, `phase_idx`, `QL1..4`, `Ton_done_i` or measured high-side
+pulse width, and future `protect_state`.

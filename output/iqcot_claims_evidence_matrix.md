@@ -271,6 +271,14 @@ R035 最关键的收束是修正 R034 的表述边界：`38/46/50/54/46us` 是 t
 |---|---|---|---|---|
 | Future automated validation should be run as an adaptive loop that can revise GAE-IQCOT, PR-ECB, PIS-IEK, active-phase guards, and claim boundaries after each validation chunk. | User instruction on 2026-06-24; `docs/adaptive_validation_automation_20260624.md`; updates to `docs/auto_research_plan_after_feedback_20260624.md`, `docs/ai_control_oriented_model_innovation_20260624.md`, and `docs/control_state_machine_after_feedback.md`; `refine-logs/LOCAL_AUDIT_R047B_ADAPTIVE_VALIDATION_AUTOMATION_20260624.md`. | High as automation/process rule; not itself a converter-performance validation. | "Each validation chunk should end in `MODEL_CONFIRMED`, `MODEL_REVISED`, `IMPLEMENTATION_ISSUE`, or `CLAIM_DOWNGRADED`, and any contradiction must update the model innovation and evidence matrix before the next chunk." | "The automation has already validated the revised controller, proven hardware/HIL performance, or should continue full-grid simulation even when early chunks contradict the model." |
 
+<!-- R048_MODEL_WIRING_AUDIT -->
+
+### C44 / R048: derived model wiring preflight
+
+| Claim | Evidence | Strength | Safe wording | Do not claim |
+|---|---|---|---|---|
+| R048 confirms the existing derived `four_phase_iek_dynamic_load_refslew.slx` wiring is sufficiently understood to plan the next derived-control copy: active `REQ` comes from `IEK_PerPhase_Request`, the scheduler exposes `phase_idx`, the Ton adapter feeds COT cells, and the main plant/gate/current tap points are identifiable. | `docs/model_wiring_audit_after_r047.md`; `refine-logs/LOCAL_AUDIT_R048_MODEL_WIRING_20260624.md`; read-only MATLAB `load_system/find_system/get_param` preflight. Actual paths include `IEK_PerPhase_Request -> Goto14(tag=REQ)`, `PhaseScheduler_4Phase`, `IQCOT_Ton_Adapter/Ton_Base`, `Ton_Limit1..4`, `Ton_trim1..4`, `IL_Measurement1..4`, `Voltage Measurement`, `GateDriver_1Phase1..4`, `LoadCurrentStep`, and `Dynamic Load Current Source`. Parameter bindings for MOSFET `Ron`, `L/DCR`, `Cout/ESR`, `Ton`, `Tblank`, `Toff_min`, and `Tdead` are variable references rather than hard-coded literals. | Medium as implementation preflight; no new switching validation and no hardware/HIL evidence. | "R048 supports proceeding to a MATLAB-API-built derived-control copy with explicit variable injection and expanded logging for PR-ECB/PIS-IEK validation." | "R048 proves PR-ECB protection performance, hardware/HIL safety, complete controller implementation, global PR-ECB calibration, a universal `E_HS,rem` law, or that AI replaces the IQCOT inner loop." |
+
 <!-- R042_PR_ECB_PHASE_DENSE_PARTIAL -->
 
 ### C38 / R042: PR-ECB phase-dense high-side boundary validation

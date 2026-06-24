@@ -149,3 +149,20 @@ _Append-only timeline._
 - Added the rule that model innovation documents and claim boundaries must be
   updated before expanding the next simulation grid whenever validation
   contradicts the current model.
+
+<!-- R048_MODEL_WIRING_AUDIT -->
+
+## 2026-06-24 R048 model wiring audit
+
+- Performed a read-only `.slx` preflight for
+  `output/simulink_iek/four_phase_iek_dynamic_load_refslew.slx`.
+- Added `docs/model_wiring_audit_after_r047.md` and
+  `refine-logs/LOCAL_AUDIT_R048_MODEL_WIRING_20260624.md`.
+- Filled the actual wiring table: `IEK_PerPhase_Request -> Goto14(tag=REQ)`,
+  `PhaseScheduler_4Phase` phase index, `IQCOT_Ton_Adapter` Ton outputs,
+  `IL_Measurement1..4`, `Voltage Measurement`, and `GateDriver_1Phase1..4`.
+- Confirmed parameter bindings are variable references for MOSFET `Ron`,
+  `L/DCR`, `Cout/ESR`, `Ton`, `Tblank`, `Toff_min`, and `Tdead`; no hard-coded
+  `0.1 ohm` MOSFET issue was found.
+- Decision: `MODEL_CONFIRMED`.  No simulation matrix was run, no original
+  `.slx` was modified, and no `.slx` XML was edited.
