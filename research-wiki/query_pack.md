@@ -198,3 +198,37 @@ New direction files:
 Next useful action: specify the derived control state machine and model-wiring
 table before running any new Simulink cases. Do not edit original `.slx` files
 or rerun R042/R043 post-processing unless an audit finds a concrete issue.
+
+<!-- R047_AI_READY_MODEL_INNOVATION -->
+
+## R047 AI-Ready Model Innovation
+
+R047 continues the corrected direction by turning the large/small-signal
+framework into an AI-control-oriented model interface, named GAE-IQCOT
+(`Guarded AI-ready Event model for IQCOT`). The point is not to make AI the
+inner-loop controller. The point is to expose compact event features, risk
+scores, feasible action sets, and projection guards that an AI/table/MPC
+supervisor can use safely.
+
+Core structure:
+
+- PR-ECB provides a normalized large-signal first-peak risk coordinate
+  `r_p = DeltaV_bound / DeltaV_allow` and selects protection action classes.
+- PIS-IEK provides the small-signal balance/reentry map: `Ton_diff` for DC
+  current sharing and `Lambda_diff` for phase-spacing/ripple-cancellation trim.
+- Active phase set `A subset {1,2,3,4}` extends PIS-IEK to `1/2/4` phase
+  add/shed hybrid events.
+- AI proposes only low-dimensional tokens: protection token `a_P`, balance
+  token `a_S`, and phase-management token `a_N`.
+- The applied action is `a_safe = Project_G(a_AI)`, not raw AI output.
+
+New documents:
+
+- `docs/ai_control_oriented_model_innovation_20260624.md`
+- `docs/control_state_machine_after_feedback.md`
+- `refine-logs/LOCAL_AUDIT_R047_AI_READY_MODEL_INNOVATION_20260624.md`
+
+Next useful action: inspect the derived `.slx` model blocks and signal names,
+then build a derived copy through MATLAB APIs if needed. Do not edit raw `.slx`
+XML, and do not run the PR-ECB/PIS-IEK/phase-shed ablations until the wiring
+table is confirmed.

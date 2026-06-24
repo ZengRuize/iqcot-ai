@@ -1,0 +1,463 @@
+# R047 AI-Control-Oriented Large/Small-Signal Model Innovation
+
+Date: 2026-06-24
+
+## Executive Decision
+
+After the R046 direction correction, the next model innovation should not return
+to an AI/`T_slew` main story. The better innovation is an AI-control-oriented
+model layer:
+
+```text
+GAE-IQCOT:
+Guarded AI-ready Event model for IQCOT
+
+= PR-ECB large-signal peak-risk guard
++ PIS-IEK small-signal balance/reentry model
++ variable-active-phase hybrid event map
++ safety projection interface for AI or table supervision
+```
+
+The main novelty is not that AI directly controls the converter. The novelty is
+that the converter model is reorganized into a form that an AI controller can
+query, optimize, and be constrained by, while the original IQCOT inner loop still
+generates the fast area-triggered pulse sequence.
+
+## Why a New AI-Ready Model Is Needed
+
+The previous AI/`T_slew` direction had a physical weakness: the load-current
+slew rate is imposed by the external load, not selected by the VRM. Therefore an
+AI controller should not be described as controlling `dI_load/dt`.
+
+However, AI can still be meaningful if its role is redefined:
+
+```text
+AI does not command gate pulses.
+AI does not choose the external load slew.
+AI proposes low-dimensional supervisory parameters.
+The model projects those proposals into a safe event-control set.
+```
+
+This gives a stronger and cleaner contribution: a large/small-signal model that
+is directly usable as a constrained action interface for AI, MPC, Bayesian
+optimization, lookup tables, or rule-based supervision.
+
+## Model Source Boundary
+
+Current repository evidence uses derived Simulink/Simscape model copies under:
+
+- `output/simulink_iek/four_phase_iek_area.slx`
+- `output/simulink_iek/four_phase_iek_perphase.slx`
+- `output/simulink_iek/four_phase_iek_perphase_trim.slx`
+- `output/simulink_iek/four_phase_iek_dynamic_load.slx`
+- `output/simulink_iek/four_phase_iek_dynamic_load_refstep.slx`
+- `output/simulink_iek/four_phase_iek_dynamic_load_refslew.slx`
+
+The established design point in the existing documents is a four-phase
+interleaved synchronous Buck/VRM around:
+
+| Item | Current research value |
+|---|---:|
+| `Vin` | `12 V` |
+| `Vref` | `1 V` |
+| phases | `4` |
+| per-phase switching frequency | about `500 kHz` |
+| `L` | about `200 nH` |
+| `Cout` | about `7.2 mF` to `7.26 mF` |
+| DCR evidence point | about `1.5 mOhm` |
+
+Before any new model construction or parameter sweep, the actual `.slx` block
+parameters must still be inspected through MATLAB APIs or `.slx` package
+inspection. In particular, `Ron`, `Rd`, `Vfd`, `Rs`, `Cs`, `L`, `DCR`, `Cout`,
+`ESR`, `Ton`, `Tdead`, `Tblank`, solver, and step size must be checked against
+the initialization path. This document is a research design and does not modify
+any `.slx` file.
+
+## Core Innovation: Two-Regime, One-Interface Model
+
+The key idea is to separate physical regimes but expose them through one
+supervisory interface:
+
+```text
+large-signal mode:
+    first-peak over-voltage risk after cut-load
+    handled by PR-ECB and hard protection actions
+
+small-signal mode:
+    current sharing, phase spacing, reentry, and active-phase recovery
+    handled by PIS-IEK and limited trim actions
+
+hybrid mode:
+    phase add/shed changes the active phase set
+    handled by active-set event maps and dwell/hysteresis guards
+```
+
+The AI-facing model state is not the full switching waveform. It is a compact
+event feature vector:
+
+```math
+z_k =
+[
+V_o,\dot V_o,
+I_{load,est},
+i_{L,1..4},
+g_{HS,1..4},
+t_{HS,rem,1..4},
+p_k,
+\mathcal A_k,
+e_I,
+e_\phi,
+protect\_state,
+dwell\_timer
+].
+```
+
+Here `p_k` is the phase/event index and `A_k` is the active phase set. The model
+returns risk scores, feasible action sets, and limited trim commands rather than
+raw gate commands.
+
+## Large-Signal Component: PR-ECB as a Peak-Risk Guard
+
+For cut-load events, define the excess current:
+
+```math
+I_{ex}(t)=\sum_{i\in\mathcal A} i_{L,i}(t)-I_{load,new}.
+```
+
+The PR-ECB branch computes a conservative first-peak feature from two families:
+
+```math
+\Delta V_E
+\approx
+\sqrt{V_0^2+\frac{2E_{ex}}{C_o}}-V_0
+```
+
+```math
+\Delta V_{Q+ESR}
+\approx
+\frac{Q_{ex}}{C_o}+I_{ex,0}R_{ESR}.
+```
+
+The risk value exposed to AI is normalized:
+
+```math
+r_p =
+\frac{
+  \Delta V_{bound}
+}{
+  \Delta V_{allow}
+},
+\qquad
+\Delta V_{bound}
+=
+\operatorname{segment\_select}
+(
+\Delta V_E,
+\Delta V_{Q+ESR},
+E_{HS,rem}
+).
+```
+
+`E_HS,rem` is only a segmentation feature for active high-side state. It must
+not be described as a universal additive energy law.
+
+The AI/control action is not a continuous `T_slew`; it is a protection token:
+
+```text
+a_P = [
+  truncate_current_Ton,
+  inhibit_event_count,
+  integrator_hold_or_reset,
+  reentry_band,
+  reentry_phase_policy
+]
+```
+
+This token is then projected by guards:
+
+```text
+if r_p >= r_high or active_HS_large_drop:
+    Ton truncation and pulse inhibit are allowed
+elif r_p >= r_mid:
+    skip/inhibit monitoring is allowed
+else:
+    normal IQCOT is preferred
+```
+
+This creates an AI-compatible large-signal model: AI can select the
+aggressiveness of protection, but it cannot inject new high-side energy when the
+guard says the first peak is unsafe.
+
+## Small-Signal Component: PIS-IEK as a Balance and Reentry Model
+
+Near normal event sequences, use the PIS-IEK small-signal map:
+
+```math
+\delta x_{k+1}
+=
+A_{\mathcal A,p}\delta x_k
+B_{T,\mathcal A,p}\delta T_{on}
+B_{\Lambda,\mathcal A,p}\delta \Lambda
+B_{d,\mathcal A,p}\delta t_d
+G_{\mathcal A,p}w_k.
+```
+
+For four-phase fixed operation, existing evidence supports:
+
+```text
+Ton_diff    -> dominant DC current-sharing actuator
+Lambda_diff -> phase-spacing / ripple-cancellation actuator
+delay_diff  -> phase-jitter disturbance
+```
+
+Define current and phase errors over the active phase set:
+
+```math
+I_{avg}
+=
+\frac{1}{|\mathcal A|}
+\sum_{i\in\mathcal A}i_{L,i},
+\qquad
+e_{I,i}=i_{L,i}-I_{avg}.
+```
+
+```math
+e_{\phi,i}
+=
+\Delta t_i-\frac{T_{cycle}}{|\mathcal A|}.
+```
+
+The small-signal control token is:
+
+```text
+a_S = [
+  K_T,
+  K_Lambda,
+  T_trim_max,
+  Lambda_trim_max,
+  balance_recovery_rate
+]
+```
+
+Projected commands are:
+
+```math
+\Delta T_{on,i}
+=
+\Pi_T(-K_T e_{I,i}),
+\qquad
+\sum_{i\in\mathcal A}\Delta T_{on,i}=0.
+```
+
+```math
+\Delta \Lambda_i
+=
+\Pi_\Lambda(-K_\Lambda e_{\phi,i}),
+\qquad
+\sum_{i\in\mathcal A}\Delta \Lambda_i=0.
+```
+
+The projection is essential: it prevents a fast current-sharing action from
+destroying phase spacing or creating a switching-frequency excursion.
+
+## Variable-Phase Component: Active-Set PIS-IEK
+
+The active phase set extends the event map:
+
+```math
+x_{k+1}
+=
+F_{p_k,\mathcal A_k}
+(x_k,u_k,T_k).
+```
+
+Phase add/shed events are saltation-like hybrid events:
+
+```math
+x_{k}^{+}
+=
+S_{\mathcal A^-\to\mathcal A^+}x_k^{-}
+ + b_{\mathcal A^-\to\mathcal A^+}.
+```
+
+The nominal phase spacing changes by active phase count:
+
+| Active phase count | Example active set | Nominal spacing |
+|---:|---|---:|
+| `1` | `{1}` | none |
+| `2` | `{1,3}` | `180 deg` |
+| `4` | `{1,2,3,4}` | `90 deg` |
+
+The phase-management token is:
+
+```text
+a_N = [
+  N_active_candidate,
+  I_add_high,
+  I_shed_low,
+  dwell_time,
+  new_phase_ramp_rate
+]
+```
+
+The hard guard is:
+
+```text
+if protect_state != NORMAL_IQCOT:
+    phase shedding is disabled
+```
+
+Recommended event order:
+
+```text
+cut-load protection
+-> controlled reentry
+-> balance recovery
+-> phase shed decision
+```
+
+This is important because immediate phase shedding after cut-load may look
+efficient but can interfere with first-peak protection and reentry.
+
+## AI Action Projection
+
+Let the AI or optimizer propose:
+
+```math
+a_{AI}=[a_P,a_S,a_N].
+```
+
+The converter never directly applies `a_AI`. It applies:
+
+```math
+a_{safe}
+=
+\Pi_{\mathcal G(z_k)}(a_{AI}),
+```
+
+where the guard set is:
+
+```math
+\mathcal G(z_k)=
+\{
+a:
+r_p(a)\le r_{max},
+|e_I^+(a)|\le I_{bal,max},
+\|e_\phi^+(a)\|\le \phi_{max},
+f_{sw,min}\le f_{sw}(a)\le f_{sw,max},
+|\Delta T_{on,i}|\le T_{trim,max},
+|\Delta\Lambda_i|\le \Lambda_{trim,max}
+\}.
+```
+
+For implementation, `Pi` can begin as a rule-based projection rather than a
+neural layer:
+
+1. reject unsafe phase shedding;
+2. clamp trim amplitudes;
+3. prefer PR-ECB protection during cut-load;
+4. use PIS-IEK balance only after reentry;
+5. fall back to original IQCOT when model confidence is low.
+
+This is a much safer and more defensible AI story than direct neural gate
+control.
+
+## Why This Is More Innovative Than the Previous Direction
+
+The previous `T_slew` direction mainly tuned one recovery parameter. R047
+proposes a structured model interface with three new research elements:
+
+1. A normalized large-signal first-peak risk coordinate `r_p` that selects
+   protection action classes, not merely a post-processing bound.
+2. An active-set PIS-IEK small-signal model that changes with `1/2/4` phase
+   operation and supplies separate balance and phase-spacing channels.
+3. A guarded AI action projection layer that makes the model directly usable by
+   AI, MPC, or table supervision without allowing unsafe gate-level behavior.
+
+The novelty is therefore:
+
+```text
+AI-ready model structure
+not AI as the main controller.
+```
+
+## Paper Claim Candidate
+
+Safe Chinese wording:
+
+> 本文提出一种面向 AI 监督控制的四相数字 IQCOT 大小信号协同事件模型。该模型将切载第一峰风险写成 PR-ECB 大信号保护坐标，将稳态均流与相位恢复写成 PIS-IEK 小信号事件映射，并进一步引入 active phase set 形成可变相数混合事件模型。AI 或查表监督层只输出低维保护、均流和加减相候选参数，最终动作必须经过 PR-ECB/PIS-IEK 约束投影后才能作用于 IQCOT 内环。
+
+Safe English wording:
+
+> This work develops a guarded AI-ready event model for four-phase digital
+> IQCOT buck control. PR-ECB provides a large-signal cut-load first-peak risk
+> coordinate, PIS-IEK provides a small-signal balance and phase-recovery map,
+> and an active-phase-set extension captures phase add/shed hybrid events. The
+> supervisory AI layer proposes low-dimensional action tokens, while a
+> model-based projection enforces voltage, current-sharing, phase-spacing, and
+> switching constraints before the original IQCOT inner loop is affected.
+
+Forbidden wording:
+
+- AI controls the external load-current slew rate.
+- AI replaces IQCOT gate-level pulse generation.
+- PIS-IEK predicts all large-signal first peaks.
+- PR-ECB is hardware/HIL validated.
+- `E_HS,rem` is a global additive energy correction law.
+
+## Validation Roadmap
+
+### R048: State Machine and Wiring Audit
+
+No switching simulation yet. First inspect the derived `.slx` model path and
+write a block/signal table for:
+
+- `Vout`, `Iload`, `IL1..IL4`;
+- high-side and low-side gate signals;
+- `REQ1..REQ4`;
+- `phase_idx`;
+- area integrator states;
+- actual high-side pulse width;
+- existing skip/reentry behavior.
+
+### R049: PR-ECB Protection Ablation
+
+Compare:
+
+| Case | Controller |
+|---|---|
+| A0 | original IQCOT |
+| A1 | simple over-voltage skip |
+| A2 | PR-ECB + Ton truncation |
+| A3 | PR-ECB + Ton truncation + pulse inhibit + controlled reentry |
+
+Main metrics: peak overshoot, first-peak time, truncated pulse count, inhibit
+duration, skip count, reentry time, secondary oscillation, and final error.
+
+### R050: PIS-IEK Balance Control
+
+Compare:
+
+| Case | Controller |
+|---|---|
+| B0 | original IQCOT |
+| B1 | `Lambda_diff` only |
+| B2 | `Ton_diff` only |
+| B3 | `Ton_diff + Lambda_diff` |
+| B4 | PIS-IEK projected balance |
+
+Main metrics: max/RMS current imbalance, phase-spacing standard deviation,
+output ripple, switching-frequency drift, and trim usage.
+
+### R051: Variable-Phase Add/Shed
+
+Compare fixed four-phase control against `1/2/4` active-phase control with and
+without PR-ECB/PIS-IEK guards. The success condition is not just fewer active
+phases. It must preserve voltage protection, reentry, and current-sharing
+recovery.
+
+## Immediate Next Step
+
+The next concrete research step should be the R048 state-machine and model
+wiring document. Only after that should a derived Simulink model be built or
+modified through MATLAB APIs. Original `.slx` files should remain untouched.

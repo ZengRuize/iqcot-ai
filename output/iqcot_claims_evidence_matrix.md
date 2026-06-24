@@ -255,6 +255,14 @@ R035 最关键的收束是修正 R034 的表述边界：`38/46/50/54/46us` 是 t
 |---|---|---|---|---|
 | The active research direction should shift from AI/`T_slew`-centered scheduling to control-centered IQCOT research: PR-ECB cut-load voltage stabilization, PIS-IEK steady-state current sharing, and variable-phase add/shed hybrid event management. | User feedback on 2026-06-24; `C:/Users/zengruize/Downloads/iqcot_research_direction_guidance_after_repo_review.md`; `docs/research_direction_after_user_feedback_20260624.md`; `docs/auto_research_plan_after_feedback_20260624.md`; existing R039-R043 PR-ECB evidence; existing IEK/PIS-IEK actuator-classification evidence. | High as project-direction correction; future validation still required for the new control actions. | "The next stage uses PR-ECB to guide cut-load protection actions, PIS-IEK to guide steady-state balance and phase recovery, and active phase set modeling to support add/shed phase logic." | "`T_slew` controls the external load-current slew rate; AI is the present main control contribution; PIS-IEK precisely predicts all large-signal first peaks; PR-ECB or the revised framework is already hardware/HIL validated." |
 
+<!-- R047_AI_READY_MODEL_INNOVATION -->
+
+### C42 / R047: AI-ready guarded large/small-signal model interface
+
+| Claim | Evidence | Strength | Safe wording | Do not claim |
+|---|---|---|---|---|
+| R047 proposes GAE-IQCOT, a guarded AI-ready event model that exposes PR-ECB large-signal peak-risk guards, PIS-IEK small-signal balance/reentry maps, active-phase hybrid event maps, and a safety projection interface for AI/table/MPC supervision. | `docs/ai_control_oriented_model_innovation_20260624.md`; `docs/control_state_machine_after_feedback.md`; `refine-logs/LOCAL_AUDIT_R047_AI_READY_MODEL_INNOVATION_20260624.md`; R046 direction correction; R039-R043 PR-ECB evidence; existing PIS-IEK actuator-classification evidence. | Medium as a research-design contribution; controller implementation and ablation simulations are still required. | "R047 reframes AI as a constrained supervisory layer: AI proposes low-dimensional protection, balance, and active-phase tokens, and the model projects them into a safe action set before they affect the IQCOT inner loop." | "R047 proves an AI controller, hardware/HIL safety, global PR-ECB calibration, direct neural gate control, or control over the external load-current slew rate." |
+
 <!-- R042_PR_ECB_PHASE_DENSE_PARTIAL -->
 
 ### C38 / R042: PR-ECB phase-dense high-side boundary validation

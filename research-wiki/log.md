@@ -124,3 +124,15 @@ _Append-only timeline._
 - New main line: PR-ECB cut-load voltage stabilization, PIS-IEK steady-state current sharing, and variable-phase add/shed hybrid event management.
 - Added `docs/research_direction_after_user_feedback_20260624.md` and `docs/auto_research_plan_after_feedback_20260624.md`.
 - Updated the automation plan so the next work specifies the derived control state machine and model-wiring table before any new Simulink runs.
+
+<!-- R047_AI_READY_MODEL_INNOVATION -->
+
+## 2026-06-24 R047 AI-ready large/small-signal model innovation
+
+- Added `docs/ai_control_oriented_model_innovation_20260624.md`.
+- Added `docs/control_state_machine_after_feedback.md`.
+- Added `refine-logs/LOCAL_AUDIT_R047_AI_READY_MODEL_INNOVATION_20260624.md`.
+- Reframed the next innovation as GAE-IQCOT: PR-ECB peak-risk guard + PIS-IEK
+  balance/reentry model + active-phase hybrid event map + AI action projection.
+- Kept the claim boundary: AI outputs low-dimensional supervisory tokens only;
+  the original IQCOT inner loop remains responsible for fast pulse generation.

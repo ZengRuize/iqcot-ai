@@ -41,6 +41,16 @@ Create or update:
 
 No simulation is required.
 
+Status after R047:
+
+- `docs/ai_control_oriented_model_innovation_20260624.md` defines the
+  AI-ready large/small-signal model interface.
+- `docs/control_state_machine_after_feedback.md` provides the first control
+  state-machine and derived-signal wiring draft.
+- The next heartbeat should inspect the derived `.slx` model blocks/signals and
+  fill the "Existing signal/block" column with actual model paths before any
+  model-copy construction.
+
 ### Priority 2: Derived Simulink Model Plan
 
 Before editing or building any model copy, produce a table:
@@ -134,4 +144,3 @@ Pause and notify the user if:
   control path;
 - GitHub push fails;
 - generated results would require claiming hardware/HIL validation.
-

@@ -29,6 +29,8 @@ Key planning documents:
 
 - `docs/research_direction_after_user_feedback_20260624.md`
 - `docs/auto_research_plan_after_feedback_20260624.md`
+- `docs/ai_control_oriented_model_innovation_20260624.md`
+- `docs/control_state_machine_after_feedback.md`
 
 ## Research Logs
 
