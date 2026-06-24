@@ -404,3 +404,32 @@ Next useful action: do not expand to a full matrix and do not keep repeating the
 same over-voltage-triggered hold-out.  Run a trigger-timing diagnostic on the
 same `40A->20A` two-offset chunk, e.g. a pre-threshold /
 load-step-synchronous active-HS Ton-truncation variant.
+
+<!-- R049F_PR_ECB_EARLY_TONTRUNC -->
+
+## R049F Latest Update
+
+R049F copied the completed R049E model into:
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049f_early_tontrunc.slx`.
+The build and runner scripts are
+`output/iqcot_r049f_build_early_tontrunc_model.m` and
+`output/iqcot_r049f_pr_ecb_early_tontrunc_chunk.m`.
+
+R049F changed the Ton-truncation trigger from the R049C/R049D/R049E
+over-voltage-triggered flag to a load-step-synchronous time-window flag by
+removing the over-voltage input from `R049C_TonTrunc_Global`.  It then ran the
+same `40A -> 20A` two-offset chunk with A0 same-model no-trunc and A2 early
+Ton-trunc rows.
+
+At `0.05us`, early A2 reduced phase-4 remaining Ton from about `52ns` to `0ns`,
+confirming that R049E failed because the over-voltage trigger was too late.
+But the global all-phase early action caused severe undervoltage:
+`-184.1030mV` peak metric and `-239.1723mV` final error.  At `0.105us`, the
+same global early action also caused severe undervoltage:
+`-189.3089mV` peak metric and `-241.9473mV` final error.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: do not expand to a full matrix.  Test a phase-selective /
+active-HS-only early guard, e.g. `early_window AND qh_i`, on the same
+`40A->20A` two-offset chunk.

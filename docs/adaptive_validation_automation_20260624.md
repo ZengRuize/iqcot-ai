@@ -299,3 +299,28 @@ Adaptive revision:
 - active-HS state alone is insufficient; trigger timing is now an explicit
   guard;
 - next chunk should be a trigger-timing diagnostic, not a full matrix.
+
+Status after R049F: the load-step-synchronous early Ton-truncation diagnostic
+completed and ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049F used a new copy,
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049f_early_tontrunc.slx`,
+made from the completed R049E model.  It changed the Ton-truncation flag to an
+early two-input time-window logic and ran only `40A -> 20A` at offsets
+`0.05 us` and `0.105 us`.  At `0.05 us`, A2 reduced phase-4 remaining Ton from
+about `52 ns` to `0 ns`, but caused a severe undervoltage response
+(`-184.1030 mV` peak metric and `-239.1723 mV` final error).  At `0.105 us`,
+the same global early action also caused severe undervoltage
+(`-189.3089 mV`, final error `-241.9473 mV`).
+
+Adaptive revision:
+
+- R049E was indeed a trigger-lateness issue for the active-HS pulse;
+- global all-phase early Ton-min truncation is too aggressive and must not be
+  used as the PR-ECB action;
+- next chunk should test a phase-selective / active-HS-only early guard, not a
+  full matrix.

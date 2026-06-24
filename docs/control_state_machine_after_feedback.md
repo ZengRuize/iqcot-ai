@@ -254,3 +254,35 @@ CUT_LOAD_PROTECT:
 
 The state machine should now carry both phase-state and trigger-timing guards
 before claiming first-peak protection from Ton truncation.
+
+## R049F State-Machine Revision
+
+R049F confirms the trigger-timing diagnosis but rejects a global early action.
+The early time-window variant removed the active phase-4 remaining on-time in
+the `40A -> 20A`, `0.05 us` row:
+
+```text
+remaining Ton4: about 52 ns -> 0 ns
+```
+
+However, the same global all-phase early Ton-min action caused severe
+undervoltage-like behavior in both offsets:
+
+```text
+0.05 us:  A2 peak metric -184.1030 mV, final error -239.1723 mV
+0.105 us: A2 peak metric -189.3089 mV, final error -241.9473 mV
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT:
+    phase_selective_active_HS_truncation:
+        allowed only for phases currently high-side active
+        must be guarded by early risk / phase state
+    global_all_phase_early_Ton_min:
+        disallowed except as an unsafe diagnostic
+```
+
+The next state-machine validation should test `early_window AND qh_i` or an
+equivalent active-HS-only guard.

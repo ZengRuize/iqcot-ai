@@ -218,6 +218,32 @@ Status after R049E:
   load-step-synchronous active-HS truncation variant to separate action
   capability from trigger lateness.
 
+Status after R049F:
+
+- `output/iqcot_r049f_build_early_tontrunc_model.m` copied the completed R049E
+  model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049f_early_tontrunc.slx`.
+- The builder reconfigured the existing `R049C_TonTrunc_Global` logic from
+  `after_load_step AND before_window_end AND over_voltage` to
+  `after_load_step AND before_window_end`, creating a load-step-synchronous
+  early window.
+- `output/iqcot_r049f_pr_ecb_early_tontrunc_chunk.m` ran only `40A -> 20A` at
+  offsets `0.05 us` and `0.105 us`, with A0 same-model no-trunc and A2 early
+  Ton-trunc rows.
+- At the active-HS boundary offset `0.05 us`, early A2 reduced phase-4
+  remaining Ton from about `52 ns` to `0 ns`, confirming the R049E issue was
+  trigger lateness rather than an incapable Ton command path.
+- But the global all-phase early window caused severe undervoltage-like
+  response: A2 peak metric was `-184.1030 mV` and final error was
+  `-239.1723 mV`.
+- At the post-turnoff offset `0.105 us`, A2 also produced severe undervoltage
+  (`-189.3089 mV`, final error `-241.9473 mV`).
+- Decision: `MODEL_REVISED`.
+- Do not expand to the full A matrix.  The next useful step is R049G: reuse the
+  `40A -> 20A` two-offset chunk with a phase-selective / active-HS-only early
+  truncation guard, such as `early_window AND qh_i`, to test whether the R049F
+  failure was caused by global all-phase truncation.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

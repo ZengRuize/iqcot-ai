@@ -264,3 +264,26 @@ _Append-only timeline._
 - Decision: `CLAIM_DOWNGRADED`.  Ton truncation remains supported for larger
   near0/10A chunks, but the current over-voltage trigger is not a general
   active-HS first-peak action for mild `40A -> 20A`.
+
+<!-- R049F_PR_ECB_EARLY_TONTRUNC -->
+
+## 2026-06-24 R049F PR-ECB early Ton-truncation trigger-timing diagnostic
+
+- Added `output/iqcot_r049f_build_early_tontrunc_model.m` and
+  `output/iqcot_r049f_pr_ecb_early_tontrunc_chunk.m`.
+- Built the new trigger-timing copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049f_early_tontrunc.slx`
+  from the completed R049E model through MATLAB APIs.
+- Reconfigured `R049C_TonTrunc_Global` from a three-input
+  after/before/over-voltage AND to a two-input load-step-synchronous time-window
+  AND.
+- Ran only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-trunc and A2 early Ton-trunc rows.
+- At `0.05us`, A2 reduced phase-4 remaining Ton from about `52ns` to `0ns`,
+  but produced a severe undervoltage response: `-184.1030mV` peak metric and
+  `-239.1723mV` final error.
+- At `0.105us`, global early truncation also produced severe undervoltage:
+  `-189.3089mV` peak metric and `-241.9473mV` final error.
+- Decision: `MODEL_REVISED`.  Early timing can affect active Ton, but global
+  all-phase early Ton-min truncation is over-aggressive; the next action should
+  be phase-selective / active-HS-only.

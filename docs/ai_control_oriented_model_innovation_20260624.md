@@ -582,6 +582,48 @@ a general active-HS law.  The next validation should diagnose trigger timing:
 use the same `40A -> 20A` offsets with a pre-threshold or
 load-step-synchronous active-HS truncation variant before any full-grid claim.
 
+### R049F Result: Early Timing Works but Global Action Is Over-Aggressive
+
+R049F changed the R049E model from an over-voltage-triggered truncation flag to
+a load-step-synchronous time-window flag:
+
+```text
+R049C/R049D/R049E:
+    after_load_step AND before_window_end AND over_voltage
+
+R049F:
+    after_load_step AND before_window_end
+```
+
+A2 used `Tton_trunc_min = 5 ns` and an `80 ns` early window.  The same
+`40A -> 20A` two-offset chunk produced:
+
+| Offset | A0 peak | A2 peak metric | A0 rem Ton4 | A2 rem Ton4 | A2 final error | Interpretation |
+|---:|---:|---:|---:|---:|---:|---|
+| `0.05 us` | `2.1103 mV` | `-184.1030 mV` | `52 ns` | `0 ns` | `-239.1723 mV` | early timing removes active Ton but causes severe undervoltage |
+| `0.105 us` | `2.0936 mV` | `-189.3089 mV` | `0 ns` | `0 ns` | `-241.9473 mV` | global early action is unsafe even without phase-4 remaining Ton |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the GAE-IQCOT/PR-ECB action model:
+
+```text
+active-HS Ton command truncation needs both:
+    1. early-enough trigger timing, and
+    2. phase-selective / state-gated application.
+
+Global all-phase load-step-synchronous Ton-min truncation is over-aggressive
+and should not be the PR-ECB action.
+```
+
+R049F clarifies the R049E negative result: the command path can remove active
+Ton when asserted early enough, but the action must be redesigned as an
+active-HS-only guard before further expansion.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:
