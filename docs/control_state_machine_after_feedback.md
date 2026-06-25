@@ -724,3 +724,26 @@ eligible scheduler/request event.  The control state should not model it as a
 continuous release-time knob.  To improve undershoot without losing recovery
 benefit, revise the restore action itself, for example with a soft/ramped token,
 or first perform a structural event-boundary audit.
+
+## R049S Sampled Event Boundary
+
+R049S showed that the active-row binary release boundary is one control sample:
+
+```text
+Ts_ctrl = 40 ns
+release_delay 1.615 us -> one_shot_done 1.655 us
+release_delay 1.616 us -> one_shot_done 1.695 us
+```
+
+State-machine implication: `one_shot_done` is a sampled event, not an analog
+release instant.  The state machine should model:
+
+```text
+release_clock_crossing
+    -> sampled set event
+    -> delayed one_shot_done output
+    -> hard restore of scheduler allow
+```
+
+The next revision should replace the last step with a soft/ramped restore
+action instead of trying to tune the crossing time.

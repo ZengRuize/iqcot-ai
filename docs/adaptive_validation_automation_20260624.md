@@ -574,3 +574,21 @@ event plateau (`1.695 us`) and incurred the larger undershoot penalty.  The
 next automation step should not keep adding binary-delay points on the same
 plateau.  Either audit the event boundary structurally or switch to soft/ramped
 release.
+
+Status after R049S: the active-offset release-event boundary audit completed:
+
+```text
+MODEL_REVISED
+```
+
+The event boundary is between `1.615 us` and `1.616 us`.  With `Ts_ctrl=40 ns`,
+the predicted sampled one-shot events matched simulation:
+
+```text
+1.615 us -> one_shot_done 1.655 us
+1.616-1.630 us -> one_shot_done 1.695 us
+```
+
+This confirms that binary release delay is quantized by the controller
+sample/update event.  The next automation step should stop scalar binary-delay
+refinement and implement a true soft/ramped restore token.

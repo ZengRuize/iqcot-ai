@@ -513,3 +513,18 @@ _Append-only timeline._
 - Decision: `MODEL_REVISED`.  Interpretation: binary delay is event-quantized;
   R049P/R049R are on the `1.655us` plateau and R049Q crosses to `1.695us`.
   Next step: event-boundary audit or soft/ramped restore.
+
+## 2026-06-25 R049S PR-ECB release-event boundary audit
+
+- Added `output/iqcot_r049s_release_event_boundary_audit.m` and
+  `output/iqcot_r049s_waveform_metric_audit.py`.
+- Ran a targeted active-offset event-boundary audit at `0.105us` with release
+  delays `1.615, 1.616, 1.620, 1.625, 1.630us`.
+- `Ts_ctrl=40ns` explains the observed one-shot quantization.
+- Simulated/predicted one-shot events matched with effectively zero error:
+  `1.615us -> 1.655us`; `1.616-1.630us -> 1.695us`.
+- Three-window metrics split into two plateaus:
+  `1.655us`: recovery peak `+0.1244mV`, undershoot `-0.7873mV`;
+  `1.695us`: recovery peak `+0.1365mV`, undershoot `-1.1109mV`.
+- Decision: `MODEL_REVISED`.  Next: implement true soft/ramped restore, not
+  more scalar binary-delay refinement.

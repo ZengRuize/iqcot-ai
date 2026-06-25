@@ -1160,5 +1160,40 @@ the same event plateau are low value; the next research step should either
 audit the event boundary between `1.655 us` and `1.695 us` or replace the hard
 binary restore with a soft/ramped restoration.
 
+### R049S Result: Sampled Release-Event Boundary
+
+R049S targeted the active `0.105 us` row and tested:
+
+```text
+Tphase_release_delay = 1.615, 1.616, 1.620, 1.625, 1.630 us
+```
+
+The controller update period is:
+
+```text
+Ts_ctrl = 40 ns
+```
+
+The observed and predicted one-shot events were:
+
+```text
+1.615 us -> one_shot_done 1.655 us
+1.616 us -> one_shot_done 1.695 us
+1.620 us -> one_shot_done 1.695 us
+1.625 us -> one_shot_done 1.695 us
+1.630 us -> one_shot_done 1.695 us
+```
+
+R049S decision:
+
+```text
+MODEL_REVISED
+```
+
+The sampled-event signal model should replace the earlier continuous-delay
+interpretation.  The hard binary release delay selects a sampled event plateau;
+it cannot continuously tune recovery.  The next controller candidate should
+modify the restore action itself, e.g. a soft/ramped request restoration token.
+
 The automation plan for this loop is recorded in
 `docs/adaptive_validation_automation_20260624.md`.

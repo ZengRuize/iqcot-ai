@@ -700,3 +700,26 @@ At `0.105us`, R049R has recovery peak improvement `+0.1244mV` and recovery
 undershoot penalty `-0.7873mV`, same as R049P.  Safe wording: binary release
 delay is event-quantized, not a smooth knob.  Next useful action is a structural
 event-boundary audit or soft/ramped restoration.
+
+## R049S Latest Update
+
+R049S validated the sampled release-event boundary for the active `0.105us`
+offset:
+
+- delays tested: `1.615, 1.616, 1.620, 1.625, 1.630us`
+- `Ts_ctrl = 40ns`
+- decision: `MODEL_REVISED`
+
+Observed one-shot map:
+
+```text
+1.615us -> one_shot_done 1.655us
+1.616us -> one_shot_done 1.695us
+1.620us -> one_shot_done 1.695us
+1.625us -> one_shot_done 1.695us
+1.630us -> one_shot_done 1.695us
+```
+
+Safe wording: R049S confirms the hard release is sampled-event quantized.  The
+signal model should use sampled one-shot plateaus, not continuous binary-delay
+tuning.  Next useful action: implement true soft/ramped restore.

@@ -507,3 +507,15 @@ Status after R049R:
   `1.655 us` plateau; R049Q crosses to the `1.695 us` plateau.
 - Next: audit the event boundary or implement soft/ramped restoration, not more
   same-plateau binary-delay points.
+
+Status after R049S:
+
+- Ran a targeted active-offset event-boundary micro-audit with delays
+  `1.615, 1.616, 1.620, 1.625, 1.630 us`.
+- Decision: `MODEL_REVISED`.
+- `Ts_ctrl=40 ns` explains the one-shot jump: `1.615 us` maps to `1.655 us`,
+  while `1.616-1.630 us` map to `1.695 us`.
+- The sample-quantized one-shot prediction matched simulation with effectively
+  zero timing error.
+- Next: stop scalar binary-delay refinement.  Implement a true soft/ramped
+  restore token.
