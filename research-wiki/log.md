@@ -422,3 +422,19 @@ _Append-only timeline._
   of the request-path gate and is suppressed by the same inhibit logic.
 - Decision: `IMPLEMENTATION_ISSUE`.  Next step is to identify an upstream
   scheduler phase-boundary / slot signal before another one-shot reentry run.
+
+## 2026-06-25 R049M PR-ECB reentry upstream boundary audit
+
+- Added `output/iqcot_r049m_reentry_boundary_audit.m`.
+- Ran a read-only structural audit of the R049L repair model; no new switching
+  simulation and no `.slx` save.
+- Verified trigger chain:
+  `R049L_Gate_And -> Allow -> Detect Rise Positive -> tr ->
+  PhaseScheduler_4Phase`.
+- Concluded that existing scheduler `phase_state`, `phase_idx`, `phase_en1..4`,
+  `tr1..4`, and downstream `qh_i` all depend on the gated `Allow` trigger and
+  cannot be causal release sources during inhibition.
+- Decision: `MODEL_REVISED`.
+- Next step: independent upstream phase-clock / predicted scheduler-slot
+  one-shot release, calibrated near the R049K `1.678-1.690us` boundary, then
+  only the same four-row `40A -> 20A` A0/A2 chunk.

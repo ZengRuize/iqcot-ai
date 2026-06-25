@@ -588,3 +588,22 @@ Next useful action: inspect or expose an upstream scheduler phase-boundary
 signal that continues to evolve during request inhibition.  Do not use
 downstream `qh1` as the causal release trigger, and do not treat the R049L
 repair A2 metrics as new controlled-reentry evidence.
+
+## R049M Latest Update
+
+R049M added `output/iqcot_r049m_reentry_boundary_audit.m` and audited the
+R049L repair model without simulation or `.slx` edits. The trigger chain is:
+
+```text
+R049L_Gate_And -> Allow -> Detect Rise Positive -> tr -> PhaseScheduler_4Phase
+```
+
+Thus the current scheduler `phase_state`, `phase_idx`, `phase_en1..4`,
+`tr1..4`, and downstream `qh_i` are all downstream of the gated request path and
+do not evolve independently during inhibition.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: build a new derived model with an independent upstream
+phase-clock / predicted-slot one-shot release trigger calibrated near the R049K
+`1.678-1.690us` boundary. Run only the same four-row `40A -> 20A` chunk first.

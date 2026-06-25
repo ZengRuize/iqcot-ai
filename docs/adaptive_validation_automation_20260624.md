@@ -487,3 +487,20 @@ Recovery metrics therefore repeat the R049K fixed-window trade-off rather than
 forming new controlled-reentry evidence.  The next automation step must inspect
 or expose an upstream phase-boundary / scheduler-slot signal before rerunning
 any one-shot reentry chunk.
+
+Status after R049M: the upstream boundary audit completed and ended in:
+
+```text
+MODEL_REVISED
+```
+
+The existing scheduler is not independently clocked. Its trigger chain is
+`Allow -> Detect Rise Positive -> tr -> PhaseScheduler_4Phase`, so scheduler
+state only advances after the same request-path gate has allowed a pulse.
+Existing `phase_state`, `phase_idx`, phase enables, per-phase trigger signals,
+and downstream `qh1` are therefore unsuitable as causal release triggers during
+inhibition.
+
+The automation should next create a derived model with an independent upstream
+phase-clock / predicted-slot one-shot release. It should not run a full matrix:
+only the same repaired `40A -> 20A` two-offset A0/A2 chunk is allowed first.

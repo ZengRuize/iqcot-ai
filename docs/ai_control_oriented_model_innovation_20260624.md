@@ -894,6 +894,41 @@ phase-clock proxy.  Downstream gate outputs such as `qh1` can be audited as
 effects, but should not be used as the release cause for request-path
 controlled reentry.
 
+### R049M Result: Existing Scheduler State Freezes During Request Inhibit
+
+R049M performed a read-only structural audit of the R049L repair model. The
+actual trigger path is:
+
+```text
+R049L_Gate_And
+-> Allow
+-> Detect Rise Positive
+-> tr
+-> PhaseScheduler_4Phase trigger
+```
+
+Inside `PhaseScheduler_4Phase`, `phase_state` is a triggered `UnitDelay`. It is
+held except when `tr` rises. Therefore the existing scheduler state and outputs
+are downstream effects of the gated request path:
+
+```text
+phase_state / phase_idx / phase_en1..4 / tr1..4 / qh1
+```
+
+They do not continue to evolve during request inhibition and cannot be causal
+release triggers.
+
+R049M decision:
+
+```text
+MODEL_REVISED
+```
+
+This revises the PR-ECB controlled-reentry interface. The release trigger must
+be an independent upstream phase-clock or predicted scheduler-slot signal,
+calibrated against the observed R049K boundary near `1.678-1.690 us`, rather
+than an existing scheduler output.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:

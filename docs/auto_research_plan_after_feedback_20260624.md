@@ -369,6 +369,24 @@ Status after R049L repair:
   observable while requests are inhibited, or implement an independent
   phase-clock / scheduler-slot proxy.
 
+Status after R049M:
+
+- `output/iqcot_r049m_reentry_boundary_audit.m` performed a read-only
+  structural audit of the R049L repair model.
+- The scheduler trigger chain is downstream of the request-path gate:
+  `R049L_Gate_And -> Allow -> Detect Rise Positive -> tr ->
+  PhaseScheduler_4Phase`.
+- `PhaseScheduler_4Phase/phase_state` is a `UnitDelay` inside a triggered
+  subsystem. It advances only on `Allow` / `tr` rising edges and freezes during
+  request inhibition.
+- Therefore existing `phase_state`, `phase_idx`, `phase_en1..4`, `tr1..4`, and
+  downstream `qh1` cannot be causal one-shot release triggers.
+- Decision: `MODEL_REVISED`.
+- Next useful step: build a new derived copy with an independent upstream
+  phase-clock / predicted scheduler-slot release trigger, calibrated near the
+  R049K observed `1.678-1.690 us` boundary, then run only the same four-row
+  `40A -> 20A` A0/A2 chunk.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

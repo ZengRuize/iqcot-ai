@@ -550,3 +550,49 @@ controlled_reentry:
 
     qh_i may still be logged as an effect / safety check
 ```
+
+## R049M State-Machine Revision
+
+R049M audited whether the existing scheduler exposes an upstream release clock.
+It does not. The actual chain is:
+
+```text
+existing_allow
+    -> R049L_Gate_And
+    -> Allow
+    -> Detect Rise Positive
+    -> tr
+    -> PhaseScheduler_4Phase trigger
+    -> phase_state / phase_idx / phase_en
+    -> per-phase triggers
+    -> qh_i
+```
+
+This means the scheduler is event-driven by allowed requests, not by an
+independent phase clock.
+
+R049M decision:
+
+```text
+MODEL_REVISED
+```
+
+State-machine rule after R049M:
+
+```text
+controlled_reentry:
+    release_trigger_class:
+        independent_phase_clock
+        or predicted_scheduler_slot
+
+    calibration:
+        first release event near R049K boundary 1.678-1.690 us
+
+    forbidden release causes:
+        req_global comparator edge
+        existing_allow
+        Allow/tr
+        phase_state or phase_idx from current triggered scheduler
+        phase_en/tr_i
+        downstream qh_i
+```
