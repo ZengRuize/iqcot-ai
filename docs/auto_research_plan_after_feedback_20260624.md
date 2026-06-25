@@ -327,6 +327,28 @@ Status after R049J:
   reentry with softer request restoration, or a shorter/phase-selective inhibit
   explicitly penalized for recovery undershoot.
 
+Status after R049K:
+
+- `output/iqcot_r049k_build_soft_reentry_model.m` copied the completed R049I
+  model into
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049k_soft_reentry.slx`.
+- R049K kept Ton truncation disabled and tested only a shortened request-path
+  soft-reentry proxy: `soft_reentry = 0.070-1.760 us`.
+- The end time was selected from R049J/R049K waveform timing: the first future
+  request / qh1 boundary is around `1.678-1.690 us`, so this is an
+  evidence-based short proxy rather than a parameter sweep.
+- At `0.05 us`, A2 preserved active-HS remaining Ton4 at `52 ns -> 52 ns` and
+  released the next qh1 pulse at about `1.772 us`.
+- Compared with R049J, recovery-window undershoot penalties were reduced from
+  `-2.9901/-4.1571 mV` to `-0.6388/-1.6588 mV`, but positive recovery-peak
+  benefit narrowed to `+0.1796/+0.1954 mV` and late positive peaks slightly
+  worsened.
+- Decision: `MODEL_REVISED`.
+- Do not keep scanning scalar fixed inhibit windows.  The next useful step is
+  an explicit controlled-reentry proxy, such as edge-aligned one-shot request
+  restoration or phase-aware release, still using R049H three-window metrics
+  and recovery-undershoot penalty.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

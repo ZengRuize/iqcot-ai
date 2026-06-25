@@ -381,3 +381,27 @@ _Append-only timeline._
   recovery undershoot penalties of `-2.9901mV` and `-4.1571mV`.
 - Decision: `MODEL_REVISED`.  Fixed post-active inhibit is too hard; next step
   should be controlled reentry / soft request restoration.
+
+<!-- R049K_PR_ECB_SOFT_REENTRY -->
+
+## 2026-06-25 R049K PR-ECB short soft-reentry proxy
+
+- Added `output/iqcot_r049k_build_soft_reentry_model.m`,
+  `output/iqcot_r049k_pr_ecb_soft_reentry_chunk.m`, and
+  `output/iqcot_r049k_waveform_metric_audit.py`.
+- Built the new short soft-reentry copy
+  `output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049k_soft_reentry.slx`
+  from the completed R049I model through MATLAB APIs.
+- Tested only `40A -> 20A` at offsets `0.05us` and `0.105us`, with A0
+  same-model no-inhibit and A2 shortened request-path soft reentry.
+- A2 used `soft_reentry = 0.070-1.760us`, selected from first future request /
+  qh1 timing around `1.678-1.690us`.
+- At `0.05us`, active-HS remaining Ton4 stayed `52ns -> 52ns`, so the current
+  active pulse was not truncated.
+- R049K reduced R049J's recovery undershoot penalties from
+  `-2.9901/-4.1571mV` to `-0.6388/-1.6588mV`, but recovery positive-peak
+  benefit narrowed to `+0.1796/+0.1954mV` and late positive peaks slightly
+  worsened.
+- Decision: `MODEL_REVISED`.  Stop fixed scalar inhibit-window scans; next step
+  should be explicit controlled reentry such as one-shot request restoration or
+  phase-aware release.

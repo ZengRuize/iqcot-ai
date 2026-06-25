@@ -536,6 +536,31 @@ undershoot penalties of `-2.9901mV` and `-4.1571mV` across the two offsets.
 
 Decision: `MODEL_REVISED`.
 
-Next useful action: R049K should test controlled reentry / soft request
-restoration, still as one minimal `40A->20A` two-offset chunk using the R049H
+Follow-up: R049K below tests a shortened controlled-reentry / soft request
+restoration proxy as one minimal `40A->20A` two-offset chunk using the R049H
 three-window gate plus recovery-undershoot penalty.
+
+<!-- R049K_PR_ECB_SOFT_REENTRY -->
+
+## R049K Latest Update
+
+R049K added `output/iqcot_r049k_build_soft_reentry_model.m`,
+`output/iqcot_r049k_pr_ecb_soft_reentry_chunk.m`, and
+`output/iqcot_r049k_waveform_metric_audit.py`.  It copied the completed R049I
+model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049k_soft_reentry.slx`.
+
+R049K tested a shortened request-path soft-reentry proxy:
+`soft_reentry = 0.070-1.760us`, chosen from the first future request / qh1
+boundary around `1.678-1.690us`.  At `0.05us`, active-HS remaining Ton4 stayed
+`52ns -> 52ns`, so the current pulse was not truncated.
+
+Windowed result: recovery positive peaks improved by `+0.1796/+0.1954mV`, and
+recovery undershoot penalties improved substantially versus R049J but remained
+non-negligible at `-0.6388/-1.6588mV`.  Late positive peaks slightly worsened.
+
+Decision: `MODEL_REVISED`.
+
+Next useful action: stop scanning fixed scalar inhibit windows.  Test an
+explicit controlled-reentry proxy such as edge-aligned one-shot request
+restoration or phase-aware release with the same R049H metric gate.

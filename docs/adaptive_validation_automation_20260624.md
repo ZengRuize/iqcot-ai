@@ -440,3 +440,30 @@ Adaptive revision:
   penalties of `-2.9901 mV` and `-4.1571 mV` in the two offsets;
 - the next chunk should be controlled reentry with softer request restoration,
   not fixed hard inhibit.
+
+Status after R049K: the short soft-reentry proxy chunk completed and ended in:
+
+```text
+MODEL_REVISED
+```
+
+R049K kept the same `40A -> 20A` two-offset scope and copied the completed
+R049I model into
+`output/cutload_pr_ecb_control/four_phase_iek_pr_ecb_control_r049k_soft_reentry.slx`.
+It tested a shortened request-path proxy:
+
+```text
+soft_reentry = 0.070-1.760 us
+```
+
+Adaptive revision:
+
+- current active-HS pulse truncation remains avoided: at `0.05 us`, remaining
+  Ton4 stays `52 ns -> 52 ns`;
+- R049K reduces R049J's recovery undershoot penalty substantially, from
+  `-2.9901/-4.1571 mV` to `-0.6388/-1.6588 mV`;
+- the benefit also narrows: recovery positive-peak improvements become only
+  `+0.1796/+0.1954 mV`, and late positive peaks slightly worsen;
+- fixed scalar inhibit-window tuning should stop; the next chunk should test
+  explicit controlled reentry such as one-shot request restoration or
+  phase-aware release.

@@ -461,3 +461,48 @@ R049J decision:
 ```text
 MODEL_REVISED
 ```
+
+## R049K State-Machine Revision
+
+R049K tested a shortened request-path soft-reentry proxy:
+
+```text
+soft_reentry = 0.070 us -> 1.760 us
+```
+
+The end point was selected from the first future request / qh1 boundary around
+`1.678-1.690 us`.  This preserves the R049J no-current-pulse-truncation rule:
+
+```text
+remaining Ton4 at 0.05 us: 52 ns -> 52 ns
+```
+
+However, the three-window result still shows a fixed-window trade-off:
+
+```text
+recovery peak improvement: +0.1796 / +0.1954 mV
+recovery undershoot penalty: -0.6388 / -1.6588 mV
+late positive peak change: -0.1318 / -0.0223 mV
+```
+
+State-machine implication:
+
+```text
+CUT_LOAD_PROTECT -> REENTRY:
+    fixed scalar post-active inhibit windows are not enough
+
+    next candidate:
+        edge-aligned one-shot request restoration
+        or phase-aware release
+
+    metric_guard:
+        preserve EARLY_LOCAL_PEAK
+        preserve RECOVERY_PEAK benefit
+        explicitly penalize RECOVERY_UNDERSHOOT and LATE_PEAK
+```
+
+R049K decision:
+
+```text
+MODEL_REVISED
+```

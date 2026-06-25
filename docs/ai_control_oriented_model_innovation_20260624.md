@@ -805,8 +805,58 @@ soft request restoration, and the R049H window gate must include recovery
 undershoot penalties.
 ```
 
-The next validation should be R049K: one minimal controlled-reentry chunk, not
-a full matrix.
+This result motivates a minimal controlled-reentry follow-up rather than a full
+matrix; R049K below performs that follow-up.
+
+### R049K Result: Short Soft Reentry Reduces but Does Not Eliminate the Trade-Off
+
+R049K copied the completed R049I model into a new derived copy and inserted the
+same request-path gate family as R049J, but shortened the A2 window:
+
+```text
+allow_to_scheduler = existing_allow AND NOT(soft_reentry)
+soft_reentry = 0.070 us -> 1.760 us
+```
+
+The end point was selected from R049J waveform timing: the first future request
+and qh1 boundary appears around `1.678-1.690 us`, whereas R049J held until
+`2.000 us`.
+
+R049K preserved the key safety property:
+
+```text
+0.05 us active-HS row remaining Ton4: 52 ns -> 52 ns
+global / phase Ton-trunc duration: 0 us
+```
+
+Windowed result:
+
+| Offset | Window | Peak improvement | Undershoot change |
+|---:|---|---:|---:|
+| `0.050 us` | `0-2 us` early local peak | `0.0000 mV` | `-0.2917 mV` |
+| `0.050 us` | `2-12 us` recovery peak | `+0.1796 mV` | `-0.6388 mV` |
+| `0.050 us` | `12-80 us` late peak | `-0.1318 mV` | `-0.0261 mV` |
+| `0.105 us` | `0-2 us` early local peak | `0.0000 mV` | `-0.6663 mV` |
+| `0.105 us` | `2-12 us` recovery peak | `+0.1954 mV` | `-1.6588 mV` |
+| `0.105 us` | `12-80 us` late peak | `-0.0223 mV` | `+0.0547 mV` |
+
+Decision:
+
+```text
+MODEL_REVISED
+```
+
+Revision to the action model:
+
+```text
+Shorter request restoration is better than a hard 2 us inhibit, but a single
+fixed scalar reentry window still trades recovery-peak reduction against
+undershoot and late-peak penalties.
+```
+
+The next validation should stop scanning fixed inhibit windows and instead test
+an explicit controlled-reentry proxy, such as edge-aligned one-shot request
+restoration or phase-aware release, with the R049H three-window metric gate.
 
 ### R050: PIS-IEK Balance Control
 
