@@ -674,3 +674,31 @@ The state machine fired correctly, but behavior was offset-selective:
 
 State-machine implication: a single global binary release delay is unlikely to
 be sufficient unless paired with phase/offset awareness or softened restoration.
+
+## R049Q Later-Point Result
+
+R049Q tested:
+
+```text
+release_clock = t_load_step + 1.630 us
+```
+
+The state machine fired correctly:
+
+```text
+0.050 us: one_shot_done = 1.670 us
+0.105 us: one_shot_done = 1.695 us
+```
+
+But the behavior moved toward the hard-release penalty:
+
+```text
+0.050 us: still transparent
+0.105 us: recovery peak improves slightly more than R049P
+          recovery undershoot worsens substantially versus R049P
+```
+
+State-machine implication: binary release delay is a sharp timing knob.  Moving
+later than `1.600 us` strengthens the reentry action but reintroduces the
+undershoot failure mode.  Next control-state revision should use either a
+between-point (`1.610-1.620 us`) or a soft/ramped restore token.

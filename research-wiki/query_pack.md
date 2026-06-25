@@ -655,3 +655,23 @@ At `0.050us`, the result is still transparent.  At `0.105us`, recovery peak
 improves by `+0.1244mV`; recovery undershoot worsens by `-0.7873mV`, which is
 less severe than R049N's `-1.4429mV`; late settling improves.  Next useful
 action: one slightly later point (`1.62-1.64us`) or soft/ramped release.
+
+## R049Q Latest Update
+
+R049Q tested one slightly later binary release:
+
+- `Tphase_release_delay = 1.630us`
+- Decision: `MODEL_REVISED`
+
+Source-model hook: the R049N `.slx` release constant is still
+`t_load_step + Tphase_release_delay`; R049Q only changed the simulation input
+value.
+
+At `0.050us`, the result remains transparent.  At `0.105us`, recovery peak
+improves by `+0.1365mV`, but recovery undershoot worsens by `-1.1109mV` and
+late peak degrades by `-0.0666mV`.
+
+Safe wording: `1.630us` shows that moving later than R049P strengthens the
+active recovery effect but moves back toward the R049N hard-release undershoot
+penalty.  Next useful action is one between-point (`1.610-1.620us`) or a
+soft/ramped restore, not another later binary release.

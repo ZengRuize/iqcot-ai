@@ -1088,5 +1088,42 @@ damaging than R049N's `1.685 us`, but the action is phase/offset selective.
 The next step should be either one slightly later point (`1.62-1.64 us`) or a
 soft/ramped release rather than a broad sweep.
 
+### R049Q Result: 1.630us Moves Back Toward Hard-Release Penalty
+
+R049Q tested one slightly later binary release:
+
+```text
+Tphase_release_delay = 1.630 us
+```
+
+The source model still uses the R049N upstream-causal release interface:
+
+```text
+release_clock = t_load_step + Tphase_release_delay
+```
+
+The release fired in both offsets:
+
+```text
+0.050 us A2: release_clock=1.630 us, one_shot_done=1.670 us
+0.105 us A2: release_clock=1.631 us, one_shot_done=1.695 us
+```
+
+The `0.050 us` row remained transparent.  At `0.105 us`, recovery peak
+improvement increased from R049P's `+0.1244 mV` to `+0.1365 mV`, but recovery
+undershoot worsened from `-0.7873 mV` to `-1.1109 mV`, and late peak changed
+from an improvement to a degradation.
+
+R049Q decision:
+
+```text
+MODEL_REVISED
+```
+
+The result narrows the safe assumption again: later binary release increases
+action strength but accelerates the undershoot penalty.  The next step should
+not keep moving later.  Test one point between `1.600 us` and `1.630 us`, or
+replace binary restore with soft/ramped restoration.
+
 The automation plan for this loop is recorded in
 `docs/adaptive_validation_automation_20260624.md`.

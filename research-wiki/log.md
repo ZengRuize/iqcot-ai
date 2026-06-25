@@ -480,3 +480,19 @@ _Append-only timeline._
   `-0.7873mV`, less severe than R049N; late settling improves.
 - Decision: `MODEL_REVISED`.  Next step: one slightly later point or a soft
   release action.
+
+## 2026-06-25 R049Q PR-ECB release-later-point audit
+
+- Added `output/iqcot_r049q_pr_ecb_release_later_point_audit.m` and
+  `output/iqcot_r049q_waveform_metric_audit.py`.
+- Tested a single later binary release: `1.630us`.
+- MATLAB API source-model check confirmed the `.slx` release constant remains
+  `t_load_step + Tphase_release_delay`; R049Q only changes the simulation input
+  variable.
+- A0 baseline passed; one-shot release fired in both A2 rows:
+  `1.670us` at offset `0.050us`, `1.695us` at offset `0.105us`.
+- `0.050us`: transparent, all three-window deltas `0.0000mV`.
+- `0.105us`: recovery peak improves `+0.1365mV`, but recovery undershoot
+  worsens `-1.1109mV`; late peak degrades `-0.0666mV`.
+- Decision: `MODEL_REVISED`.  Next step: do not move later again; test
+  `1.610-1.620us` or switch to soft/ramped release.

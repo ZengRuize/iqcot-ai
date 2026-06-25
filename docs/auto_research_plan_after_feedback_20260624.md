@@ -485,3 +485,13 @@ Status after R049P:
 - `0.050 us` remained transparent; `0.105 us` became active with recovery peak
   improvement `+0.1244 mV` and less severe recovery undershoot than R049N.
 - Next: one slightly later point (`1.62-1.64 us`) or soft/ramped restoration.
+
+Status after R049Q:
+
+- Tested a single later binary release, `Tphase_release_delay=1.630 us`.
+- Decision: `MODEL_REVISED`.
+- `0.050 us` remained transparent.
+- `0.105 us` recovery peak improved by `+0.1365 mV`, but recovery undershoot
+  worsened to `-1.1109 mV` and late peak degraded by `-0.0666 mV`.
+- Next: do not keep moving later.  Either test one intermediate point between
+  R049P and R049Q (`1.610-1.620 us`) or implement soft/ramped restoration.

@@ -547,3 +547,16 @@ It remains transparent at `0.050 us`, but at `0.105 us` it preserves recovery
 peak improvement (`+0.1244 mV`) while reducing the severe R049N undershoot
 penalty.  The next automation step should be one slightly later point
 (`1.62-1.64 us`) or a soft/ramped release, not a broad sweep.
+
+Status after R049Q: the single later point `1.630 us` completed:
+
+```text
+MODEL_REVISED
+```
+
+It is still transparent at `0.050 us`.  At `0.105 us`, recovery peak
+improvement increases slightly to `+0.1365 mV`, but recovery undershoot worsens
+to `-1.1109 mV` and late peak becomes worse than A0.  This means simply moving
+the binary release later is heading back toward the hard-release R049N failure
+mode.  The next automation step should either test one point between R049P and
+R049Q (`1.610-1.620 us`) or switch to a soft/ramped release.
