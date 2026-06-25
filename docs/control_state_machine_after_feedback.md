@@ -702,3 +702,25 @@ State-machine implication: binary release delay is a sharp timing knob.  Moving
 later than `1.600 us` strengthens the reentry action but reintroduces the
 undershoot failure mode.  Next control-state revision should use either a
 between-point (`1.610-1.620 us`) or a soft/ramped restore token.
+
+## R049R Between-Point Result
+
+R049R tested:
+
+```text
+release_clock = t_load_step + 1.615 us
+```
+
+The state machine fired, but it selected the same actual release event as
+R049P:
+
+```text
+R049P/R049R active row: one_shot_done = 1.655 us
+R049Q active row:      one_shot_done = 1.695 us
+```
+
+State-machine implication: the binary release delay is quantized by the next
+eligible scheduler/request event.  The control state should not model it as a
+continuous release-time knob.  To improve undershoot without losing recovery
+benefit, revise the restore action itself, for example with a soft/ramped token,
+or first perform a structural event-boundary audit.

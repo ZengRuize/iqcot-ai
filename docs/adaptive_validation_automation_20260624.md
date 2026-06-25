@@ -560,3 +560,17 @@ to `-1.1109 mV` and late peak becomes worse than A0.  This means simply moving
 the binary release later is heading back toward the hard-release R049N failure
 mode.  The next automation step should either test one point between R049P and
 R049Q (`1.610-1.620 us`) or switch to a soft/ramped release.
+
+Status after R049R: the between-point `1.615 us` completed:
+
+```text
+MODEL_REVISED
+```
+
+R049R produced the same waveform metrics as R049P because the actual one-shot
+release event did not move: both R049P `1.600 us` and R049R `1.615 us` fired at
+`1.655 us` for the active `0.105 us` row.  R049Q `1.630 us` crossed to the next
+event plateau (`1.695 us`) and incurred the larger undershoot penalty.  The
+next automation step should not keep adding binary-delay points on the same
+plateau.  Either audit the event boundary structurally or switch to soft/ramped
+release.

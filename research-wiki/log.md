@@ -496,3 +496,20 @@ _Append-only timeline._
   worsens `-1.1109mV`; late peak degrades `-0.0666mV`.
 - Decision: `MODEL_REVISED`.  Next step: do not move later again; test
   `1.610-1.620us` or switch to soft/ramped release.
+
+## 2026-06-25 R049R PR-ECB release-between-point audit
+
+- Added `output/iqcot_r049r_pr_ecb_release_between_point_audit.m` and
+  `output/iqcot_r049r_waveform_metric_audit.py`.
+- Tested the between-point binary release: `1.615us`.
+- Source-model check confirmed the `.slx` release constant remains
+  `t_load_step + Tphase_release_delay`; R049R only changes the simulation input
+  variable.
+- A0 baseline passed; one-shot release fired in both A2 rows:
+  `1.670us` at offset `0.050us`, `1.655us` at offset `0.105us`.
+- `0.050us`: transparent, all three-window deltas `0.0000mV`.
+- `0.105us`: metrics exactly match R049P: recovery peak `+0.1244mV`,
+  recovery undershoot `-0.7873mV`, late settling improves.
+- Decision: `MODEL_REVISED`.  Interpretation: binary delay is event-quantized;
+  R049P/R049R are on the `1.655us` plateau and R049Q crosses to `1.695us`.
+  Next step: event-boundary audit or soft/ramped restore.

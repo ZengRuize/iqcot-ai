@@ -1125,5 +1125,40 @@ action strength but accelerates the undershoot penalty.  The next step should
 not keep moving later.  Test one point between `1.600 us` and `1.630 us`, or
 replace binary restore with soft/ramped restoration.
 
+### R049R Result: Binary Release Timing Is Event-Quantized
+
+R049R tested the between-point:
+
+```text
+Tphase_release_delay = 1.615 us
+```
+
+The release clock moved as intended, but the actual one-shot event did not move
+relative to R049P:
+
+```text
+R049P 0.105 us: release delay 1.600 us -> one_shot_done 1.655 us
+R049R 0.105 us: release delay 1.615 us -> one_shot_done 1.655 us
+R049Q 0.105 us: release delay 1.630 us -> one_shot_done 1.695 us
+```
+
+Consequently R049R's window metrics match R049P:
+
+```text
+0.105 us recovery: +0.1244 mV peak improvement, -0.7873 mV undershoot change
+```
+
+R049R decision:
+
+```text
+MODEL_REVISED
+```
+
+The revised model is now clearer: binary release delay is not a smooth timing
+knob.  It selects the next actual release/scheduler event.  More points inside
+the same event plateau are low value; the next research step should either
+audit the event boundary between `1.655 us` and `1.695 us` or replace the hard
+binary restore with a soft/ramped restoration.
+
 The automation plan for this loop is recorded in
 `docs/adaptive_validation_automation_20260624.md`.

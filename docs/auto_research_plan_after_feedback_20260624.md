@@ -495,3 +495,15 @@ Status after R049Q:
   worsened to `-1.1109 mV` and late peak degraded by `-0.0666 mV`.
 - Next: do not keep moving later.  Either test one intermediate point between
   R049P and R049Q (`1.610-1.620 us`) or implement soft/ramped restoration.
+
+Status after R049R:
+
+- Tested the between-point `Tphase_release_delay=1.615 us`.
+- Decision: `MODEL_REVISED`.
+- `0.050 us` remained transparent.
+- `0.105 us` exactly matched R049P: recovery peak improvement `+0.1244 mV`,
+  recovery undershoot penalty `-0.7873 mV`, one-shot at `1.655 us`.
+- Interpretation: binary delay is event-quantized.  R049P/R049R are on the
+  `1.655 us` plateau; R049Q crosses to the `1.695 us` plateau.
+- Next: audit the event boundary or implement soft/ramped restoration, not more
+  same-plateau binary-delay points.

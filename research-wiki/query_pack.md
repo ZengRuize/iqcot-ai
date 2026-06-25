@@ -675,3 +675,28 @@ Safe wording: `1.630us` shows that moving later than R049P strengthens the
 active recovery effect but moves back toward the R049N hard-release undershoot
 penalty.  Next useful action is one between-point (`1.610-1.620us`) or a
 soft/ramped restore, not another later binary release.
+
+## R049R Latest Update
+
+R049R tested the between-point:
+
+- `Tphase_release_delay = 1.615us`
+- Decision: `MODEL_REVISED`
+
+Source-model hook: the R049N `.slx` release constant is still
+`t_load_step + Tphase_release_delay`; R049R only changed the simulation input
+value.
+
+Main finding: R049R exactly matches R049P because both map to the same actual
+one-shot event:
+
+```text
+R049P 1.600us -> one_shot_done 1.655us
+R049R 1.615us -> one_shot_done 1.655us
+R049Q 1.630us -> one_shot_done 1.695us
+```
+
+At `0.105us`, R049R has recovery peak improvement `+0.1244mV` and recovery
+undershoot penalty `-0.7873mV`, same as R049P.  Safe wording: binary release
+delay is event-quantized, not a smooth knob.  Next useful action is a structural
+event-boundary audit or soft/ramped restoration.
