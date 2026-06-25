@@ -438,3 +438,45 @@ _Append-only timeline._
 - Next step: independent upstream phase-clock / predicted scheduler-slot
   one-shot release, calibrated near the R049K `1.678-1.690us` boundary, then
   only the same four-row `40A -> 20A` A0/A2 chunk.
+
+## 2026-06-25 R049N PR-ECB independent-clock reentry
+
+- Added `output/iqcot_r049n_build_independent_clock_reentry_model.m`,
+  `output/iqcot_r049n_pr_ecb_independent_clock_reentry_chunk.m`, and
+  `output/iqcot_r049n_waveform_metric_audit.py`.
+- Built a R049N derived model from the repaired R049L model with
+  `release_clock = t_load_step + 1.685us`.
+- Ran the four-row `40A -> 20A` chunk.  A0 baseline passed:
+  `2.1103/2.0936mV`, qh4 `1/0`, remaining Ton4 `50.5/0ns`.
+- A2 implementation passed: release_clock `1.686/1.685us`, one_shot_done
+  `1.750/1.735us`, Ton truncation disabled.
+- R049H three-window audit: recovery peak improves `+0.1127/+0.1205mV`, but
+  recovery undershoot worsens `-0.5597/-1.4429mV`.
+- Decision: `MODEL_REVISED`.  Next step should tune release timing or soft
+  reentry while preserving the upstream-causal release interface.
+
+## 2026-06-25 R049O PR-ECB release-timing micro-audit
+
+- Added `output/iqcot_r049o_pr_ecb_release_timing_micro_audit.m` and
+  `output/iqcot_r049o_waveform_metric_audit.py`.
+- Reused the R049N upstream-causal release interface and tested release delays
+  `1.250us` and `1.450us`.
+- A0 baseline passed; one-shot release fired for all A2 probes; Ton truncation
+  stayed disabled.
+- Three-window deltas versus A0 were all `0.0000mV`.
+- Decision: `CLAIM_DOWNGRADED`.  Earlier binary release is transparent; useful
+  timing is bracketed between `1.450us` and `1.685us`, or requires soft
+  request restoration.
+
+## 2026-06-25 R049P PR-ECB release-midpoint audit
+
+- Added `output/iqcot_r049p_pr_ecb_release_midpoint_audit.m` and
+  `output/iqcot_r049p_waveform_metric_audit.py`.
+- Tested a single intermediate binary release: `1.600us`.
+- A0 baseline passed; one-shot release fired in both A2 rows; Ton truncation
+  stayed disabled.
+- `0.050us`: transparent, all three-window deltas `0.0000mV`.
+- `0.105us`: recovery peak improves `+0.1244mV`; recovery undershoot penalty
+  `-0.7873mV`, less severe than R049N; late settling improves.
+- Decision: `MODEL_REVISED`.  Next step: one slightly later point or a soft
+  release action.

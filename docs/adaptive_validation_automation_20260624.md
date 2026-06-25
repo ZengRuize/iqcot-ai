@@ -504,3 +504,46 @@ inhibition.
 The automation should next create a derived model with an independent upstream
 phase-clock / predicted-slot one-shot release. It should not run a full matrix:
 only the same repaired `40A -> 20A` two-offset A0/A2 chunk is allowed first.
+
+Status after R049N: the independent upstream release-clock chunk completed:
+
+```text
+MODEL_REVISED
+```
+
+A0 baseline still matches the repaired R049K-compatible gate.  A2 successfully
+fired the upstream release clock and one-shot (`1.686/1.750 us` at `0.050 us`,
+`1.685/1.735 us` at `0.105 us`), so the R049L downstream-`qh1` circular
+dependency is fixed at the implementation level.
+
+The performance gate did not confirm the controller.  R049H three-window
+metrics show recovery peak improvement but recovery undershoot penalties:
+`-0.5597 mV` at `0.050 us` and `-1.4429 mV` at `0.105 us`.  The next automation
+step should keep the upstream-causal release interface and tune release timing
+or soft reentry to reduce the undershoot penalty.  Do not expand to a full
+matrix yet.
+
+Status after R049O: a two-delay release-timing micro-audit tested `1.250 us`
+and `1.450 us` binary releases with the same R049N upstream interface.
+
+```text
+CLAIM_DOWNGRADED
+```
+
+Both releases fired, but the R049H three-window deltas versus A0 were all
+`0.0000 mV`.  Earlier binary release is therefore too transparent: it removes
+R049N's undershoot penalty by also removing the recovery-peak benefit.  Next
+automation should not broaden the matrix; it should test one narrow
+intermediate point between `1.450 us` and `1.685 us`, or switch to soft
+request restoration.
+
+Status after R049P: the single midpoint `1.600 us` completed:
+
+```text
+MODEL_REVISED
+```
+
+It remains transparent at `0.050 us`, but at `0.105 us` it preserves recovery
+peak improvement (`+0.1244 mV`) while reducing the severe R049N undershoot
+penalty.  The next automation step should be one slightly later point
+(`1.62-1.64 us`) or a soft/ramped release, not a broad sweep.

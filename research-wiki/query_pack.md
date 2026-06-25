@@ -607,3 +607,51 @@ Decision: `MODEL_REVISED`.
 Next useful action: build a new derived model with an independent upstream
 phase-clock / predicted-slot one-shot release trigger calibrated near the R049K
 `1.678-1.690us` boundary. Run only the same four-row `40A -> 20A` chunk first.
+
+## R049N Latest Update
+
+R049N built and ran the independent upstream release-clock chunk.  The release
+clock was calibrated to `t_load_step + 1.685us`.
+
+Key result:
+
+- A0 baseline passed against R049K / R049L repair.
+- A2 release_clock fired at `1.686us` / `1.685us`.
+- A2 one_shot_done fired at `1.750us` / `1.735us`.
+- Ton truncation stayed disabled and active Ton4 was not shortened.
+- Decision: `MODEL_REVISED`.
+
+Three-window metric hook: recovery positive peak improves by
+`+0.1127/+0.1205mV`, but recovery undershoot worsens by
+`-0.5597/-1.4429mV`.  Safe wording: R049N validates the upstream-causal release
+interface, not the controller performance.  Next useful action is a small
+release-timing or soft-reentry revision targeting undershoot.
+
+## R049O Latest Update
+
+R049O tested earlier binary release timing using the R049N upstream-causal
+release interface:
+
+- `Tphase_release_delay = 1.250us`
+- `Tphase_release_delay = 1.450us`
+
+Both settings fired one-shot release, but every R049H three-window delta versus
+A0 was `0.0000mV`.
+
+Decision: `CLAIM_DOWNGRADED`.
+
+Safe wording: releases at `1.250-1.450us` are too early/transparent; `1.685us`
+is active but causes undershoot.  Next useful action is one intermediate point
+or soft request restoration, not a broad timing sweep.
+
+## R049P Latest Update
+
+R049P tested one intermediate binary release:
+
+- `Tphase_release_delay = 1.600us`
+- Decision: `MODEL_REVISED`
+
+At `0.050us`, the result is still transparent.  At `0.105us`, recovery peak
+improves by `+0.1244mV`; recovery undershoot worsens by `-0.7873mV`, which is
+less severe than R049N's `-1.4429mV`; late settling improves.  Next useful
+action: one slightly later point (`1.62-1.64us`) or soft/ramped release.

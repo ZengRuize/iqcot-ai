@@ -995,5 +995,98 @@ Examples:
 - If phase shedding creates a transient spike, revise dwell/reentry locks and
   new-phase ramp logic before claiming an efficiency benefit.
 
+### R049N Result: Independent Upstream Release Fires but Needs Softer Recovery
+
+R049N implemented the next interface proposed by R049M: an upstream independent
+phase-clock / predicted-slot release trigger.  The fixed release was calibrated
+at:
+
+```text
+release_clock = t_load_step + 1.685 us
+```
+
+Unlike R049L repair, the A2 release is not downstream of `qh1` or the gated
+scheduler.  The quality gates passed:
+
+```text
+0.050 us A2: release_clock=1.686 us, one_shot_done=1.750 us
+0.105 us A2: release_clock=1.685 us, one_shot_done=1.735 us
+```
+
+The repaired A0 baseline remained aligned with R049K / R049L repair:
+
+```text
+0.050 us A0: peak 2.1103 mV, qh4_at_step=1, remaining Ton4=50.5 ns
+0.105 us A0: peak 2.0936 mV, qh4_at_step=0, remaining Ton4=0 ns
+```
+
+However, R049H three-window metrics show that this is not a confirmed
+controller improvement.  Recovery positive peaks improve, but recovery
+undershoot worsens:
+
+```text
+0.050 us recovery: +0.1127 mV peak improvement, -0.5597 mV undershoot change
+0.105 us recovery: +0.1205 mV peak improvement, -1.4429 mV undershoot change
+```
+
+R049N decision:
+
+```text
+MODEL_REVISED
+```
+
+The research interpretation is now sharper: the upstream release interface is
+viable, but a fixed hard release at `1.685 us` is too coarse.  The next PR-ECB
+iteration should keep the upstream-causal interface while reducing recovery
+undershoot, e.g. via earlier release timing or softened request restoration.
+
+### R049O Result: Earlier Binary Release Becomes Transparent
+
+R049O kept the R049N upstream-causal release interface and tested two earlier
+binary release delays:
+
+```text
+Tphase_release_delay = 1.250 us
+Tphase_release_delay = 1.450 us
+```
+
+Both releases fired successfully, but all R049H three-window deltas versus A0
+were `0.0000 mV`.  The earlier release settings remove the R049N recovery
+undershoot penalty by also removing the controlled-reentry effect.
+
+R049O decision:
+
+```text
+CLAIM_DOWNGRADED
+```
+
+This brackets the useful timing region: `1.250-1.450 us` is too early and
+transparent; `1.685 us` is active but too hard.  The next step should be a
+single narrow intermediate timing point or a soft request-restoration action.
+
+### R049P Result: 1.600us Midpoint Is Offset-Selective
+
+R049P tested exactly one intermediate binary release:
+
+```text
+Tphase_release_delay = 1.600 us
+```
+
+The release fired in both offsets, but only the `0.105 us` row showed useful
+change.  At `0.050 us`, all R049H three-window deltas remained `0.0000 mV`.
+At `0.105 us`, recovery peak improved by `+0.1244 mV`, recovery undershoot
+worsened by `-0.7873 mV`, and late settling improved.
+
+R049P decision:
+
+```text
+MODEL_REVISED
+```
+
+The result narrows the path: binary timing around `1.600 us` can be less
+damaging than R049N's `1.685 us`, but the action is phase/offset selective.
+The next step should be either one slightly later point (`1.62-1.64 us`) or a
+soft/ramped release rather than a broad sweep.
+
 The automation plan for this loop is recorded in
 `docs/adaptive_validation_automation_20260624.md`.

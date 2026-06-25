@@ -448,3 +448,40 @@ Pause and notify the user if:
   control path;
 - GitHub push fails;
 - generated results would require claiming hardware/HIL validation.
+
+Status after R049N:
+
+- Added `output/iqcot_r049n_build_independent_clock_reentry_model.m`,
+  `output/iqcot_r049n_pr_ecb_independent_clock_reentry_chunk.m`, and
+  `output/iqcot_r049n_waveform_metric_audit.py`.
+- Built `four_phase_iek_pr_ecb_control_r049n_independent_clock_reentry.slx`
+  from the repaired R049L derived model.
+- A0 baseline passed: `2.1103/2.0936 mV`, qh4 `1/0`, remaining Ton4
+  `50.5/0 ns`.
+- A2 upstream release fired: release_clock `1.686/1.685 us`, one_shot_done
+  `1.750/1.735 us`.
+- Decision: `MODEL_REVISED`.  The implementation interface is viable, but the
+  fixed `1.685 us` release has recovery undershoot penalties under the R049H
+  three-window gate.
+- Next step: keep the upstream-causal release interface and run only a tiny
+  release-timing / soft-reentry revision before any broader matrix.
+
+Status after R049O:
+
+- Added `output/iqcot_r049o_pr_ecb_release_timing_micro_audit.m` and
+  `output/iqcot_r049o_waveform_metric_audit.py`.
+- Tested two earlier binary release delays: `1.250 us` and `1.450 us`.
+- A0 baseline passed, release_clock and one_shot_done fired, and Ton truncation
+  stayed disabled.
+- Decision: `CLAIM_DOWNGRADED`.  All R049H three-window deltas versus A0 were
+  `0.0000 mV`; the earlier releases are effectively transparent.
+- Next step: no broad sweep.  Either test one intermediate binary timing point
+  between `1.450 us` and `1.685 us`, or revise to soft request restoration.
+
+Status after R049P:
+
+- Tested a single intermediate binary release, `Tphase_release_delay=1.600 us`.
+- Decision: `MODEL_REVISED`.
+- `0.050 us` remained transparent; `0.105 us` became active with recovery peak
+  improvement `+0.1244 mV` and less severe recovery undershoot than R049N.
+- Next: one slightly later point (`1.62-1.64 us`) or soft/ramped restoration.

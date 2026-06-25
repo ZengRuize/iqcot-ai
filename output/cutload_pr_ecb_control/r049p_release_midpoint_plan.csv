@@ -1,0 +1,5 @@
+case_id,controller,role,trigger_mode,base_load_A,target_load_A,load_drop_A,load_step_offset_us,tau_ai_us,selected_ref_slew_us,tton_trunc_min_ns,tton_trunc_window_us,post_inhibit_delay_us,post_inhibit_window_us,phase_release_delay_us
+r049p_20A_off0p050_a0,A0_no_inhibit,baseline_same_model,disabled_negative_window,40,20,20,0.05,1.25,60,196.5,-0.001,0.07,-0.001,1.6
+r049p_20A_off0p050_a2_rel1p600,A2_release_1p600us,release_midpoint_probe,release_timing_1p600us,40,20,20,0.05,1.25,60,196.5,-0.001,0.07,1.69,1.6
+r049p_20A_off0p105_a0,A0_no_inhibit,baseline_same_model,disabled_negative_window,40,20,20,0.105,1.25,60,196.5,-0.001,0.07,-0.001,1.6
+r049p_20A_off0p105_a2_rel1p600,A2_release_1p600us,release_midpoint_probe,release_timing_1p600us,40,20,20,0.105,1.25,60,196.5,-0.001,0.07,1.69,1.6

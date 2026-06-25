@@ -596,3 +596,81 @@ controlled_reentry:
         phase_en/tr_i
         downstream qh_i
 ```
+
+## R049N State-Machine Revision
+
+R049N implemented the first upstream-causal reentry release:
+
+```text
+independent_clock_reentry:
+    inhibit_raw = t_load_step + 0.070 us through 1.690 us duration
+    release_clock = t_load_step + 1.685 us
+    one_shot_done = first release_clock event during inhibit_raw
+    allow_to_scheduler = existing_allow AND (NOT(inhibit_raw) OR one_shot_done)
+```
+
+This passes the causal state-machine gate: `release_clock` is generated outside
+the inhibited request/scheduler path and continues to evolve while requests are
+blocked.  A2 one-shot times were `1.750 us` and `1.735 us` for the two offsets.
+
+R049N decision:
+
+```text
+MODEL_REVISED
+```
+
+State-machine rule after R049N:
+
+```text
+controlled_reentry:
+    use upstream-causal release signal
+    verify release_clock and one_shot_done both fire
+    keep current active-HS Ton untruncated
+    evaluate early/recovery/late windows separately
+
+    if recovery undershoot worsens:
+        revise release timing or soft-reentry slope
+        do not claim controller confirmation
+```
+
+## R049O Timing Bracket
+
+R049O tested earlier binary releases using the same upstream-causal interface:
+
+```text
+release_clock = t_load_step + 1.250 us
+release_clock = t_load_step + 1.450 us
+```
+
+Both one-shot releases fired, but the resulting waveforms were identical to A0
+in the R049H windows.  State-machine interpretation:
+
+```text
+binary_release_timing:
+    too_early <= 1.450 us:
+        release is causal but transparent
+    1.685 us:
+        release has measurable recovery effect but creates undershoot penalty
+
+next:
+    test narrow intermediate timing
+    or replace binary restore with soft/ramped restore
+```
+
+## R049P Midpoint Result
+
+R049P tested:
+
+```text
+release_clock = t_load_step + 1.600 us
+```
+
+The state machine fired correctly, but behavior was offset-selective:
+
+```text
+0.050 us: transparent, no windowed delta
+0.105 us: active, recovery peak improves but recovery undershoot remains
+```
+
+State-machine implication: a single global binary release delay is unlikely to
+be sufficient unless paired with phase/offset awareness or softened restoration.
