@@ -349,6 +349,26 @@ Status after R049K:
   restoration or phase-aware release, still using R049H three-window metrics
   and recovery-undershoot penalty.
 
+Status after R049L repair:
+
+- The external R049L result was first rejected as `IMPLEMENTATION_ISSUE`
+  because its A0 baseline used `t_load_step = offset` instead of
+  `0.45 ms + offset`.
+- `output/iqcot_r049l_repair_pr_ecb_controlled_reentry_chunk.m` restored the
+  R049K-compatible baseline.  A0 now matches R049K: at `0.050 us`, peak is
+  `2.1103 mV`, `qh4_at_step=1`, and remaining Ton4 is `50.5 ns`; at
+  `0.105 us`, peak is `2.0936 mV`, `qh4_at_step=0`, and remaining Ton4 is
+  `0 ns`.
+- The attempted A2 phase-boundary one-shot used downstream `qh1` rising as the
+  release trigger.  It did not fire in either A2 row
+  (`one_shot_edge_count=0`, `one_shot_time_us=NaN`), so A2 effectively
+  reproduced the R049K fixed `0.070-1.760 us` inhibit window.
+- Decision: `IMPLEMENTATION_ISSUE`.
+- Next step: do not use downstream `qh1` as the release trigger.  First expose
+  or identify an upstream scheduler phase-boundary signal that remains
+  observable while requests are inhibited, or implement an independent
+  phase-clock / scheduler-slot proxy.
+
 ### Priority 4: PIS-IEK Current-Sharing Ablation
 
 Run only after the cut-load model path is stable:

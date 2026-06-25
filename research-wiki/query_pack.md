@@ -564,3 +564,27 @@ Decision: `MODEL_REVISED`.
 Next useful action: stop scanning fixed scalar inhibit windows.  Test an
 explicit controlled-reentry proxy such as edge-aligned one-shot request
 restoration or phase-aware release with the same R049H metric gate.
+
+## R049L Repair Latest Update
+
+R049L repair restored the R049K-compatible baseline after the external R049L
+run was rejected.  A0 now matches R049K:
+
+- `0.050us`: `t_load_step=450.050us`, peak `2.1103mV`, `qh4_at_step=1`,
+  remaining Ton4 `50.5ns`;
+- `0.105us`: `t_load_step=450.105us`, peak `2.0936mV`, `qh4_at_step=0`,
+  remaining Ton4 `0ns`.
+
+The attempted A2 qh1-rising one-shot did not fire:
+
+```text
+one_shot_edge_count = 0
+one_shot_time_us = NaN
+```
+
+Decision: `IMPLEMENTATION_ISSUE`.
+
+Next useful action: inspect or expose an upstream scheduler phase-boundary
+signal that continues to evolve during request inhibition.  Do not use
+downstream `qh1` as the causal release trigger, and do not treat the R049L
+repair A2 metrics as new controlled-reentry evidence.

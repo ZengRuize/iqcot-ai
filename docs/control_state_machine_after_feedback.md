@@ -506,3 +506,47 @@ R049K decision:
 ```text
 MODEL_REVISED
 ```
+
+## R049L Repair State-Machine Revision
+
+R049L repair tested the intended next family:
+
+```text
+phase_boundary_one_shot_reentry:
+    inhibit_raw = 0.070 us -> 1.760 us
+    release_trigger = qh1 rising edge during inhibit_raw
+    allow_to_scheduler = existing_allow AND (NOT(inhibit_raw) OR one_shot_done)
+```
+
+The A0 baseline was repaired and now matches R049K.  The state-machine issue is
+in A2: `qh1` is downstream of `allow_to_scheduler`, so it cannot be the causal
+release trigger while the gate is blocking requests.
+
+```text
+R049L repair A2:
+    one_shot_edge_count = 0
+    one_shot_time_us = NaN
+    effective_inhibit_duration = full 1.690 us
+```
+
+R049L repair decision:
+
+```text
+IMPLEMENTATION_ISSUE
+```
+
+State-machine rule after R049L repair:
+
+```text
+controlled_reentry:
+    release_trigger must be upstream of the request-path gate
+    valid candidates:
+        scheduler internal slot / phase-boundary signal
+        independent phase clock
+        explicitly exposed phase-index transition that continues during inhibit
+
+    invalid as causal trigger:
+        downstream qh_i gate output suppressed by allow_to_scheduler
+
+    qh_i may still be logged as an effect / safety check
+```

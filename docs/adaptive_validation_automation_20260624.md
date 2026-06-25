@@ -467,3 +467,23 @@ Adaptive revision:
 - fixed scalar inhibit-window tuning should stop; the next chunk should test
   explicit controlled reentry such as one-shot request restoration or
   phase-aware release.
+
+Status after R049L repair: the baseline repair succeeded, but the attempted
+phase-boundary one-shot implementation ended in:
+
+```text
+IMPLEMENTATION_ISSUE
+```
+
+The repaired A0 rows now match R049K (`2.1103 mV` at `0.050 us` with
+remaining Ton4 `50.5 ns`, and `2.0936 mV` at `0.105 us` with remaining Ton4
+`0 ns`).  However, A2 used downstream `qh1` rising as the one-shot release
+trigger, and `qh1` never rose during the inhibit window because the same
+request-path gate suppresses the scheduler pulse that would produce that edge.
+The result is a circular dependency, not a scientific rejection of controlled
+reentry.
+
+Recovery metrics therefore repeat the R049K fixed-window trade-off rather than
+forming new controlled-reentry evidence.  The next automation step must inspect
+or expose an upstream phase-boundary / scheduler-slot signal before rerunning
+any one-shot reentry chunk.

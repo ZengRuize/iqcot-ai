@@ -405,3 +405,20 @@ _Append-only timeline._
 - Decision: `MODEL_REVISED`.  Stop fixed scalar inhibit-window scans; next step
   should be explicit controlled reentry such as one-shot request restoration or
   phase-aware release.
+
+## 2026-06-25 R049L repair PR-ECB phase-boundary controlled reentry
+
+- Rejected the external R049L `CLAIM_DOWNGRADED` result as
+  `IMPLEMENTATION_ISSUE` because its A0 baseline used the wrong load-step epoch
+  and non-R049K operating parameters.
+- Added repair scripts:
+  `output/iqcot_r049l_repair_build_controlled_reentry_model.m`,
+  `output/iqcot_r049l_repair_pr_ecb_controlled_reentry_chunk.m`, and
+  `output/iqcot_r049l_repair_waveform_metric_audit.py`.
+- Repaired the baseline: A0 now matches R049K at `450.050us/450.105us`, with
+  peaks `2.1103/2.0936mV` and remaining Ton4 `50.5/0ns`.
+- The attempted A2 qh1-rising one-shot did not fire
+  (`one_shot_edge_count=0`, `one_shot_time_us=NaN`) because `qh1` is downstream
+  of the request-path gate and is suppressed by the same inhibit logic.
+- Decision: `IMPLEMENTATION_ISSUE`.  Next step is to identify an upstream
+  scheduler phase-boundary / slot signal before another one-shot reentry run.

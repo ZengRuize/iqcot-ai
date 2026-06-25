@@ -858,6 +858,42 @@ The next validation should stop scanning fixed inhibit windows and instead test
 an explicit controlled-reentry proxy, such as edge-aligned one-shot request
 restoration or phase-aware release, with the R049H three-window metric gate.
 
+### R049L Repair Result: Downstream qh1 Is Not a Valid Release Trigger
+
+R049L repair first fixed the external R049L implementation issue by restoring
+the R049K-compatible baseline:
+
+```text
+t_load_step = 0.45 ms + offset
+0.050 us A0: peak 2.1103 mV, qh4_at_step=1, remaining Ton4=50.5 ns
+0.105 us A0: peak 2.0936 mV, qh4_at_step=0, remaining Ton4=0 ns
+```
+
+The repaired A2 then attempted a phase-boundary one-shot release triggered by
+`qh1` rising during the inhibit window.  This failed structurally:
+
+```text
+one_shot_edge_count = 0
+one_shot_time_us = NaN
+```
+
+The reason is a circular dependency.  `qh1` is downstream of the same
+request-path gate that the reentry logic controls.  Once the gate suppresses
+the scheduler request, the `qh1` edge needed to release the gate cannot occur.
+
+R049L repair is therefore:
+
+```text
+IMPLEMENTATION_ISSUE
+```
+
+This revises the controlled-reentry implementation rule: a one-shot reentry
+trigger must come from an upstream phase-boundary / scheduler-slot signal that
+continues to evolve during request inhibition, or from an independent
+phase-clock proxy.  Downstream gate outputs such as `qh1` can be audited as
+effects, but should not be used as the release cause for request-path
+controlled reentry.
+
 ### R050: PIS-IEK Balance Control
 
 Compare:
