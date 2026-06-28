@@ -1,0 +1,25 @@
+required_signal,status,present,logged,matched_signal_names,source_blocks,notes
+Vout,PRESENT_LOGGED,1,1,Vout,four_phase_ideal_digital_iqcot/Voltage Measurement,direct output-voltage log
+Iload,MISSING,0,0,,,required for load-step validation
+IL1,PRESENT_LOGGED,1,1,IL1,four_phase_ideal_digital_iqcot/IL_Measurement1,phase current
+IL2,PRESENT_LOGGED,1,1,IL2,four_phase_ideal_digital_iqcot/IL_Measurement2,phase current
+IL3,PRESENT_LOGGED,1,1,IL3,four_phase_ideal_digital_iqcot/IL_Measurement3,phase current
+IL4,PRESENT_LOGGED,1,1,IL4,four_phase_ideal_digital_iqcot/IL_Measurement4,phase current
+QH1,PRESENT_LOGGED,1,1,QH1,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,high-side gate
+QH2,PRESENT_LOGGED,1,1,QH2,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,high-side gate
+QH3,PRESENT_LOGGED,1,1,QH3,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,high-side gate
+QH4,PRESENT_LOGGED,1,1,QH4,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,high-side gate
+QL1,PRESENT_LOGGED,1,1,QL1,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,low-side gate
+QL2,PRESENT_LOGGED,1,1,QL2,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,low-side gate
+QL3,PRESENT_LOGGED,1,1,QL3,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,low-side gate
+QL4,PRESENT_LOGGED,1,1,QL4,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,low-side gate
+REQ1,MAPPED_PROXY,1,1,REQ_iqcot; tr1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request; four_phase_ideal_digital_iqcot/Logical Operator1,per-phase request absent; global request / accepted trigger available
+REQ2,MAPPED_PROXY,1,1,REQ_iqcot; tr2,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request; four_phase_ideal_digital_iqcot/Logical Operator2,per-phase request absent; global request / accepted trigger available
+REQ3,MAPPED_PROXY,1,1,REQ_iqcot; tr3,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request; four_phase_ideal_digital_iqcot/Logical Operator3,per-phase request absent; global request / accepted trigger available
+REQ4,MAPPED_PROXY,1,1,REQ_iqcot; tr4,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request; four_phase_ideal_digital_iqcot/Logical Operator4,per-phase request absent; global request / accepted trigger available
+phase_idx,PRESENT_LOGGED,1,1,phase_idx,four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase,scheduler phase index
+Ton_cmd_i,MAPPED_PROXY,1,1,Ton_iqcot1; Ton_iqcot2; Ton_iqcot3; Ton_iqcot4,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter,commanded Ton proxy currently named Ton_iqcot1..4
+Ton_actual_i,MISSING,0,0,,,missing explicit measured pulse width
+Lambda_i,PRESENT_LOGGED,1,1,Lambda_i,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,IQCOT event threshold
+area_int_i,MAPPED_PROXY,1,1,A_iqcot,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,area integrator proxy currently named A_iqcot
+active_phase_set,MISSING,0,0,,,fixed four-phase model has phase enables but no active set bus

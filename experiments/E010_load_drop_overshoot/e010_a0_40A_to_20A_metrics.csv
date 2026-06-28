@@ -1,0 +1,2 @@
+success,error_message,variant,base_load_A,target_load_A,peak_overshoot_mV,early_local_peak_0_2us_mV,recovery_peak_2_12us_mV,late_settling_12_80us_abs_mV,undershoot_penalty_mV,reentry_time_us,skip_count_est,final_error_mV,phase_current_peak_A,ton_actual_peak_ns,ton_cmd_trunc_peak_ns,ton_trunc_active_fraction,pulse_inhibit_active_fraction,pulse_inhibit_event_est
+1,,A0_original_ideal_iqcot_observable,40,20,1.13166065626613,0.51566251442603,1.09036348761782,1.13166065626613,0.451249840300871,NaN,0,0.700473835856693,14.6727455147055,200.000000000005,NaN,NaN,NaN,NaN

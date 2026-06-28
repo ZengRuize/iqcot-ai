@@ -1,0 +1,1346 @@
+block_path,block_type,mask_type,parameter,value,value_class
+"four_phase_ideal_digital_iqcot/Series RLC Branch",PMComponent,Series RLC Branch,Capacitance,"1e-6",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch1",PMComponent,Series RLC Branch,Capacitance,"1e-6",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch2",PMComponent,Series RLC Branch,Capacitance,"1e-6",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch3",PMComponent,Series RLC Branch,Capacitance,"1e-6",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch4",PMComponent,Series RLC Branch,Capacitance,"Cout",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch8",PMComponent,Series RLC Branch,Capacitance,"1e-6",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7",SubSystem,Mosfet,Cs,"Cs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode",SubSystem,Diode,Cs,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch",SubSystem,Ideal Switch,Cs,"Csnubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Current Measurement/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain",Gain,,Gain,"Vo_ref / Tss",variable_or_expression
+"four_phase_ideal_digital_iqcot/Gain11",Gain,,Gain,"205",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain12",Gain,,Gain,"-205",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain13",Gain,,Gain,"205",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain9",Gain,,Gain,"-205",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/do not
+delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A1",Gain,,Gain,"1 / IL_adc_counts_per_A",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A2",Gain,,Gain,"1 / IL_adc_counts_per_A",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A3",Gain,,Gain,"1 / IL_adc_counts_per_A",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A4",Gain,,Gain,"1 / IL_adc_counts_per_A",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot1",Gain,,Gain,"Iqcot_enable * Kiqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot2",Gain,,Gain,"Iqcot_enable * Kiqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot3",Gain,,Gain,"Iqcot_enable * Kiqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot4",Gain,,Gain,"Iqcot_enable * Kiqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Gain",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/1//Rsw",Gain,,Gain,"1./Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Gain",Gain,,Gain,"Vcot_ramp_enable * Vcot_ramp_amp",variable_or_expression
+"four_phase_ideal_digital_iqcot/Voltage Measurement/do not delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/do not delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/do not delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/do not delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/do not delete
+this gain",Gain,,Gain,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch",PMComponent,Series RLC Branch,Inductance,"L",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch1",PMComponent,Series RLC Branch,Inductance,"L",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch2",PMComponent,Series RLC Branch,Inductance,"L",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch3",PMComponent,Series RLC Branch,Inductance,"L",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch4",PMComponent,Series RLC Branch,Inductance,"1e-3",numeric_literal
+"four_phase_ideal_digital_iqcot/Series RLC Branch8",PMComponent,Series RLC Branch,Inductance,"1e-3",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Integrator1",Integrator,,InitialCondition,"Toff_min",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Integrator1",Integrator,,InitialCondition,"Toff_min",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Integrator1",Integrator,,InitialCondition,"Toff_min",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Integrator1",Integrator,,InitialCondition,"Toff_min",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Delay Input1",UnitDelay,,InitialCondition,"vinit",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/phase_idx_Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/tr_reset_Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Memory",Memory,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Integrator",Integrator,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_state",UnitDelay,,InitialCondition,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7",SubSystem,Mosfet,Rd,"Rd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch",PMComponent,Series RLC Branch,Resistance,"DCR_L1",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch1",PMComponent,Series RLC Branch,Resistance,"DCR_L2",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch2",PMComponent,Series RLC Branch,Resistance,"DCR_L3",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch3",PMComponent,Series RLC Branch,Resistance,"DCR_L4",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch4",PMComponent,Series RLC Branch,Resistance,"ESR_C",variable_or_expression
+"four_phase_ideal_digital_iqcot/Series RLC Branch8",PMComponent,Series RLC Branch,Resistance,"Rload",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet",SubSystem,Mosfet,Ron,"Ron_HS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1",SubSystem,Mosfet,Ron,"Ron_HS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2",SubSystem,Mosfet,Ron,"Ron_HS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3",SubSystem,Mosfet,Ron,"Ron_HS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4",SubSystem,Mosfet,Ron,"Ron_LS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5",SubSystem,Mosfet,Ron,"Ron_LS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6",SubSystem,Mosfet,Ron,"Ron_LS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7",SubSystem,Mosfet,Ron,"Ron_LS",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode",SubSystem,Diode,Ron,"Rd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch",SubSystem,Ideal Switch,Ron,"Ron",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7",SubSystem,Mosfet,Rs,"Rs_snubber",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode",SubSystem,Diode,Rs,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch",SubSystem,Ideal Switch,Rs,"Rs",variable_or_expression
+"four_phase_ideal_digital_iqcot/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Add1",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Add2",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Add3",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Add4",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant1/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant1/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant2/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant2/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant2/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant2/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant3/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant3/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant3/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant3/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/CurrentLimit_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Data Type Conversion1",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/ILi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator2",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator3",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator4",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Logical
+Operator5",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/NQmin_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Qi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Ton_done_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Ton_iqcot1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/tri",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant1/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant1/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant2/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant2/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant2/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant2/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant3/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant3/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant3/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant3/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/CurrentLimit_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Data Type Conversion1",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/ILi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator2",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator3",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator4",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Logical
+Operator5",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/NQmin_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Qi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Ton_done_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Ton_iqcot2",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/tri",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant1/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant1/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant2/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant2/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant2/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant2/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant3/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant3/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant3/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant3/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/CurrentLimit_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Data Type Conversion1",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/ILi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator2",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator3",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator4",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Logical
+Operator5",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/NQmin_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Qi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Ton_done_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Ton_iqcot3",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/tri",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant1/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant1/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant2/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant2/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant2/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant2/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant3/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant3/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant3/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant3/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/CurrentLimit_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Data Type Conversion1",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/ILi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator2",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator3",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator4",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Logical
+Operator5",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/NQmin_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Qi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Ton_done_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Ton_iqcot4",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/tri",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement1/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement2/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Current Measurement3/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source/Model/DC",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source/Model/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source1/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source1/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source1/Model/DC",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source1/Model/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source2/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source2/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source2/Model/DC",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source2/Model/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source3/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source3/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source3/Model/DC",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source3/Model/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Data Type Conversion2",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Data Type Conversion3",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Data Type Conversion4",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Delay Input1",UnitDelay,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/FixPt
+Relational
+Operator",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Positive/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Positive/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Positive/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Positive/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/U",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain11",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain12",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain13",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Gain9",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/QHi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/QLi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/Qi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/ShootThrough_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/QHi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/QLi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/Qi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/ShootThrough_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/QHi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/QLi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/Qi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/ShootThrough_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/QHi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/QLi",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/Qi",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/ShootThrough_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement1/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement2/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement3/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/do not
+delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IL_Measurement4/i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_Double1",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_Double2",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_Double3",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_Double4",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A1",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A2",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A3",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/ADC_to_A4",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Abs1",Abs,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Abs2",Abs,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Abs3",Abs,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Abs4",Abs,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/IL_sample1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/IL_sample2",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/IL_sample3",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/IL_sample4",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ierr1",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ierr2",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ierr3",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ierr4",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Iref_Phase",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot1",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot2",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot3",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Kiqcot4",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Base",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Limit1",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Limit2",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Limit3",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Limit4",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Sum1",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Sum2",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Sum3",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Sum4",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_iqcot1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_iqcot2",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_iqcot3",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_iqcot4",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/IdealIQCOT_Enable_Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_init",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_lower",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_upper",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL1_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL1_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL2",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL2_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL2_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL3",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL3_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL3_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL4",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL4_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL4_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IL_sel",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/A_init_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/A_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/A_lower_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/A_upper_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/IL1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/IL2",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/IL3",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/IL4",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/IL_sel",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Kvc_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Lambda0_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Lambda_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Lambda_m2_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/REQ_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Ri_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Ts_ctrl_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/Vc_bias_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/e_v",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/enable",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/h_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/kappa_cmd_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/phase_idx",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/rho_cmd_in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/tr_reset",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/IQCOT_Event_Core/vc_ctrl",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Kvc_iqcot",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Lambda0_iqcot",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Lambda_i",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Lambda_m2",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/REQ_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Ri_iqcot",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Ts_ctrl",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Vc_bias_iqcot",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/e_v",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/e_v_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/e_v_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/enable",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/enable_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/enable_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/h_iqcot",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/kappa_cmd",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/phase_idx",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/phase_idx_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/phase_idx_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/rho_cmd",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/tr_reset",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/tr_reset_ZOH",ZeroOrderHold,,SampleTime,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/tr_reset_double",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/vc_ctrl",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Logical
+Operator1",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Logical
+Operator2",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Logical
+Operator3",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Logical
+Operator4",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/D",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/eee",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/iSwitch",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/vf",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/a",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/k",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/1",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/2",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/0 1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/1//Rsw",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Uswitch",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/gate",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Measurement list/In1",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Measurement list/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/S",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Selector",Selector,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/g",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/m",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Data Type Conversion",DataTypeConversion,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Logical
+Operator",Logic,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Add",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant1/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant1/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant1/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant1/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant2/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant2/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant2/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant2/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant3/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant3/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant3/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant3/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant4/Compare",RelationalOperator,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant4/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant4/u",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant4/y",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Constant1",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Switch",Switch,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Trigger",TriggerPort,,SampleTime,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_en1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_en2",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_en3",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_en4",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_idx",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/phase_state",UnitDelay,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Quantizer1",Quantizer,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Quantizer2",Quantizer,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Quantizer3",Quantizer,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Quantizer4",Quantizer,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Saturation",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Saturation1",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Saturation2",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Saturation3",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Saturation4",Saturate,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope1",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope2",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope3",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope4",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope5",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Scope6",Scope,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Constant",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Look-Up Table1",Lookup_n-D,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Math
+Function",Math,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Out1",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Sum",Sum,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/do not delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement/v",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/do not delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement1/v",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/do not delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement2/v",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/do not delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement3/v",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/+",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/-",PMIOPort,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/Model/in",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/Model/out",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/do not delete
+this gain",Gain,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Voltage Measurement4/v",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold1",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold19",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold2",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold20",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold21",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold22",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold23",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold3",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/Zero-Order
+Hold4",ZeroOrderHold,,SampleTime,"1/25000000",variable_or_expression
+"four_phase_ideal_digital_iqcot/powergui",SubSystem,PSB option menu block,SampleTime,"2e-9",numeric_literal
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Gates/gates",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Sources/SwitchCurrents",Constant,,SampleTime,"inf",numeric_literal
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Sources/u",Outport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Status/status",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Yout/v,i",Inport,,SampleTime,"-1",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/Switch",Switch,,Threshold,"0.5",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Switch",Switch,,Threshold,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant1/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant2/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase1/Compare
+To Constant3/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant1/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant2/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase2/Compare
+To Constant3/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant1/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant2/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase3/Compare
+To Constant3/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant1/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant2/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/COT_Cell_1Phase4/Compare
+To Constant3/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/Constant",Constant,,Value,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/DC Voltage Source/Model/DC",Constant,,Value,"Amplitude",variable_or_expression
+"four_phase_ideal_digital_iqcot/DC Voltage Source1/Model/DC",Constant,,Value,"Amplitude",variable_or_expression
+"four_phase_ideal_digital_iqcot/DC Voltage Source2/Model/DC",Constant,,Value,"Amplitude",variable_or_expression
+"four_phase_ideal_digital_iqcot/DC Voltage Source3/Model/DC",Constant,,Value,"Amplitude",variable_or_expression
+"four_phase_ideal_digital_iqcot/Detect Rise
+Positive/Positive/Constant",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase1/OnDelay1/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase2/OnDelay1/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase3/OnDelay1/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/GateDriver_1Phase4/OnDelay1/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Iref_Phase",Constant,,Value,"Iph",variable_or_expression
+"four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter/Ton_Base",Constant,,Value,"Ton_cmd",variable_or_expression
+"four_phase_ideal_digital_iqcot/IdealIQCOT_Enable_Constant",Constant,,Value,"IdealIQCOT_Enable",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_init",Constant,,Value,"A_init",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_lower",Constant,,Value,"A_lower",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/A_upper",Constant,,Value,"A_upper",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Kvc_iqcot",Constant,,Value,"Kvc_iqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Lambda0_iqcot",Constant,,Value,"Lambda0_iqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Lambda_m2",Constant,,Value,"Lambda_m2",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Ri_iqcot",Constant,,Value,"Ri_iqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Ts_ctrl",Constant,,Value,"Ts_ctrl",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/Vc_bias_iqcot",Constant,,Value,"Vc_bias_iqcot",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/kappa_cmd",Constant,,Value,"kappa_cmd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request/rho_cmd",Constant,,Value,"rho_cmd",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet1/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet2/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet3/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet4/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet5/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet6/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/Mosfet7/Diode/Model/eee",Constant,,Value,"Vf",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7/Ideal Switch/Model/0 1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/OnDelay/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant1/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant2/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant3/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Compare
+To Constant4/Constant",Constant,,Value,"const",variable_or_expression
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Constant",Constant,,Value,"1",numeric_literal
+"four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase/Constant1",Constant,,Value,"0",numeric_literal
+"four_phase_ideal_digital_iqcot/VCOT_Ramp_Unit/Constant",Constant,,Value,"period",variable_or_expression
+"four_phase_ideal_digital_iqcot/powergui/EquivalentModel1/Sources/SwitchCurrents",Constant,,Value,"zeros(16,1)",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet1",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet2",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet3",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet4",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet5",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet6",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression
+"four_phase_ideal_digital_iqcot/Mosfet7",SubSystem,Mosfet,Vfd,"Vfd_body",variable_or_expression

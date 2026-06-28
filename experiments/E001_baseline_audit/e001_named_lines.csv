@@ -1,0 +1,79 @@
+signal_name,line_data_logging,source_port_data_logging,test_point,source_block,source_port,destinations,segment_type
+A_iqcot,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,2,four_phase_ideal_digital_iqcot/IdealIQCOT_Log_A_iqcot:1,trunk
+Allow,,on,,four_phase_ideal_digital_iqcot/Compare To Constant,1,four_phase_ideal_digital_iqcot/Goto15:1,trunk
+IL1,,on,,four_phase_ideal_digital_iqcot/IL_Measurement1,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:2,branch
+IL1,,on,,four_phase_ideal_digital_iqcot/IL_Measurement1,1,four_phase_ideal_digital_iqcot/Goto22:1,branch
+IL1,,on,,four_phase_ideal_digital_iqcot/IL_Measurement1,1,four_phase_ideal_digital_iqcot/Goto22:1; four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:2,trunk
+IL2,,on,,four_phase_ideal_digital_iqcot/IL_Measurement2,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:3,branch
+IL2,,on,,four_phase_ideal_digital_iqcot/IL_Measurement2,1,four_phase_ideal_digital_iqcot/Goto23:1,branch
+IL2,,on,,four_phase_ideal_digital_iqcot/IL_Measurement2,1,four_phase_ideal_digital_iqcot/Goto23:1; four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:3,trunk
+IL3,,on,,four_phase_ideal_digital_iqcot/IL_Measurement3,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:4,branch
+IL3,,on,,four_phase_ideal_digital_iqcot/IL_Measurement3,1,four_phase_ideal_digital_iqcot/Goto24:1,branch
+IL3,,on,,four_phase_ideal_digital_iqcot/IL_Measurement3,1,four_phase_ideal_digital_iqcot/Goto24:1; four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:4,trunk
+IL4,,on,,four_phase_ideal_digital_iqcot/IL_Measurement4,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:5,branch
+IL4,,on,,four_phase_ideal_digital_iqcot/IL_Measurement4,1,four_phase_ideal_digital_iqcot/Goto25:1,branch
+IL4,,on,,four_phase_ideal_digital_iqcot/IL_Measurement4,1,four_phase_ideal_digital_iqcot/Goto25:1; four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:5,trunk
+IL_sample1,,on,,four_phase_ideal_digital_iqcot/From27,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:1,branch
+IL_sample1,,on,,four_phase_ideal_digital_iqcot/From27,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase1:2,branch
+IL_sample1,,on,,four_phase_ideal_digital_iqcot/From27,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase1:2; four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:1,trunk
+IL_sample2,,on,,four_phase_ideal_digital_iqcot/From28,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase2:2,branch
+IL_sample2,,on,,four_phase_ideal_digital_iqcot/From28,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:2,branch
+IL_sample2,,on,,four_phase_ideal_digital_iqcot/From28,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:2; four_phase_ideal_digital_iqcot/COT_Cell_1Phase2:2,trunk
+IL_sample3,,on,,four_phase_ideal_digital_iqcot/From29,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase3:2,branch
+IL_sample3,,on,,four_phase_ideal_digital_iqcot/From29,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:3,branch
+IL_sample3,,on,,four_phase_ideal_digital_iqcot/From29,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:3; four_phase_ideal_digital_iqcot/COT_Cell_1Phase3:2,trunk
+IL_sample4,,on,,four_phase_ideal_digital_iqcot/From30,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase4:2,branch
+IL_sample4,,on,,four_phase_ideal_digital_iqcot/From30,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:4,branch
+IL_sample4,,on,,four_phase_ideal_digital_iqcot/From30,1,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter:4; four_phase_ideal_digital_iqcot/COT_Cell_1Phase4:2,trunk
+IL_sel,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,5,four_phase_ideal_digital_iqcot/IdealIQCOT_Log_IL_sel:1,trunk
+Lambda_i,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,3,four_phase_ideal_digital_iqcot/IdealIQCOT_Log_Lambda_i:1,trunk
+QH1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,1,four_phase_ideal_digital_iqcot/Bus Creator2:1,branch
+QH1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,1,four_phase_ideal_digital_iqcot/Goto4:1,branch
+QH1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,1,four_phase_ideal_digital_iqcot/Bus Creator1:1,branch
+QH1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,1,four_phase_ideal_digital_iqcot/Bus Creator1:1; four_phase_ideal_digital_iqcot/Goto4:1; four_phase_ideal_digital_iqcot/Bus Creator2:1,trunk
+QH2,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,1,four_phase_ideal_digital_iqcot/Goto5:1,branch
+QH2,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,1,four_phase_ideal_digital_iqcot/Bus Creator2:2,branch
+QH2,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,1,four_phase_ideal_digital_iqcot/Bus Creator2:2; four_phase_ideal_digital_iqcot/Goto5:1,trunk
+QH3,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,1,four_phase_ideal_digital_iqcot/Goto6:1,branch
+QH3,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,1,four_phase_ideal_digital_iqcot/Bus Creator2:3,branch
+QH3,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,1,four_phase_ideal_digital_iqcot/Bus Creator2:3; four_phase_ideal_digital_iqcot/Goto6:1,trunk
+QH4,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,1,four_phase_ideal_digital_iqcot/Goto7:1,branch
+QH4,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,1,four_phase_ideal_digital_iqcot/Bus Creator2:4,branch
+QH4,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,1,four_phase_ideal_digital_iqcot/Bus Creator2:4; four_phase_ideal_digital_iqcot/Goto7:1,trunk
+QL1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,2,four_phase_ideal_digital_iqcot/Goto8:1,branch
+QL1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,2,four_phase_ideal_digital_iqcot/Bus Creator1:2,branch
+QL1,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase1,2,four_phase_ideal_digital_iqcot/Bus Creator1:2; four_phase_ideal_digital_iqcot/Goto8:1,trunk
+QL2,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase2,2,four_phase_ideal_digital_iqcot/Goto9:1,trunk
+QL3,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase3,2,four_phase_ideal_digital_iqcot/Goto10:1,trunk
+QL4,,on,,four_phase_ideal_digital_iqcot/GateDriver_1Phase4,2,four_phase_ideal_digital_iqcot/Goto11:1,trunk
+REQ_iqcot,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,1,four_phase_ideal_digital_iqcot/Goto14:1,trunk
+SW1,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement1,1,four_phase_ideal_digital_iqcot/Goto2:1,trunk
+SW2,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement2,1,four_phase_ideal_digital_iqcot/Goto:1,trunk
+SW3,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement3,1,four_phase_ideal_digital_iqcot/Goto1:1,trunk
+SW4,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement4,1,four_phase_ideal_digital_iqcot/Goto3:1,trunk
+Ton_iqcot1,,on,,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter,1,four_phase_ideal_digital_iqcot/COT_Cell_1Phase1:3,trunk
+Ton_iqcot2,,on,,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter,2,four_phase_ideal_digital_iqcot/COT_Cell_1Phase2:3,trunk
+Ton_iqcot3,,on,,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter,3,four_phase_ideal_digital_iqcot/COT_Cell_1Phase3:3,trunk
+Ton_iqcot4,,on,,four_phase_ideal_digital_iqcot/IQCOT_Ton_Adapter,4,four_phase_ideal_digital_iqcot/COT_Cell_1Phase4:3,trunk
+Vcot_ramp,,off,,four_phase_ideal_digital_iqcot/VCOT_Ramp_Gain,1,four_phase_ideal_digital_iqcot/Sum:3,trunk
+Vout,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement,1,four_phase_ideal_digital_iqcot/Goto13:1,branch
+Vout,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement,1,four_phase_ideal_digital_iqcot/Scope:1,branch
+Vout,,on,,four_phase_ideal_digital_iqcot/Voltage Measurement,1,four_phase_ideal_digital_iqcot/Scope:1; four_phase_ideal_digital_iqcot/Goto13:1,trunk
+e_v,,on,,four_phase_ideal_digital_iqcot/Sum,1,four_phase_ideal_digital_iqcot/Relay:1,branch
+e_v,,on,,four_phase_ideal_digital_iqcot/Sum,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:1,branch
+e_v,,on,,four_phase_ideal_digital_iqcot/Sum,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:1; four_phase_ideal_digital_iqcot/Relay:1,trunk
+h_iqcot,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,4,four_phase_ideal_digital_iqcot/IdealIQCOT_Log_h_iqcot:1,trunk
+phase_idx,,on,,four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase,5,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:6,trunk
+tr,,on,,four_phase_ideal_digital_iqcot/From18,1,four_phase_ideal_digital_iqcot/PhaseScheduler_4Phase:1,trunk
+tr1,,on,,four_phase_ideal_digital_iqcot/Logical Operator1,1,four_phase_ideal_digital_iqcot/Goto18:1,branch
+tr1,,on,,four_phase_ideal_digital_iqcot/Logical Operator1,1,four_phase_ideal_digital_iqcot/Scope4:1,branch
+tr1,,on,,four_phase_ideal_digital_iqcot/Logical Operator1,1,four_phase_ideal_digital_iqcot/Scope4:1; four_phase_ideal_digital_iqcot/Goto18:1,trunk
+tr2,,on,,four_phase_ideal_digital_iqcot/Logical Operator2,1,four_phase_ideal_digital_iqcot/Goto19:1,branch
+tr2,,on,,four_phase_ideal_digital_iqcot/Logical Operator2,1,four_phase_ideal_digital_iqcot/Scope5:1,branch
+tr2,,on,,four_phase_ideal_digital_iqcot/Logical Operator2,1,four_phase_ideal_digital_iqcot/Scope5:1; four_phase_ideal_digital_iqcot/Goto19:1,trunk
+tr3,,on,,four_phase_ideal_digital_iqcot/Logical Operator3,1,four_phase_ideal_digital_iqcot/Goto20:1,trunk
+tr4,,on,,four_phase_ideal_digital_iqcot/Logical Operator4,1,four_phase_ideal_digital_iqcot/Goto21:1,trunk
+tr_reset,,on,,four_phase_ideal_digital_iqcot/From17,1,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:7,branch
+tr_reset,,on,,four_phase_ideal_digital_iqcot/From17,1,four_phase_ideal_digital_iqcot/Memory:1,branch
+tr_reset,,on,,four_phase_ideal_digital_iqcot/From17,1,four_phase_ideal_digital_iqcot/Memory:1; four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request:7,trunk
+vc_ctrl,,on,,four_phase_ideal_digital_iqcot/Ideal_Digital_IQCOT_Request,6,four_phase_ideal_digital_iqcot/IdealIQCOT_Log_vc_ctrl:1,trunk

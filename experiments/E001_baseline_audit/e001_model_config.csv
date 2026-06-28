@@ -1,0 +1,15 @@
+field,value
+baseline_model,E:/Desktop/codex/output/simulink_ideal_iqcot/four_phase_ideal_digital_iqcot.slx
+init_script,E:/Desktop/codex/output/iqcot_init_ideal_digital_iqcot_params.m
+update_status,PASS
+update_message,
+Solver,VariableStepAuto
+SolverType,Variable-step
+FixedStep,auto
+MaxStep,max_step_cont
+StopTime,0.5e-3
+SignalLogging,on
+SignalLoggingName,logsout
+ReturnWorkspaceOutputs,on
+SaveFormat,Dataset
+LoadExternalInput,off
