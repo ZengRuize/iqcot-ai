@@ -107,10 +107,10 @@ safety projection and a load-drop magnitude selector.
 
 | Module | Status | Next action |
 |---|---|---|
-| PIS-IEK | mature evidence | convert to controller validation in E030 |
+| PIS-IEK | first E030 controller chunk `MODEL_REVISED` | retune `a_S` projection before broad mismatch grids |
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
-| `a_S` balance | theory/evidence | validate under mismatch |
+| `a_S` balance | first DCR mismatch chunk complete | retune Ton/Lambda projection; then add mismatch families |
 | `a_N` active phase | planned | validate after E020/E030 |
 | Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
 
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence is strong. Bidirectional large-signal theory now has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism. E030 balance controller validation and E040 active-phase validation are pending.
+PIS-IEK small-signal evidence is strong, and E030 now gives the first closed-loop balance-recovery controller evidence. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030 is `MODEL_REVISED` for local DCR-mismatch balance recovery. E040 active-phase validation is pending.
 
 E020 load-rise first chunk is complete:
 
@@ -143,4 +143,26 @@ B3 phase-current peak = 34.09 A/phase, current guard not hit
 
 Boundary: this confirms the local `a_U` mechanism for peak-undershoot reduction and current-rise acceleration, not full 120A recovery. None of B0-B3 settled within the 1 mV band in the simulated 90 us post-step window, and B3 final error remained about `-297.93 mV`.
 
-Next task: start E030 minimal DCR-mismatch balance-recovery validation, or tune the E020 `a_U` window before any phase-add experiment.
+E030 balance-recovery first chunk is complete:
+
+```text
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+variants: C0/C1/C2/C3/C4
+metrics: experiments/E030_balance_recovery/e030_metrics.csv
+summary: experiments/E030_balance_recovery/e030_research_summary.md
+classification: MODEL_REVISED
+
+C0 max current imbalance = 0.853665 A
+C1 Ton_diff-only max current imbalance = 0.313775 A
+C2 Lambda_diff-only max current imbalance = 0.853665 A
+C3 Ton_diff + Lambda_diff max current imbalance = 0.313775 A
+C4 PIS-IEK projected balancer max current imbalance = 0.376221 A
+
+C1/C3 Ton usage = 0.865969, final Vout error = -58.156 mV
+C4 Ton usage = 0.53786, final Vout error = -23.494 mV
+```
+
+Boundary: E030 supports `Ton_diff` as the dominant local DC current-sharing actuator and shows that C4 trades some balance improvement for lower trim usage and smaller final voltage error. It does not prove robust mismatch recovery or active Lambda_diff control. The first serial sampled Lambda implementation was rejected because it dropped narrow REQ pulses; the retained Lambda path is side-band projection/logging with fallback.
+
+Next task: retune the E030 `a_S` projection (`K_T`, `T_trim_max`, voltage/ripple budget, event-native Lambda implementation) before expanding mismatch grids or starting E040 active-phase validation.

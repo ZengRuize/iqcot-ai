@@ -28,16 +28,32 @@ Current E010 evidence:
   do not use it as improvement evidence yet.
 ```
 
+E030 balance-recovery validation has now produced a first `MODEL_REVISED` chunk:
+
+```text
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+C0 max current imbalance = 0.853665 A
+C1 Ton_diff-only max current imbalance = 0.313775 A
+C2 Lambda_diff-only max current imbalance = 0.853665 A
+C3 Ton_diff + Lambda_diff max current imbalance = 0.313775 A
+C4 projected balancer max current imbalance = 0.376221 A
+classification: MODEL_REVISED
+```
+
+C4 improves current sharing versus C0 and uses less Ton trim than C1/C3, with smaller final Vout error magnitude, but it does not beat the Ton_diff-only current-imbalance metric.
+
 ## Immediate Order
 
 Proceed in this order:
 
 1. Freeze current E010 and E020 findings in theory and claim boundaries.
-2. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-3. Start E030 balance recovery validation with the smallest DCR-mismatch chunk.
-4. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-5. After E030, run E040 active-phase add/shed validation.
-6. Update manuscript direction after E030 evidence is known.
+2. Freeze E030 findings in theory and claim boundaries.
+3. Retune E030 `a_S`: reduce C1/C3 voltage/ripple cost, refine C4 projection, and replace side-band Lambda logging with an event-native implementation before claiming active Lambda control.
+4. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+5. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+6. After E030 projection tuning, run E040 active-phase add/shed validation.
+7. Update manuscript direction after the retuned E030 evidence is known.
 
 ## E020 First Chunk Result
 

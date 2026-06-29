@@ -4,7 +4,7 @@ Draft date: 2026-06-29
 
 ## Abstract
 
-This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters. Derived Simulink validation currently covers the load-drop overshoot branch and the first load-rise undershoot chunk. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us` without hitting the tested current guard. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, or global optimality.
+This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters. Derived Simulink validation currently covers the load-drop overshoot branch, the first load-rise undershoot chunk, and a first DCR-mismatch current-sharing chunk. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us` without hitting the tested current guard. For current sharing, E030 shows that `Ton_diff` is the dominant local DC balance actuator under a +/-10% DCR mismatch, reducing max imbalance from `0.853665 A` to `0.313775 A`; the projected C4 balancer reduces imbalance to `0.376221 A` with lower Ton-trim usage and smaller final voltage error than the aggressive Ton_diff-only variants. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, robust mismatch recovery, active-phase robustness, or global optimality.
 
 ## 1. Introduction
 
@@ -19,7 +19,7 @@ bidirectional large-signal voltage regulation
 + AI/table supervisor with safety projection
 ```
 
-This draft reports the first completed validation loops for load-drop overshoot protection and load-rise peak-undershoot reduction. Load current is always treated as an external disturbance. The AI/table layer may observe load-step direction, magnitude, and estimated slew, but it must not command the load-current profile.
+This draft reports the first completed validation loops for load-drop overshoot protection, load-rise peak-undershoot reduction, and DCR-mismatch current-sharing recovery. Load current is always treated as an external disturbance. The AI/table layer may observe load-step direction, magnitude, and estimated slew, but it must not command the load-current profile.
 
 ## 2. Baseline and Control Boundary
 
@@ -199,6 +199,29 @@ boost_window = 3 us
 current_limit_guard = 55 A/phase
 ```
 
+The first balance-recovery branch is `a_S`:
+
+```text
+K_T
+T_trim_max
+K_Lambda
+Lambda_trim_max
+balance_recovery_rate
+phase_spacing_weight
+current_balance_weight
+```
+
+For E030, the tested Ton trim is zero-mean:
+
+```text
+I_avg = mean(IL_i)
+e_I_i = IL_i - I_avg
+Delta_Ton_i = clamp(-K_T * e_I_i, -T_trim_max, T_trim_max)
+Delta_Ton_i = Delta_Ton_i - mean(Delta_Ton_i)
+```
+
+The first Lambda implementation was revised during validation. A sampled MATLAB Function inserted in series with the narrow REQ trigger path dropped events and invalidated the loop, so the retained E030 Lambda path is side-band projection/logging with fallback. This means E030 can discuss Lambda guard behavior but cannot yet claim an active event-native Lambda actuator.
+
 ## 5. Validation Method
 
 The validation protocol follows these rules:
@@ -236,6 +259,22 @@ final error
 event count during first 2us
 Ton boost usage
 fast-request count
+```
+
+The E030 current-sharing metrics are:
+
+```text
+max current imbalance
+RMS current imbalance
+phase spacing std
+output ripple
+effective switching frequency
+Ton trim usage
+Lambda trim usage
+final voltage error
+guard clamp count
+fallback count
+phase order error rate
 ```
 
 ## 6. Experimental Results
@@ -302,9 +341,34 @@ B3 reduces peak undershoot by `78.34 mV` relative to B0 and accelerates the 90% 
 
 This is a limited confirmation. B3 still has about `-297.93 mV` final error over the `75-90 us` post-step window, and no tested variant settles within the `1 mV` band in the simulated window. The result supports peak-undershoot and current-rise improvement, not complete 120A recovery.
 
+### 6.6 DCR-Mismatch Current Sharing: Fixed 40A
+
+The E030 C0-C4 comparison is available in:
+
+```text
+experiments/E030_balance_recovery/e030_research_summary.md
+```
+
+The first chunk uses fixed four-phase operation, a constant external `40A` load, and alternating DCR mismatch:
+
+```text
+DCR_L1/L3 = +10%
+DCR_L2/L4 = -10%
+```
+
+| Variant | Description | Max imbalance (A) | Ripple (mV) | Ton usage | Final Vout error (mV) | Interpretation |
+|---|---|---:|---:|---:|---:|---|
+| C0 | original IQCOT with DCR mismatch | 0.853665 | 1.3133 | 0 | -2.277 | baseline mismatch imbalance |
+| C1 | Ton_diff only | 0.313775 | 15.217 | 0.865969 | -58.156 | strongest balance, high voltage/ripple cost |
+| C2 | Lambda_diff side-band only | 0.853665 | 1.3133 | 0 | -2.277 | no DC sharing improvement |
+| C3 | Ton_diff + Lambda side-band | 0.313775 | 15.217 | 0.865969 | -58.156 | matches Ton_diff behavior |
+| C4 | PIS-IEK projected balancer | 0.376221 | 16.075 | 0.53786 | -23.494 | balance improvement with lower Ton usage and smaller final error |
+
+This is classified as `MODEL_REVISED`. It supports `Ton_diff` as the dominant DC current-sharing actuator in the tested local mismatch case. It does not support a claim that the first C4 projection is globally optimal or that `Lambda_diff` alone is a DC sharing actuator.
+
 ## 7. Discussion
 
-The E010 and E020 loops produced four useful findings.
+The E010, E020, and E030 loops produced five useful findings.
 
 First, the load-drop branch is not controlled by a single monotonic protection knob. Mild drops may be harmed by truncation; medium drops benefit from a projected combination of Ton truncation and one early pulse inhibit; severe drops need a different token.
 
@@ -314,13 +378,15 @@ Third, the current evidence supports a supervisor/table interpretation more stro
 
 Fourth, the load-rise branch behaves differently from the load-drop branch. E020 shows that fast event request is the primary severe-rise lever, while Ton boost alone is weak unless accepted event density also increases. This supports a bidirectional action space rather than a single transient-control variable.
 
+Fifth, E030 supports the PIS-IEK actuator split but revises the controller claim. `Ton_diff` is the primary DC sharing actuator under the tested DCR mismatch, while `Lambda_diff` should remain a guarded phase-spacing/ripple variable until an event-native implementation is validated. C4 shows the value of projection as a trade-off mechanism: it gives less balance correction than aggressive Ton_diff-only control but reduces trim usage and final voltage error.
+
 ## 8. Limitations
 
 This draft does not claim hardware validation, HIL validation, board-level behavior, or silicon behavior. The evidence is Simulink-only and uses an ideal derived baseline. The current validation is also incomplete for:
 
 - load-rise `a_U` behavior beyond the first `40A -> 120A` peak-undershoot chunk;
 - complete load-rise settling and 120A final regulation;
-- PIS-IEK current-sharing and phase-recovery controller mismatch cases (`a_S`);
+- robust PIS-IEK current-sharing and phase-recovery across mismatch families beyond the first DCR chunk;
 - active-phase add/shed hybrid event management (`a_N`);
 - high-load `120A` operating-point validity in the present derived model setup.
 
@@ -330,9 +396,10 @@ The next research steps are:
 
 1. Add a severe-drop `a_O` token for `40A -> 1A`, with explicit skip-hold and shaped reentry.
 2. Tune the E020 `a_U` window and decide whether the residual 120A error requires phase-add or operating-boundary re-audit.
-3. Implement E030 mismatch validation for PIS-IEK current sharing and phase recovery.
-4. Implement E040 active-phase add/shed validation after voltage protection and reentry guards are stable.
-5. Convert this Markdown draft into a LaTeX manuscript once E030 evidence exists.
+3. Retune E030 `a_S` projection so that current-sharing improvement, ripple, and final voltage error are jointly constrained.
+4. Implement an event-native Lambda_diff path before claiming active phase-spacing control.
+5. Implement E040 active-phase add/shed validation after voltage protection and reentry guards are stable.
+6. Convert this Markdown draft into a LaTeX manuscript after the retuned E030 evidence is known.
 
 ## 10. Current Claim
 
@@ -346,9 +413,13 @@ preserves baseline behavior for a mild 40A -> 20A step and reduces the 40A ->
 10A recovery peak by about 22.2% with a bounded 0.863951 mV undershoot penalty.
 For load rise, the first a_U chunk reduces 40A -> 120A peak undershoot from
 397.42 mV to 319.08 mV and accelerates the 90% current-rise metric from
-37.996 us to 1.212 us without hitting the tested current guard. The evidence is
-derived-Simulink evidence and does not yet prove complete 120A recovery,
-mismatch robustness, active-phase robustness, hardware behavior, or HIL behavior.
+37.996 us to 1.212 us without hitting the tested current guard. For the first
+DCR-mismatch balance chunk, Ton_diff reduces max current imbalance from
+0.853665 A to 0.313775 A, while the C4 projected balancer reaches 0.376221 A
+with lower Ton usage and smaller final Vout error magnitude than Ton_diff-only
+control. The evidence is derived-Simulink evidence and does not yet prove
+complete 120A recovery, robust mismatch recovery, active-phase robustness,
+hardware behavior, or HIL behavior.
 ```
 
 ## References To Complete

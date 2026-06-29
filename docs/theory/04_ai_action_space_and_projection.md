@@ -240,3 +240,58 @@ B3 fast request + Ton boost = 319.08 mV
 The current `a_U` selector should therefore prefer fast request as the primary severe load-rise action and add Ton boost only under the same current and recovery guards. Ton boost alone should not be described as a complete load-rise recovery mechanism.
 
 This evidence is local to the derived ideal model. The same E020 run did not settle within the `90 us` post-step window, so `a_U` is currently confirmed only for peak-undershoot reduction and current-rise acceleration, not for complete 120A recovery.
+
+## Balance-Recovery Projection Rule from E030
+
+The first E030 validation chunk supports a revised local projection rule for `a_S`:
+
+```text
+a_S_raw =
+  [K_T,
+   T_trim_max,
+   K_Lambda,
+   Lambda_trim_max,
+   balance_recovery_rate,
+   phase_spacing_weight,
+   current_balance_weight]
+
+a_S_projected = P_S(a_S_raw, x_hat, guards)
+```
+
+For the fixed `40A` DCR-mismatch chunk, the dominant DC sharing action is `Ton_diff`:
+
+```text
+I_avg = mean(IL_i)
+e_I_i = IL_i - I_avg
+Delta_Ton_i = clamp(-K_T * e_I_i, -T_trim_max, T_trim_max)
+Delta_Ton_i = Delta_Ton_i - mean(Delta_Ton_i)
+```
+
+Measured local evidence:
+
+```text
+C0 max imbalance = 0.853665 A
+C1 Ton_diff-only max imbalance = 0.313775 A
+C4 projected balancer max imbalance = 0.376221 A
+```
+
+The projection must also account for the observed trade-off:
+
+```text
+C1 Ton usage = 0.865969, final Vout error = -58.156 mV
+C4 Ton usage = 0.53786, final Vout error = -23.494 mV
+```
+
+Thus, the current `a_S` projection is not simply "maximize current sharing." It should solve a constrained local trade-off:
+
+```text
+minimize current_imbalance
+subject to:
+  Ton trim bound
+  final Vout error budget
+  ripple budget
+  phase-order guard
+  event-native implementation guard
+```
+
+`Lambda_diff` remains a projected phase-spacing / ripple-recovery variable, but E030 does not yet validate it as an active serial trigger-path controller. The first attempted serial sampled implementation dropped narrow trigger pulses and was rejected as an implementation issue. The retained implementation is side-band projection/logging with fallback when the projected Lambda trim violates guard limits.

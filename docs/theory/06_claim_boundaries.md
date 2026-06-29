@@ -121,9 +121,55 @@ Not yet allowed from E020:
 - phase-add benefit claim, because B4/B5 were not run;
 - global load-rise generalization beyond this first derived-Simulink chunk.
 
-## Current E030/E040 Boundary
+## Current E030 Evidence Boundary
 
-E030 balance recovery is pending controller validation. PIS-IEK evidence may be used to motivate actuator classification, but not yet to claim closed-loop mismatch robustness.
+Validated so far:
+
+```text
+experiment: E030 balance recovery
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+variants: C0, C1, C2, C3, C4
+summary: experiments/E030_balance_recovery/e030_research_summary.md
+metrics: experiments/E030_balance_recovery/e030_metrics.csv
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, zero-mean Ton_diff is the dominant
+small-signal DC current-sharing actuator for the tested DCR-mismatch case.
+The C4 PIS-IEK projected balancer improves max current imbalance versus C0
+while using less Ton trim and producing a smaller final Vout error magnitude
+than the aggressive Ton_diff-only C1/C3 variants.
+```
+
+Quantitative local evidence:
+
+```text
+C0 max current imbalance = 0.853665 A
+C1 Ton_diff-only max current imbalance = 0.313775 A
+C2 Lambda_diff-only max current imbalance = 0.853665 A
+C3 Ton_diff + Lambda_diff max current imbalance = 0.313775 A
+C4 projected balancer max current imbalance = 0.376221 A
+
+C1/C3 Ton trim usage = 0.865969
+C4 Ton trim usage = 0.53786
+
+C1/C3 final Vout error = -58.156 mV
+C4 final Vout error = -23.494 mV
+```
+
+Not yet allowed from E030:
+
+- robust current-sharing claims across all mismatch families;
+- claim that C4 is globally better than Ton_diff-only, because C1/C3 give the lowest current imbalance in this first chunk;
+- claim that Lambda_diff is an active DC current-sharing actuator;
+- claim that sampled serial REQ-path Lambda control is valid, because that implementation dropped narrow pulses and was revised to side-band projection/logging;
+- hardware, HIL, board-level, or silicon claims.
+
+## Current E040 Boundary
 
 E040 active-phase add/shed is planned. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.
 

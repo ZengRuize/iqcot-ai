@@ -35,6 +35,46 @@ Lambda_diff -> phase-spacing and ripple-cancellation trim
 
 `Ton_diff` should not be overused for fast voltage recovery when `a_U` large-signal recovery is active. `Lambda_diff` should not be used to hide persistent DC current imbalance that requires on-time or parameter correction.
 
+## E030 Evidence Update
+
+The first E030 DCR-mismatch controller chunk supports the actuator separation, but revises the strength of the closed-loop claim.
+
+Validated local setup:
+
+```text
+experiment: E030 balance recovery
+case: fixed 40 A load, fixed 4 phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+summary: experiments/E030_balance_recovery/e030_research_summary.md
+metrics: experiments/E030_balance_recovery/e030_metrics.csv
+classification: MODEL_REVISED
+```
+
+Measured result:
+
+```text
+C0 original DCR-mismatch imbalance = 0.853665 A
+C1 Ton_diff-only imbalance = 0.313775 A
+C2 Lambda_diff-only imbalance = 0.853665 A
+C3 Ton_diff + Lambda_diff imbalance = 0.313775 A
+C4 projected balancer imbalance = 0.376221 A
+```
+
+Interpretation:
+
+- `Ton_diff` is confirmed as the dominant DC current-sharing actuator in this local mismatch case.
+- `Lambda_diff` is not a DC current-sharing actuator in this chunk; it is retained as a phase-spacing / ripple-recovery projection variable.
+- Serially inserting a sampled MATLAB Function into the narrow REQ trigger path can drop events and is an implementation error for this model. The current E030 Lambda path is therefore side-band projection/logging only, not a direct trigger gate.
+- The C4 projected balancer reduces Ton trim usage (`0.53786` vs `0.865969` for C1/C3) and reduces final Vout error magnitude (`23.494 mV` vs `58.156 mV`), but it does not beat the Ton_diff-only current-imbalance value.
+
+The theory is therefore revised:
+
+```text
+Ton_diff provides the primary small-signal DC balance lever.
+Safety projection must trade current-sharing speed against voltage error and trim usage.
+Lambda_diff requires a non-sampling, event-native IQCOT parameter implementation before it can be claimed as an active phase-spacing actuator.
+```
+
 ## Token Interface
 
 PIS-IEK informs token `a_S`:
@@ -54,3 +94,5 @@ The safety projection clamps differential trims and may slow recovery when volta
 ## Validity
 
 PIS-IEK claims are small-signal or recovery claims unless validated against large-signal derived models. Mismatch studies must include L, DCR, Ron, current-sense gain, and driver-delay perturbations before claiming robustness.
+
+After E030, PIS-IEK may be used to motivate the `a_S` controller architecture and to claim local DCR-mismatch balance improvement in the ideal derived model. It may not yet be used to claim robust mismatch recovery across L, DCR, Ron, current-sense gain, and driver-delay families.
