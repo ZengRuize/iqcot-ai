@@ -105,6 +105,35 @@ R2-C4c final Vout error = -29.616 mV
 
 R2 confirms that R1-C4a/R1-C4c are not robust under current-sense gain mismatch as-is. The sensed-current objective can improve while real phase-current balance worsens. Add a current-sense-confidence or calibration-aware guard before any E040 active-phase add/shed validation.
 
+E030-R3 calibration-aware guard has now produced a `MODEL_CONFIRMED` chunk:
+
+```text
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R3-C0, R3-C1low, R3-C4a_conf, R3-C4a_cal, R3-C4c_cal
+summary: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_research_summary.md
+metrics: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_metrics.csv
+classification: MODEL_CONFIRMED
+```
+
+Key R3 result:
+
+```text
+R3-C0 real max imbalance = 0.036272 A
+real_no_harm threshold = 0.056272 A
+
+R3-C1low real max imbalance = 0.030506 A
+R3-C4a_conf real max imbalance = 0.036272 A
+R3-C4a_cal real max imbalance = 0.020618 A
+R3-C4c_cal real max imbalance = 0.025784 A
+
+REQ dropped vs C0 = 0 for all R3 variants
+phase order error rate = 0 for all R3 variants
+```
+
+R3 confirms the local guard principle. It does not prove broad current-sense robustness, imperfect calibration robustness, active Lambda control, active-phase add/shed benefit, or hardware/HIL/silicon behavior.
+
 ## Immediate Order
 
 Proceed in this order:
@@ -112,11 +141,11 @@ Proceed in this order:
 1. Freeze current E010 and E020 findings in theory and claim boundaries.
 2. Freeze E030 findings in theory and claim boundaries.
 3. Treat R1-C4a/R1-C4c as local DCR-mismatch candidates, not robust fixed selectors.
-4. Add and validate one calibration-aware or current-sense-confidence `a_S` revision under E030-R2 before E040.
-5. Only after the sensing guard passes, freeze the local `a_S` mode selector for fixed four-phase balance recovery.
+4. Freeze the E030-R3 local guarded `a_S` selector.
+5. Prepare E040 active-phase add/shed validation using the frozen selector and keep active Lambda disabled.
 6. Add or design a severe-drop `a_O` token for `40A -> 1A`.
 7. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-8. Run E040 active-phase add/shed validation only after the guarded `a_S` projection rule is stable.
+8. Run E040 active-phase add/shed validation only after the guarded `a_S` projection rule is frozen in the validation protocol.
 9. Update manuscript direction after the guarded E030 revision or downgrade decision.
 
 ## E020 First Chunk Result
@@ -156,7 +185,7 @@ Classification: MODEL_REVISED
 
 Boundary: E030-R2 shows a real-vs-sensed current-sharing divergence. Ton_diff and projected `a_S` can reduce the controller-observed sensed imbalance while worsening real phase-current imbalance. R2-C4a reduces trim and voltage-error cost versus aggressive R2-C1, but it still worsens real imbalance versus R2-C0. R2-C4c improves sensed imbalance most, but it also worsens real imbalance. Do not start E040 from this state.
 
-Next smallest useful experiment:
+Completed follow-up:
 
 ```text
 E030-R3 calibration-aware a_S guard:
@@ -164,6 +193,21 @@ E030-R3 calibration-aware a_S guard:
   reuse the R2 current-sense gain pattern
   compare baseline, low-gain fallback, confidence-gated C4a, and calibrated C4a/C4c if calibration is explicitly modeled
   require real-current improvement or a no-harm real-current fallback before unblocking E040
+  result: MODEL_CONFIRMED for the local ideal-calibration / confidence-gated guard principle
+```
+
+Next smallest useful step:
+
+```text
+Freeze local guarded a_S selector:
+  if sense_confidence == LOW:
+      use no-op or low-gain Ton_diff fallback
+  elif calibration_enable == true and voltage/ripple risk is high:
+      use calibrated C4a
+  elif calibration_enable == true and current imbalance dominates:
+      allow calibrated C4c under voltage/ripple guards
+  else:
+      fallback
 ```
 
 ## Standing Guardrails

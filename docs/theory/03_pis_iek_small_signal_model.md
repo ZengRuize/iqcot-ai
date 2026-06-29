@@ -185,6 +185,76 @@ else:
     allow R1-C4a or R1-C4c selector according to voltage/ripple guards
 ```
 
+## E030-R3 Calibration-Aware Guard Update
+
+E030-R3 tested the guard implied by R2 under the same fixed-four-phase current-sense mismatch:
+
+```text
+experiment: experiments/E030_balance_recovery/R3_calibration_aware_guard/
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+classification: MODEL_CONFIRMED
+```
+
+The revised current input to the balance kernel is:
+
+```text
+IL_sense_i = g_i * IL_real_i
+IL_est_i = IL_sense_i / g_hat_i
+
+if calibration_enable:
+    I_ctrl_i = IL_est_i
+elif current_sense_confidence == LOW:
+    I_ctrl_i = IL_sense_i
+    K_T = fallback_K_T
+else:
+    I_ctrl_i = IL_sense_i
+```
+
+R3 used the ideal calibration boundary `g_hat_i = g_i` for calibrated variants. This is a controlled Simulink hypothesis test, not evidence of practical online calibration accuracy.
+
+Measured local evidence:
+
+```text
+R3-C0:
+  real max imbalance = 0.036272 A
+  sensed max imbalance = 0.538006 A
+
+R3-C1low low-gain fallback:
+  real max imbalance = 0.030506 A
+  sensed max imbalance = 0.522300 A
+  real_no_harm = true
+
+R3-C4a_conf confidence-gated C4a:
+  real max imbalance = 0.036272 A
+  sensed max imbalance = 0.538006 A
+  real_no_harm = true
+
+R3-C4a_cal ideal calibrated C4a:
+  real max imbalance = 0.020618 A
+  sensed max imbalance = 0.523013 A
+  real_no_harm = true
+
+R3-C4c_cal ideal calibrated C4c:
+  real max imbalance = 0.025784 A
+  sensed max imbalance = 0.527296 A
+  real_no_harm = true
+```
+
+R3 therefore confirms the local guard principle:
+
+```text
+if current_sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable and voltage/ripple risk is high:
+    use calibrated C4a-like projection
+elif calibration_enable and current imbalance dominates:
+    allow calibrated C4c-like projection under voltage/ripple guards
+else:
+    fallback
+```
+
+This result narrows the R2 failure mode but does not prove broad current-sense robustness. It validates only one gain pattern with ideal `g_hat_i` for the calibrated branches.
+
 ## Token Interface
 
 PIS-IEK informs token `a_S`:
@@ -205,4 +275,4 @@ The safety projection clamps differential trims and may slow recovery when volta
 
 PIS-IEK claims are small-signal or recovery claims unless validated against large-signal derived models. Mismatch studies must include L, DCR, Ron, current-sense gain, and driver-delay perturbations before claiming robustness.
 
-After E030, PIS-IEK may be used to motivate the `a_S` controller architecture and to claim local DCR-mismatch balance improvement in the ideal derived model. It may not yet be used to claim robust mismatch recovery across L, DCR, Ron, current-sense gain, and driver-delay families.
+After E030-R3, PIS-IEK may be used to motivate the `a_S` controller architecture, to claim local DCR-mismatch balance trade-offs, and to claim that one local current-sense mismatch pattern was made real-current no-harm by a confidence/calibration guard in the ideal derived model. It may not yet be used to claim robust mismatch recovery across L, DCR, Ron, current-sense gain, and driver-delay families.

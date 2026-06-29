@@ -413,4 +413,45 @@ else:
 
 This is not an AI action that controls load-current slew, and it does not command gates. It is a model-based safety projection check on whether sensed current imbalance is trustworthy enough to drive IQCOT parameter trims.
 
-E040 active-phase add/shed must remain blocked until a calibration-aware or confidence-aware `a_S` revision is validated, because add/shed events would otherwise mix active-phase dynamics with an unresolved current-sensing error.
+At the R2 boundary, E040 active-phase add/shed had to remain blocked until a calibration-aware or confidence-aware `a_S` revision was validated, because add/shed events would otherwise mix active-phase dynamics with an unresolved current-sensing error.
+
+## E030-R3 Guarded a_S Selector
+
+E030-R3 validated the first calibration-aware / confidence-gated `a_S` revision for one local current-sense mismatch pattern:
+
+```text
+experiment: experiments/E030_balance_recovery/R3_calibration_aware_guard/
+G_sense = [1.05, 0.95, 1.05, 0.95]
+classification: MODEL_CONFIRMED
+```
+
+The selector now has an explicit sensing layer:
+
+```text
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a-like projection
+elif calibration_enable == true and current imbalance dominates:
+    use calibrated C4c-like projection
+else:
+    fallback
+```
+
+Local R3 evidence:
+
+```text
+R3-C0 real max imbalance = 0.036272 A
+R3-C1low real max imbalance = 0.030506 A
+R3-C4a_conf real max imbalance = 0.036272 A
+R3-C4a_cal real max imbalance = 0.020618 A
+R3-C4c_cal real max imbalance = 0.025784 A
+
+real_no_harm threshold = 0.056272 A
+dropped_REQ_count = 0 for all R3 variants
+phase_order_error_rate = 0 for all R3 variants
+```
+
+The calibrated variants use the ideal boundary `g_hat_i = g_i`. This supports the projection architecture, not a claim that calibration is available or accurate in hardware.
+
+After R3, E040 may be prepared only after this local selector is frozen in the validation protocol. R3 itself still provides no active-phase add/shed evidence and no active Lambda control evidence.

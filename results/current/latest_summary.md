@@ -107,11 +107,11 @@ safety projection and a load-drop magnitude selector.
 
 | Module | Status | Next action |
 |---|---|---|
-| PIS-IEK | E030/E030-R1 DCR chunks + E030-R2 current-sense chunk `MODEL_REVISED` | add current-sense-confidence / calibration-aware `a_S` guard before E040 |
+| PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED` | freeze guarded `a_S` selector before E040 |
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
-| `a_S` balance | R1 candidates revised by R2 sensed-real divergence | validate guarded/calibrated selector; do not claim active Lambda |
-| `a_N` active phase | planned but blocked | validate only after guarded `a_S` is stable |
+| `a_S` balance | guarded/calibrated selector validated locally in R3 | freeze selector; do not claim active Lambda |
+| `a_N` active phase | planned but not yet validated | prepare E040 only after selector freeze |
 | Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
 
 ## Current Phase
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence now has local DCR-mismatch support and a current-sense mismatch warning. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED` for fixed-four-phase balance recovery. E040 active-phase validation is blocked until the `a_S` sensing-confidence guard is validated.
+PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040 active-phase validation is still not evidence; it should be prepared only after the local `a_S` selector is frozen.
 
 E020 load-rise first chunk is complete:
 
@@ -232,6 +232,39 @@ REQ dropped vs C0 = 0 for all R2 variants
 phase order error rate = 0 for all R2 variants
 ```
 
-Boundary: R2 confirms that current-sense gain mismatch can make the controller-observed sensed-current objective diverge from real phase-current balance. R1-C4a reduces the over-correction cost versus aggressive Ton_diff-only, but still worsens real current imbalance versus R2-C0. R1-C4c improves sensed imbalance most, but also worsens real current imbalance. `a_S` now needs a current-sense-confidence or calibration-aware projection guard before E040.
+Boundary: R2 confirms that current-sense gain mismatch can make the controller-observed sensed-current objective diverge from real phase-current balance. R1-C4a reduces the over-correction cost versus aggressive Ton_diff-only, but still worsens real current imbalance versus R2-C0. R1-C4c improves sensed imbalance most, but also worsens real current imbalance. `a_S` therefore needs a current-sense-confidence or calibration-aware projection guard before E040.
 
-Next task: run one smallest useful E030-R3 calibration-aware `a_S` guard revision under the R2 current-sense mismatch setup. Do not start E040 until the guarded selector has no-harm real-current behavior or explicit calibration evidence.
+E030-R3 calibration-aware guard is complete:
+
+```text
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R3-C0/R3-C1low/R3-C4a_conf/R3-C4a_cal/R3-C4c_cal
+metrics: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_metrics.csv
+summary: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_research_summary.md
+classification: MODEL_CONFIRMED
+
+R3-C0 real max current imbalance = 0.036272 A
+R3-C0 sensed max current imbalance = 0.538006 A
+real_no_harm threshold = 0.056272 A
+
+R3-C1low real max current imbalance = 0.030506 A
+R3-C1low sensed max current imbalance = 0.522300 A
+
+R3-C4a_conf real max current imbalance = 0.036272 A
+R3-C4a_conf sensed max current imbalance = 0.538006 A
+
+R3-C4a_cal real max current imbalance = 0.020618 A
+R3-C4a_cal sensed max current imbalance = 0.523013 A
+
+R3-C4c_cal real max current imbalance = 0.025784 A
+R3-C4c_cal sensed max current imbalance = 0.527296 A
+
+REQ dropped vs C0 = 0 for all R3 variants
+phase order error rate = 0 for all R3 variants
+```
+
+Boundary: R3 confirms the local guard principle under one gain-mismatch pattern. `R3-C4a_cal` and `R3-C4c_cal` use ideal calibration with `g_hat_i = g_i`; this does not prove imperfect calibration robustness or practical online calibration. R3 still does not validate active Lambda, active-phase add/shed, neural AI control, hardware, HIL, board-level, or silicon behavior.
+
+Next task: freeze the local guarded `a_S` selector in the validation protocol, then prepare E040 active-phase add/shed validation with active Lambda still disabled.

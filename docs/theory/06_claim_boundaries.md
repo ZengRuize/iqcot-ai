@@ -277,9 +277,77 @@ Not yet allowed from E030-R2:
 - AI neural controller validation;
 - hardware, HIL, board-level, or silicon claims.
 
+## Current E030-R3 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E030-R3 calibration-aware a_S guard
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R3-C0, R3-C1low, R3-C4a_conf, R3-C4a_cal, R3-C4c_cal
+summary: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_research_summary.md
+metrics: experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_metrics.csv
+classification: MODEL_CONFIRMED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model and one specified current-sense
+gain mismatch pattern, a confidence-gated or ideal-calibrated a_S projection
+can prevent sensed-current optimization from harming real phase-current balance.
+This supports requiring a sensing-aware safety projection before active-phase
+scheduling.
+```
+
+Quantitative local evidence:
+
+```text
+R3-C0 real max imbalance = 0.036272 A
+R3-C0 sensed max imbalance = 0.538006 A
+real_no_harm threshold = 0.056272 A
+
+R3-C1low real max imbalance = 0.030506 A
+R3-C1low sensed max imbalance = 0.522300 A
+R3-C1low real_no_harm = true
+
+R3-C4a_conf real max imbalance = 0.036272 A
+R3-C4a_conf sensed max imbalance = 0.538006 A
+R3-C4a_conf real_no_harm = true
+
+R3-C4a_cal real max imbalance = 0.020618 A
+R3-C4a_cal sensed max imbalance = 0.523013 A
+R3-C4a_cal real_no_harm = true
+
+R3-C4c_cal real max imbalance = 0.025784 A
+R3-C4c_cal sensed max imbalance = 0.527296 A
+R3-C4c_cal real_no_harm = true
+
+REQ dropped vs C0 = 0 for all R3 variants
+phase order error rate = 0 for all R3 variants
+```
+
+Boundary details:
+
+- `R3-C4a_cal` and `R3-C4c_cal` use ideal calibration with `g_hat_i = g_i`; this is not evidence of practical online calibration accuracy.
+- `R3-C4a_conf` validates the low-confidence no-op guard behavior, not a current-sharing improvement.
+- `R3-C1low` validates a conservative fallback under the tested mismatch pattern.
+
+Not yet allowed from E030-R3:
+
+- broad current-sense robustness beyond the tested gain pattern;
+- imperfect calibration robustness;
+- active Lambda_diff closed-loop claims;
+- active-phase add/shed claims;
+- AI neural controller validation;
+- hardware, HIL, board-level, or silicon claims;
+- global superiority over Ton_diff-only.
+
 ## Current E040 Boundary
 
-E040 active-phase add/shed is planned but remains blocked after E030-R2. Do not claim active-phase robustness until current-sense-confidence handling is revised and add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.
+E040 active-phase add/shed is planned. After E030-R3, it may be prepared only after the local guarded `a_S` selector is frozen. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, residual-current, and sensing-confidence guards.
 
 These restrictions are standing:
 
