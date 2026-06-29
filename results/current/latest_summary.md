@@ -1,6 +1,6 @@
 # Latest Summary
 
-Date: 2026-06-28
+Date: 2026-06-29
 
 ## Current Direction
 
@@ -103,4 +103,44 @@ medium-drop recovery-peak reduction, but it requires a binding voltage/undershoo
 safety projection and a load-drop magnitude selector.
 ```
 
-Next task: resolve the severe-drop token for `40A -> 1A`, then begin E020 load-rise undershoot validation.
+## Module Status
+
+| Module | Status | Next action |
+|---|---|---|
+| PIS-IEK | mature evidence | convert to controller validation in E030 |
+| Load-drop `a_O` | partially validated | add severe-drop token |
+| Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
+| `a_S` balance | theory/evidence | validate under mismatch |
+| `a_N` active phase | planned | validate after E020/E030 |
+| Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
+
+## Current Phase
+
+```text
+theory reconstruction + minimal validation
+```
+
+PIS-IEK small-signal evidence is strong. Bidirectional large-signal theory now has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism. E030 balance controller validation and E040 active-phase validation are pending.
+
+E020 load-rise first chunk is complete:
+
+```text
+case: 40A -> 120A external load-current rise
+variants: B0/B1/B2/B3
+metrics: experiments/E020_load_rise_undershoot/e020_metrics.csv
+summary: experiments/E020_load_rise_undershoot/e020_research_summary.md
+classification: MODEL_CONFIRMED
+
+B0 peak undershoot = 397.42 mV
+B1 fast request only = 343.79 mV
+B2 Ton boost only = 382.41 mV
+B3 fast request + Ton boost = 319.08 mV
+
+B0 90% current-rise time = 37.996 us
+B3 90% current-rise time = 1.212 us
+B3 phase-current peak = 34.09 A/phase, current guard not hit
+```
+
+Boundary: this confirms the local `a_U` mechanism for peak-undershoot reduction and current-rise acceleration, not full 120A recovery. None of B0-B3 settled within the 1 mV band in the simulated 90 us post-step window, and B3 final error remained about `-297.93 mV`.
+
+Next task: start E030 minimal DCR-mismatch balance-recovery validation, or tune the E020 `a_U` window before any phase-add experiment.

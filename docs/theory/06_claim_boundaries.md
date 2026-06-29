@@ -76,3 +76,59 @@ Not yet allowed:
 - current-sharing or phase-recovery claims under mismatch;
 - active-phase add/shed claims;
 - hardware, HIL, or board-level claims.
+
+## Current E020 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E020 load-rise undershoot
+case: 40A -> 120A external load-current step
+variants: B0, B1, B2, B3
+summary: experiments/E020_load_rise_undershoot/e020_research_summary.md
+metrics: experiments/E020_load_rise_undershoot/e020_metrics.csv
+classification: MODEL_CONFIRMED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, the projected load-rise a_U branch can
+reduce peak undershoot and accelerate current rise for the severe 40A -> 120A
+external load-current rise. Fast request is the dominant first lever; Ton boost
+is weak alone but improves the result when combined with fast request.
+```
+
+Quantitative local evidence:
+
+```text
+B0 peak undershoot = 397.42 mV
+B1 fast request only peak undershoot = 343.79 mV
+B2 Ton boost only peak undershoot = 382.41 mV
+B3 fast request + Ton boost peak undershoot = 319.08 mV
+
+B0 90% current-rise time = 37.996 us
+B3 90% current-rise time = 1.212 us
+B3 phase-current peak = 34.09 A/phase
+current-limit guard = not hit
+```
+
+Not yet allowed from E020:
+
+- full `40A -> 120A` recovery or final-regulation claim;
+- settling-time claim, because no tested variant settled within the `1 mV` band in the `90 us` post-step window;
+- 120A operating-boundary claim, because B3 final error remained about `-297.93 mV` at `75-90 us`;
+- phase-add benefit claim, because B4/B5 were not run;
+- global load-rise generalization beyond this first derived-Simulink chunk.
+
+## Current E030/E040 Boundary
+
+E030 balance recovery is pending controller validation. PIS-IEK evidence may be used to motivate actuator classification, but not yet to claim closed-loop mismatch robustness.
+
+E040 active-phase add/shed is planned. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.
+
+These restrictions are standing:
+
+- AI/table may observe load-step features but must not control external load-current slew.
+- AI/table must not command gates.
+- Current Simulink evidence is not hardware, HIL, board-level, or silicon evidence.

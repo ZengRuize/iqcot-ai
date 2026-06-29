@@ -99,6 +99,18 @@ settling time
 final error
 ```
 
+Current status:
+
+```text
+40A -> 120A completed for B0-B3
+summary: experiments/E020_load_rise_undershoot/e020_research_summary.md
+metrics: experiments/E020_load_rise_undershoot/e020_metrics.csv
+classification: MODEL_CONFIRMED
+scope: peak-undershoot reduction and current-rise acceleration only
+boundary: no tested variant settled within 1 mV in the 90us post-step window
+next E020 expansion target: tune a_U window before any B4 phase-add run
+```
+
 ## E030 Balance Recovery Validation
 
 Compare:

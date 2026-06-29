@@ -141,6 +141,80 @@ Primary controls after safety projection:
 
 The load-rise branch uses token `a_U`.
 
+### Load-Rise Deficit-Charge Estimate
+
+At the instant of a load rise, the load current can step faster than the inductor-current sum:
+
+```text
+I_Lsum(t0+) = I_Lsum(t0-)
+I_def(t0+) = Iload_new - I_Lsum(t0+)
+```
+
+The first-order capacitor droop estimate is:
+
+```text
+Delta Vout_down ~= (1 / Cout) * integral(max(Iload(t) - I_Lsum(t), 0) dt)
+```
+
+This expression is a deficit-charge model. It is not a direct settling-time model because the later waveform also depends on IQCOT event density, minimum off-time, current limits, output-capacitor recharge, and recovery overshoot guards.
+
+For one accepted high-side pulse in phase `i`, the local inductor-current increment is approximated by:
+
+```text
+Delta i_i,on ~= ((Vin - Vout) / L_i) * Ton_actual_i
+```
+
+Therefore the load-rise branch has two distinct event-domain levers:
+
+```text
+fast request / Lambda_cm_reduce:
+  increase the number of accepted current-building events in the early window
+
+Ton boost:
+  increase the current increment per accepted event, subject to Ton and current guards
+```
+
+The two levers should be projected together because Ton boost without enough accepted events may have limited effect, while fast request without Ton boost may improve current slope but remain bounded by nominal pulse energy.
+
+### E020 First-Chunk Result
+
+The first E020 chunk used derived copies of the local ideal IQCOT baseline for the external `40A -> 120A` load-current rise:
+
+```text
+B0 original ideal IQCOT with observability
+B1 fast request only
+B2 Ton boost only
+B3 fast request + Ton boost
+```
+
+Observed metrics:
+
+```text
+B0 peak undershoot: 397.42 mV
+B1 peak undershoot: 343.79 mV
+B2 peak undershoot: 382.41 mV
+B3 peak undershoot: 319.08 mV
+
+B0 90% current-rise time: 37.996 us
+B1 90% current-rise time: 2.658 us
+B2 90% current-rise time: 39.92 us
+B3 90% current-rise time: 1.212 us
+
+B3 phase-current peak: 34.09 A/phase
+current-limit guard: not hit
+```
+
+This confirms the local mechanism that early event-density increase is the dominant first lever for the tested severe load rise, and bounded Ton boost is useful mainly when combined with fast request.
+
+The same result also adds a boundary:
+
+```text
+B3 final error at 75-90us: -297.93 mV
+settling time within 1 mV: not reached in the simulated window
+```
+
+Thus E020 supports a peak-undershoot and current-rise improvement claim for the first derived-Simulink chunk. It does not yet support a full recovery, final regulation, phase-add, or global 120A operating-boundary claim.
+
 ## Branch Selection
 
 Branch selection is event driven:

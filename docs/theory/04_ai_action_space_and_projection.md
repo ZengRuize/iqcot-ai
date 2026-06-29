@@ -171,3 +171,72 @@ else:
 ```
 
 The numeric thresholds are evidence-local to the current ideal derived model and must not be presented as universal controller constants.
+
+## Load-Rise Projection Rule from E020
+
+The first E020 validation chunk supports a local projection rule for `a_U`:
+
+```text
+a_U_raw =
+  [fast_request_enable,
+   Lambda_cm_reduce,
+   min_off_override_level,
+   Ton_boost_enable,
+   Tton_boost_max,
+   boost_window,
+   boost_decay_rate,
+   current_limit_guard]
+
+a_U_projected = P_U(a_U_raw, x_hat)
+```
+
+The projection may enable fast scheduler requests only when:
+
+```text
+branch == load_rise
+Vout <= Vref - undershoot_band
+t in [t_load_step, t_load_step + fast_request_window]
+max_i |IL_i| <= current_limit_guard
+active_phase_reentry_lockout == false
+```
+
+For the first `40A -> 120A` E020 chunk, the evidence-local parameters were:
+
+```text
+fast_request_window = 3 us
+fast_request_period = 160 ns
+fast_request_pulse_width = 25 ns
+undershoot_band = 0.2 mV
+current_limit_guard = 55 A/phase
+```
+
+The projection may enable Ton boost only when:
+
+```text
+branch == load_rise
+Vout <= Vref - undershoot_band
+t in [t_load_step, t_load_step + boost_window]
+Ton_cmd_i <= Tton_boost_max
+|IL_i| <= current_limit_guard
+```
+
+For the first E020 chunk:
+
+```text
+Tton_boost_max = 260 ns
+boost_window = 3 us
+boost_decay_rate = 5e5 1/s
+```
+
+Measured local evidence:
+
+```text
+B0 peak undershoot = 397.42 mV
+B1 fast request only = 343.79 mV
+B2 Ton boost only = 382.41 mV
+B3 fast request + Ton boost = 319.08 mV
+```
+
+The current `a_U` selector should therefore prefer fast request as the primary severe load-rise action and add Ton boost only under the same current and recovery guards. Ton boost alone should not be described as a complete load-rise recovery mechanism.
+
+This evidence is local to the derived ideal model. The same E020 run did not settle within the `90 us` post-step window, so `a_U` is currently confirmed only for peak-undershoot reduction and current-rise acceleration, not for complete 120A recovery.
