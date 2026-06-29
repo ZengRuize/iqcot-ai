@@ -128,6 +128,63 @@ Interpretation:
 - `R1-C4b` shows that simply reducing `T_trim_max` can weaken balance too much even when the bound is enforced.
 - `R1-C4d` is too close to `R1-C1` to count as a distinct retuned controller.
 
+## E030-R2 Current-Sense Mismatch Update
+
+E030-R2 tested the same fixed-four-phase operating point with nominal DCR and biased controller measurements:
+
+```text
+experiment: experiments/E030_balance_recovery/R2_current_sense_mismatch/
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+classification: MODEL_REVISED
+```
+
+The event-domain balance error must now distinguish real and sensed currents:
+
+```text
+I_real_i = IL_i
+I_sense_i = G_sense_i * IL_i
+
+e_I_real_i = I_real_i - mean(I_real_i)
+e_I_sense_i = I_sense_i - mean(I_sense_i)
+```
+
+The implemented controller uses `e_I_sense_i`, but the plant objective is bounded `e_I_real_i`. Under R2, the two diverged:
+
+```text
+R2-C0 real max imbalance = 0.036272 A
+R2-C0 sensed max imbalance = 0.538006 A
+
+R2-C1 Ton_diff reference:
+  real max imbalance = 0.475724 A
+  sensed max imbalance = 0.141896 A
+
+R2-C4a reduced-KT projection:
+  real max imbalance = 0.317534 A
+  sensed max imbalance = 0.195376 A
+
+R2-C4c voltage-aware projection:
+  real max imbalance = 0.432627 A
+  sensed max imbalance = 0.126599 A
+```
+
+Interpretation:
+
+- Current-sense gain mismatch can make `Ton_diff` appear effective to the controller while worsening real current distribution.
+- `R2-C4a` reduces the damage versus aggressive `R2-C1`, but it still worsens real imbalance versus `R2-C0`.
+- `R2-C4c` improves sensed imbalance most strongly among the projected variants, but it also worsens real imbalance.
+- PIS-IEK therefore needs a sensing-confidence term before using sensed `e_I_i` as a balance objective.
+
+Revised local rule:
+
+```text
+if current_sense_confidence < confidence_min:
+    freeze or strongly downscale Ton_diff
+    prefer voltage-safe no-op / low-gain fallback
+    require calibration-aware evidence before enabling C4a/C4c
+else:
+    allow R1-C4a or R1-C4c selector according to voltage/ripple guards
+```
+
 ## Token Interface
 
 PIS-IEK informs token `a_S`:

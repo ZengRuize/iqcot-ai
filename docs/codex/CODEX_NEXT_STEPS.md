@@ -74,18 +74,50 @@ R1-C4c voltage-aware projection:
 
 R1-C4a is the best scored trade-off candidate; R1-C4c is the stronger current-sharing candidate. No R1 variant validates active Lambda control.
 
+E030-R2 current-sense mismatch confirmation has now produced a third `MODEL_REVISED` chunk:
+
+```text
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R2-C0, R2-C1, R2-C4a, R2-C4c
+summary: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_research_summary.md
+metrics: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_metrics.csv
+classification: MODEL_REVISED
+```
+
+Key R2 result:
+
+```text
+R2-C0 real max imbalance = 0.036272 A
+R2-C0 sensed max imbalance = 0.538006 A
+
+R2-C4a real max imbalance = 0.317534 A
+R2-C4a sensed max imbalance = 0.195376 A
+R2-C4a Ton usage = 0.401338
+R2-C4a final Vout error = -7.459 mV
+
+R2-C4c real max imbalance = 0.432627 A
+R2-C4c sensed max imbalance = 0.126599 A
+R2-C4c Ton usage = 0.681135
+R2-C4c final Vout error = -29.616 mV
+```
+
+R2 confirms that R1-C4a/R1-C4c are not robust under current-sense gain mismatch as-is. The sensed-current objective can improve while real phase-current balance worsens. Add a current-sense-confidence or calibration-aware guard before any E040 active-phase add/shed validation.
+
 ## Immediate Order
 
 Proceed in this order:
 
 1. Freeze current E010 and E020 findings in theory and claim boundaries.
 2. Freeze E030 findings in theory and claim boundaries.
-3. Use the R1-C4a/R1-C4c evidence to freeze the local `a_S` projection rule.
-4. Run one smallest useful E030 confirmation case before E040: either a current-sense gain mismatch or a second DCR pattern, still fixed four-phase and no active Lambda actuation.
-5. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-6. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-7. Run E040 active-phase add/shed validation only after the `a_S` projection rule is stable.
-8. Update manuscript direction after the extra E030 confirmation or downgrade decision.
+3. Treat R1-C4a/R1-C4c as local DCR-mismatch candidates, not robust fixed selectors.
+4. Add and validate one calibration-aware or current-sense-confidence `a_S` revision under E030-R2 before E040.
+5. Only after the sensing guard passes, freeze the local `a_S` mode selector for fixed four-phase balance recovery.
+6. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+7. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+8. Run E040 active-phase add/shed validation only after the guarded `a_S` projection rule is stable.
+9. Update manuscript direction after the guarded E030 revision or downgrade decision.
 
 ## E020 First Chunk Result
 
@@ -108,6 +140,31 @@ B3 90% current-rise time: 1.212 us
 Boundary: E020 confirms local peak-undershoot reduction and current-rise acceleration, not full recovery. B0-B3 did not settle within the 1 mV band in the 90 us post-step window.
 
 Do not add phase-add until E020 window tuning and E030 balance evidence are reviewed.
+
+## E030-R2 Confirmation Result
+
+Completed:
+
+```text
+Load: fixed 40A
+Active phases: fixed 4-phase
+Power-stage mismatch: none
+Current-sense mismatch: [1.05, 0.95, 1.05, 0.95]
+Compare: R2-C0, R2-C1, R2-C4a, R2-C4c
+Classification: MODEL_REVISED
+```
+
+Boundary: E030-R2 shows a real-vs-sensed current-sharing divergence. Ton_diff and projected `a_S` can reduce the controller-observed sensed imbalance while worsening real phase-current imbalance. R2-C4a reduces trim and voltage-error cost versus aggressive R2-C1, but it still worsens real imbalance versus R2-C0. R2-C4c improves sensed imbalance most, but it also worsens real imbalance. Do not start E040 from this state.
+
+Next smallest useful experiment:
+
+```text
+E030-R3 calibration-aware a_S guard:
+  keep fixed 40A and fixed four phases
+  reuse the R2 current-sense gain pattern
+  compare baseline, low-gain fallback, confidence-gated C4a, and calibrated C4a/C4c if calibration is explicitly modeled
+  require real-current improvement or a no-harm real-current fallback before unblocking E040
+```
 
 ## Standing Guardrails
 

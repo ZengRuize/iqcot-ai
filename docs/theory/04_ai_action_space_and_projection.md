@@ -96,6 +96,7 @@ The projection must enforce:
 - active-phase dwell and residual-current rules;
 - branch consistency between load-drop and load-rise behavior;
 - disabled active-phase add/shed during protection/reentry, except load-rise add-phase protection.
+- current-sense confidence / calibration guard before applying current-sharing trims that depend on `IL_sense_i`.
 
 Projection failures are implementation evidence. They should be logged as projected, clamped, delayed, rejected, or fallback-to-baseline.
 
@@ -362,3 +363,54 @@ else:
 ```
 
 The E030-R1 classification remains `MODEL_REVISED`, not `MODEL_CONFIRMED`, because the Pareto score is weight-dependent, Lambda remains side-band/logging only, and only one DCR mismatch pattern has been tested.
+
+## Current-Sense Projection Guard from E030-R2
+
+E030-R2 tested the R1 `a_S` candidates under fixed `40A`, fixed four-phase operation, nominal DCR, and current-sense gain mismatch:
+
+```text
+G_sense = [1.05, 0.95, 1.05, 0.95]
+experiment: experiments/E030_balance_recovery/R2_current_sense_mismatch/
+classification: MODEL_REVISED
+```
+
+This run separates the plant objective from the controller-observed objective:
+
+```text
+I_real_i = IL_i
+I_sense_i = G_sense_i * IL_i
+e_I_real_i = I_real_i - mean(I_real_i)
+e_I_sense_i = I_sense_i - mean(I_sense_i)
+```
+
+The tested controller trims used `e_I_sense_i`. The metrics showed that the sensed objective can improve while real phase-current sharing worsens:
+
+```text
+R2-C0 real max imbalance = 0.036272 A
+R2-C0 sensed max imbalance = 0.538006 A
+
+R2-C4a real max imbalance = 0.317534 A
+R2-C4a sensed max imbalance = 0.195376 A
+R2-C4a final Vout error = -7.459 mV
+
+R2-C4c real max imbalance = 0.432627 A
+R2-C4c sensed max imbalance = 0.126599 A
+R2-C4c final Vout error = -29.616 mV
+```
+
+The `a_S` token definition remains low dimensional, but the projection must now take a calibration state or confidence scalar as a guard input:
+
+```text
+a_S_projected = P_S(a_S_raw, x_hat, guards, current_sense_confidence)
+
+if current_sense_confidence < confidence_min:
+    freeze Ton_diff or strongly downscale K_T
+    prefer baseline / voltage-safe low-gain fallback
+    block R1-C4a and R1-C4c claims as robust current-sharing modes
+else:
+    allow R1-C4a-like or R1-C4c-like projection according to voltage/ripple guards
+```
+
+This is not an AI action that controls load-current slew, and it does not command gates. It is a model-based safety projection check on whether sensed current imbalance is trustworthy enough to drive IQCOT parameter trims.
+
+E040 active-phase add/shed must remain blocked until a calibration-aware or confidence-aware `a_S` revision is validated, because add/shed events would otherwise mix active-phase dynamics with an unresolved current-sensing error.

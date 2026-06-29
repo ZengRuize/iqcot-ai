@@ -218,9 +218,68 @@ Not yet allowed from E030-R1:
 - AI neural controller validation;
 - hardware, HIL, board-level, or silicon claims.
 
+## Current E030-R2 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E030-R2 current-sense gain mismatch
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R2-C0, R2-C1, R2-C4a, R2-C4c
+summary: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_research_summary.md
+metrics: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_metrics.csv
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, current-sense gain mismatch can create
+a real-vs-sensed current-sharing divergence. Ton_diff and projected a_S actions
+can reduce controller-observed sensed imbalance while increasing real phase-current
+imbalance. Therefore a_S must include a current-sense-confidence or
+calibration-aware guard before active-phase validation.
+```
+
+Quantitative local evidence:
+
+```text
+R2-C0 real max imbalance = 0.036272 A
+R2-C0 sensed max imbalance = 0.538006 A
+
+R2-C1 real max imbalance = 0.475724 A
+R2-C1 sensed max imbalance = 0.141896 A
+R2-C1 Ton usage = 0.871935
+
+R2-C4a real max imbalance = 0.317534 A
+R2-C4a sensed max imbalance = 0.195376 A
+R2-C4a Ton usage = 0.401338
+R2-C4a final Vout error = -7.459 mV
+
+R2-C4c real max imbalance = 0.432627 A
+R2-C4c sensed max imbalance = 0.126599 A
+R2-C4c Ton usage = 0.681135
+R2-C4c final Vout error = -29.616 mV
+
+REQ dropped vs C0 = 0 for all R2 variants
+phase order error rate = 0 for all R2 variants
+```
+
+Not yet allowed from E030-R2:
+
+- claim that R1-C4a/R1-C4c are robust under current-sense gain mismatch;
+- proceed-to-E040 claim before adding a sensing-confidence or calibration-aware guard;
+- broad mismatch robustness;
+- active Lambda_diff closed-loop claims;
+- active-phase add/shed claims;
+- AI neural controller validation;
+- hardware, HIL, board-level, or silicon claims.
+
 ## Current E040 Boundary
 
-E040 active-phase add/shed is planned. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.
+E040 active-phase add/shed is planned but remains blocked after E030-R2. Do not claim active-phase robustness until current-sense-confidence handling is revised and add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.
 
 These restrictions are standing:
 

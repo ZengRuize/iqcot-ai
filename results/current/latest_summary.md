@@ -107,11 +107,11 @@ safety projection and a load-drop magnitude selector.
 
 | Module | Status | Next action |
 |---|---|---|
-| PIS-IEK | E030 + E030-R1 local DCR chunks `MODEL_REVISED` | run one smallest fixed-four-phase mismatch confirmation before E040 |
+| PIS-IEK | E030/E030-R1 DCR chunks + E030-R2 current-sense chunk `MODEL_REVISED` | add current-sense-confidence / calibration-aware `a_S` guard before E040 |
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
-| `a_S` balance | R1 projection retune complete | freeze R1-C4a/R1-C4c local selector; do not claim active Lambda |
-| `a_N` active phase | planned | validate after E020/E030 |
+| `a_S` balance | R1 candidates revised by R2 sensed-real divergence | validate guarded/calibrated selector; do not claim active Lambda |
+| `a_N` active phase | planned but blocked | validate only after guarded `a_S` is stable |
 | Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
 
 ## Current Phase
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence is strong, and E030 now gives the first closed-loop balance-recovery controller evidence. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030 is `MODEL_REVISED` for local DCR-mismatch balance recovery. E040 active-phase validation is pending.
+PIS-IEK small-signal evidence now has local DCR-mismatch support and a current-sense mismatch warning. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED` for fixed-four-phase balance recovery. E040 active-phase validation is blocked until the `a_S` sensing-confidence guard is validated.
 
 E020 load-rise first chunk is complete:
 
@@ -199,4 +199,39 @@ phase order error rate = 0 for all R1 variants
 
 Boundary: R1-C4a is the best local Pareto candidate and R1-C4c is the stronger current-sharing candidate, but the result remains `MODEL_REVISED`. It does not prove broad mismatch robustness, active Lambda control, active-phase add/shed, neural AI control, hardware, HIL, board-level, or silicon behavior.
 
-Next task: run one smallest useful fixed-four-phase E030 confirmation case, or explicitly freeze R1 and proceed to E040 with the above boundaries.
+E030-R2 current-sense mismatch confirmation is complete:
+
+```text
+case: fixed 40A external load, fixed four active phases
+power-stage DCR: nominal
+current-sense gains: [1.05, 0.95, 1.05, 0.95]
+variants: R2-C0/R2-C1/R2-C4a/R2-C4c
+metrics: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_metrics.csv
+summary: experiments/E030_balance_recovery/R2_current_sense_mismatch/e030_r2_research_summary.md
+classification: MODEL_REVISED
+
+R2-C0 real max current imbalance = 0.036272 A
+R2-C0 sensed max current imbalance = 0.538006 A
+
+R2-C1 real max current imbalance = 0.475724 A
+R2-C1 sensed max current imbalance = 0.141896 A
+R2-C1 Ton usage = 0.871935
+R2-C1 final Vout error = -58.868 mV
+
+R2-C4a real max current imbalance = 0.317534 A
+R2-C4a sensed max current imbalance = 0.195376 A
+R2-C4a Ton usage = 0.401338
+R2-C4a final Vout error = -7.459 mV
+
+R2-C4c real max current imbalance = 0.432627 A
+R2-C4c sensed max current imbalance = 0.126599 A
+R2-C4c Ton usage = 0.681135
+R2-C4c final Vout error = -29.616 mV
+
+REQ dropped vs C0 = 0 for all R2 variants
+phase order error rate = 0 for all R2 variants
+```
+
+Boundary: R2 confirms that current-sense gain mismatch can make the controller-observed sensed-current objective diverge from real phase-current balance. R1-C4a reduces the over-correction cost versus aggressive Ton_diff-only, but still worsens real current imbalance versus R2-C0. R1-C4c improves sensed imbalance most, but also worsens real current imbalance. `a_S` now needs a current-sense-confidence or calibration-aware projection guard before E040.
+
+Next task: run one smallest useful E030-R3 calibration-aware `a_S` guard revision under the R2 current-sense mismatch setup. Do not start E040 until the guarded selector has no-harm real-current behavior or explicit calibration evidence.
