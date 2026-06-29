@@ -500,3 +500,75 @@ Still not allowed from E040-A-R1:
 - severe load-drop shed behavior;
 - switching-efficiency improvement;
 - hardware, HIL, board-level, or silicon validation.
+
+## Current E040-S0 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/
+case: 40A -> 20A external load-current drop
+transition target: 4 active phases -> 2 active phases [1,3]
+variants: S0, S1, S2, S3
+summary: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_metrics.csv
+classification: MODEL_REVISED
+```
+
+Allowed local claim from E040-S0:
+
+```text
+In the local ideal IQCOT derived model, the first minimal 4 -> 2 shed attempt
+shows that a simple immediate, dwell-only, or residual-threshold-only shed
+projection is insufficient. Immediate and dwell-only shed can hold two phases
+but produce large undershoot and current-limit violations. The residual/relock
+S3 guard prevents the worst voltage/current-limit failure only by failing to
+hold a stable two-phase active set.
+```
+
+Quantitative local evidence:
+
+```text
+S0 fixed four-phase:
+  N_active_final = 4
+  peak overshoot = 1.132 mV
+  peak undershoot = 0.451 mV
+  final Vout error = 0.699 mV
+
+S1 immediate shed:
+  N_active_final = 2
+  peak undershoot = 663.614 mV
+  final Vout error = -624.357 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  N_active_final = 2
+  peak undershoot = 543.833 mV
+  final Vout error = -500.714 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  N_active_final = 3.79065
+  peak undershoot = 19.133 mV
+  final Vout error = -3.371 mV
+  current_limit_hit = false
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+Interpretation:
+
+- E040-S0 is valid negative evidence for the simple shed model, not an implementation-only failure.
+- Stable shed requires a staged load-share transfer, disabled-phase current drain, and a commit/relock state that is separate from the instantaneous residual-current predicate.
+- Residual-current thresholding remains necessary but is not sufficient by itself.
+- Delayed `a_S` after shed is still unproven, because S3 did not maintain a stable two-phase post-shed interval.
+
+Still not allowed from E040-S0:
+
+- active-phase shed validation;
+- S4 AI/table selected `a_N` shed claim;
+- broad 1/2/4 active-phase scheduling robustness;
+- severe load-drop shed behavior;
+- switching-efficiency improvement from phase shedding;
+- active Lambda control;
+- hardware, HIL, board-level, or silicon validation.

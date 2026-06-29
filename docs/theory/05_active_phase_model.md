@@ -150,3 +150,61 @@ R1-D3:
 ```
 
 Voltage recovery remains a separate tuning axis. R1-D1 had the best local final voltage recovery among add variants, while R1-D2/R1-D3 demonstrated the guarded insertion and post-relock `a_S` timing at the cost of larger final error. Therefore R1 confirms local add-insertion integrity, not global active-phase benefit or shed behavior.
+
+## E040-S0 Shed-Phase Revision Boundary
+
+E040-S0 produced a `MODEL_REVISED` result for the first minimal shed attempt:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/
+case: 40A -> 20A external load-current drop
+transition target: 4 -> 2 active phases [1,3]
+variants: S0/S1/S2/S3
+classification: MODEL_REVISED
+```
+
+The evidence separates two failure modes:
+
+```text
+S1 immediate shed:
+  N_active_final = 2
+  peak undershoot = 663.614 mV
+  final Vout error = -624.357 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  N_active_final = 2
+  peak undershoot = 543.833 mV
+  final Vout error = -500.714 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  N_active_final = 3.79065
+  peak undershoot = 19.133 mV
+  final Vout error = -3.371 mV
+  current_limit_hit = false
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+Thus, simply switching `active_phase_set` to `[1,0,1,0]` is not a valid shed model. A stable shed event must manage energy and event order before it removes phases:
+
+```text
+SHED_REQUEST
+LOAD_SHARE_TRANSFER
+DISABLED_PHASE_DRAIN
+SHED_COMMIT
+ORDER_RELOCK
+BALANCE_RECOVERY
+```
+
+The revised shed model requires:
+
+- retained phases must have current headroom before accepting load transfer;
+- candidate shed phases must stop receiving new high-side energy while their residual current is drained under a bounded policy;
+- residual-current thresholding must qualify the commit event, but it is not sufficient alone;
+- post-shed two-phase order must be locked to the physical sequence `[1,3]`;
+- frozen guarded `a_S` may act only after shed commit, order relock, voltage guard, and residual-current guard;
+- active Lambda remains disabled.
+
+E040-S0 does not validate phase shedding. It blocks S4/table-selected `a_N` shed claims until a staged shed-handoff model is built and locally confirmed.

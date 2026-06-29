@@ -1,6 +1,6 @@
 # Latest Summary
 
-Date: 2026-06-29
+Date: 2026-06-30
 
 ## Current Direction
 
@@ -111,7 +111,7 @@ safety projection and a load-drop magnitude selector.
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
-| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED` | prepare minimal E040-S only after explicit protocol approval |
+| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED` | revise shed theory toward staged handoff/drain before any S4 or broad grid |
 | Manuscript | Markdown draft synced through E020; evidence now extends through E040-A-R1 | update paper outline with E030-R3 and E040-A-R1 boundaries |
 
 ## Current Phase
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, but E040-A-R1 is now `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point.
+PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, E040-A-R1 is `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point, and E040-S0 is `MODEL_REVISED` for the first minimal 4 -> 2 shed attempt.
 
 E020 load-rise first chunk is complete:
 
@@ -334,4 +334,43 @@ R1-D3:
 
 Boundary: R1 confirms only the local corrected-remap/insertion/relock add-phase integrity point in the ideal derived Simulink model. It does not validate E040-S shed, broad 1/2/4 active-phase scheduling, active Lambda, severe 40A -> 120A recovery, efficiency gain, hardware, HIL, board-level, or silicon behavior.
 
-Next task: prepare a minimal E040-S shed-phase protocol only if explicitly authorized; otherwise update the manuscript outline and claim matrix with E030-R3 and E040-A-R1.
+E040-S0 minimal shed-phase validation is complete:
+
+```text
+case: 40A -> 20A external load-current drop
+transition: 4 active phases -> 2 active phases
+variants: S0/S1/S2/S3
+metrics: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_metrics.csv
+summary: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_research_summary.md
+classification: MODEL_REVISED
+
+S0 fixed four-phase:
+  N_active_final = 4
+  peak overshoot = 1.132 mV
+  peak undershoot = 0.451 mV
+  final Vout error = 0.699 mV
+
+S1 immediate shed:
+  N_active_final = 2
+  peak undershoot = 663.614 mV
+  final Vout error = -624.357 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  N_active_final = 2
+  peak undershoot = 543.833 mV
+  final Vout error = -500.714 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  N_active_final = 3.79065
+  peak undershoot = 19.133 mV
+  final Vout error = -3.371 mV
+  current_limit_hit = false
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+Boundary: E040-S0 rejects the simple shed model. Immediate or dwell-only 4 -> 2 shed creates unacceptable undershoot/current-limit behavior, while the residual-qualified S3 guard avoids the worst voltage/current-limit failure only by failing to hold a stable two-phase state. Shed-phase theory now needs a staged load-share handoff and disabled-phase drain model before S4, broad 1/2/4 scheduling, or any shed benefit claim.
+
+Next task: design the smallest E040-S1 staged shed-handoff protocol, or update the manuscript outline and claim matrix with the E030-R3, E040-A-R1, and E040-S0 boundaries. Do not run S4, severe shed cases, active Lambda, or broad active-phase grids from the current S0 state.

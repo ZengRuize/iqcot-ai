@@ -155,6 +155,72 @@ R1-D3:
 
 This validates only the local add-phase insertion/relock projection. It does not validate shed-phase behavior, broad 1/2/4 scheduling, active Lambda, severe load-rise recovery, or hardware/HIL behavior.
 
+## E040-S0 Shed-Phase Projection Revision
+
+E040-S0 tested the first minimal shed-phase branch for a mild external load drop:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/
+case: 40A -> 20A
+transition target: 4 -> 2 active phases [1,3]
+classification: MODEL_REVISED
+```
+
+The tested simple shed policies are not sufficient:
+
+```text
+S1 immediate shed:
+  stable N_active_final = 2
+  peak undershoot = 663.614 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  stable N_active_final = 2
+  peak undershoot = 543.833 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  current_limit_hit = false
+  peak undershoot = 19.133 mV
+  N_active_final = 3.79065
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+The revised `a_N` shed projection may no longer treat residual-current threshold as a single sufficient accept condition. The next shed model must separate at least four event states:
+
+```text
+SHED_REQUEST:
+  detect load-drop branch and Iload_est < I_shed_low
+
+LOAD_SHARE_TRANSFER:
+  increase/request-transfer support on retained phases [1,3]
+  keep voltage and current-limit guards active
+
+DISABLED_PHASE_DRAIN:
+  inhibit new high-side energy on candidate shed phases [2,4]
+  allow residual IL2/IL4 to decay under a bounded drain/freewheel policy
+
+SHED_COMMIT_AND_RELOCK:
+  commit active_phase_set = [1,0,1,0]
+  relock scheduler order to [1,3]
+  enable a_S only after commit, relock, voltage guard, and residual guard
+```
+
+Projection rule update:
+
+```text
+allow_shed_commit only if:
+  branch == load_drop
+  protection/reentry lockout == false
+  retained_phase_current_headroom == pass
+  disabled_phase_residual_current <= residual_current_threshold
+  voltage deviation <= shed_voltage_budget
+  order_relock_window can complete without dropped/inactive REQ
+```
+
+If these conditions are not met, the projection must delay shed or fall back to fixed four-phase operation. It must not oscillate between four-phase and two-phase states as a response to the instantaneous residual-current predicate.
+
 ## Safety Projection Requirements
 
 The projection must enforce:

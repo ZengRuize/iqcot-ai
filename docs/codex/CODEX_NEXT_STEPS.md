@@ -1,6 +1,6 @@
 # Codex Next Steps
 
-Date: 2026-06-29
+Date: 2026-06-30
 
 ## Current State
 
@@ -143,10 +143,11 @@ Proceed in this order:
 3. Treat R1-C4a/R1-C4c as local DCR-mismatch candidates, not robust fixed selectors.
 4. Freeze the E030-R3 local guarded `a_S` selector.
 5. Freeze E040-A-R1 as local add-phase insertion evidence; keep active Lambda disabled.
-6. Prepare the smallest E040-S shed-phase protocol only after explicitly accepting the E040-A-R1 claim boundary.
-7. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-8. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-9. Update manuscript direction with E030-R3 and E040-A-R1 evidence before broad grids.
+6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
+7. Do not run S4 or broad E040 grids from S0; design only the smallest staged shed-handoff revision if continuing E040-S.
+8. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+9. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+10. Update manuscript direction with E030-R3, E040-A-R1, and E040-S0 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -270,7 +271,60 @@ Key R1 pass metrics:
   R1-D3 a_S_enable_time = 5.5 us
 ```
 
-E040-S remains blocked until the next prompt explicitly authorizes a minimal shed-phase run. Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
+E040-S0 minimal shed-phase run is complete:
+
+```text
+case: 40A -> 20A external load-current drop
+transition: 4 active phases -> 2 active phases
+variants: S0/S1/S2/S3
+summary: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_metrics.csv
+classification: MODEL_REVISED
+```
+
+Key S0 outcome:
+
+```text
+S0 fixed four-phase:
+  N_active_final = 4
+  peak undershoot = 0.451 mV
+  final Vout error = 0.699 mV
+
+S1 immediate shed:
+  N_active_final = 2
+  peak undershoot = 663.614 mV
+  final Vout error = -624.357 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  N_active_final = 2
+  peak undershoot = 543.833 mV
+  final Vout error = -500.714 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  N_active_final = 3.79065
+  peak undershoot = 19.133 mV
+  final Vout error = -3.371 mV
+  current_limit_hit = false
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+E040-S0 revised the shed model. Immediate and dwell-only shed can hold two phases but produce unacceptable voltage/current-limit behavior. The residual-qualified S3 guard avoids the severe voltage/current-limit failure only by failing to remain in the two-phase state; its active set toggles back toward four-phase behavior. Do not claim shed validation.
+
+Next smallest useful E040-S step:
+
+```text
+E040-S1 staged shed-handoff design only:
+  keep 40A -> 20A
+  keep initial 4 phases and target [1,3]
+  no S4, no severe cases, no broad grids
+  add explicit load-share transfer / disabled-phase drain / shed commit state
+  keep active Lambda disabled
+```
+
+Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
 
 ## Standing Guardrails
 

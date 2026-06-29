@@ -292,4 +292,61 @@ R1-D3:
   Ton_trim_usage = 0.204702
 ```
 
-E040-A-R1 validated only the local `20A -> 40A`, `2 -> 4` add-phase insertion/relock integrity. Do not run E040-S, broad 1/2/4 grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.
+E040-A-R1 validated only the local `20A -> 40A`, `2 -> 4` add-phase insertion/relock integrity.
+
+E040-S0 minimal shed-phase validation is complete:
+
+```text
+case: 40A -> 20A external load-current drop
+initial active phases: 4
+target active phases: 2, physical [1,3]
+variants: S0/S1/S2/S3
+summary: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_metrics.csv
+classification: MODEL_REVISED
+```
+
+Key result:
+
+```text
+S0 fixed four-phase:
+  peak undershoot = 0.451 mV
+  final Vout error = 0.699 mV
+
+S1 immediate shed:
+  N_active_final = 2
+  peak undershoot = 663.614 mV
+  current_limit_hit = true
+
+S2 dwell/lockout shed:
+  N_active_final = 2
+  peak undershoot = 543.833 mV
+  current_limit_hit = true
+  phase_order_error_rate_post_shed = 0.265152
+
+S3 residual/relock/a_S guarded shed:
+  N_active_final = 3.79065
+  peak undershoot = 19.133 mV
+  current_limit_hit = false
+  phase_order_error_rate_post_shed = 0.992308
+```
+
+Interpretation:
+
+```text
+E040-S0 is negative/revision evidence for the simple shed projection.
+Immediate or dwell-only shed can hold two phases but violates voltage/current guards.
+Residual/relock S3 avoids current-limit failure only by failing to hold stable two-phase operation.
+```
+
+Next E040-S target:
+
+```text
+E040-S1 staged shed handoff, smallest useful chunk only
+same 40A -> 20A case
+same 4 -> [1,3] target
+explicit LOAD_SHARE_TRANSFER and DISABLED_PHASE_DRAIN states
+no S4 unless the staged S1 guard first confirms stable local shed integrity
+```
+
+Do not run broad 1/2/4 grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.
