@@ -145,27 +145,75 @@ effective switching frequency
 trim usage
 ```
 
-## E040 Active-Phase Validation
-
-Compare:
+Current status:
 
 ```text
-D0 fixed 4-phase
-D1 basic add/shed
-D2 add/shed + overshoot/undershoot guards
-D3 add/shed + PIS-IEK balance recovery
-D4 AI/table selected a_N
+E030 DCR mismatch first chunk: MODEL_REVISED
+E030-R1 projection retune: MODEL_REVISED
+E030-R2 current-sense mismatch: MODEL_REVISED
+E030-R3 calibration-aware guard: MODEL_CONFIRMED
 ```
 
-Test:
+Frozen local guarded `a_S` selector after E030-R3:
 
 ```text
-1A -> 40A
-10A -> 120A
-120A -> 10A
-40A <-> 120A repeated
-10A <-> 40A repeated
-slow ramp 0A -> 120A -> 0A
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a
+elif calibration_enable == true and current imbalance dominates:
+    allow calibrated C4c under voltage/ripple guards
+else:
+    fallback
+```
+
+`C4a_cal` is the preferred voltage-safe calibrated mode. `C4c_cal` is the stronger current-sharing calibrated mode under voltage/ripple guards. `C1low` is the low-confidence fallback. `C4a_conf` is the no-harm confidence-gated mode when sensing confidence is low. Active Lambda remains disabled.
+
+## E040 Active-Phase Validation
+
+First chunk: E040-A add-phase validation only. Do not run E040-S or a broad active-phase grid until E040-A is classified.
+
+E040-A compare:
+
+```text
+D0 fixed two-phase operation, no phase add
+D1 immediate 2 -> 4 phase add without dwell/ramp guard
+D2 guarded 2 -> 4 phase add with dwell, new_phase_ramp_rate, and frozen a_S recovery
+D3 guarded 2 -> 4 phase add with frozen a_S selector and current-sense confidence check
+```
+
+E040-A test:
+
+```text
+20A -> 40A external load-current rise
+initial active phases: 2
+target active phases: 4
+nominal DCR
+nominal current-sense gains
+active Lambda disabled
+frozen guarded a_S selector enabled after add/reentry
+```
+
+E040-A add guard:
+
+```text
+if Iload_est > I_add_high
+and Vout is not in severe overshoot
+and active_phase_reentry_lockout == false
+and dwell_timer_pass == true
+and current_limit_guard == pass:
+    allow N_active_candidate to increase
+else:
+    delay or reject add-phase request
+```
+
+Initial values:
+
+```text
+I_add_high = 30 A
+dwell_time = 2 us
+new_phase_ramp_rate = bounded and documented by derived script
+current_limit_guard = inherited from E020/E030 safety limits
 ```
 
 Metrics:
@@ -179,4 +227,56 @@ disabled phase residual current
 phase spacing recovery time
 overshoot/undershoot during add/shed
 switching count / efficiency proxy
+```
+
+Required CSV columns for E040-A:
+
+```text
+variant, success
+peak_overshoot_mV, peak_undershoot_mV, settling_time_us
+final_Vout_error_mV, Vout_ripple_pp_mV
+active_phase_transition_time_us
+N_active_initial, N_active_final
+phase_add_accept_count, phase_shed_accept_count
+phase_add_reject_count, phase_shed_reject_count
+new_phase_current_ramp_time_us, new_phase_current_overshoot_A
+residual_current_at_shed_A, residual_current_threshold_A
+real_max_current_imbalance_A, real_rms_current_imbalance_A
+sensed_max_current_imbalance_A, sensed_rms_current_imbalance_A
+phase_spacing_std_ns, phase_order_error_rate
+REQ_count, dropped_REQ_count
+current_limit_hit
+Ton_trim_usage, Lambda_trim_usage
+fallback_count, guard_clamp_count
+classification_hint
+```
+
+Current status:
+
+```text
+E040-A first chunk completed
+summary: experiments/E040_active_phase_add_shed/e040_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/e040_metrics.csv
+classification: MODEL_REVISED
+```
+
+Key evidence:
+
+```text
+D1/D2/D3 all reached N_active_final = 4
+dropped_REQ_count = 0
+current_limit_hit = false
+D1 phase_order_error_rate = 0.120482
+D2/D3 phase_order_error_rate = 0.170732
+D1 peak undershoot = 802.746 mV
+D2/D3 peak undershoot = 810.494 mV
+```
+
+Next E040 target:
+
+```text
+E040-A-R1 only
+retune request remap / phase insertion / dwell-ramp / post-add Ton recovery
+require phase_order_error_rate = 0 before E040-S
+keep active Lambda disabled
 ```

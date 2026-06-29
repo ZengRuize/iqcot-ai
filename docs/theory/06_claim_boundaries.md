@@ -345,9 +345,82 @@ Not yet allowed from E030-R3:
 - hardware, HIL, board-level, or silicon claims;
 - global superiority over Ton_diff-only.
 
+## Frozen Local Guarded a_S Selector After E030-R3
+
+The only `a_S` selector frozen for follow-on validation is:
+
+```text
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a
+elif calibration_enable == true and current imbalance dominates:
+    allow calibrated C4c under voltage/ripple guards
+else:
+    fallback
+```
+
+Interpretation:
+
+- `C4a_cal` is the preferred voltage-safe calibrated mode.
+- `C4c_cal` is the stronger current-sharing calibrated mode, but only under voltage/ripple/event guards.
+- `C1low` is the low-confidence fallback mode.
+- `C4a_conf` is the no-harm confidence-gated mode when sensing confidence is low.
+- Active Lambda remains disabled.
+
+Additional forbidden claims from R3:
+
+- E030-R3 does not prove broad robustness.
+- E030-R3 does not prove imperfect calibration robustness.
+- E030-R3 does not validate active Lambda control.
+- E030-R3 does not validate active-phase add/shed.
+- E030-R3 is derived-Simulink evidence only.
+
 ## Current E040 Boundary
 
 E040 active-phase add/shed is planned. After E030-R3, it may be prepared only after the local guarded `a_S` selector is frozen. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, residual-current, and sensing-confidence guards.
+
+First E040-A result:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/
+case: 20A -> 40A external load-current rise
+transition: 2 active phases -> 4 active phases
+variants: D0/D1/D2/D3
+metrics: experiments/E040_active_phase_add_shed/e040_metrics.csv
+summary: experiments/E040_active_phase_add_shed/e040_research_summary.md
+classification: MODEL_REVISED
+```
+
+Allowed local claim from E040-A:
+
+```text
+In the local ideal IQCOT derived model, a request-remapped active-phase add proxy
+can change the active set from two phases to four phases without REQ drop or
+current-limit hit in the moderate 20A -> 40A case, but the tested D1/D2/D3
+variants still violate phase-order integrity and exhibit large undershoot/final
+voltage error. The active-phase theory must therefore be revised before any
+active-phase benefit or shed-phase claim is allowed.
+```
+
+Quantitative local evidence:
+
+```text
+D1: N_active_final = 4, dropped_REQ_count = 0, phase_order_error_rate = 0.120482,
+    peak undershoot = 802.746 mV, final Vout error = -269.941 mV
+D2/D3: N_active_final = 4, dropped_REQ_count = 0, phase_order_error_rate = 0.170732,
+       peak undershoot = 810.494 mV, final Vout error = -319.350 mV
+```
+
+Not yet allowed from E040-A:
+
+- active-phase add benefit claim;
+- active-phase shed validation or E040-S claim;
+- broad 1/2/4 phase scheduling robustness;
+- phase-order-safe insertion claim;
+- voltage-recovery improvement claim;
+- active Lambda control claim;
+- hardware, HIL, board-level, or silicon claim.
 
 These restrictions are standing:
 

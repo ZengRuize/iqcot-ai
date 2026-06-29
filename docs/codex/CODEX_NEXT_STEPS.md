@@ -196,19 +196,72 @@ E030-R3 calibration-aware a_S guard:
   result: MODEL_CONFIRMED for the local ideal-calibration / confidence-gated guard principle
 ```
 
+Frozen local guarded `a_S` selector after E030-R3:
+
+```text
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a
+elif calibration_enable == true and current imbalance dominates:
+    allow calibrated C4c under voltage/ripple guards
+else:
+    fallback
+```
+
+Mode names:
+
+```text
+C4a_cal: preferred voltage-safe calibrated mode
+C4c_cal: stronger current-sharing calibrated mode under voltage/ripple guards
+C1low: low-confidence fallback
+C4a_conf: no-harm confidence-gated mode when sensing confidence is low
+active Lambda: disabled
+```
+
+E040-A first add-phase chunk is complete:
+
+```text
+case: 20A -> 40A external load-current rise
+transition: 2 active phases -> 4 active phases
+variants: D0/D1/D2/D3
+classification: MODEL_REVISED
+
+D1:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0.120482
+  peak undershoot = 802.746 mV
+  final Vout error = -269.941 mV
+
+D2/D3:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0.170732
+  peak undershoot = 810.494 mV
+  final Vout error = -319.350 mV
+```
+
+E040-A implementation lessons:
+
+```text
+sampled serial REQ-path supervisor can miss narrow events: reject this implementation path
+two-phase mode must remap four-phase scheduler events onto active phases: do not simply drop inactive requests
+active_phase_set transition alone is not evidence: phase order and voltage recovery failed
+```
+
 Next smallest useful step:
 
 ```text
-Freeze local guarded a_S selector:
-  if sense_confidence == LOW:
-      use no-op or low-gain Ton_diff fallback
-  elif calibration_enable == true and voltage/ripple risk is high:
-      use calibrated C4a
-  elif calibration_enable == true and current imbalance dominates:
-      allow calibrated C4c under voltage/ripple guards
-  else:
-      fallback
+Run E040-A-R1 only:
+  keep 20A -> 40A
+  keep D0/D1/D2/D3 comparison
+  keep active Lambda disabled
+  retune phase insertion, scheduler order, dwell/ramp timing, and post-add Ton recovery
+  require phase_order_error_rate = 0 before E040-S
 ```
+
+Do not run E040-S or any broad active-phase grid until E040-A-R1 is classified.
 
 ## Standing Guardrails
 

@@ -107,11 +107,11 @@ safety projection and a load-drop magnitude selector.
 
 | Module | Status | Next action |
 |---|---|---|
-| PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED` | freeze guarded `a_S` selector before E040 |
+| PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
-| `a_S` balance | guarded/calibrated selector validated locally in R3 | freeze selector; do not claim active Lambda |
-| `a_N` active phase | planned but not yet validated | prepare E040 only after selector freeze |
+| `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
+| `a_N` active phase | E040-A add chunk completed as `MODEL_REVISED`; no active-phase benefit claim yet | retune request remap / phase insertion / ramp before E040-S |
 | Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
 
 ## Current Phase
@@ -267,4 +267,47 @@ phase order error rate = 0 for all R3 variants
 
 Boundary: R3 confirms the local guard principle under one gain-mismatch pattern. `R3-C4a_cal` and `R3-C4c_cal` use ideal calibration with `g_hat_i = g_i`; this does not prove imperfect calibration robustness or practical online calibration. R3 still does not validate active Lambda, active-phase add/shed, neural AI control, hardware, HIL, board-level, or silicon behavior.
 
-Next task: freeze the local guarded `a_S` selector in the validation protocol, then prepare E040 active-phase add/shed validation with active Lambda still disabled.
+Frozen local guarded `a_S` selector after E030-R3:
+
+```text
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a
+elif calibration_enable == true and current imbalance dominates:
+    allow calibrated C4c under voltage/ripple guards
+else:
+    fallback
+```
+
+`C4a_cal` is the preferred voltage-safe calibrated mode. `C4c_cal` is the stronger current-sharing calibrated mode under voltage/ripple guards. `C1low` is the low-confidence fallback. `C4a_conf` is the no-harm confidence-gated mode when sensing confidence is low. Active Lambda remains disabled.
+
+E040-A active-phase add first chunk is complete:
+
+```text
+case: 20A -> 40A external load-current rise
+transition: 2 active phases -> 4 active phases
+variants: D0/D1/D2/D3
+metrics: experiments/E040_active_phase_add_shed/e040_metrics.csv
+summary: experiments/E040_active_phase_add_shed/e040_research_summary.md
+classification: MODEL_REVISED
+
+D1:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0.120482
+  peak undershoot = 802.746 mV
+  final Vout error = -269.941 mV
+
+D2/D3:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0.170732
+  peak undershoot = 810.494 mV
+  final Vout error = -319.350 mV
+  Ton_trim_usage = 0.216193
+```
+
+E040-A revised the active-phase theory. The add transition can be represented without REQ drop after request remapping, but the tested insertion/ramp/a_S recovery still violates phase-order integrity and leaves large voltage error. Do not claim active-phase benefit, and do not start E040-S until E040-A is retuned.
+
+Next task: revise E040-A request remap / phase insertion / ramp timing and post-add Ton recovery, then rerun the same `20A -> 40A`, `2 -> 4`, D0-D3 chunk. Keep active Lambda disabled.

@@ -415,7 +415,7 @@ This is not an AI action that controls load-current slew, and it does not comman
 
 At the R2 boundary, E040 active-phase add/shed had to remain blocked until a calibration-aware or confidence-aware `a_S` revision was validated, because add/shed events would otherwise mix active-phase dynamics with an unresolved current-sensing error.
 
-## E030-R3 Guarded a_S Selector
+## Frozen Local Guarded a_S Selector After E030-R3
 
 E030-R3 validated the first calibration-aware / confidence-gated `a_S` revision for one local current-sense mismatch pattern:
 
@@ -425,18 +425,26 @@ G_sense = [1.05, 0.95, 1.05, 0.95]
 classification: MODEL_CONFIRMED
 ```
 
-The selector now has an explicit sensing layer:
+The local selector is now frozen for the next validation step. It is not a learned controller and it is not a gate command. It is a model-based safety projection that decides which low-dimensional `a_S` Ton-difference mode may reach the IQCOT parameter path:
 
 ```text
 if sense_confidence == LOW:
     use no-op or low-gain Ton_diff fallback
 elif calibration_enable == true and voltage/ripple risk is high:
-    use calibrated C4a-like projection
+    use calibrated C4a
 elif calibration_enable == true and current imbalance dominates:
-    use calibrated C4c-like projection
+    allow calibrated C4c under voltage/ripple guards
 else:
     fallback
 ```
+
+Mode interpretation for subsequent E040 work:
+
+- `C4a_cal` is the preferred voltage-safe calibrated mode.
+- `C4c_cal` is the stronger current-sharing calibrated mode and remains subject to voltage/ripple/event guards.
+- `C1low` is the low-confidence fallback mode.
+- `C4a_conf` is the no-harm confidence-gated mode when sensing confidence is low.
+- Active `Lambda_diff` actuation remains disabled; Lambda may be logged or projected as a boundary variable only.
 
 Local R3 evidence:
 
@@ -454,4 +462,4 @@ phase_order_error_rate = 0 for all R3 variants
 
 The calibrated variants use the ideal boundary `g_hat_i = g_i`. This supports the projection architecture, not a claim that calibration is available or accurate in hardware.
 
-After R3, E040 may be prepared only after this local selector is frozen in the validation protocol. R3 itself still provides no active-phase add/shed evidence and no active Lambda control evidence.
+The frozen selector can be used after an active-phase add/reentry event in E040-A, but R3 itself still provides no active-phase add/shed evidence and no active Lambda control evidence. It also does not prove broad current-sense robustness or imperfect calibration robustness.
