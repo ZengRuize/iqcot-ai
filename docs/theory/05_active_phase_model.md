@@ -91,3 +91,62 @@ peak undershoot = 802.746 mV to 810.494 mV
 ```
 
 This revises the active-phase model: `active_phase_set` transition is necessary but not sufficient. The next E040-A revision must explicitly co-design phase insertion, scheduler order, dwell/ramp timing, and post-add Ton recovery before any E040-S shed validation.
+
+## E040-A-R1 Confirmed Local Add-Insertion Model
+
+E040-A-R1 produced a local `MODEL_CONFIRMED` result for the same moderate add case:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/
+case: 20A -> 40A external load-current rise
+transition: 2 -> 4 active phases
+variants: R1-D0/R1-D1/R1-D2/R1-D3
+classification: MODEL_CONFIRMED
+```
+
+The corrected model separates logical scheduler slots from physical phases:
+
+```text
+two-phase mode:
+  active_phase_set = [1, 0, 1, 0]
+  physical sequence = [1, 3]
+  raw slots [1, 3] map to physical phase 1
+  raw slots [2, 4] map to physical phase 3
+
+four-phase mode:
+  active_phase_set = [1, 1, 1, 1]
+  physical sequence = [1, 2, 3, 4]
+```
+
+The add transition uses a controlled insertion schedule:
+
+```text
+ADD_PENDING:
+  require load-rise branch, Iload > I_add_high, dwell pass, voltage guard, and current guard
+
+NEW_PHASE_RAMP:
+  insert phases 2 and 4 with bounded Ton
+
+ORDER_RELOCK:
+  hold a_S disabled while the four-phase event order relocks
+
+BALANCE_RECOVERY:
+  allow frozen guarded a_S only after ramp, relock, and reentry delay
+```
+
+Measured R1 local integrity:
+
+```text
+R1-D1/R1-D2/R1-D3:
+  N_active_final = 4
+  accepted_REQ_count = 145
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+
+R1-D3:
+  a_S_enable_time = 5.5 us
+```
+
+Voltage recovery remains a separate tuning axis. R1-D1 had the best local final voltage recovery among add variants, while R1-D2/R1-D3 demonstrated the guarded insertion and post-relock `a_S` timing at the cost of larger final error. Therefore R1 confirms local add-insertion integrity, not global active-phase benefit or shed behavior.

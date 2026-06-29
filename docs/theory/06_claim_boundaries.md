@@ -427,3 +427,76 @@ These restrictions are standing:
 - AI/table may observe load-step features but must not control external load-current slew.
 - AI/table must not command gates.
 - Current Simulink evidence is not hardware, HIL, board-level, or silicon evidence.
+
+## Current E040-A-R1 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/
+case: 20A -> 40A external load-current rise
+transition: 2 active phases -> 4 active phases
+variants: R1-D0, R1-D1, R1-D2, R1-D3
+metrics: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_metrics.csv
+summary: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_research_summary.md
+classification: MODEL_CONFIRMED
+```
+
+Allowed local claim from E040-A-R1:
+
+```text
+In the local ideal IQCOT derived model, corrected active-phase remap plus a
+guarded insertion/relock sequence enables the moderate 20A -> 40A, 2 -> 4
+add-phase transition while preserving accepted-REQ integrity, avoiding inactive
+phase requests, maintaining zero post-add phase-order error, and avoiding the
+current-limit guard.
+```
+
+Quantitative local evidence:
+
+```text
+R1-D1:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  peak undershoot = 801.960 mV
+  final Vout error = -270.375 mV
+
+R1-D2:
+  dwell_time = 1 us
+  new_phase_ramp_time = 1.998 us measured
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  peak undershoot = 807.856 mV
+  final Vout error = -334.944 mV
+
+R1-D3:
+  a_S_enable_time = 5.5 us
+  Ton_trim_usage = 0.204702
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  peak undershoot = 807.856 mV
+  final Vout error = -340.265 mV
+```
+
+Interpretation:
+
+- E040-A-R1 upgrades only the local active-phase add insertion integrity claim.
+- The best voltage recovery among the add variants is still R1-D1; R1-D2/R1-D3 trade voltage recovery for guarded insertion and post-relock a_S timing.
+- R1-D3 verifies that frozen guarded `a_S` can be delayed until after dwell, ramp, order relock, and reentry delay in this local add case.
+
+Still not allowed from E040-A-R1:
+
+- broad active-phase robustness;
+- 4 -> 2 shed behavior;
+- arbitrary 1/2/4 active-phase scheduling;
+- active Lambda control;
+- severe 40A -> 120A add-phase recovery;
+- severe load-drop shed behavior;
+- switching-efficiency improvement;
+- hardware, HIL, board-level, or silicon validation.

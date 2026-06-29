@@ -84,6 +84,77 @@ phase_insert_policy
 
 Purpose: manage 1/2/4 active phases without destabilizing voltage protection, reentry, or current sharing.
 
+## E040-A-R1 Active-Phase Projection Rule
+
+E040-A-R1 confirms a local `a_N` add-phase projection for the moderate external
+`20A -> 40A` load-rise case:
+
+```text
+experiment: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/
+classification: MODEL_CONFIRMED
+```
+
+The validated local two-phase mapping is:
+
+```text
+before add:
+  active physical phases = [1, 3]
+  raw scheduler slots [1, 3] -> physical phase 1
+  raw scheduler slots [2, 4] -> physical phase 3
+
+after add/relock:
+  active physical phases = [1, 2, 3, 4]
+  raw scheduler slot i -> physical phase i
+```
+
+The projected add action is allowed only when:
+
+```text
+branch == load_rise
+Iload_est > I_add_high
+Vout <= Vref + severe_overshoot_band
+current_limit_guard == pass
+dwell_timer >= dwell_time
+protection/reentry lockout == false
+```
+
+The R1 local parameter set was:
+
+```text
+I_add_high = 30 A
+dwell_time = 1 us
+new_phase_ramp_time = 2 us
+new_phase_Ton_limit = 0.75 * Ton_nom
+order_relock_window = 2 us
+post_add_reentry_delay = 0.5 us
+current_limit_guard = 55 A/phase
+```
+
+The `a_S` balance token may not act during insertion. In R1-D3 it was enabled only after:
+
+```text
+N_active == 4
+new_phase_ramp_state == COMPLETE
+order_relock_window_done == true
+post_add_reentry_delay elapsed
+```
+
+Measured local integrity evidence:
+
+```text
+R1-D1/R1-D2/R1-D3:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+
+R1-D3:
+  a_S_enable_time = 5.5 us
+```
+
+This validates only the local add-phase insertion/relock projection. It does not validate shed-phase behavior, broad 1/2/4 scheduling, active Lambda, severe load-rise recovery, or hardware/HIL behavior.
+
 ## Safety Projection Requirements
 
 The projection must enforce:

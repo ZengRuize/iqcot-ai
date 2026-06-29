@@ -111,8 +111,8 @@ safety projection and a load-drop magnitude selector.
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
-| `a_N` active phase | E040-A add chunk completed as `MODEL_REVISED`; no active-phase benefit claim yet | retune request remap / phase insertion / ramp before E040-S |
-| Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
+| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED` | prepare minimal E040-S only after explicit protocol approval |
+| Manuscript | Markdown draft synced through E020; evidence now extends through E040-A-R1 | update paper outline with E030-R3 and E040-A-R1 boundaries |
 
 ## Current Phase
 
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040 active-phase validation is still not evidence; it should be prepared only after the local `a_S` selector is frozen.
+PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, but E040-A-R1 is now `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point.
 
 E020 load-rise first chunk is complete:
 
@@ -310,4 +310,28 @@ D2/D3:
 
 E040-A revised the active-phase theory. The add transition can be represented without REQ drop after request remapping, but the tested insertion/ramp/a_S recovery still violates phase-order integrity and leaves large voltage error. Do not claim active-phase benefit, and do not start E040-S until E040-A is retuned.
 
-Next task: revise E040-A request remap / phase insertion / ramp timing and post-add Ton recovery, then rerun the same `20A -> 40A`, `2 -> 4`, D0-D3 chunk. Keep active Lambda disabled.
+E040-A-R1 phase-insertion retune is complete:
+
+```text
+case: 20A -> 40A external load-current rise
+transition: 2 active phases -> 4 active phases
+variants: R1-D0/R1-D1/R1-D2/R1-D3
+metrics: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_metrics.csv
+summary: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_research_summary.md
+classification: MODEL_CONFIRMED
+
+R1-D1/R1-D2/R1-D3:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+
+R1-D3:
+  a_S_enable_time = 5.5 us
+  Ton_trim_usage = 0.204702
+```
+
+Boundary: R1 confirms only the local corrected-remap/insertion/relock add-phase integrity point in the ideal derived Simulink model. It does not validate E040-S shed, broad 1/2/4 active-phase scheduling, active Lambda, severe 40A -> 120A recovery, efficiency gain, hardware, HIL, board-level, or silicon behavior.
+
+Next task: prepare a minimal E040-S shed-phase protocol only if explicitly authorized; otherwise update the manuscript outline and claim matrix with E030-R3 and E040-A-R1.

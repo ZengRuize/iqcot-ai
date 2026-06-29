@@ -275,8 +275,21 @@ D2/D3 peak undershoot = 810.494 mV
 Next E040 target:
 
 ```text
-E040-A-R1 only
-retune request remap / phase insertion / dwell-ramp / post-add Ton recovery
-require phase_order_error_rate = 0 before E040-S
-keep active Lambda disabled
+E040-A-R1 completed
+summary: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_metrics.csv
+classification: MODEL_CONFIRMED
+
+R1-D1/R1-D2/R1-D3:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+
+R1-D3:
+  a_S_enable_time = 5.5 us
+  Ton_trim_usage = 0.204702
 ```
+
+E040-A-R1 validated only the local `20A -> 40A`, `2 -> 4` add-phase insertion/relock integrity. Do not run E040-S, broad 1/2/4 grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.

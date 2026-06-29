@@ -142,11 +142,11 @@ Proceed in this order:
 2. Freeze E030 findings in theory and claim boundaries.
 3. Treat R1-C4a/R1-C4c as local DCR-mismatch candidates, not robust fixed selectors.
 4. Freeze the E030-R3 local guarded `a_S` selector.
-5. Prepare E040 active-phase add/shed validation using the frozen selector and keep active Lambda disabled.
-6. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-7. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-8. Run E040 active-phase add/shed validation only after the guarded `a_S` projection rule is frozen in the validation protocol.
-9. Update manuscript direction after the guarded E030 revision or downgrade decision.
+5. Freeze E040-A-R1 as local add-phase insertion evidence; keep active Lambda disabled.
+6. Prepare the smallest E040-S shed-phase protocol only after explicitly accepting the E040-A-R1 claim boundary.
+7. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+8. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+9. Update manuscript direction with E030-R3 and E040-A-R1 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -253,15 +253,24 @@ active_phase_set transition alone is not evidence: phase order and voltage recov
 Next smallest useful step:
 
 ```text
-Run E040-A-R1 only:
-  keep 20A -> 40A
-  keep D0/D1/D2/D3 comparison
-  keep active Lambda disabled
-  retune phase insertion, scheduler order, dwell/ramp timing, and post-add Ton recovery
-  require phase_order_error_rate = 0 before E040-S
+E040-A-R1 completed:
+  case: 20A -> 40A
+  transition: 2 -> 4 active phases
+  variants: R1-D0/R1-D1/R1-D2/R1-D3
+  summary: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_research_summary.md
+  metrics: experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_metrics.csv
+  classification: MODEL_CONFIRMED
+
+Key R1 pass metrics:
+  R1-D1/R1-D2/R1-D3 N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+  R1-D3 a_S_enable_time = 5.5 us
 ```
 
-Do not run E040-S or any broad active-phase grid until E040-A-R1 is classified.
+E040-S remains blocked until the next prompt explicitly authorizes a minimal shed-phase run. Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
 
 ## Standing Guardrails
 
