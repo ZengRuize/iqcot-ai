@@ -169,6 +169,55 @@ Not yet allowed from E030:
 - claim that sampled serial REQ-path Lambda control is valid, because that implementation dropped narrow pulses and was revised to side-band projection/logging;
 - hardware, HIL, board-level, or silicon claims.
 
+## Current E030-R1 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E030-R1 projection retune
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+variants: R1-C0, R1-C1, R1-C4a, R1-C4b, R1-C4c, R1-C4d
+summary: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_research_summary.md
+metrics: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_metrics.csv
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model and one specified +/-10% DCR mismatch
+pattern, retuned safety-projected a_S control can trade current-sharing strength
+against lower Ton trim usage, smaller final Vout error, and bounded ripple/event
+cost. R1-C4a is the best scored Pareto candidate in this chunk; R1-C4c is a
+stronger balance candidate with higher trim and final-error cost than R1-C4a.
+```
+
+Quantitative local evidence:
+
+```text
+R1-C0 max current imbalance = 0.853665 A
+R1-C1 Ton_diff reference max current imbalance = 0.313749 A
+R1-C4a reduced-KT projection max current imbalance = 0.416996 A
+R1-C4c voltage-aware projection max current imbalance = 0.319450 A
+
+R1-C1 Ton trim usage = 0.866649, final Vout error = -58.188 mV, ripple = 15.311 mV
+R1-C4a Ton trim usage = 0.404392, final Vout error = -3.604 mV, ripple = 8.128 mV
+R1-C4c Ton trim usage = 0.676533, final Vout error = -29.407 mV, ripple = 7.121 mV
+
+REQ dropped vs C0 = 0 for all R1 variants
+phase order error rate = 0 for all R1 variants
+```
+
+Not yet allowed from E030-R1:
+
+- broad mismatch robustness beyond the specified DCR pattern;
+- claim that C4a or C4c globally outperforms Ton_diff-only on current sharing;
+- active Lambda_diff closed-loop claims, because R1 keeps Lambda side-band/logging only;
+- active-phase add/shed claims;
+- AI neural controller validation;
+- hardware, HIL, board-level, or silicon claims.
+
 ## Current E040 Boundary
 
 E040 active-phase add/shed is planned. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, and residual-current guards.

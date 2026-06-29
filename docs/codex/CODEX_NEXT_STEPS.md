@@ -43,17 +43,49 @@ classification: MODEL_REVISED
 
 C4 improves current sharing versus C0 and uses less Ton trim than C1/C3, with smaller final Vout error magnitude, but it does not beat the Ton_diff-only current-imbalance metric.
 
+E030-R1 projection retune has now produced a second `MODEL_REVISED` chunk:
+
+```text
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+variants: R1-C0, R1-C1, R1-C4a, R1-C4b, R1-C4c, R1-C4d
+summary: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_research_summary.md
+metrics: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_metrics.csv
+classification: MODEL_REVISED
+```
+
+Best current `a_S` candidates:
+
+```text
+R1-C4a reduced-KT projection:
+  max imbalance = 0.416996 A
+  Ton usage = 0.404392
+  final Vout error = -3.604 mV
+  ripple = 8.128 mV
+  Pareto score = 0.362552
+
+R1-C4c voltage-aware projection:
+  max imbalance = 0.319450 A
+  Ton usage = 0.676533
+  final Vout error = -29.407 mV
+  ripple = 7.121 mV
+  Pareto score = 0.415946
+```
+
+R1-C4a is the best scored trade-off candidate; R1-C4c is the stronger current-sharing candidate. No R1 variant validates active Lambda control.
+
 ## Immediate Order
 
 Proceed in this order:
 
 1. Freeze current E010 and E020 findings in theory and claim boundaries.
 2. Freeze E030 findings in theory and claim boundaries.
-3. Retune E030 `a_S`: reduce C1/C3 voltage/ripple cost, refine C4 projection, and replace side-band Lambda logging with an event-native implementation before claiming active Lambda control.
-4. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-5. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-6. After E030 projection tuning, run E040 active-phase add/shed validation.
-7. Update manuscript direction after the retuned E030 evidence is known.
+3. Use the R1-C4a/R1-C4c evidence to freeze the local `a_S` projection rule.
+4. Run one smallest useful E030 confirmation case before E040: either a current-sense gain mismatch or a second DCR pattern, still fixed four-phase and no active Lambda actuation.
+5. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+6. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+7. Run E040 active-phase add/shed validation only after the `a_S` projection rule is stable.
+8. Update manuscript direction after the extra E030 confirmation or downgrade decision.
 
 ## E020 First Chunk Result
 

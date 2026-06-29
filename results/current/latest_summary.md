@@ -107,10 +107,10 @@ safety projection and a load-drop magnitude selector.
 
 | Module | Status | Next action |
 |---|---|---|
-| PIS-IEK | first E030 controller chunk `MODEL_REVISED` | retune `a_S` projection before broad mismatch grids |
+| PIS-IEK | E030 + E030-R1 local DCR chunks `MODEL_REVISED` | run one smallest fixed-four-phase mismatch confirmation before E040 |
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
-| `a_S` balance | first DCR mismatch chunk complete | retune Ton/Lambda projection; then add mismatch families |
+| `a_S` balance | R1 projection retune complete | freeze R1-C4a/R1-C4c local selector; do not claim active Lambda |
 | `a_N` active phase | planned | validate after E020/E030 |
 | Manuscript | Markdown draft synced through E020 | convert to LaTeX after E030 evidence |
 
@@ -165,4 +165,38 @@ C4 Ton usage = 0.53786, final Vout error = -23.494 mV
 
 Boundary: E030 supports `Ton_diff` as the dominant local DC current-sharing actuator and shows that C4 trades some balance improvement for lower trim usage and smaller final voltage error. It does not prove robust mismatch recovery or active Lambda_diff control. The first serial sampled Lambda implementation was rejected because it dropped narrow REQ pulses; the retained Lambda path is side-band projection/logging with fallback.
 
-Next task: retune the E030 `a_S` projection (`K_T`, `T_trim_max`, voltage/ripple budget, event-native Lambda implementation) before expanding mismatch grids or starting E040 active-phase validation.
+E030-R1 projection retune is complete:
+
+```text
+case: fixed 40A external load, fixed four active phases
+mismatch: DCR_L1/L3 = +10%, DCR_L2/L4 = -10%
+variants: R1-C0/R1-C1/R1-C4a/R1-C4b/R1-C4c/R1-C4d
+metrics: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_metrics.csv
+summary: experiments/E030_balance_recovery/R1_projection_retune/e030_r1_research_summary.md
+classification: MODEL_REVISED
+
+R1-C0 max current imbalance = 0.853665 A
+R1-C1 Ton_diff reference max current imbalance = 0.313749 A
+R1-C1 Ton usage = 0.866649, final Vout error = -58.188 mV, ripple = 15.311 mV
+
+R1-C4a reduced-KT projection:
+  max current imbalance = 0.416996 A
+  Ton usage = 0.404392
+  final Vout error = -3.604 mV
+  ripple = 8.128 mV
+  Pareto score = 0.362552
+
+R1-C4c voltage-aware projection:
+  max current imbalance = 0.319450 A
+  Ton usage = 0.676533
+  final Vout error = -29.407 mV
+  ripple = 7.121 mV
+  Pareto score = 0.415946
+
+REQ dropped vs C0 = 0 for all R1 variants
+phase order error rate = 0 for all R1 variants
+```
+
+Boundary: R1-C4a is the best local Pareto candidate and R1-C4c is the stronger current-sharing candidate, but the result remains `MODEL_REVISED`. It does not prove broad mismatch robustness, active Lambda control, active-phase add/shed, neural AI control, hardware, HIL, board-level, or silicon behavior.
+
+Next task: run one smallest useful fixed-four-phase E030 confirmation case, or explicitly freeze R1 and proceed to E040 with the above boundaries.

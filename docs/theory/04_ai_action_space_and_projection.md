@@ -295,3 +295,70 @@ subject to:
 ```
 
 `Lambda_diff` remains a projected phase-spacing / ripple-recovery variable, but E030 does not yet validate it as an active serial trigger-path controller. The first attempted serial sampled implementation dropped narrow trigger pulses and was rejected as an implementation issue. The retained implementation is side-band projection/logging with fallback when the projected Lambda trim violates guard limits.
+
+## E030-R1 Retuned a_S Projection
+
+E030-R1 revises the current `a_S` selector using the same fixed `40A`, fixed four-phase, alternating `DCR +/-10%` local mismatch case.
+
+The current projected Ton trim rule is:
+
+```text
+Delta_Ton_raw_i = -K_T * (IL_i - mean(IL_i))
+Delta_Ton_limited_i = clamp(Delta_Ton_raw_i, -T_trim_max, T_trim_max)
+Delta_Ton_zero_sum_i = Delta_Ton_limited_i - mean(Delta_Ton_limited_i)
+
+if max_i |Delta_Ton_zero_sum_i| > T_trim_max:
+    Delta_Ton_i =
+        Delta_Ton_zero_sum_i * T_trim_max / max_i |Delta_Ton_zero_sum_i|
+else:
+    Delta_Ton_i = Delta_Ton_zero_sum_i
+```
+
+Voltage-aware projection may further scale:
+
+```text
+voltage_scale =
+    clamp(1 - max(|Vout - Vref| - V_error_budget, 0)
+              / (V_error_hard_limit - V_error_budget),
+          min_scale, 1)
+
+Delta_Ton_i = voltage_scale * Delta_Ton_i
+```
+
+Current evidence:
+
+```text
+R1-C1 Ton_diff reference:
+  max imbalance = 0.313749 A
+  Ton usage = 0.866649
+  final Vout error = -58.188 mV
+  ripple = 15.311 mV
+
+R1-C4a reduced-KT projection:
+  K_T = 2.2e-9
+  max imbalance = 0.416996 A
+  Ton usage = 0.404392
+  final Vout error = -3.604 mV
+  ripple = 8.128 mV
+
+R1-C4c voltage-aware projection:
+  K_T = 5e-9
+  projection_mode = voltage-aware
+  max imbalance = 0.319450 A
+  Ton usage = 0.676533
+  final Vout error = -29.407 mV
+  ripple = 7.121 mV
+```
+
+Selector implication:
+
+```text
+if final-voltage-error budget dominates:
+    prefer R1-C4a-like reduced-KT projection
+elif current-sharing recovery dominates and voltage error remains inside guard:
+    allow R1-C4c-like voltage-aware projection
+else:
+    fall back toward Ton_diff reference or no-op according to guard status
+```
+
+The E030-R1 classification remains `MODEL_REVISED`, not `MODEL_CONFIRMED`, because the Pareto score is weight-dependent, Lambda remains side-band/logging only, and only one DCR mismatch pattern has been tested.

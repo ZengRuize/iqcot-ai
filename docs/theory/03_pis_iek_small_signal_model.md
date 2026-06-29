@@ -75,6 +75,59 @@ Safety projection must trade current-sharing speed against voltage error and tri
 Lambda_diff requires a non-sampling, event-native IQCOT parameter implementation before it can be claimed as an active phase-spacing actuator.
 ```
 
+## E030-R1 Projection Retune
+
+E030-R1 retuned the fixed-four-phase `a_S` projection on the same local DCR mismatch case:
+
+```text
+experiment: experiments/E030_balance_recovery/R1_projection_retune/
+classification: MODEL_REVISED
+```
+
+The retained projected Ton-difference rule is:
+
+```text
+I_avg = mean(IL_i)
+e_I_i = IL_i - I_avg
+Delta_Ton_raw_i = -K_T * e_I_i
+Delta_Ton_limited_i = clamp(Delta_Ton_raw_i, -T_trim_max, T_trim_max)
+Delta_Ton_zero_sum_i = Delta_Ton_limited_i - mean(Delta_Ton_limited_i)
+Delta_Ton_i = scale_bound * Delta_Ton_zero_sum_i
+
+scale_bound = min(1, T_trim_max / max_i |Delta_Ton_zero_sum_i|)
+```
+
+The final bound projection is required because zero-mean centering after per-phase clamping can otherwise push one phase back outside `T_trim_max`.
+
+R1 evidence:
+
+```text
+R1-C1 Ton_diff reference:
+  max imbalance = 0.313749 A
+  Ton usage = 0.866649
+  final Vout error = -58.188 mV
+  ripple = 15.311 mV
+
+R1-C4a reduced-KT projection:
+  max imbalance = 0.416996 A
+  Ton usage = 0.404392
+  final Vout error = -3.604 mV
+  ripple = 8.128 mV
+
+R1-C4c voltage-aware projection:
+  max imbalance = 0.319450 A
+  Ton usage = 0.676533
+  final Vout error = -29.407 mV
+  ripple = 7.121 mV
+```
+
+Interpretation:
+
+- `R1-C4a` is the best Pareto candidate by the selected score: it gives less current-sharing improvement than `R1-C1`, but greatly reduces trim effort and voltage-error magnitude.
+- `R1-C4c` nearly matches the current-sharing strength of `R1-C1` while reducing ripple and trim usage, but its final voltage error remains larger than `R1-C4a`.
+- `R1-C4b` shows that simply reducing `T_trim_max` can weaken balance too much even when the bound is enforced.
+- `R1-C4d` is too close to `R1-C1` to count as a distinct retuned controller.
+
 ## Token Interface
 
 PIS-IEK informs token `a_S`:
