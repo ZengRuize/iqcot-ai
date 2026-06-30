@@ -572,3 +572,62 @@ Still not allowed from E040-S0:
 - switching-efficiency improvement from phase shedding;
 - active Lambda control;
 - hardware, HIL, board-level, or silicon validation.
+
+## Current E040-S1 Design Boundary
+
+Prepared so far:
+
+```text
+experiment design: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
+case for future run: 40A -> 20A external load-current drop
+transition target: 4 active phases -> 2 active phases [1,3]
+status: DESIGN_ONLY
+classification: not applicable until simulation
+```
+
+Artifacts:
+
+```text
+e040_s1_hypothesis.md
+e040_s1_protocol.md
+e040_s1_state_machine.md
+e040_s1_scheduler_audit.md
+e040_s1_metrics_template.csv
+e040_s1_research_summary.md
+```
+
+Allowed claim from this design step:
+
+```text
+E040-S1 defines a staged shed-handoff hypothesis and validation protocol
+responding to E040-S0. It proposes load-share transfer, disabled-phase drain,
+atomic shed commit, two-phase order relock, and delayed conservative a_S as
+the next mechanism to test.
+```
+
+Not allowed from this design step:
+
+- E040-S shed success;
+- `MODEL_CONFIRMED` classification;
+- S4 AI/table selected `a_N` shed success;
+- broad active-phase robustness;
+- arbitrary 1/2/4 scheduling;
+- severe `40A -> 1A` or `120A -> 10A` shed behavior;
+- active Lambda control;
+- efficiency improvement;
+- hardware, HIL, board-level, or silicon validation.
+
+Future E040-S1 may support a shed-handoff mechanism claim only if a derived Simulink implementation later proves:
+
+```text
+N_active_final == 2
+actual_active_phase_set_final == [1,3]
+shed_commit_count == 1
+fallback_4ph_count == 0
+dropped_REQ_count == 0
+inactive_phase_REQ_count == 0
+phase_order_error_rate_post_shed == 0
+current_limit_hit == false
+residual_current_check == pass
+a_S enables only after commit, relock, residual, and voltage guards pass
+```

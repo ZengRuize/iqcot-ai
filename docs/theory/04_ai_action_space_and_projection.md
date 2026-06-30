@@ -221,6 +221,92 @@ allow_shed_commit only if:
 
 If these conditions are not met, the projection must delay shed or fall back to fixed four-phase operation. It must not oscillate between four-phase and two-phase states as a response to the instantaneous residual-current predicate.
 
+## E040-S1 Staged Shed-Handoff Design
+
+E040-S1 is currently a design package only:
+
+```text
+experiment folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
+status: DESIGN_ONLY
+no new simulation results
+```
+
+The revised shed `a_N` projection is a staged hybrid event:
+
+```text
+NORMAL_4PH
+SHED_REQUESTED
+LOAD_SHARE_TRANSFER
+DISABLED_PHASE_DRAIN
+SHED_COMMIT_ARMED
+SHED_COMMIT
+ORDER_RELOCK_2PH
+POST_SHED_RECOVERY
+NORMAL_2PH
+FALLBACK_4PH
+```
+
+Projection variables added for the future implementation:
+
+```text
+shed_transfer_rate
+shed_transfer_window
+max_transfer_Ton_trim
+remaining_phase_current_limit_guard
+disabled_phase_drain_timeout
+residual_current_threshold
+shed_commit_boundary_policy
+post_commit_order_relock_window
+post_shed_aS_delay
+shed_fallback_enable
+shed_fallback_reason
+```
+
+Discrete observability required:
+
+```text
+shed_state
+shed_transfer_progress
+disabled_phase_current_sum
+commit_armed
+commit_done
+fallback_4ph_triggered
+fallback_reason
+```
+
+The commit rule is stricter than E040-S0:
+
+```text
+before commit:
+  active_phase_set = [1,1,1,1]
+
+after commit:
+  active_phase_set = [1,0,1,0]
+  N_active = 2 exactly
+  accepted physical phases in [1,3] only
+```
+
+Post-shed `a_S` is conservative:
+
+```text
+allowed: C1low or C4a_conf
+blocked: C4c_cal, active Lambda, aggressive Ton_diff
+```
+
+`a_S` may enable only after:
+
+```text
+commit_done == true
+N_active == 2
+phase_order_error_rate_window == 0
+inactive_phase_REQ_count_window == 0
+residual_current_check == pass
+Vout within recovery band
+post_shed_aS_delay elapsed
+```
+
+This design still does not claim shed success. It defines the next smallest implementable mechanism to test.
+
 ## Safety Projection Requirements
 
 The projection must enforce:

@@ -144,7 +144,7 @@ Proceed in this order:
 4. Freeze the E030-R3 local guarded `a_S` selector.
 5. Freeze E040-A-R1 as local add-phase insertion evidence; keep active Lambda disabled.
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
-7. Do not run S4 or broad E040 grids from S0; design only the smallest staged shed-handoff revision if continuing E040-S.
+7. E040-S1 staged shed-handoff design package is complete; next step is only a smallest implementation/preflight, not S4 or broad E040 grids.
 8. Add or design a severe-drop `a_O` token for `40A -> 1A`.
 9. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 10. Update manuscript direction with E030-R3, E040-A-R1, and E040-S0 evidence before broad grids.
@@ -323,6 +323,39 @@ E040-S1 staged shed-handoff design only:
   add explicit load-share transfer / disabled-phase drain / shed commit state
   keep active Lambda disabled
 ```
+
+Completed design package:
+
+```text
+folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
+status: DESIGN_ONLY
+no simulation results claimed
+
+artifacts:
+  e040_s1_hypothesis.md
+  e040_s1_protocol.md
+  e040_s1_state_machine.md
+  e040_s1_scheduler_audit.md
+  e040_s1_metrics_template.csv
+  e040_s1_research_summary.md
+```
+
+E040-S1 design freezes the required shed state machine:
+
+```text
+NORMAL_4PH
+SHED_REQUESTED
+LOAD_SHARE_TRANSFER
+DISABLED_PHASE_DRAIN
+SHED_COMMIT_ARMED
+SHED_COMMIT
+ORDER_RELOCK_2PH
+POST_SHED_RECOVERY
+NORMAL_2PH
+FALLBACK_4PH
+```
+
+Future E040-S1 implementation must prove atomic commit to `[1,0,1,0]`, exact `N_active == 2`, no dropped/inactive accepted REQ, zero post-shed order error, no current-limit hit, and residual-current pass before enabling conservative post-shed `a_S`. `S1-R4` remains blocked until `S1-R3` passes.
 
 Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
 

@@ -111,8 +111,8 @@ safety projection and a load-drop magnitude selector.
 | Load-drop `a_O` | partially validated | add severe-drop token |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
-| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED` | revise shed theory toward staged handoff/drain before any S4 or broad grid |
-| Manuscript | Markdown draft synced through E020; evidence now extends through E040-A-R1 | update paper outline with E030-R3 and E040-A-R1 boundaries |
+| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed design `DESIGN_ONLY` | implement only smallest staged handoff/preflight before any S4 or broad grid |
+| Manuscript | Markdown draft synced through E020; evidence now extends through E040-S1 design boundary | update paper outline with E030-R3, E040-A-R1, E040-S0, and E040-S1 boundaries |
 
 ## Current Phase
 
@@ -373,4 +373,26 @@ S3 residual/relock/a_S guarded shed:
 
 Boundary: E040-S0 rejects the simple shed model. Immediate or dwell-only 4 -> 2 shed creates unacceptable undershoot/current-limit behavior, while the residual-qualified S3 guard avoids the worst voltage/current-limit failure only by failing to hold a stable two-phase state. Shed-phase theory now needs a staged load-share handoff and disabled-phase drain model before S4, broad 1/2/4 scheduling, or any shed benefit claim.
 
-Next task: design the smallest E040-S1 staged shed-handoff protocol, or update the manuscript outline and claim matrix with the E030-R3, E040-A-R1, and E040-S0 boundaries. Do not run S4, severe shed cases, active Lambda, or broad active-phase grids from the current S0 state.
+E040-S1 staged shed-handoff design package is complete:
+
+```text
+folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
+status: DESIGN_ONLY
+no new simulation results
+
+state machine:
+  NORMAL_4PH
+  SHED_REQUESTED
+  LOAD_SHARE_TRANSFER
+  DISABLED_PHASE_DRAIN
+  SHED_COMMIT_ARMED
+  SHED_COMMIT
+  ORDER_RELOCK_2PH
+  POST_SHED_RECOVERY
+  NORMAL_2PH
+  FALLBACK_4PH
+```
+
+The S1 design requires load-share transfer away from phases `[2,4]`, disabled-phase drain, atomic commit to `[1,0,1,0]`, exact post-commit `N_active == 2`, post-commit relock to physical sequence `[1,3]`, and delayed conservative `a_S` only after commit/relock/residual/voltage guards pass. `C1low` or `C4a_conf` are the only allowed post-shed a_S modes in this design. Active Lambda remains disabled.
+
+Next task: implement only the smallest E040-S1 staged handoff preflight/derived model if continuing E040-S. Do not run S4, severe shed cases, active Lambda, current-sense mismatch with active-phase, or broad active-phase grids from the current state.

@@ -349,4 +349,40 @@ explicit LOAD_SHARE_TRANSFER and DISABLED_PHASE_DRAIN states
 no S4 unless the staged S1 guard first confirms stable local shed integrity
 ```
 
+E040-S1 design package is now prepared:
+
+```text
+folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
+status: DESIGN_ONLY
+metrics template: e040_s1_metrics_template.csv
+state machine: e040_s1_state_machine.md
+scheduler audit design: e040_s1_scheduler_audit.md
+```
+
+Future E040-S1 variants:
+
+```text
+S1-R0: fixed four-phase reference
+S1-R1: immediate shed reference from E040-S0, failure baseline only
+S1-R2: staged transfer + disabled-phase drain, no final commit unless all guards pass
+S1-R3: staged transfer + drain + atomic shed commit + two-phase order relock
+S1-R4: optional conservative post-shed a_S using C1low or C4a_conf only
+```
+
+Required future pass criteria:
+
+```text
+N_active_final == 2
+actual_active_phase_set_final == [1,3]
+shed_commit_count == 1
+fallback_4ph_count == 0
+dropped_REQ_count == 0
+inactive_phase_REQ_count == 0
+phase_order_error_rate_post_shed == 0
+current_limit_hit == false
+residual_current_check == pass
+peak_undershoot bounded relative to S0 fixed-four-phase reference
+final_Vout_error bounded
+```
+
 Do not run broad 1/2/4 grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.
