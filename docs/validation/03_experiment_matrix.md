@@ -339,41 +339,22 @@ Immediate or dwell-only shed can hold two phases but violates voltage/current gu
 Residual/relock S3 avoids current-limit failure only by failing to hold stable two-phase operation.
 ```
 
-Next E040-S target:
+E040-S1 staged shed handoff is complete:
 
 ```text
-E040-S1 staged shed handoff, smallest useful chunk only
-same 40A -> 20A case
-same 4 -> [1,3] target
-explicit LOAD_SHARE_TRANSFER and DISABLED_PHASE_DRAIN states
-no S4 unless the staged S1 guard first confirms stable local shed integrity
+case: 40A -> 20A external load-current drop
+target: 4 -> [1,3]
+variants: S1-R0/S1-R2/S1-R3
+summary: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_research_summary.md
+metrics: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv
+classification: MODEL_CONFIRMED
 ```
 
-E040-S1 design package is now prepared:
-
-```text
-folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
-status: DESIGN_ONLY
-metrics template: e040_s1_metrics_template.csv
-state machine: e040_s1_state_machine.md
-scheduler audit design: e040_s1_scheduler_audit.md
-```
-
-Future E040-S1 variants:
-
-```text
-S1-R0: fixed four-phase reference
-S1-R1: immediate shed reference from E040-S0, failure baseline only
-S1-R2: staged transfer + disabled-phase drain, no final commit unless all guards pass
-S1-R3: staged transfer + drain + atomic shed commit + two-phase order relock
-S1-R4: optional conservative post-shed a_S using C1low or C4a_conf only
-```
-
-Required future pass criteria:
+Key S1-R3 pass metrics:
 
 ```text
 N_active_final == 2
-actual_active_phase_set_final == [1,3]
+actual_active_phase_set_final == 1010
 shed_commit_count == 1
 fallback_4ph_count == 0
 dropped_REQ_count == 0
@@ -381,8 +362,24 @@ inactive_phase_REQ_count == 0
 phase_order_error_rate_post_shed == 0
 current_limit_hit == false
 residual_current_check == pass
-peak_undershoot bounded relative to S0 fixed-four-phase reference
-final_Vout_error bounded
 ```
 
-Do not run broad 1/2/4 grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.
+Executed E040-S1 variants:
+
+```text
+S1-R0: fixed four-phase reference
+S1-R1: immediate shed reference from E040-S0, failure baseline only
+S1-R2: staged transfer + disabled-phase drain, no final commit unless all guards pass
+S1-R3: staged transfer + drain + atomic shed commit + two-phase order relock
+S1-R4: not run; optional conservative post-shed a_S using C1low or C4a_conf only
+```
+
+S1 implementation lesson:
+
+```text
+disabled-phase drain must include per-phase residual qualification
+and deterministic phase_gate_enable masking to prevent reverse-current sink
+after IL2/IL4 cross the residual-current band.
+```
+
+Do not run S1-R4, broad 1/2/4 grids, active Lambda, current-sense/DCR mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.

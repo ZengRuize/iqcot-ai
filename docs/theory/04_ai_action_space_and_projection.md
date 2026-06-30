@@ -221,14 +221,16 @@ allow_shed_commit only if:
 
 If these conditions are not met, the projection must delay shed or fall back to fixed four-phase operation. It must not oscillate between four-phase and two-phase states as a response to the instantaneous residual-current predicate.
 
-## E040-S1 Staged Shed-Handoff Design
+## E040-S1 Confirmed Staged Shed-Handoff Projection
 
-E040-S1 is currently a design package only:
+E040-S1 locally confirmed the staged `a_N` shed projection for one fixed mild load-drop case:
 
 ```text
 experiment folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
-status: DESIGN_ONLY
-no new simulation results
+case: 40A -> 20A external load-current drop
+transition: 4 -> [1,3]
+variants: S1-R0/S1-R2/S1-R3
+classification: MODEL_CONFIRMED
 ```
 
 The revised shed `a_N` projection is a staged hybrid event:
@@ -272,7 +274,19 @@ commit_armed
 commit_done
 fallback_4ph_triggered
 fallback_reason
+phase_gate_enable1..4
 ```
+
+The confirmed projection adds a deterministic per-phase gate-enable safety mask after residual-current qualification:
+
+```text
+if phase i is a candidate shed phase
+and shed_transfer_progress >= 0.5
+and abs(IL_i) <= residual_current_threshold:
+    phase_gate_enable_i = 0
+```
+
+This mask is part of the active-phase event manager and prevents disabled synchronous phases from becoming reverse-current sinks. It is not an AI/table gate command.
 
 The commit rule is stricter than E040-S0:
 
@@ -305,7 +319,21 @@ Vout within recovery band
 post_shed_aS_delay elapsed
 ```
 
-This design still does not claim shed success. It defines the next smallest implementable mechanism to test.
+Measured S1-R3 local result:
+
+```text
+N_active_final = 2
+actual_active_phase_set_final = 1010
+shed_commit_count = 1
+fallback_4ph_count = 0
+dropped_REQ_count = 0
+inactive_phase_REQ_count = 0
+phase_order_error_rate_post_shed = 0
+current_limit_hit = false
+residual_current_check = pass
+```
+
+This confirms only the local ideal-derived Simulink handoff mechanism. `S1-R4` remains unrun, active Lambda remains disabled, and no broad active-phase robustness or efficiency claim is allowed.
 
 ## Safety Projection Requirements
 

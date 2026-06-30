@@ -144,10 +144,11 @@ Proceed in this order:
 4. Freeze the E030-R3 local guarded `a_S` selector.
 5. Freeze E040-A-R1 as local add-phase insertion evidence; keep active Lambda disabled.
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
-7. E040-S1 staged shed-handoff design package is complete; next step is only a smallest implementation/preflight, not S4 or broad E040 grids.
-8. Add or design a severe-drop `a_O` token for `40A -> 1A`.
-9. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-10. Update manuscript direction with E030-R3, E040-A-R1, and E040-S0 evidence before broad grids.
+7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
+8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids until the paper claim boundary is updated.
+9. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
+11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -313,34 +314,36 @@ S3 residual/relock/a_S guarded shed:
 
 E040-S0 revised the shed model. Immediate and dwell-only shed can hold two phases but produce unacceptable voltage/current-limit behavior. The residual-qualified S3 guard avoids the severe voltage/current-limit failure only by failing to remain in the two-phase state; its active set toggles back toward four-phase behavior. Do not claim shed validation.
 
-Next smallest useful E040-S step:
+E040-S1 staged shed-handoff run is complete:
 
 ```text
-E040-S1 staged shed-handoff design only:
+E040-S1 staged shed-handoff:
   keep 40A -> 20A
   keep initial 4 phases and target [1,3]
-  no S4, no severe cases, no broad grids
-  add explicit load-share transfer / disabled-phase drain / shed commit state
+  variants: S1-R0/S1-R2/S1-R3
+  summary: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_research_summary.md
+  metrics: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv
+  classification: MODEL_CONFIRMED
   keep active Lambda disabled
 ```
 
-Completed design package:
+Key S1-R3 pass metrics:
 
 ```text
-folder: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/
-status: DESIGN_ONLY
-no simulation results claimed
-
-artifacts:
-  e040_s1_hypothesis.md
-  e040_s1_protocol.md
-  e040_s1_state_machine.md
-  e040_s1_scheduler_audit.md
-  e040_s1_metrics_template.csv
-  e040_s1_research_summary.md
+N_active_final = 2
+actual_active_phase_set_final = 1010
+shed_commit_count = 1
+fallback_4ph_count = 0
+dropped_REQ_count = 0
+inactive_phase_REQ_count = 0
+phase_order_error_rate_post_shed = 0
+current_limit_hit = false
+residual_current_check = pass
+peak_undershoot = 0.641487 mV
+final_Vout_error = 1.65264 mV
 ```
 
-E040-S1 design freezes the required shed state machine:
+E040-S1 confirmed the required shed state machine for one local case:
 
 ```text
 NORMAL_4PH
@@ -355,7 +358,18 @@ NORMAL_2PH
 FALLBACK_4PH
 ```
 
-Future E040-S1 implementation must prove atomic commit to `[1,0,1,0]`, exact `N_active == 2`, no dropped/inactive accepted REQ, zero post-shed order error, no current-limit hit, and residual-current pass before enabling conservative post-shed `a_S`. `S1-R4` remains blocked until `S1-R3` passes.
+Implementation lesson:
+
+```text
+staged load-share transfer alone is not enough;
+disabled-phase drain must include per-phase zero-current gate-enable masking
+to prevent synchronous low-side reverse-current sink;
+commit holding must be separated from the instantaneous residual predicate.
+```
+
+Allowed local claim: S1-R3 validates only the fixed `40A -> 20A`, `4 -> [1,3]` shed-handoff integrity point in the local ideal IQCOT derived Simulink model. `S1-R4` remains unrun and requires a new protocol despite S1-R3 passing.
+
+Still forbidden: broad active-phase robustness, arbitrary 1/2/4 scheduling, severe shed behavior, current-sense/DCR mismatch with active-phase, active Lambda, efficiency improvement, hardware/HIL/board/silicon validation.
 
 Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
 

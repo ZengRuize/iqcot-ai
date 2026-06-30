@@ -1,87 +1,39 @@
-# E040-S1 Staged Shed-Handoff Design Summary
+# E040-S1 Staged Shed-Handoff Summary
 
 Date: 2026-06-30
 
-## Status
+## Scope
 
-`DESIGN_ONLY`
+Local derived-Simulink preflight for `40A -> 20A`, `4 -> 2` active-phase shed only. The baseline source is `E:/Desktop/codex/output/simulink_ideal_iqcot/four_phase_ideal_digital_iqcot.slx` and is not modified.
 
-No E040-S1 simulation has been run in this design step. No new model-derived result, metrics movement, or `MODEL_CONFIRMED` claim is made here.
+## Baseline Audit
 
-## Motivation
+`E:/Desktop/codex/experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_baseline_wiring_audit.md`
 
-E040-S0 produced `MODEL_REVISED` evidence:
+## Metrics CSV
 
-```text
-Immediate shed and dwell-only shed can force N_active = 2,
-but they produce unacceptable voltage and current-limit behavior.
+`E:/Desktop/codex/experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv`
 
-Residual-qualified S3 avoids severe voltage/current-limit failure,
-but fails to commit to stable two-phase operation.
-```
+| Variant | Success | N init | N final | Active final | Commit | Fallback | Undershoot mV | Final err mV | Resid p2 A | Resid p4 A | Resid pass | Post order err | Dropped REQ | Inactive REQ | Hint |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|---|
+| S1-R0 | 1 | 4 | 4 | 1111 | 0 | 0 | 0.45125 | 0.698733 | 3.68592 | 9.25788 | fail | NaN | 0 | 0 | fixed_four_phase_reference |
+| S1-R2 | 1 | 4 | 4 | 1111 | 0 | 0 | 0.641487 | 2.80462 | 9.99757e-05 | 9.99756e-05 | pass | NaN | 0 | 0 | transfer_drain_interpretable |
+| S1-R3 | 1 | 4 | 2 | 1010 | 1 | 0 | 0.641487 | 1.65264 | 9.99757e-05 | 9.99756e-05 | pass | 0 | 0 | 0 | local_staged_shed_integrity_pass |
 
-Therefore the next shed design must manage current handoff and commit stability, not only scheduler remap.
+## Interpretation
 
-## Proposed Mechanism
+- `S1-R0`: success `1`, N_final `4`, active_set `1111`, commit_count `0`, fallback_count `0`, dropped_REQ `0`, inactive_REQ `0`, residual `fail`, hint `fixed_four_phase_reference`.
+- `S1-R2`: success `1`, N_final `4`, active_set `1111`, commit_count `0`, fallback_count `0`, dropped_REQ `0`, inactive_REQ `0`, residual `pass`, hint `transfer_drain_interpretable`.
+- `S1-R3`: success `1`, N_final `2`, active_set `1010`, commit_count `1`, fallback_count `0`, dropped_REQ `0`, inactive_REQ `0`, residual `pass`, hint `local_staged_shed_integrity_pass`.
 
-E040-S1 introduces:
+## Classification
 
-```text
-LOAD_SHARE_TRANSFER:
-  gradually unload phases [2,4] and shift load share to [1,3]
+`MODEL_CONFIRMED`
 
-DISABLED_PHASE_DRAIN:
-  hold off new energy injection into [2,4] through projected scheduling
-  wait for residual IL2/IL4 to fall below threshold
+The local 40A->20A staged shed reached exact two-phase operation with REQ integrity, residual qualification, no fallback, and bounded voltage/current behavior.
 
-SHED_COMMIT:
-  atomically switch active_phase_set from [1,1,1,1] to [1,0,1,0]
+## Claim Boundary
 
-ORDER_RELOCK_2PH:
-  prove accepted events target physical sequence [1,3]
+Allowed local claim: in the local ideal IQCOT derived model, staged load-share transfer, disabled-phase drain, atomic commit, and two-phase relock enable the tested `40A -> 20A`, `4 -> 2` handoff while preserving REQ integrity and residual-current qualification. This remains Simulink-only evidence.
 
-POST_SHED_RECOVERY:
-  allow only C1low or C4a_conf after all commit/relock/residual guards pass
-```
-
-Active Lambda remains disabled.
-
-## Future Validation Package
-
-This folder defines:
-
-- hypothesis: `e040_s1_hypothesis.md`;
-- protocol: `e040_s1_protocol.md`;
-- state machine: `e040_s1_state_machine.md`;
-- scheduler audit: `e040_s1_scheduler_audit.md`;
-- metrics template: `e040_s1_metrics_template.csv`.
-
-## Future Variants
-
-```text
-S1-R0: fixed four-phase reference
-S1-R1: immediate shed failure baseline from E040-S0
-S1-R2: staged transfer + drain, no final commit unless guards pass
-S1-R3: staged transfer + drain + atomic commit + relock
-S1-R4: optional conservative post-shed a_S, only after S1-R3 passes
-```
-
-## Future Claim Boundary
-
-If later validated, the narrow claim may be:
-
-```text
-Shed-phase active-set reduction requires staged load-share transfer,
-disabled-phase drain, atomic commit, and two-phase order relock before
-post-shed recovery is enabled.
-```
-
-Still forbidden:
-
-- E040-S shed success before simulation;
-- S4 AI/table selected `a_N` shed claim;
-- broad active-phase robustness;
-- severe load-drop shed behavior;
-- active Lambda control;
-- efficiency improvement;
-- hardware, HIL, board-level, or silicon validation.
+Forbidden claims remain: broad active-phase robustness, arbitrary 1/2/4 scheduling, severe shed behavior, active Lambda control, efficiency gain, hardware, HIL, board-level, or silicon validation.

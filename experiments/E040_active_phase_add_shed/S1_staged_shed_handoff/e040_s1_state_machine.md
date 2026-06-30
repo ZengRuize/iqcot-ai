@@ -2,7 +2,21 @@
 
 Date: 2026-06-30
 
-This is a design artifact only. It defines the state machine to implement before any new shed validation run.
+This state machine was implemented in the E040-S1 derived models and locally validated for the fixed `40A -> 20A`, `4 -> [1,3]` case.
+
+## Executed Classification
+
+```text
+classification: MODEL_CONFIRMED
+metrics: e040_s1_metrics.csv
+summary: e040_s1_research_summary.md
+S1-R3 final active set: 1010
+S1-R3 N_active_final: 2
+S1-R3 post-shed order error: 0
+S1-R3 dropped/inactive REQ: 0 / 0
+S1-R3 current_limit_hit: false
+S1-R3 residual_current_check: pass
+```
 
 ## State List
 
@@ -26,7 +40,7 @@ FALLBACK_4PH
 | `NORMAL_4PH` | `[1,1,1,1]` | Regular four-phase IQCOT operation | 4 -> 2 shed request is observed |
 | `SHED_REQUESTED` | `[1,1,1,1]` | Latch target, request time, load estimate, Vout, and IL1..IL4 | Request is valid and branch is load-drop |
 | `LOAD_SHARE_TRANSFER` | `[1,1,1,1]` | Transfer average current from phases `[2,4]` to `[1,3]` | Transfer progress reaches target or timeout/guard failure |
-| `DISABLED_PHASE_DRAIN` | `[1,1,1,1]` with `[2,4]` energy-limited | Drain residual current in phases `[2,4]` | Residual, voltage, and current guards pass |
+| `DISABLED_PHASE_DRAIN` | `[1,1,1,1]` with `[2,4]` energy-limited and zero-current gate mask | Drain residual current in phases `[2,4]` without reverse-current sink | Residual, voltage, and current guards pass |
 | `SHED_COMMIT_ARMED` | `[1,1,1,1]` | Prepare two-phase scheduler boundary | Next safe scheduler event boundary |
 | `SHED_COMMIT` | atomic switch to `[1,0,1,0]` | Commit active set exactly once | Commit edge logged |
 | `ORDER_RELOCK_2PH` | `[1,0,1,0]` | Relock logical slots to physical sequence `[1,3]` | Post-commit order window passes |
@@ -87,6 +101,16 @@ All trims must pass voltage, current-limit, and `Ton` bounds before reaching IQC
 
 During `DISABLED_PHASE_DRAIN`, phases `[2,4]` must not receive new high-side energy through the supervisory action path. The supervisor still does not command gates directly. It only projects the event and parameter schedule so new energy is not requested for candidate disabled phases.
 
+The executed S1 implementation adds a deterministic active-phase safety mask:
+
+```text
+phase_gate_enable_i = 0 for candidate disabled phase i
+only after abs(IL_i) <= residual_current_threshold
+and shed_transfer_progress >= 0.5
+```
+
+This mask is part of the model-based active-phase event manager. It prevents synchronous low-side reverse-current sink after a disabled phase reaches the residual-current band. It is not an AI action and does not allow the AI/table supervisor to command high-side or low-side gates directly.
+
 Exit guards:
 
 ```text
@@ -108,6 +132,15 @@ post_commit N_active = 2
 ```
 
 Fractional final active phase count is a hard fail because E040-S0 S3 ended with `N_active_final = 3.79065`.
+
+The executed S1-R3 commit rule separates pre-commit residual qualification from post-commit state holding:
+
+```text
+commit_ready requires residual_ok, voltage_ok, current headroom, and no fallback.
+commit_done holds after the transfer/commit boundary unless a hard fallback guard trips.
+```
+
+This avoids the E040-S0 failure mode where `N_active` drifted back toward four-phase behavior after a transient residual check.
 
 ## Two-Phase Relock Rule
 

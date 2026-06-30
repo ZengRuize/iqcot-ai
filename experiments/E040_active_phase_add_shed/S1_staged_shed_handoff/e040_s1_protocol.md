@@ -4,13 +4,42 @@ Date: 2026-06-30
 
 ## Purpose
 
-Design the smallest future validation that addresses the E040-S0 failure mechanism:
+Implement and validate the smallest local staged-shed handoff that addresses the E040-S0 failure mechanism:
 
 ```text
 The controller attempted to remove phases before those phases were unloaded and before the remaining phases could safely carry the load.
 ```
 
-This document is a protocol. It does not report simulation results.
+This document now records the executed S1-R0/S1-R2/S1-R3 preflight and the guard rules used for that run.
+
+## Executed Result
+
+```text
+date: 2026-06-30
+classification: MODEL_CONFIRMED
+metrics: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv
+summary: experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_research_summary.md
+derived models:
+  models/derived/E040S1_R0_fixed4_iqcot_20260630.slx
+  models/derived/E040S1_R2_transfer_drain_iqcot_20260630.slx
+  models/derived/E040S1_R3_commit_relock_iqcot_20260630.slx
+```
+
+Key local S1-R3 metrics:
+
+```text
+N_active_final = 2
+actual_active_phase_set_final = 1010
+shed_commit_count = 1
+fallback_4ph_count = 0
+dropped_REQ_count = 0
+inactive_phase_REQ_count = 0
+phase_order_error_rate_post_shed = 0
+current_limit_hit = false
+residual_current_check = pass
+peak_undershoot = 0.641487 mV
+final_Vout_error = 1.65264 mV
+```
 
 ## Fixed Case
 
@@ -43,7 +72,7 @@ Rules:
 - AI/table supervisor may change only low-dimensional projected parameters;
 - AI/table supervisor may not command gates or external load-current slew.
 
-## Future Variants
+## Executed Variants
 
 ```text
 S1-R0:
@@ -54,7 +83,7 @@ S1-R1:
 
 S1-R2:
   staged load-share transfer + disabled-phase drain,
-  but no final commit unless all guards pass.
+  no final active-set commit; used as the interpretability gate before R3.
 
 S1-R3:
   staged transfer + drain + atomic shed commit + two-phase order relock.
@@ -63,7 +92,7 @@ S1-R4 optional:
   S1-R3 + conservative post-shed a_S recovery using C1low or C4a_conf only.
 ```
 
-Do not run `S1-R4` unless `S1-R3` satisfies the local integrity gate:
+`S1-R4` remains unrun. Do not run `S1-R4` unless a separate protocol is written from the confirmed S1-R3 state:
 
 ```text
 N_active_final == 2
@@ -102,9 +131,12 @@ commit_armed
 commit_done
 fallback_4ph_triggered
 fallback_reason
+phase_gate_enable1..4
 ```
 
-## Future Run Order
+`phase_gate_enable1..4` is a deterministic active-phase safety projection used to tri-state candidate disabled phases after per-phase residual-current qualification. It is not an AI gate command.
+
+## Run Order Used
 
 1. Audit baseline wiring and required signals.
 2. Create a derived model copy through MATLAB APIs.
@@ -112,9 +144,9 @@ fallback_reason
 4. Build `S1-R0` and verify it reproduces the fixed four-phase reference.
 5. Build `S1-R2` and verify staged transfer/drain can delay commit safely.
 6. Build `S1-R3` only after `S1-R2` produces interpretable transfer/drain logs.
-7. Consider `S1-R4` only if `S1-R3` passes all hard integrity gates.
+7. Stop after `S1-R3`; do not run `S1-R4` in this chunk.
 
-## Minimum Future Pass Criteria
+## Minimum Pass Criteria
 
 ```text
 N_active_final == 2

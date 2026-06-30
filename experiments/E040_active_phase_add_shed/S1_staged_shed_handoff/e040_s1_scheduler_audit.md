@@ -2,7 +2,35 @@
 
 Date: 2026-06-30
 
-This document defines the required scheduler audit table for a future E040-S1 run. It does not contain measured results.
+This document defines the scheduler audit table used by the executed E040-S1 run and records the local S1-R3 audit result.
+
+## Executed Audit Result
+
+```text
+classification: MODEL_CONFIRMED
+scheduler audit CSVs:
+  e040_s1_r0_fixed4_scheduler_audit.csv
+  e040_s1_r2_transfer_drain_scheduler_audit.csv
+  e040_s1_r3_commit_relock_scheduler_audit.csv
+signal availability CSVs:
+  e040_s1_r0_fixed4_signal_availability.csv
+  e040_s1_r2_transfer_drain_signal_availability.csv
+  e040_s1_r3_commit_relock_signal_availability.csv
+```
+
+S1-R3 passed the local audit gate:
+
+```text
+N_active_final = 2
+actual_active_phase_set_final = 1010
+shed_commit_count = 1
+fallback_4ph_count = 0
+dropped_REQ_count = 0
+inactive_phase_REQ_count = 0
+phase_order_error_rate_post_shed = 0
+current_limit_hit = false
+residual_current_check = pass
+```
 
 ## Required Audit Columns
 
@@ -29,7 +57,7 @@ fallback_reason
 
 | Column | Meaning |
 |---|---|
-| `event_index` | Monotonic accepted or rejected scheduler event index |
+| `event_index` | Monotonic accepted scheduler event index; dropped and inactive request checks are audited through raw-vs-accepted counts |
 | `time_us` | Time relative to external load step |
 | `shed_state` | Discrete E040-S1 state machine state |
 | `active_phase_set` | Four-bit mask, for example `1111` or `1010` |
@@ -120,3 +148,9 @@ fallback time and reason, if any
 ```
 
 If any of these cannot be reconstructed from logs, the future result must be classified as `IMPLEMENTATION_ISSUE`.
+
+## S1-R3 Interpretation
+
+The S1-R3 audit shows that after commit, accepted requests target only the retained physical phases `[1,3]`. No accepted event targets inactive phases `[2,4]`, raw-vs-accepted counts show no silently dropped request, and `commit_done` rises once. The separate signal-availability audit confirms `phase_gate_enable1..4`, residual-current signals, commit/fallback flags, and active-phase-set logs are present.
+
+The during-transfer order error metric is not a post-shed failure: transfer/drain intentionally remaps events before active-set commit while the model still reports `active_phase_set = 1111`. The claim gate uses the post-shed relock metric, which is zero for S1-R3.
