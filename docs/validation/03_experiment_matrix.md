@@ -66,7 +66,7 @@ next E010 expansion target: severe-drop a_O token for 40A -> 1A
 
 ### E010-A5 Severe-Drop Token Design
 
-Status: design/protocol only. Do not claim validation until a future derived-model run produces CSV metrics and a Markdown report.
+Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4 only. Do not claim A5 validation until A5-T1/T2/T3/T4 candidate runs produce CSV metrics and a Markdown report.
 
 Fixed case:
 
@@ -79,18 +79,35 @@ Active Lambda: disabled
 Active-phase add/shed: disabled
 ```
 
-Future variants:
+Variants:
 
 ```text
-A5-C0: original ideal IQCOT reference for 40A -> 1A
-A5-C4: previous A4 no-harm selector
-A5-T1: severe Ton truncation only
-A5-T2: severe Ton truncation + bounded one-pulse inhibit
-A5-T3: severe Ton truncation + bounded multi-pulse inhibit + area hold
-A5-T4: full severe-drop token with controlled reentry and fallback guard
+A5-C0: original ideal IQCOT reference for 40A -> 1A, completed
+A5-C4: previous A4 no-harm selector, completed
+A5-T1: severe Ton truncation only, not run
+A5-T2: severe Ton truncation + bounded one-pulse inhibit, not run
+A5-T3: severe Ton truncation + bounded multi-pulse inhibit + area hold, not run
+A5-T4: full severe-drop token with controlled reentry and fallback guard, not run
 ```
 
-Future metrics:
+Completed baseline audit:
+
+```text
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_baseline_metrics.csv
+audit: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_baseline_audit.md
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_baseline_reproduction_summary.md
+classification: MODEL_CONFIRMED
+
+A5-C0 peak overshoot = 4.06085 mV
+A5-C0 recovery peak 2-12us = 3.61172 mV
+A5-C0 REQ/accepted/dropped = 149/149/0
+
+A5-C4 peak overshoot = 4.06085 mV
+A5-C4 recovery peak 2-12us = 3.61172 mV
+A5-C4 REQ/accepted/dropped = 149/149/0
+```
+
+Metrics:
 
 ```text
 variant

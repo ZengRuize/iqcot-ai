@@ -146,7 +146,7 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. Design the severe-drop `a_O` token package for `40A -> 1A` before any new E010-A5 simulation.
+9. E010-A5 baseline audit is complete; next smallest useful E010 step is A5-T1/T2/T3/T4 candidate comparison only.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -383,9 +383,9 @@ For `4 -> 2` shed, the main issue was load-share handoff and disabled-phase curr
 
 The current paper may claim local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model only. It must not claim broad active-phase robustness, arbitrary `1/2/4` scheduling, active Lambda control, efficiency improvement, severe load-rise/drop active-phase behavior, or hardware/HIL/board/silicon validation.
 
-## Next E010-A5 Design Target
+## E010-A5 Baseline Audit Completed
 
-Design only before simulation:
+Completed:
 
 ```text
 folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
@@ -394,21 +394,42 @@ active phases: fixed four-phase
 DCR/sense gains: nominal
 active Lambda: disabled
 active-phase add/shed: disabled
-status: DESIGN_ONLY
+status: A5-C0/A5-C4 baseline audit MODEL_CONFIRMED
 ```
 
-The A5 severe-drop `a_O` token should combine active-HS-aware Ton truncation, bounded multi-event pulse inhibit, area-integrator hold/controlled reset, undershoot-budgeted reentry, and fallback-to-A4/no-op. Do not use PIS-IEK to claim first-peak prediction; the severe first peak is a large-signal excess-energy branch.
-
-Required design artifacts:
+Baseline audit result:
 
 ```text
-e010_a5_hypothesis.md
-e010_a5_protocol.md
-e010_a5_token_design.md
-e010_a5_state_machine.md
-e010_a5_metrics_template.csv
-e010_a5_waveform_audit.md
-e010_a5_research_summary.md
+A5-C0 original ideal IQCOT:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.61172 mV
+  REQ/accepted/dropped = 149/149/0
+
+A5-C4 previous A4 no-harm selector:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.61172 mV
+  REQ/accepted/dropped = 149/149/0
+```
+
+A5-C4 reproduces the known severe-drop boundary: A4 is no-harm but non-improving for `40A -> 1A`. This confirms the need for A5 but does not validate A5.
+
+Evidence:
+
+```text
+e010_a5_baseline_audit.md
+e010_a5_baseline_metrics.csv
+e010_a5_baseline_waveform_audit.md
+e010_a5_baseline_reproduction_summary.md
+```
+
+Next smallest useful step:
+
+```text
+run A5-T1/T2/T3/T4 candidate comparison
+do not run broad sweeps
+do not enable active Lambda
+do not enable active-phase add/shed
+do not claim A5 improvement until a candidate beats A5-C0/A5-C4 without violating guards
 ```
 
 ## Standing Guardrails

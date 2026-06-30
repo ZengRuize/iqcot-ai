@@ -108,7 +108,7 @@ safety projection and a load-drop magnitude selector.
 | Module | Status | Next action |
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
-| Load-drop `a_O` | partially validated; `40A -> 1A` remains no-harm but non-improving under A4 | design E010-A5 severe-drop token before new simulation |
+| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; `40A -> 1A` remains no-harm but non-improving under A4 | run A5-T1/T2/T3/T4 only, no broad sweeps |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
@@ -434,9 +434,9 @@ After E040-A-R1 and E040-S1, active-phase add and shed are frozen as local integ
 
 The current paper may claim local add/shed integrity in the derived ideal IQCOT Simulink model only. It must not claim broad active-phase robustness, arbitrary `1/2/4` scheduling, active Lambda control, efficiency improvement, severe active-phase load-rise/drop performance, or hardware/HIL/board/silicon validation.
 
-## E010-A5 Severe-Drop Token Design Status
+## E010-A5 Severe-Drop Baseline Audit Status
 
-E010-A5 is now the next design target:
+E010-A5 baseline reproduction is now confirmed for the fixed severe-drop infrastructure:
 
 ```text
 folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
@@ -445,10 +445,23 @@ active phases: fixed four-phase
 DCR/sense gains: nominal
 active Lambda: disabled
 active-phase add/shed: disabled
-status: DESIGN_ONLY until future metrics exist
+status: A5-C0/A5-C4 baseline audit MODEL_CONFIRMED
 ```
 
-The severe-drop token should not be mixed with active-phase shedding. The first severe-drop peak is a large-signal excess-current / excess-energy effect; PIS-IEK may only be used after protection/reentry for conservative balance recovery.
+Audit result:
+
+```text
+A5-C0 peak overshoot = 4.06085 mV
+A5-C0 recovery peak 2-12us = 3.61172 mV
+A5-C0 REQ/accepted/dropped = 149/149/0
+
+A5-C4 peak overshoot = 4.06085 mV
+A5-C4 recovery peak 2-12us = 3.61172 mV
+A5-C4 REQ/accepted/dropped = 149/149/0
+classification: MODEL_CONFIRMED
+```
+
+A5-C4 reproduces the known severe-drop boundary: previous A4 is no-harm but non-improving for `40A -> 1A`. The severe-drop token should not be mixed with active-phase shedding. The first severe-drop peak is a large-signal excess-current / excess-energy effect; PIS-IEK may only be used after protection/reentry for conservative balance recovery.
 
 Design artifacts:
 
@@ -460,4 +473,8 @@ e010_a5_state_machine.md
 e010_a5_metrics_template.csv
 e010_a5_waveform_audit.md
 e010_a5_research_summary.md
+e010_a5_baseline_audit.md
+e010_a5_baseline_metrics.csv
+e010_a5_baseline_waveform_audit.md
+e010_a5_baseline_reproduction_summary.md
 ```

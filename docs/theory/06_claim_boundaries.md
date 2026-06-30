@@ -78,27 +78,44 @@ Not yet allowed:
 - active-phase add/shed claims;
 - hardware, HIL, or board-level claims.
 
-## E010-A5 Severe-Drop Design Boundary
+## E010-A5 Severe-Drop Baseline Audit Boundary
 
-The severe `40A -> 1A` load-drop case remains unresolved:
+The severe `40A -> 1A` load-drop case remains unresolved as an improvement target, but the A5 baseline reproduction and logging infrastructure is now confirmed:
 
 ```text
 current status: A4 no-harm but non-improving
 new design target: E010-A5 severe-drop a_O token
 folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
-status: DESIGN_ONLY until a future derived-model run produces metrics
+baseline audit status: MODEL_CONFIRMED for A5-C0 and A5-C4
+metrics: e010_a5_baseline_metrics.csv
+summary: e010_a5_baseline_reproduction_summary.md
+```
+
+Confirmed baseline-audit evidence:
+
+```text
+A5-C0 peak overshoot = 4.06085 mV
+A5-C0 recovery peak 2-12us = 3.61172 mV
+A5-C0 REQ/accepted/dropped = 149/149/0
+
+A5-C4 peak overshoot = 4.06085 mV
+A5-C4 recovery peak 2-12us = 3.61172 mV
+A5-C4 REQ/accepted/dropped = 149/149/0
 ```
 
 Allowed at this stage:
 
 - define the severe-drop token, state machine, metrics, waveform audit, and future pass/fail criteria;
 - describe why severe load-drop is a large-signal excess-current / excess-energy branch;
-- state that PIS-IEK may only be used after protection/reentry for conservative balance recovery.
+- state that PIS-IEK may only be used after protection/reentry for conservative balance recovery;
+- state that A5-C0/A5-C4 severe-drop baseline reproduction and logging/postprocess audit passed;
+- state that A5-C4 reproduces the known A4 no-harm but non-improving boundary.
 
 Forbidden at this stage:
 
 - claiming A5 improves peak overshoot or recovery peak;
-- claiming A5 solves severe `40A -> 1A` until CSV metrics and a Markdown report exist;
+- claiming A5 solves severe `40A -> 1A`;
+- treating the baseline audit as A5 token validation;
 - mixing severe-drop A5 with active-phase shedding;
 - using Simulink-only future evidence as hardware/HIL/board/silicon validation.
 
