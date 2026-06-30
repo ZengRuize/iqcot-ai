@@ -112,7 +112,7 @@ safety projection and a load-drop magnitude selector.
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | freeze S1-R3 local claim; do not run S1-R4 or broad grids without a new protocol |
-| Manuscript | Markdown draft synced through E020; evidence now extends through E040-S1 local shed-handoff confirmation | update paper outline with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence boundaries |
+| Manuscript | Markdown draft synced through E040-S1 local shed-handoff confirmation | convert current Markdown draft into LaTeX plan/figures after claim and citation scaffolding |
 
 ## Current Phase
 

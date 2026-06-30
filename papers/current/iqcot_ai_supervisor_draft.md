@@ -1,10 +1,10 @@
 # Safety-Projected AI/Table Supervision for Event-Domain IQCOT Voltage Regulation in Multiphase Buck VRMs
 
-Draft date: 2026-06-29
+Draft date: 2026-06-30
 
 ## Abstract
 
-This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters. Derived Simulink validation currently covers the load-drop overshoot branch, the first load-rise undershoot chunk, and a first DCR-mismatch current-sharing chunk. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us` without hitting the tested current guard. For current sharing, E030 shows that `Ton_diff` is the dominant local DC balance actuator under a +/-10% DCR mismatch, reducing max imbalance from `0.853665 A` to `0.313775 A`; the projected C4 balancer reduces imbalance to `0.376221 A` with lower Ton-trim usage and smaller final voltage error than the aggressive Ton_diff-only variants. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, robust mismatch recovery, active-phase robustness, or global optimality.
+This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters or active-phase event states. Derived Simulink validation now covers bidirectional large-signal regulation, sensing-aware PIS-IEK current-sharing guards, and first local active-phase add/shed integrity points. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us` without hitting the tested current guard. For current sharing, `Ton_diff` is confirmed as the dominant local DC balance actuator under a +/-10% DCR mismatch, while E030-R3 shows that confidence-gated or ideal-calibrated `a_S` projection can avoid real-current harm under one current-sense gain mismatch. For active phases, E040-A-R1 confirms one local `2 -> 4` insertion/relock integrity point, E040-S0 rejects simple immediate or dwell-only shed, and E040-S1 confirms one staged `4 -> [1,3]` shed handoff with exact `N_active_final = 2`, zero dropped/inactive accepted requests, zero post-shed order error, and residual-current qualification. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, broad mismatch robustness, broad active-phase robustness, efficiency improvement, or global optimality.
 
 ## 1. Introduction
 
@@ -19,7 +19,7 @@ bidirectional large-signal voltage regulation
 + AI/table supervisor with safety projection
 ```
 
-This draft reports the first completed validation loops for load-drop overshoot protection, load-rise peak-undershoot reduction, and DCR-mismatch current-sharing recovery. Load current is always treated as an external disturbance. The AI/table layer may observe load-step direction, magnitude, and estimated slew, but it must not command the load-current profile.
+This draft reports the first completed validation loops for load-drop overshoot protection, load-rise peak-undershoot reduction, DCR-mismatch current-sharing recovery, current-sense-confidence protection, and local active-phase add/shed event integrity. Load current is always treated as an external disturbance. The AI/table layer may observe load-step direction, magnitude, and estimated slew, but it must not command the load-current profile.
 
 ## 2. Baseline and Control Boundary
 
@@ -222,6 +222,51 @@ Delta_Ton_i = Delta_Ton_i - mean(Delta_Ton_i)
 
 The first Lambda implementation was revised during validation. A sampled MATLAB Function inserted in series with the narrow REQ trigger path dropped events and invalidated the loop, so the retained E030 Lambda path is side-band projection/logging with fallback. This means E030 can discuss Lambda guard behavior but cannot yet claim an active event-native Lambda actuator.
 
+E030-R2 showed why `a_S` cannot trust sensed-current imbalance blindly. With current-sense gains `[1.05, 0.95, 1.05, 0.95]`, aggressive Ton_diff reduced sensed imbalance but increased real phase-current imbalance. E030-R3 therefore freezes a local sensing-aware selector:
+
+```text
+if sense_confidence == LOW:
+    use no-op or low-gain Ton_diff fallback
+elif calibration_enable == true and voltage/ripple risk is high:
+    use calibrated C4a
+elif calibration_enable == true and current imbalance dominates:
+    allow calibrated C4c under voltage/ripple guards
+else:
+    fallback
+```
+
+This selector supports the safety-projection architecture but remains local evidence. The calibrated modes assume ideal gain knowledge, `g_hat_i = g_i`, and do not prove practical online calibration.
+
+The active-phase branch is `a_N`:
+
+```text
+N_active_candidate
+I_add_high
+I_shed_low
+dwell_time
+new_phase_ramp_rate
+shed_lockout_after_protect
+residual_current_threshold
+phase_insert_policy
+```
+
+For add events, the projected `a_N` path must remap requests to the new active set, ramp inserted phases, relock the physical phase order, and delay any `a_S` recovery until voltage/reentry/order guards pass. For shed events, E040-S0 showed that residual threshold alone is not enough. The revised shed projection uses a staged hybrid handoff:
+
+```text
+NORMAL_4PH
+SHED_REQUESTED
+LOAD_SHARE_TRANSFER
+DISABLED_PHASE_DRAIN
+SHED_COMMIT_ARMED
+SHED_COMMIT
+ORDER_RELOCK_2PH
+POST_SHED_RECOVERY
+NORMAL_2PH
+FALLBACK_4PH
+```
+
+The executed E040-S1 implementation includes a deterministic `phase_gate_enable_i` safety mask after per-phase residual-current qualification. This mask is part of the model-based active-phase event manager; it is not an AI/table gate command.
+
 ## 5. Validation Method
 
 The validation protocol follows these rules:
@@ -275,6 +320,25 @@ final voltage error
 guard clamp count
 fallback count
 phase order error rate
+```
+
+The E040 active-phase metrics add event-integrity and hybrid-state checks:
+
+```text
+active phase timeline
+N_active_final
+actual_active_phase_set_final
+add/shed commit count
+fallback count
+dropped_REQ_count
+inactive_phase_REQ_count
+phase_order_error_rate_post_add_or_shed
+residual_current_check for shed
+current_limit_hit
+new phase ramp or disabled phase drain timing
+post-transition a_S enable timing
+peak overshoot/undershoot
+final voltage error
 ```
 
 ## 6. Experimental Results
@@ -366,9 +430,130 @@ DCR_L2/L4 = -10%
 
 This is classified as `MODEL_REVISED`. It supports `Ton_diff` as the dominant DC current-sharing actuator in the tested local mismatch case. It does not support a claim that the first C4 projection is globally optimal or that `Lambda_diff` alone is a DC sharing actuator.
 
+### 6.7 Current-Sense Gain Mismatch and Guarded a_S: E030-R3
+
+E030-R2 introduced a sensing failure mode: under current-sense gain mismatch, the controller-observed sensed-current objective can diverge from real phase-current balance. E030-R3 tests the local guard rule using fixed four-phase operation, nominal power-stage DCR, and current-sense gains:
+
+```text
+[1.05, 0.95, 1.05, 0.95]
+```
+
+The comparison is available in:
+
+```text
+experiments/E030_balance_recovery/R3_calibration_aware_guard/e030_r3_research_summary.md
+```
+
+| Variant | Description | Real max imbalance (A) | Sensed max imbalance (A) | Interpretation |
+|---|---|---:|---:|---|
+| R3-C0 | no correction baseline | 0.036272 | 0.538006 | real balance is already good despite sensed error |
+| R3-C1low | low-gain fallback | 0.030506 | 0.522300 | no real-current harm |
+| R3-C4a_conf | low-confidence no-op guard | 0.036272 | 0.538006 | blocks unsafe sensed optimization |
+| R3-C4a_cal | ideal calibrated voltage-safe mode | 0.020618 | 0.523013 | improves real balance under ideal calibration |
+| R3-C4c_cal | ideal calibrated balance mode | 0.025784 | 0.527296 | stronger balance mode under guards |
+
+All R3 variants preserve accepted-REQ integrity and zero phase-order error. This is classified as `MODEL_CONFIRMED` for one local sensing-aware guard pattern. It does not prove imperfect calibration robustness or broad current-sense robustness.
+
+### 6.8 Active-Phase Add Integrity: E040-A and E040-A-R1
+
+The first active-phase add attempt, E040-A, showed that request remapping can avoid dropped requests but still violate phase-order integrity and leave large voltage error. E040-A-R1 retuned the insertion and scheduler order for the fixed moderate rise case:
+
+```text
+20A -> 40A external load-current rise
+2 active phases -> 4 active phases
+active Lambda disabled
+```
+
+The R1 comparison is available in:
+
+```text
+experiments/E040_active_phase_add_shed/R1_phase_insertion_retune/e040_a_r1_research_summary.md
+```
+
+For R1-D1/R1-D2/R1-D3, the local integrity gates passed:
+
+```text
+N_active_final = 4
+dropped_REQ_count = 0
+inactive_phase_REQ_count = 0
+phase_order_error_rate_post_add = 0
+current_limit_hit = false
+```
+
+R1-D3 also verified delayed post-relock `a_S` timing:
+
+```text
+a_S_enable_time = 5.5 us
+Ton_trim_usage = 0.204702
+```
+
+This is classified as `MODEL_CONFIRMED` only for local corrected-remap/insertion/relock integrity. It does not claim active-phase voltage benefit, severe load-rise recovery, arbitrary 1/2/4 scheduling, or active Lambda control.
+
+### 6.9 Negative Shed Evidence: E040-S0
+
+E040-S0 tested the first minimal `4 -> 2` shed policies for a fixed mild load drop:
+
+```text
+40A -> 20A external load-current drop
+target active phases [1,3]
+active Lambda disabled
+```
+
+The comparison is available in:
+
+```text
+experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_research_summary.md
+```
+
+| Variant | N_active_final | Peak undershoot (mV) | Final Vout error (mV) | Current limit | Post-shed order error | Interpretation |
+|---|---:|---:|---:|---|---:|---|
+| S0 | 4 | 0.451 | 0.699 | false | n/a | fixed four-phase reference |
+| S1 | 2 | 663.614 | -624.357 | true | n/a | immediate shed is unsafe |
+| S2 | 2 | 543.833 | -500.714 | true | 0.265152 | dwell-only shed is unsafe |
+| S3 | 3.79065 | 19.133 | -3.371 | false | 0.992308 | residual/relock guard avoids worst voltage failure but does not hold two phases |
+
+This is classified as `MODEL_REVISED`. It is useful negative evidence: active-phase shed requires staged current handoff and atomic commit; a residual-current predicate alone is not a sufficient shed accept rule.
+
+### 6.10 Staged Shed-Handoff Confirmation: E040-S1
+
+E040-S1 implements the revised shed model from E040-S0. It uses the same fixed mild shed case:
+
+```text
+40A -> 20A external load-current drop
+initial active phases = 4
+target active phases = [1,3]
+target active phase mask = 1010
+nominal DCR and current-sense gains
+active Lambda disabled
+```
+
+The executed evidence is available in:
+
+```text
+experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_research_summary.md
+experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv
+```
+
+| Variant | Purpose | N_active_final | Active set | Commit | Fallback | Dropped REQ | Inactive REQ | Residual | Interpretation |
+|---|---|---:|---|---:|---:|---:|---:|---|---|
+| S1-R0 | fixed four-phase reference | 4 | 1111 | 0 | 0 | 0 | 0 | fail | reference/logging check |
+| S1-R2 | transfer/drain, no commit | 4 | 1111 | 0 | 0 | 0 | 0 | pass | transfer/drain interpretable |
+| S1-R3 | transfer/drain + atomic commit + relock | 2 | 1010 | 1 | 0 | 0 | 0 | pass | local shed-handoff integrity pass |
+
+The key S1-R3 metrics are:
+
+```text
+phase_order_error_rate_post_shed = 0
+current_limit_hit = false
+peak undershoot = 0.641487 mV
+final Vout error = 1.65264 mV
+```
+
+This is classified as `MODEL_CONFIRMED` for one local ideal-derived Simulink shed-handoff integrity point. The confirmed mechanisms are staged load-share transfer away from phases `[2,4]`, disabled-phase current drain, per-phase zero-current gate-enable masking, atomic commit to `[1,0,1,0]`, exact post-commit `N_active == 2`, and relock to physical sequence `[1,3]`. S1-R4, severe shed cases, active Lambda, mismatch with active-phase scheduling, and broad active-phase grids remain unrun.
+
 ## 7. Discussion
 
-The E010, E020, and E030 loops produced five useful findings.
+The E010-E040 loops produced eight useful findings.
 
 First, the load-drop branch is not controlled by a single monotonic protection knob. Mild drops may be harmed by truncation; medium drops benefit from a projected combination of Ton truncation and one early pulse inhibit; severe drops need a different token.
 
@@ -380,14 +565,26 @@ Fourth, the load-rise branch behaves differently from the load-drop branch. E020
 
 Fifth, E030 supports the PIS-IEK actuator split but revises the controller claim. `Ton_diff` is the primary DC sharing actuator under the tested DCR mismatch, while `Lambda_diff` should remain a guarded phase-spacing/ripple variable until an event-native implementation is validated. C4 shows the value of projection as a trade-off mechanism: it gives less balance correction than aggressive Ton_diff-only control but reduces trim usage and final voltage error.
 
+Sixth, E030-R2/R3 show that sensed-current objectives need their own safety projection. A controller can improve sensed balance while harming real balance when current-sense gains are mismatched. The frozen local selector therefore treats sensing confidence and calibration state as first-class guard variables before enabling stronger `a_S` action.
+
+Seventh, active-phase add is primarily a scheduler-integrity problem before it is an efficiency or voltage-benefit problem. E040-A-R1 confirms that a corrected remap plus insertion/relock sequence can make a local `2 -> 4` transition without dropped or inactive accepted requests, but it does not yet show voltage improvement.
+
+Eighth, active-phase shed is harder than add. E040-S0 rejected immediate and dwell-only shed because they force unsafe two-phase operation. E040-S1 confirmed that the shed event must be staged: transfer load share, drain disabled phases, apply a residual-qualified gate-enable safety mask, commit atomically, and relock the two-phase order. This is a local hybrid-event integrity result, not a broad active-phase robustness result.
+
 ## 8. Limitations
 
 This draft does not claim hardware validation, HIL validation, board-level behavior, or silicon behavior. The evidence is Simulink-only and uses an ideal derived baseline. The current validation is also incomplete for:
 
 - load-rise `a_U` behavior beyond the first `40A -> 120A` peak-undershoot chunk;
 - complete load-rise settling and 120A final regulation;
-- robust PIS-IEK current-sharing and phase-recovery across mismatch families beyond the first DCR chunk;
-- active-phase add/shed hybrid event management (`a_N`);
+- robust PIS-IEK current-sharing and phase-recovery across mismatch families beyond the tested DCR and current-sense-gain chunks;
+- practical online calibration accuracy for the E030-R3 calibrated `a_S` modes;
+- active-phase add/shed behavior beyond the local E040-A-R1 add point and E040-S1 shed point;
+- S1-R4 post-shed conservative `a_S` recovery;
+- severe shed cases such as `40A -> 1A` or `120A -> 10A`;
+- arbitrary 1/2/4 active-phase scheduling grids;
+- active Lambda control;
+- switching-efficiency improvement from phase shedding;
 - high-load `120A` operating-point validity in the present derived model setup.
 
 ## 9. Next Work
@@ -396,10 +593,11 @@ The next research steps are:
 
 1. Add a severe-drop `a_O` token for `40A -> 1A`, with explicit skip-hold and shaped reentry.
 2. Tune the E020 `a_U` window and decide whether the residual 120A error requires phase-add or operating-boundary re-audit.
-3. Retune E030 `a_S` projection so that current-sharing improvement, ripple, and final voltage error are jointly constrained.
-4. Implement an event-native Lambda_diff path before claiming active phase-spacing control.
-5. Implement E040 active-phase add/shed validation after voltage protection and reentry guards are stable.
-6. Convert this Markdown draft into a LaTeX manuscript after the retuned E030 evidence is known.
+3. Convert the frozen E030-R3 sensing-aware `a_S` selector into a compact paper figure and claim-evidence table.
+4. Prepare a new smallest-useful protocol before running S1-R4 post-shed conservative `a_S`; do not run it as an automatic extension of S1-R3.
+5. Prepare separate protocols for severe shed cases, mismatch with active-phase scheduling, and broad 1/2/4 active-phase grids.
+6. Implement an event-native Lambda_diff path before claiming active phase-spacing control.
+7. Convert this Markdown draft into LaTeX with evidence tables for E010, E020, E030-R3, E040-A-R1, E040-S0, and E040-S1.
 
 ## 10. Current Claim
 
@@ -417,9 +615,17 @@ For load rise, the first a_U chunk reduces 40A -> 120A peak undershoot from
 DCR-mismatch balance chunk, Ton_diff reduces max current imbalance from
 0.853665 A to 0.313775 A, while the C4 projected balancer reaches 0.376221 A
 with lower Ton usage and smaller final Vout error magnitude than Ton_diff-only
-control. The evidence is derived-Simulink evidence and does not yet prove
-complete 120A recovery, robust mismatch recovery, active-phase robustness,
-hardware behavior, or HIL behavior.
+control. Under one current-sense gain mismatch, E030-R3 confirms that a
+confidence-gated or ideal-calibrated a_S projection can prevent sensed-current
+optimization from harming real current balance. For active phases, E040-A-R1
+confirms one local 20A -> 40A, 2 -> 4 insertion/relock integrity point, while
+E040-S1 confirms one local 40A -> 20A, 4 -> [1,3] staged shed handoff with
+N_active_final = 2, active set 1010, shed_commit_count = 1, fallback_count = 0,
+dropped_REQ_count = 0, inactive_phase_REQ_count = 0, post-shed order error = 0,
+current_limit_hit = false, and residual_current_check = pass. The evidence is
+derived-Simulink evidence and does not yet prove complete 120A recovery, robust
+mismatch recovery, broad active-phase robustness, efficiency improvement,
+active Lambda control, hardware behavior, or HIL behavior.
 ```
 
 ## References To Complete
