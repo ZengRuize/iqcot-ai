@@ -168,6 +168,59 @@ Not allowed from this chunk:
 - universal severe-drop threshold claims;
 - hardware, HIL, board-level, or silicon validation.
 
+## Current E010-A5-T4-R1 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E010-A5-T4-R1 controlled reentry / burst limiter
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+variants: R1-C0, R1-C4, R1-T4proxy, R1-T4a, R1-T4b, R1-T4c
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R1_controlled_reentry_burst_limiter/e010_a5_t4_r1_metrics.csv
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R1_controlled_reentry_burst_limiter/e010_a5_t4_r1_research_summary.md
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, adding a count/window burst limiter,
+area-integrator reentry clamp, and Ton ramp to the A5-T4 severe-drop proxy did
+not produce a guard-passing A5 token. R1-T4a/b/c suppressed positive recovery
+peaks only by creating severe undershoot and final-error failure, while the
+post-reentry burst count still violated the configured `5 / 2` guard. A5
+severe-drop recovery therefore remains MODEL_REVISED and needs reentry energy
+shaping rather than only accepted-pulse counting.
+```
+
+Quantitative local evidence:
+
+```text
+R1-T4proxy recovery peak 2-12us = 3.55696 mV
+R1-T4proxy recovery peak 12-40us = 3.53370 mV
+R1-T4proxy peak undershoot = 0.697797 mV
+R1-T4proxy burst count / limit = 5 / 2
+
+R1-T4a/b/c peak overshoot = 0 mV
+R1-T4a/b/c recovery peak 2-12us = 0 mV
+R1-T4a/b/c peak undershoot = 971.618 mV
+R1-T4a/b/c final Vout error = -919.625 mV
+R1-T4a/b/c REQ/accepted/dropped = 187/187/0
+R1-T4a/b/c REQ reject count = 170
+R1-T4a/b/c burst count / limit = 5 / 2
+```
+
+Not allowed from E010-A5-T4-R1:
+
+- A5 `MODEL_CONFIRMED` severe-drop validation;
+- treating zero positive peak as improvement when undershoot/final-error guards fail;
+- claiming the count-based burst limiter closes the T4 guard failure;
+- broad load-drop robustness;
+- active Lambda control;
+- active-phase shed during severe `40A -> 1A`;
+- hardware, HIL, board-level, or silicon validation.
+
 ## Current E020 Evidence Boundary
 
 Validated so far:

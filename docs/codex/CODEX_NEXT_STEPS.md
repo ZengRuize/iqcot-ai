@@ -146,7 +146,7 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. E010-A5 candidate comparison is complete; next smallest useful E010 step is a controlled-reentry / burst-limiter revision for A5-T4-R1 only.
+9. E010-A5-T4-R1 controlled-reentry / burst-limiter revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is reentry energy shaping, not a broad sweep.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -396,6 +396,7 @@ active Lambda: disabled
 active-phase add/shed: disabled
 baseline audit status: A5-C0/A5-C4 MODEL_CONFIRMED
 candidate comparison status: A5-T1/T2/T3/T4 MODEL_REVISED
+controlled reentry revision status: A5-T4-R1 MODEL_REVISED
 ```
 
 Baseline audit result:
@@ -447,15 +448,42 @@ e010_a5_baseline_waveform_audit.md
 e010_a5_baseline_reproduction_summary.md
 ```
 
+E010-A5-T4-R1 controlled reentry / burst limiter completed:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R1_controlled_reentry_burst_limiter/
+metrics: e010_a5_t4_r1_metrics.csv
+summary: e010_a5_t4_r1_research_summary.md
+classification: MODEL_REVISED
+
+R1-T4proxy:
+  recovery peak 2-12us = 3.55696 mV
+  recovery peak 12-40us = 3.53370 mV
+  peak undershoot = 0.697797 mV
+  burst count / limit = 5 / 2
+
+R1-T4a/b/c:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ/accepted/dropped = 187/187/0
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Interpretation: controlled reentry / burst limiter did not validate A5. R1-T4a/b/c suppressed positive peaks only by producing severe undershoot and final-error collapse, and the burst guard still failed. Do not claim A5 validation.
+
 Next smallest useful step:
 
 ```text
-revise controlled reentry / burst limiter as A5-T4-R1
+revise reentry energy shaping and scheduler release
 keep 40A -> 1A fixed four-phase severe drop
 keep active Lambda disabled
 keep active-phase add/shed disabled
 do not add mismatch or broad load-drop grids
-do not claim A5 improvement until recovery improvement and burst guard pass together
+do not tune into a pass without a new hypothesis
 ```
 
 ## Standing Guardrails

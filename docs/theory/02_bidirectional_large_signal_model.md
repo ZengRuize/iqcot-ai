@@ -142,9 +142,9 @@ where:
 The severe `40A -> 1A` case is not solved by the current A4 selector:
 
 ```text
-current status: A4 no-harm but non-improving
-future folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
-status: DESIGN_ONLY
+A5-C0/A5-C4 baseline audit: MODEL_CONFIRMED
+A5-T1/T2/T3/T4 candidate comparison: MODEL_REVISED
+A5-T4-R1 controlled-reentry burst-limiter revision: MODEL_REVISED
 ```
 
 The proposed severe-drop token is:
@@ -165,6 +165,11 @@ a_O_severe = [
   reentry_band_down_severe,
   controlled_reentry_Ton_limit,
   burst_pulse_limit_after_reentry,
+  burst_count_window_us,
+  reentry_min_inter_pulse_spacing_us,
+  first_reentry_Ton_limit_ns,
+  recovery_Ton_ramp_rate,
+  area_int_reentry_clamp,
   undershoot_budget_severe,
   late_settling_guard,
   fallback_to_A4_or_noop_guard
@@ -193,6 +198,69 @@ and DeltaI_drop >= DeltaI_drop_threshold_high:
 ```
 
 The threshold is not a universal controller constant. It is a local candidate for the current ideal derived model and must be validated before any severe-drop improvement claim.
+
+### E010-A5-T4-R1 Controlled-Reentry Revision
+
+The T4 proxy reduced the local severe-drop recovery peaks but failed the burst guard:
+
+```text
+A5-T4proxy recovery peak 2-12us = 3.55696 mV
+A5-T4proxy recovery peak 12-40us = 3.53370 mV
+A5-T4proxy burst count / limit = 5 / 2
+```
+
+R1 tested explicit count/window burst limiting, optional area-integrator reentry clamp, and optional Ton ramp:
+
+```text
+R1-T4a: burst limiter + conservative inter-pulse spacing
+R1-T4b: R1-T4a + area-int reentry clamp
+R1-T4c: R1-T4b + recovery Ton ramp
+```
+
+The R1 outcome is `MODEL_REVISED`, not `MODEL_CONFIRMED`:
+
+```text
+R1-T4a/b/c peak overshoot = 0 mV
+R1-T4a/b/c recovery peaks = 0 mV
+R1-T4a/b/c peak undershoot = 971.618 mV
+R1-T4a/b/c final Vout error = -919.625 mV
+R1-T4a/b/c burst count / limit = 5 / 2
+```
+
+The zero positive peaks are not useful recovery improvement. They occur because the output collapses into a severe undershoot and final-error failure. Therefore the revised large-signal model is:
+
+```text
+valid severe-drop reentry
+  requires both:
+    bounded positive surplus-charge reinjection
+    bounded negative deficit-charge created by protection
+  and cannot be certified by accepted-pulse count alone
+```
+
+In charge form, a count constraint:
+
+```text
+n_window <= n_limit
+```
+
+is insufficient. The projected reentry must also bound the signed recovery charge:
+
+```text
+Q_reentry(t) =
+  integral_window(I_Lsum(t) - Iload_new) dt
+
+-Cout * V_undershoot_budget
+  <= Q_reentry(t)
+  <= Cout * V_recovery_peak_budget
+```
+
+and the per-event energy distribution:
+
+```text
+E_pulse,k ~= integral_pulse(Vin - Vout) * i_L,phase(k) dt
+```
+
+must be shaped by voltage, area-integrator, and phase-scheduler state. The next A5 revision should therefore reconstruct the reentry energy distribution and scheduler release conditions rather than only counting accepted pulses after reentry.
 
 ## Load-Rise Branch: Undershoot / Deficit Current
 

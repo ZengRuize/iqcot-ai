@@ -22,6 +22,12 @@ elseif variant == "A5-T3"
     modelName = "E010A5_T3_trunc_multi_area_hold_40A_1A_" + dateTag;
 elseif variant == "A5-T4"
     modelName = "E010A5_T4_full_severe_token_40A_1A_" + dateTag;
+elseif variant == "A5-T4-R1a"
+    modelName = "E010A5_T4_R1a_burst_limiter_40A_1A_" + dateTag;
+elseif variant == "A5-T4-R1b"
+    modelName = "E010A5_T4_R1b_burst_area_clamp_40A_1A_" + dateTag;
+elseif variant == "A5-T4-R1c"
+    modelName = "E010A5_T4_R1c_burst_clamp_ton_ramp_40A_1A_" + dateTag;
 else
     error("Unknown E010-A5 candidate variant: %s", variant);
 end
@@ -61,6 +67,15 @@ else
     addPulseInhibit(modelName);
 end
 addAreaHoldEnableProjection(modelName);
+if startsWith(variant, "A5-T4-R1")
+    addR1ControlledReentryBurstLimiter(modelName);
+    if variant == "A5-T4-R1c"
+        addR1RecoveryTonRamp(modelName);
+    else
+        addScalarConstantLog(modelName, "recovery_Ton_ramp_usage", "0", ...
+            [4080 2045 4260 2075]);
+    end
+end
 
 addReqRejectReasonLog(modelName);
 addPhaseOrderErrorLog(modelName);
@@ -450,6 +465,201 @@ markBlockOutport(gateBlock, 5, "area_bleed_count");
 markBlockOutport(gateBlock, 6, "reentry_state");
 end
 
+function addR1ControlledReentryBurstLimiter(modelName)
+clockBlock = modelName + "/E010A5_R1_BurstLimiter_Clock";
+enableBlock = modelName + "/E010A5_R1_BurstLimiter_Enable";
+tstepBlock = modelName + "/E010A5_R1_BurstLimiter_LoadStepTime";
+windowBlock = modelName + "/E010A5_R1_BurstWindow";
+limitBlock = modelName + "/E010A5_R1_BurstLimit";
+spacingBlock = modelName + "/E010A5_R1_MinInterPulseSpacing";
+areaClampBlock = modelName + "/E010A5_R1_AreaClampEnable";
+limiterBlock = modelName + "/E010A5_R1_ControlledReentryBurstLimiter";
+signalTerm = modelName + "/E010A5_R1_BurstLimiter_Term";
+ctrlTerm = modelName + "/E010A5_R1_ControlledReentry_Term";
+stateTerm = modelName + "/E010A5_R1_BurstLimiterState_Term";
+areaClampTerm = modelName + "/E010A5_R1_AreaClamp_Term";
+clampCountTerm = modelName + "/E010A5_R1_ClampCount_Term";
+releaseTerm = modelName + "/E010A5_R1_ReleaseCount_Term";
+fallbackTerm = modelName + "/E010A5_R1_FallbackReason_Term";
+deleteBlockIfExists(clockBlock);
+deleteBlockIfExists(enableBlock);
+deleteBlockIfExists(tstepBlock);
+deleteBlockIfExists(windowBlock);
+deleteBlockIfExists(limitBlock);
+deleteBlockIfExists(spacingBlock);
+deleteBlockIfExists(areaClampBlock);
+deleteBlockIfExists(limiterBlock);
+deleteBlockIfExists(signalTerm);
+deleteBlockIfExists(ctrlTerm);
+deleteBlockIfExists(stateTerm);
+deleteBlockIfExists(areaClampTerm);
+deleteBlockIfExists(clampCountTerm);
+deleteBlockIfExists(releaseTerm);
+deleteBlockIfExists(fallbackTerm);
+
+add_block("simulink/Sources/Clock", clockBlock, "Position", [1680 1990 1720 2020]);
+add_block("simulink/Sources/Constant", enableBlock, ...
+    "Value", "E010A5_R1_BurstLimiter_Enable", ...
+    "Position", [1680 2035 1860 2060]);
+add_block("simulink/Sources/Constant", tstepBlock, ...
+    "Value", "t_load_step", "Position", [1680 2080 1860 2105]);
+add_block("simulink/Sources/Constant", windowBlock, ...
+    "Value", "E010A5_R1_BurstWindow", ...
+    "Position", [1680 2125 1860 2150]);
+add_block("simulink/Sources/Constant", limitBlock, ...
+    "Value", "E010A5_R1_BurstLimit", ...
+    "Position", [1680 2170 1860 2195]);
+add_block("simulink/Sources/Constant", spacingBlock, ...
+    "Value", "E010A5_R1_MinInterPulseSpacing", ...
+    "Position", [1680 2215 1860 2240]);
+add_block("simulink/Sources/Constant", areaClampBlock, ...
+    "Value", "E010A5_R1_AreaClamp_Enable", ...
+    "Position", [1680 2260 1860 2285]);
+add_block("simulink/User-Defined Functions/MATLAB Function", limiterBlock, ...
+    "Position", [2180 1995 2535 2145]);
+setR1BurstLimiterScript(limiterBlock);
+
+add_block("simulink/Sinks/Terminator", signalTerm, ...
+    "Position", [2710 1995 2730 2020]);
+add_block("simulink/Sinks/Terminator", ctrlTerm, ...
+    "Position", [2710 2030 2730 2055]);
+add_block("simulink/Sinks/Terminator", stateTerm, ...
+    "Position", [2710 2065 2730 2090]);
+add_block("simulink/Sinks/Terminator", areaClampTerm, ...
+    "Position", [2710 2100 2730 2125]);
+add_block("simulink/Sinks/Terminator", clampCountTerm, ...
+    "Position", [2710 2135 2730 2160]);
+add_block("simulink/Sinks/Terminator", releaseTerm, ...
+    "Position", [2710 2170 2730 2195]);
+add_block("simulink/Sinks/Terminator", fallbackTerm, ...
+    "Position", [2710 2205 2730 2230]);
+
+iqcotBlock = modelName + "/Ideal_Digital_IQCOT_Request";
+areaHoldBlock = modelName + "/E010A5_AreaHold_EnableProjection";
+disconnectInport(iqcotBlock, 8);
+connectBlocks(areaHoldBlock, 1, limiterBlock, 1);
+connectBlocks(clockBlock, 1, limiterBlock, 2);
+connectBlocks(tstepBlock, 1, limiterBlock, 3);
+connectBlocks(enableBlock, 1, limiterBlock, 4);
+connectBlocks(windowBlock, 1, limiterBlock, 5);
+connectBlocks(limitBlock, 1, limiterBlock, 6);
+connectBlocks(spacingBlock, 1, limiterBlock, 7);
+connectBlocks(areaClampBlock, 1, limiterBlock, 8);
+
+for phase = 1:4
+    fromBlock = modelName + "/E010A5_R1_REQAccept_Delay_From" + phase;
+    delayBlock = modelName + "/E010A5_R1_REQAccept_Delay" + phase;
+    deleteBlockIfExists(delayBlock);
+    deleteBlockIfExists(fromBlock);
+    y = 1980 + 45 * phase;
+    add_block("simulink/Signal Routing/From", fromBlock, ...
+        "GotoTag", "REQ_accept" + phase, "Position", [1885 y 1955 y+28]);
+    add_block("simulink/Discrete/Unit Delay", delayBlock, ...
+        "SampleTime", "Tss", "InitialCondition", "0", ...
+        "Position", [2020 y 2075 y+28]);
+    connectBlocks(fromBlock, 1, delayBlock, 1);
+    connectBlocks(delayBlock, 1, limiterBlock, 8 + phase);
+end
+
+connectBlocks(limiterBlock, 1, iqcotBlock, 8);
+connectBlocks(limiterBlock, 1, signalTerm, 1);
+connectBlocks(limiterBlock, 2, ctrlTerm, 1);
+connectBlocks(limiterBlock, 3, stateTerm, 1);
+connectBlocks(limiterBlock, 4, areaClampTerm, 1);
+connectBlocks(limiterBlock, 5, clampCountTerm, 1);
+connectBlocks(limiterBlock, 6, releaseTerm, 1);
+connectBlocks(limiterBlock, 7, fallbackTerm, 1);
+
+markBlockOutport(limiterBlock, 2, "controlled_reentry_active");
+markBlockOutport(limiterBlock, 3, "burst_limiter_state");
+markBlockOutport(limiterBlock, 4, "area_int_reentry_clamp");
+markBlockOutport(limiterBlock, 5, "burst_limiter_clamp_count");
+markBlockOutport(limiterBlock, 6, "burst_limiter_release_count");
+markBlockOutport(limiterBlock, 7, "burst_limiter_fallback_reason");
+
+for phase = 1:4
+    gateBlock = modelName + "/E010A5_R1_FinalReqGate" + phase;
+    deleteBlockIfExists(gateBlock);
+    y = 2380 + 90 * phase;
+    add_block("simulink/User-Defined Functions/MATLAB Function", gateBlock, ...
+        "Position", [2540 y 2710 y+55]);
+    setR1FinalReqGateScript(gateBlock);
+    pulseBlock = modelName + "/E010A5_PulseInhibit" + phase;
+    cotBlock = modelName + "/COT_Cell_1Phase" + phase;
+    gotoBlock = modelName + "/E010A5_REQAccept_Goto" + phase;
+    disconnectInport(cotBlock, 1);
+    disconnectInport(gotoBlock, 1);
+    connectBlocks(pulseBlock, 1, gateBlock, 1);
+    connectBlocks(limiterBlock, 1, gateBlock, 2);
+    connectBlocks(gateBlock, 1, cotBlock, 1);
+    connectBlocks(gateBlock, 1, gotoBlock, 1);
+    markBlockOutport(gateBlock, 1, "REQ_accept" + phase);
+end
+end
+
+function addR1RecoveryTonRamp(modelName)
+clockBlock = modelName + "/E010A5_R1_TonRamp_Clock";
+enableBlock = modelName + "/E010A5_R1_TonRamp_Enable";
+tstepBlock = modelName + "/E010A5_R1_TonRamp_LoadStepTime";
+startBlock = modelName + "/E010A5_R1_TonRamp_StartDelay";
+windowBlock = modelName + "/E010A5_R1_TonRamp_Window";
+limitBlock = modelName + "/E010A5_R1_FirstReentryTonLimit";
+usageMux = modelName + "/E010A5_R1_TonRampUsage_Mux";
+usageTerm = modelName + "/E010A5_R1_TonRampUsage_Term";
+deleteBlockIfExists(clockBlock);
+deleteBlockIfExists(enableBlock);
+deleteBlockIfExists(tstepBlock);
+deleteBlockIfExists(startBlock);
+deleteBlockIfExists(windowBlock);
+deleteBlockIfExists(limitBlock);
+deleteBlockIfExists(usageMux);
+deleteBlockIfExists(usageTerm);
+
+add_block("simulink/Sources/Clock", clockBlock, "Position", [3720 2210 3760 2240]);
+add_block("simulink/Sources/Constant", enableBlock, ...
+    "Value", "E010A5_R1_TonRamp_Enable", "Position", [3720 2255 3890 2280]);
+add_block("simulink/Sources/Constant", tstepBlock, ...
+    "Value", "t_load_step", "Position", [3720 2300 3890 2325]);
+add_block("simulink/Sources/Constant", startBlock, ...
+    "Value", "E010A5_R1_TonRamp_StartDelay", "Position", [3720 2345 3890 2370]);
+add_block("simulink/Sources/Constant", windowBlock, ...
+    "Value", "E010A5_R1_TonRamp_Window", "Position", [3720 2390 3890 2415]);
+add_block("simulink/Sources/Constant", limitBlock, ...
+    "Value", "E010A5_R1_FirstReentryTonLimit", "Position", [3720 2435 3890 2460]);
+add_block("simulink/Signal Routing/Mux", usageMux, ...
+    "Inputs", "4", "Position", [4310 2235 4340 2355]);
+add_block("simulink/Sinks/Terminator", usageTerm, ...
+    "Position", [4440 2285 4460 2310]);
+
+for phase = 1:4
+    rampBlock = modelName + "/E010A5_R1_TonRamp" + phase;
+    rampTerm = modelName + "/E010A5_R1_TonRamp" + phase + "_Term";
+    deleteBlockIfExists(rampTerm);
+    deleteBlockIfExists(rampBlock);
+    y = 2185 + 85 * phase;
+    add_block("simulink/User-Defined Functions/MATLAB Function", rampBlock, ...
+        "Position", [3920 y 4160 y+68]);
+    setR1TonRampScript(rampBlock);
+
+    disconnectInport(modelName + "/COT_Cell_1Phase" + phase, 3);
+    connectBlocks(modelName + "/E010A5_TonTrunc" + phase, 1, rampBlock, 1);
+    connectBlocks(clockBlock, 1, rampBlock, 2);
+    connectBlocks(tstepBlock, 1, rampBlock, 3);
+    connectBlocks(startBlock, 1, rampBlock, 4);
+    connectBlocks(windowBlock, 1, rampBlock, 5);
+    connectBlocks(limitBlock, 1, rampBlock, 6);
+    connectBlocks(enableBlock, 1, rampBlock, 7);
+    connectBlocks(rampBlock, 1, modelName + "/COT_Cell_1Phase" + phase, 3);
+    connectBlocks(rampBlock, 2, usageMux, phase);
+    add_block("simulink/Sinks/Terminator", rampTerm, ...
+        "Position", [4240 y+20 4260 y+45]);
+    connectBlocks(rampBlock, 2, rampTerm, 1);
+    markBlockOutport(rampBlock, 1, "Ton_cmd" + phase);
+end
+connectBlocks(usageMux, 1, usageTerm, 1);
+markBlockOutport(usageMux, 1, "recovery_Ton_ramp_usage");
+end
+
 function addReqRejectReasonLog(modelName)
 block = modelName + "/E010A5_REQRejectReason";
 termBlock = modelName + "/E010A5_REQRejectReason_Term";
@@ -546,6 +756,12 @@ elseif variant == "A5-T3"
     value = "53";
 elseif variant == "A5-T4"
     value = "54";
+elseif variant == "A5-T4-R1a"
+    value = "61";
+elseif variant == "A5-T4-R1b"
+    value = "62";
+elseif variant == "A5-T4-R1c"
+    value = "63";
 else
     value = "50";
 end
@@ -735,6 +951,126 @@ try
     set_param(blockPath, "SystemSampleTime", "Ts_ctrl");
 catch
 end
+end
+
+function setR1BurstLimiterScript(blockPath)
+script = [
+"function [enable_out,controlled_active,burst_state,area_clamp_active,clamp_count,release_count,fallback_reason] = r1_burst_limiter(enable_in,t,t_step,enable,burst_window,burst_limit,min_spacing,area_clamp_enable,a1,a2,a3,a4)"
+"%#codegen"
+"persistent prev count first_time last_time clamp_seen release_seen"
+"if isempty(prev)"
+"    prev = [false,false,false,false];"
+"end"
+"if isempty(count)"
+"    count = 0.0;"
+"end"
+"if isempty(first_time)"
+"    first_time = -1.0;"
+"end"
+"if isempty(last_time)"
+"    last_time = -1.0;"
+"end"
+"if isempty(clamp_seen)"
+"    clamp_seen = 0.0;"
+"end"
+"if isempty(release_seen)"
+"    release_seen = 0.0;"
+"end"
+"if t < t_step"
+"    prev = [false,false,false,false];"
+"    count = 0.0;"
+"    first_time = -1.0;"
+"    last_time = -1.0;"
+"    clamp_seen = 0.0;"
+"    release_seen = 0.0;"
+"end"
+"acc = [a1,a2,a3,a4] > 0.5;"
+"rise = acc & ~prev;"
+"if (enable > 0.5) && (t >= t_step)"
+"    for idx = 1:4"
+"        if rise(idx)"
+"            if count < 0.5"
+"                first_time = t;"
+"            end"
+"            count = count + 1.0;"
+"            last_time = t;"
+"        end"
+"    end"
+"end"
+"controlled_active = double((enable > 0.5) && (t >= t_step) && (count > 0.5));"
+"in_burst_window = (first_time >= 0.0) && (t < first_time + max(burst_window, 0.0));"
+"limit_hold = in_burst_window && (count >= max(burst_limit, 0.0));"
+"spacing_hold = (last_time >= 0.0) && ((t - last_time) < max(min_spacing, 0.0));"
+"hold = (enable > 0.5) && (t >= t_step) && (limit_hold || spacing_hold);"
+"enable_out = double(enable_in > 0.5);"
+"if hold"
+"    enable_out = 0.0;"
+"end"
+"if limit_hold"
+"    burst_state = 2.0;"
+"elseif spacing_hold"
+"    burst_state = 1.0;"
+"elseif (first_time >= 0.0) && (t >= first_time + max(burst_window, 0.0))"
+"    burst_state = 3.0;"
+"else"
+"    burst_state = 0.0;"
+"end"
+"area_clamp_active = double(hold && (area_clamp_enable > 0.5));"
+"if area_clamp_active > 0.5"
+"    clamp_seen = 1.0;"
+"end"
+"if (first_time >= 0.0) && (t >= first_time + max(burst_window, 0.0))"
+"    release_seen = 1.0;"
+"end"
+"clamp_count = clamp_seen;"
+"release_count = release_seen;"
+"fallback_reason = 0.0;"
+"prev = acc;"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["enable_in", "t", "t_step", "enable", "burst_window", ...
+    "burst_limit", "min_spacing", "area_clamp_enable", ...
+    "a1", "a2", "a3", "a4", "enable_out", ...
+    "controlled_active", "burst_state", "area_clamp_active", ...
+    "clamp_count", "release_count", "fallback_reason"], ...
+    ["a1", "a2", "a3", "a4"]);
+setFastSampleTime(blockPath);
+end
+
+function setR1TonRampScript(blockPath)
+script = [
+"function [ton_out,ramp_usage] = r1_ton_ramp(ton_in,t,t_step,start_delay,ramp_window,first_limit,enable)"
+"%#codegen"
+"age = t - (t_step + max(start_delay, 0.0));"
+"active = (enable > 0.5) && (age >= 0.0) && (age <= max(ramp_window, 0.0));"
+"if active"
+"    if ramp_window > 0.0"
+"        alpha = min(max(age / ramp_window, 0.0), 1.0);"
+"    else"
+"        alpha = 1.0;"
+"    end"
+"    ton_limit = first_limit + alpha * max(ton_in - first_limit, 0.0);"
+"    ton_out = min(ton_in, ton_limit);"
+"else"
+"    ton_out = ton_in;"
+"end"
+"ramp_usage = max(ton_in - ton_out, 0.0);"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["ton_in", "t", "t_step", "start_delay", "ramp_window", ...
+    "first_limit", "enable", "ton_out", "ramp_usage"], strings(0, 1));
+setFastSampleTime(blockPath);
+end
+
+function setR1FinalReqGateScript(blockPath)
+script = [
+"function req_out = r1_final_req_gate(req_in, enable_in)"
+"%#codegen"
+"req_out = (req_in > 0.5) && (enable_in > 0.5);"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["req_in", "enable_in", "req_out"], ["req_in", "req_out"]);
+setFastSampleTime(blockPath);
 end
 
 function setActiveHsPhaseScript(blockPath)

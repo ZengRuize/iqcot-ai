@@ -61,12 +61,12 @@ Current status:
 120A -> 10A A0 completed as operating-boundary check, not improvement evidence
 comparison: experiments/E010_load_drop_overshoot/e010_research_summary.md
 classification: MODEL_REVISED
-next E010 expansion target: severe-drop a_O token for 40A -> 1A
+next E010 expansion target: severe-drop reentry energy shaping for 40A -> 1A
 ```
 
 ### E010-A5 Severe-Drop Token Design
 
-Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison has run and is `MODEL_REVISED`; do not claim A5 validation.
+Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison and A5-T4-R1 controlled-reentry revision have run and are `MODEL_REVISED`; do not claim A5 validation.
 
 Fixed case:
 
@@ -125,6 +125,51 @@ A5-T3/T4:
   REQ/accepted/dropped = 149/149/0
   burst count / limit = 5 / 2
   note: T4 is not a passing full-token validation; it is a proxy result that exposes the missing burst limiter
+```
+
+Completed A5-T4-R1 controlled-reentry / burst-limiter revision:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R1_controlled_reentry_burst_limiter/
+metrics: e010_a5_t4_r1_metrics.csv
+summary: e010_a5_t4_r1_research_summary.md
+classification: MODEL_REVISED
+
+R1-C0/R1-C4:
+  carry-forward baseline references
+
+R1-T4proxy:
+  recovery peak 2-12us = 3.55696 mV
+  recovery peak 12-40us = 3.53370 mV
+  peak undershoot = 0.697797 mV
+  burst count / limit = 5 / 2
+
+R1-T4a:
+  explicit burst limiter + inter-pulse spacing
+
+R1-T4b:
+  R1-T4a + area-int reentry clamp
+
+R1-T4c:
+  R1-T4b + recovery Ton ramp
+
+R1-T4a/b/c result:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ/accepted/dropped = 187/187/0
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Interpretation:
+
+```text
+The count/window burst limiter did not close the T4 burst failure.
+The apparent positive-peak suppression in R1-T4a/b/c is a severe undershoot collapse, not usable recovery improvement.
+Next smallest useful step: revise reentry energy shaping and scheduler release, not a broad sweep.
 ```
 
 Metrics:

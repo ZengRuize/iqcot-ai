@@ -502,6 +502,11 @@ a_O_severe = [
   reentry_band_down_severe,
   controlled_reentry_Ton_limit,
   burst_pulse_limit_after_reentry,
+  burst_count_window_us,
+  reentry_min_inter_pulse_spacing_us,
+  first_reentry_Ton_limit_ns,
+  recovery_Ton_ramp_rate,
+  area_int_reentry_clamp,
   late_settling_guard,
   undershoot_budget_severe,
   fallback_to_A4_or_noop_guard
@@ -541,6 +546,66 @@ DeltaI_drop >= 30 A
 ```
 
 This threshold is evidence-local to the current ideal derived model and must not be described as a universal controller constant.
+
+### E010-A5-T4-R1 Projection Revision
+
+A5-T4-R1 tested whether explicit burst-limited controlled reentry could turn the T4 proxy into a guard-passing severe-drop token:
+
+```text
+experiment: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R1_controlled_reentry_burst_limiter/
+classification: MODEL_REVISED
+```
+
+The tested R1 projection added:
+
+```text
+burst_count_window_us = 2
+burst_pulse_limit_after_reentry = 2
+reentry_min_inter_pulse_spacing_us = 0.4
+first_reentry_Ton_limit_ns = 200
+area_int_reentry_clamp = variant dependent
+recovery_Ton_ramp = variant dependent
+```
+
+Measured result:
+
+```text
+R1-T4proxy:
+  recovery peak 2-12us = 3.55696 mV
+  peak undershoot = 0.697797 mV
+  burst count / limit = 5 / 2
+
+R1-T4a/b/c:
+  peak overshoot = 0 mV
+  recovery peak 2-12us = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Projection rule update:
+
+```text
+Do not accept positive-peak suppression as improvement when it is produced by
+severe undershoot, final-error collapse, or a failed burst guard.
+```
+
+For severe load-drop, `P_O` must project the reentry token against both positive and negative energy budgets:
+
+```text
+P_O must satisfy:
+  recovery_peak_budget
+  undershoot_budget
+  final_error_budget
+  burst_pulse_limit
+  event-spacing guard
+  bounded area-integrator state
+  scheduler release consistency
+```
+
+If these budgets cannot be satisfied together, the projection must fall back to the previous safe no-op/A4 boundary rather than applying a count-only burst limiter. The next A5 revision should shape reentry energy at the scheduler-release level and not only inhibit pulses after accepted reentry events have already clustered.
 
 ## Load-Rise Projection Rule from E020
 
