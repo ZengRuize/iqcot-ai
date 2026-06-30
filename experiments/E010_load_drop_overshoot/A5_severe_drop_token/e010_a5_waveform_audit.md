@@ -55,26 +55,20 @@ Ton_actual1
 Ton_actual2
 Ton_actual3
 Ton_actual4
+active_HS_phase
+Ton_trunc_i
+Ton_saved_i
+Lambda_i
 area_int_i
 a_O_state
-severe_drop_detected
-Ton_trunc_active
-Ton_trunc_count
-pulse_inhibit_active
-pulse_inhibit_count
-area_hold_active
-area_hold_count
-area_reset_count
-area_bleed_count
-reentry_armed
-controlled_reentry_active
-first_reentry_phase
-first_reentry_Ton_ns
-burst_pulse_count_after_reentry
+severe_drop_detect
+pulse_inhibit_state
+area_hold_state
+reentry_state
+fallback_state
 current_limit_hit
-fallback_safe_active
-fallback_count
-fallback_reason
+phase_order_error
+burst_pulse_count_after_reentry
 ```
 
 ## Audit Windows

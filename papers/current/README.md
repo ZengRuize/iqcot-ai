@@ -30,6 +30,7 @@ Current design package:
 
 ```text
 experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_state_machine.md
 ```
 
 Scope:

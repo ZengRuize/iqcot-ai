@@ -95,21 +95,27 @@ QL1..QL4
 phase_idx
 Ton_cmd1..4
 Ton_actual1..4
+Ton_trunc_i
+Ton_saved_i
 area_int_i
 a_O_state
 severe_drop_detected
+active_HS_phase
 Ton_trunc_active
 Ton_trunc_count
 pulse_inhibit_active
 pulse_inhibit_count
+inhibit_release_condition
 area_hold_active
 area_hold_count
 area_reset_count
 area_bleed_count
 reentry_armed
 controlled_reentry_active
+controlled_reentry_Ton_limit
 first_reentry_phase
 first_reentry_Ton_ns
+burst_pulse_limit_after_reentry
 burst_pulse_count_after_reentry
 current_limit_hit
 fallback_safe_active
@@ -131,6 +137,7 @@ phase_order_error_rate == 0
 current_limit_hit == false
 burst_pulse_count_after_reentry is bounded
 final_Vout_error remains bounded
+fallback does not loop
 ```
 
 ## Hard Fail

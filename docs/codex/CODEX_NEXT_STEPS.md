@@ -399,6 +399,18 @@ status: DESIGN_ONLY
 
 The A5 severe-drop `a_O` token should combine active-HS-aware Ton truncation, bounded multi-event pulse inhibit, area-integrator hold/controlled reset, undershoot-budgeted reentry, and fallback-to-A4/no-op. Do not use PIS-IEK to claim first-peak prediction; the severe first peak is a large-signal excess-energy branch.
 
+Required design artifacts:
+
+```text
+e010_a5_hypothesis.md
+e010_a5_protocol.md
+e010_a5_token_design.md
+e010_a5_state_machine.md
+e010_a5_metrics_template.csv
+e010_a5_waveform_audit.md
+e010_a5_research_summary.md
+```
+
 ## Standing Guardrails
 
 - AI does not control external load slew.

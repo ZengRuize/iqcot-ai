@@ -45,6 +45,17 @@ For a `40A -> 10A` drop near balanced four-phase operation, the initial excess-c
 I_ex0 ~= 40A - 10A = 30A
 ```
 
+For the unresolved severe E010-A5 target, the same estimate becomes:
+
+```text
+Iload_before = 40A
+Iload_after = 1A
+DeltaI_drop = 39A
+I_excess(t0+) ~= 39A
+```
+
+This first peak is a large-signal excess-current / excess-energy behavior. It must not be treated as a PIS-IEK small-signal first-peak prediction problem. PIS-IEK may only be used after protection and reentry for conservative current-sharing and event recovery.
+
 The output-capacitor voltage rise is dominated by surplus charge:
 
 ```text
@@ -125,6 +136,63 @@ where:
 - `pulse inhibit` changes the first accepted reentry trigger and can lower the recovery peak;
 - `reentry_band_down` is a safety projection variable that trades overshoot reduction against undershoot penalty;
 - a binding reentry guard may reject pulse inhibit, returning the behavior toward A1.
+
+### E010-A5 Severe-Drop Design Model
+
+The severe `40A -> 1A` case is not solved by the current A4 selector:
+
+```text
+current status: A4 no-harm but non-improving
+future folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+status: DESIGN_ONLY
+```
+
+The proposed severe-drop token is:
+
+```text
+a_O_severe = [
+  severe_drop_detect_enable,
+  DeltaI_drop_threshold_high,
+  active_HS_trunc_enable,
+  Tton_trunc_min_severe,
+  Tton_trunc_window_severe,
+  multi_pulse_inhibit_count,
+  inhibit_time_severe,
+  inhibit_release_condition,
+  area_integrator_hold_policy,
+  area_integrator_bleed_policy,
+  area_integrator_reset_policy,
+  reentry_band_down_severe,
+  controlled_reentry_Ton_limit,
+  burst_pulse_limit_after_reentry,
+  undershoot_budget_severe,
+  late_settling_guard,
+  fallback_to_A4_or_noop_guard
+]
+```
+
+The design combines five mechanisms:
+
+```text
+1. active-HS-aware Ton truncation;
+2. bounded multi-event pulse inhibit;
+3. area-integrator hold / bleed / controlled reset;
+4. stricter but undershoot-budgeted reentry;
+5. fallback-to-A4/no-op if predicted undershoot or reentry risk is too high.
+```
+
+Severe-drop detection is evidence-local:
+
+```text
+DeltaI_drop = Iload_before - Iload_after
+DeltaI_drop_threshold_high = 30A candidate
+
+if branch == load_drop
+and DeltaI_drop >= DeltaI_drop_threshold_high:
+    enter SEVERE_DROP_DETECTED
+```
+
+The threshold is not a universal controller constant. It is a local candidate for the current ideal derived model and must be validated before any severe-drop improvement claim.
 
 ## Load-Rise Branch: Undershoot / Deficit Current
 

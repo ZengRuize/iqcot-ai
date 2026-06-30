@@ -449,3 +449,15 @@ status: DESIGN_ONLY until future metrics exist
 ```
 
 The severe-drop token should not be mixed with active-phase shedding. The first severe-drop peak is a large-signal excess-current / excess-energy effect; PIS-IEK may only be used after protection/reentry for conservative balance recovery.
+
+Design artifacts:
+
+```text
+e010_a5_hypothesis.md
+e010_a5_protocol.md
+e010_a5_token_design.md
+e010_a5_state_machine.md
+e010_a5_metrics_template.csv
+e010_a5_waveform_audit.md
+e010_a5_research_summary.md
+```

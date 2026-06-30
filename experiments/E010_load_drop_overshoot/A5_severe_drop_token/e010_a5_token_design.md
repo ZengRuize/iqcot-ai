@@ -15,9 +15,13 @@ a_O_severe = [
   Tton_trunc_window_severe,
   multi_pulse_inhibit_count,
   inhibit_time_severe,
+  inhibit_release_condition,
   area_integrator_hold_policy,
-  area_integrator_bleed_or_reset_policy,
+  area_integrator_bleed_policy,
+  area_integrator_reset_policy,
   reentry_band_down_severe,
+  controlled_reentry_Ton_limit,
+  burst_pulse_limit_after_reentry,
   late_settling_guard,
   undershoot_budget_severe,
   fallback_to_A4_or_noop_guard
@@ -25,6 +29,43 @@ a_O_severe = [
 ```
 
 The supervisor may propose this token, but only the projected token may reach IQCOT parameter scheduling. The token does not command high-side or low-side gates directly.
+
+## Large-Signal Rationale
+
+At the instant of the severe load drop:
+
+```text
+I_Lsum(t0+) ~= I_Lsum(t0-)
+I_excess(t0+) = I_Lsum(t0+) - Iload_after
+```
+
+For the fixed A5 target:
+
+```text
+Iload_before = 40A
+Iload_after = 1A
+I_excess ~= 39A
+```
+
+This excess inductor current charges the output capacitor and creates overshoot. A5 therefore targets additional high-side energy injection, unsafe early reentry events, and stored area-integrator state. PIS-IEK must not be used to predict the severe-drop first peak; it may only help after protection/reentry for current-sharing and event recovery.
+
+## Severe-Drop Detection
+
+```text
+DeltaI_drop = Iload_before - Iload_after
+
+if branch == load_drop
+and DeltaI_drop >= DeltaI_drop_threshold_high:
+    enter SEVERE_DROP_DETECTED
+```
+
+Initial local candidate:
+
+```text
+DeltaI_drop_threshold_high = 30A
+```
+
+This threshold is evidence-local and must not be claimed as universal.
 
 ## Mechanism 1: Active-HS-Aware Ton Truncation
 
@@ -50,6 +91,7 @@ Candidate bounds:
 ```text
 multi_pulse_inhibit_count in {1, 2, 3}
 inhibit_time_severe bounded by future protocol
+inhibit_release_condition requires voltage, minimum-time, phase-order, and area-state guards
 ```
 
 Unlimited inhibit is forbidden because it can create undershoot and reentry oscillation.

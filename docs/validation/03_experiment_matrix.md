@@ -93,24 +93,44 @@ A5-T4: full severe-drop token with controlled reentry and fallback guard
 Future metrics:
 
 ```text
+variant
+success
 peak_overshoot_mV
 peak_undershoot_mV
 recovery_peak_2_12us_mV
 recovery_peak_12_40us_mV
 settling_time_us
 final_Vout_error_mV
+Vout_ripple_pp_mV
 Ton_trunc_count
+Ton_trunc_min_ns
+Ton_saved_ns
+Tton_trunc_window_us
 pulse_inhibit_count
-area_hold/reset/bleed counts
+inhibit_time_us
+REQ_reject_count
+REQ_reject_reason
+area_hold_count
+area_reset_count
+area_bleed_count
+area_int_max
+area_int_at_reentry
 first_reentry_time_us
 first_reentry_phase
 first_reentry_Ton_ns
 burst_pulse_count_after_reentry
+REQ_count
+accepted_REQ_count
 dropped_REQ_count
 phase_order_error_rate
+real_max_current_imbalance_A
+real_rms_current_imbalance_A
 current_limit_hit
 undershoot_budget_violation
+late_settling_guard_violation
 fallback_count
+fallback_reason
+classification_hint
 ```
 
 Pass gate:
@@ -123,6 +143,7 @@ phase_order_error_rate == 0
 current_limit_hit == false
 burst_pulse_count_after_reentry is bounded
 final_Vout_error remains bounded
+fallback does not loop
 ```
 
 ## E020 Load-Rise Undershoot Validation

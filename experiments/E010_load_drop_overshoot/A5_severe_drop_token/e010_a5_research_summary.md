@@ -25,6 +25,7 @@ Active-phase add/shed: disabled
 e010_a5_hypothesis.md
 e010_a5_protocol.md
 e010_a5_token_design.md
+e010_a5_state_machine.md
 e010_a5_metrics_template.csv
 e010_a5_waveform_audit.md
 ```
@@ -44,6 +45,31 @@ Forbidden:
 - A5 can be mixed with active-phase shedding.
 - PIS-IEK predicts the severe-drop first peak.
 - Any hardware/HIL/board/silicon claim.
+
+## Future Claim Boundary
+
+If A5 later succeeds, the allowed claim may be:
+
+```text
+In the local ideal IQCOT derived Simulink model, a severe-drop a_O token
+using active-HS-aware Ton truncation, bounded pulse inhibit, area-integrator
+management, and undershoot-budgeted controlled reentry can improve the tested
+40A -> 1A load-drop recovery without violating REQ, phase-order, current-limit,
+area-integrator, fallback, or reentry guards.
+```
+
+Still forbidden even after a future local success:
+
+```text
+broad load-drop robustness
+hardware/HIL/board/silicon validation
+active Lambda control
+active-phase shed during severe 40A -> 1A
+PIS-IEK first-peak prediction claim
+universal severe_drop_threshold
+AI direct gate control
+AI control of external load-current slew
+```
 
 ## Next Execution Gate
 
