@@ -108,7 +108,7 @@ safety projection and a load-drop magnitude selector.
 | Module | Status | Next action |
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
-| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; `40A -> 1A` remains no-harm but non-improving under A4 | run A5-T1/T2/T3/T4 only, no broad sweeps |
+| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4 candidate comparison `MODEL_REVISED`; T3/T4 improve recovery but fail burst guard | revise A5-T4 controlled reentry / burst limiter only, no broad sweeps |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
@@ -478,3 +478,31 @@ e010_a5_baseline_metrics.csv
 e010_a5_baseline_waveform_audit.md
 e010_a5_baseline_reproduction_summary.md
 ```
+
+E010-A5 candidate comparison is complete:
+
+```text
+case: 40A -> 1A external load-current drop
+variants: A5-T1/A5-T2/A5-T3/A5-T4
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_metrics.csv
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_research_summary.md
+classification: MODEL_REVISED
+
+A5-T1/T2:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.61172 mV
+  REQ/accepted/dropped = 149/149/0
+  result = no improvement versus A5-C0/A5-C4
+
+A5-T3/T4:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.55696 mV
+  recovery peak 12-40us = 3.53370 mV
+  peak undershoot = 0.697797 mV
+  REQ/accepted/dropped = 149/149/0
+  burst count / limit = 5 / 2
+  result = partial recovery improvement but burst guard fail
+  note = T4 is a state-machine proxy, not a complete full-token pass
+```
+
+Boundary: A5 remains revised, not confirmed. The next smallest useful step is a fixed-case A5-T4-R1 controlled-reentry / burst-limiter revision. Do not expand to broad load-drop grids, active Lambda, active-phase shed, or mismatch cases.

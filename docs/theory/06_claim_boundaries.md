@@ -119,6 +119,55 @@ Forbidden at this stage:
 - mixing severe-drop A5 with active-phase shedding;
 - using Simulink-only future evidence as hardware/HIL/board/silicon validation.
 
+## E010-A5 Candidate Comparison Boundary
+
+Validated so far:
+
+```text
+experiment: E010-A5 candidate comparison
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+variants: A5-T1, A5-T2, A5-T3, A5-T4
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_metrics.csv
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_research_summary.md
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, the tested A5-T3/T4
+area-hold/reentry projection reduces the severe 40A -> 1A recovery peaks
+versus A5-C0/A5-C4 while keeping undershoot, REQ accounting,
+accepted-event phase order, current limit, and late-settling guards clean.
+However, it violates the post-reentry burst guard, so A5 remains MODEL_REVISED.
+The current T4 evidence is a state-machine proxy with reentry/burst audit, not
+a complete full-token fallback/burst-limiter validation.
+```
+
+Quantitative local evidence:
+
+```text
+A5-C0/A5-C4 recovery peak 2-12us = 3.61172 mV
+A5-T3/T4 recovery peak 2-12us = 3.55696 mV
+A5-T3/T4 recovery peak 12-40us = 3.53370 mV
+A5-T3/T4 peak undershoot = 0.697797 mV
+A5-T3/T4 REQ/accepted/dropped = 149/149/0
+A5-T3/T4 burst count / limit = 5 / 2
+```
+
+Not allowed from this chunk:
+
+- A5 `MODEL_CONFIRMED` severe-drop validation;
+- claiming A5 safely improves `40A -> 1A` before burst guard passes;
+- treating the T4 proxy as a complete full-token pass;
+- broad load-drop robustness;
+- active Lambda control;
+- active-phase shed during severe `40A -> 1A`;
+- PIS-IEK first-peak prediction;
+- universal severe-drop threshold claims;
+- hardware, HIL, board-level, or silicon validation.
+
 ## Current E020 Evidence Boundary
 
 Validated so far:

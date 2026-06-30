@@ -66,7 +66,7 @@ next E010 expansion target: severe-drop a_O token for 40A -> 1A
 
 ### E010-A5 Severe-Drop Token Design
 
-Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4 only. Do not claim A5 validation until A5-T1/T2/T3/T4 candidate runs produce CSV metrics and a Markdown report.
+Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison has run and is `MODEL_REVISED`; do not claim A5 validation.
 
 Fixed case:
 
@@ -84,10 +84,10 @@ Variants:
 ```text
 A5-C0: original ideal IQCOT reference for 40A -> 1A, completed
 A5-C4: previous A4 no-harm selector, completed
-A5-T1: severe Ton truncation only, not run
-A5-T2: severe Ton truncation + bounded one-pulse inhibit, not run
-A5-T3: severe Ton truncation + bounded multi-pulse inhibit + area hold, not run
-A5-T4: full severe-drop token with controlled reentry and fallback guard, not run
+A5-T1: severe Ton truncation only, completed, no improvement
+A5-T2: severe Ton truncation + bounded one-pulse inhibit, completed, no improvement
+A5-T3: severe Ton truncation + bounded inhibit + area hold, completed, partial recovery improvement but burst guard fail
+A5-T4: severe-drop token proxy with controlled reentry/fallback bookkeeping, completed, partial recovery improvement but burst guard fail
 ```
 
 Completed baseline audit:
@@ -105,6 +105,26 @@ A5-C0 REQ/accepted/dropped = 149/149/0
 A5-C4 peak overshoot = 4.06085 mV
 A5-C4 recovery peak 2-12us = 3.61172 mV
 A5-C4 REQ/accepted/dropped = 149/149/0
+```
+
+Completed candidate comparison:
+
+```text
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_metrics.csv
+comparison: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_comparison.md
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_candidate_research_summary.md
+classification: MODEL_REVISED
+
+A5-T1/T2:
+  no improvement versus A5-C0/A5-C4
+
+A5-T3/T4:
+  recovery peak 2-12us = 3.55696 mV
+  recovery peak 12-40us = 3.53370 mV
+  peak undershoot = 0.697797 mV
+  REQ/accepted/dropped = 149/149/0
+  burst count / limit = 5 / 2
+  note: T4 is not a passing full-token validation; it is a proxy result that exposes the missing burst limiter
 ```
 
 Metrics:

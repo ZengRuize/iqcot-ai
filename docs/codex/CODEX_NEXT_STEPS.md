@@ -146,7 +146,7 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. E010-A5 baseline audit is complete; next smallest useful E010 step is A5-T1/T2/T3/T4 candidate comparison only.
+9. E010-A5 candidate comparison is complete; next smallest useful E010 step is a controlled-reentry / burst-limiter revision for A5-T4-R1 only.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -383,7 +383,7 @@ For `4 -> 2` shed, the main issue was load-share handoff and disabled-phase curr
 
 The current paper may claim local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model only. It must not claim broad active-phase robustness, arbitrary `1/2/4` scheduling, active Lambda control, efficiency improvement, severe load-rise/drop active-phase behavior, or hardware/HIL/board/silicon validation.
 
-## E010-A5 Baseline Audit Completed
+## E010-A5 Candidate Comparison Completed
 
 Completed:
 
@@ -394,7 +394,8 @@ active phases: fixed four-phase
 DCR/sense gains: nominal
 active Lambda: disabled
 active-phase add/shed: disabled
-status: A5-C0/A5-C4 baseline audit MODEL_CONFIRMED
+baseline audit status: A5-C0/A5-C4 MODEL_CONFIRMED
+candidate comparison status: A5-T1/T2/T3/T4 MODEL_REVISED
 ```
 
 Baseline audit result:
@@ -413,6 +414,30 @@ A5-C4 previous A4 no-harm selector:
 
 A5-C4 reproduces the known severe-drop boundary: A4 is no-harm but non-improving for `40A -> 1A`. This confirms the need for A5 but does not validate A5.
 
+Candidate comparison result:
+
+```text
+A5-T1:
+  same as A5-C0/A5-C4; no improvement
+
+A5-T2:
+  same as A5-C0/A5-C4; no improvement
+
+A5-T3:
+  recovery peak 2-12us = 3.55696 mV
+  recovery peak 12-40us = 3.53370 mV
+  peak undershoot = 0.697797 mV
+  REQ/accepted/dropped = 149/149/0
+  burst count / limit = 5 / 2
+  classification hint = MODEL_REVISED
+
+A5-T4:
+  same implemented conservative proxy setting and metrics as A5-T3
+  classification hint = MODEL_REVISED
+```
+
+Interpretation: T3/T4 show a local recovery-peak reduction, but fail the post-reentry burst guard. T4 is a severe-drop state-machine proxy with reentry/burst audit, not a complete full-token fallback/burst-limiter validation. A5 is not confirmed.
+
 Evidence:
 
 ```text
@@ -425,11 +450,12 @@ e010_a5_baseline_reproduction_summary.md
 Next smallest useful step:
 
 ```text
-run A5-T1/T2/T3/T4 candidate comparison
-do not run broad sweeps
-do not enable active Lambda
-do not enable active-phase add/shed
-do not claim A5 improvement until a candidate beats A5-C0/A5-C4 without violating guards
+revise controlled reentry / burst limiter as A5-T4-R1
+keep 40A -> 1A fixed four-phase severe drop
+keep active Lambda disabled
+keep active-phase add/shed disabled
+do not add mismatch or broad load-drop grids
+do not claim A5 improvement until recovery improvement and burst guard pass together
 ```
 
 ## Standing Guardrails
