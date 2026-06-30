@@ -146,7 +146,7 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. E010-A5-T4-R1 controlled-reentry / burst-limiter revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is reentry energy shaping, not a broad sweep.
+9. E010-A5-R2 reentry energy-shaping / scheduler-release revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is severe-drop `a_O` token-structure revision or claim downgrade, not a broad sweep.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -475,11 +475,39 @@ R1-T4a/b/c:
 
 Interpretation: controlled reentry / burst limiter did not validate A5. R1-T4a/b/c suppressed positive peaks only by producing severe undershoot and final-error collapse, and the burst guard still failed. Do not claim A5 validation.
 
+E010-A5-R2 reentry energy-shaping / scheduler-release revision completed:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/
+metrics: e010_a5_r2_metrics.csv
+summary: e010_a5_r2_research_summary.md
+classification: MODEL_REVISED
+
+R2-E1/R2-E2:
+  peak overshoot = 3.51629 mV
+  recovery peak 2-12us = 1.75366 mV
+  recovery peak 12-40us = 3.51629 mV
+  peak undershoot = 7.63188 mV
+  burst count / limit = 5 / 2
+  guard_pass = false
+
+R2-E3/R2-E4:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Interpretation: E1/E2 show that energy budget plus Ton ramp can reduce positive recovery peaks, but not safely. E2's soft preload is observable but behaviorally unchanged from E1. E3/E4 show that the current scheduler-release gate starves recovery energy; voltage-window release does not fix the final-REQ gate insertion. Do not claim A5 validation.
+
 Next smallest useful step:
 
 ```text
-revise reentry energy shaping and scheduler release
-keep 40A -> 1A fixed four-phase severe drop
+revise severe-drop a_O token structure or downgrade severe-drop improvement claim
+keep 40A -> 1A fixed four-phase severe drop if another smallest-useful test is needed
 keep active Lambda disabled
 keep active-phase add/shed disabled
 do not add mismatch or broad load-drop grids

@@ -221,6 +221,66 @@ Not allowed from E010-A5-T4-R1:
 - active-phase shed during severe `40A -> 1A`;
 - hardware, HIL, board-level, or silicon validation.
 
+## Current E010-A5-R2 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E010-A5-R2 reentry energy shaping and scheduler release
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+variants: R2-C0, R2-C4, R2-T4proxy, R2-R1bad, R2-E1, R2-E2, R2-E3, R2-E4
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/e010_a5_r2_metrics.csv
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/e010_a5_r2_research_summary.md
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, R2 shows that severe-drop reentry
+must be treated as signed energy/event release rather than pulse counting alone.
+R2-E1/E2 reduce positive recovery peaks, but they violate the undershoot and
+post-reentry burst guards. R2-E3/E4 suppress positive peaks only by starving
+recovery energy and reproducing R1-like severe undershoot/final-error collapse.
+A5 severe-drop validation therefore remains MODEL_REVISED.
+```
+
+Quantitative local evidence:
+
+```text
+R2-E1/E2:
+  peak overshoot = 3.51629 mV
+  recovery peak 2-12us = 1.75366 mV
+  recovery peak 12-40us = 3.51629 mV
+  peak undershoot = 7.63188 mV
+  burst count / limit = 5 / 2
+  REQ/accepted/dropped = 152/152/0
+
+R2-E3/E4:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+```
+
+Not allowed from E010-A5-R2:
+
+- A5 `MODEL_CONFIRMED` severe-drop validation;
+- claiming R2 improves `40A -> 1A` while all guards pass;
+- treating E1/E2 positive-peak reduction as safe when undershoot and burst guards fail;
+- treating E3/E4 zero positive peak as improvement when it is caused by recovery starvation;
+- broad load-drop robustness;
+- active Lambda control;
+- active-phase shed during severe `40A -> 1A`;
+- AI direct gate control or AI control of external load-current slew;
+- hardware, HIL, board-level, or silicon validation.
+
 ## Current E020 Evidence Boundary
 
 Validated so far:

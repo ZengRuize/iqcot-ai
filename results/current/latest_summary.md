@@ -108,7 +108,7 @@ safety projection and a load-drop magnitude selector.
 | Module | Status | Next action |
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
-| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4 candidate comparison `MODEL_REVISED`; A5-T4-R1 controlled-reentry burst limiter `MODEL_REVISED` | revise reentry energy shaping and scheduler release only, no broad sweeps |
+| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4 candidate comparison `MODEL_REVISED`; A5-T4-R1 controlled-reentry burst limiter `MODEL_REVISED`; A5-R2 reentry energy shaping / scheduler release `MODEL_REVISED` | revise severe-drop token structure or downgrade severe-drop improvement claim; no broad sweeps |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
@@ -534,4 +534,37 @@ R1-T4a/b/c:
   guard_pass = false
 ```
 
-Boundary: R1 does not validate A5. The count/window burst limiter suppressed positive peaks only by creating severe undershoot and final-error collapse, while the burst count still failed `5 / 2`. The next smallest useful E010 step is reentry energy shaping and scheduler-release reconstruction, not a broad sweep or active-phase shed.
+Boundary: R1 does not validate A5. The count/window burst limiter suppressed positive peaks only by creating severe undershoot and final-error collapse, while the burst count still failed `5 / 2`. R2 below is the completed follow-up and should be treated as the current E010 severe-drop state.
+
+E010-A5-R2 reentry energy shaping and scheduler release is complete:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+metrics: e010_a5_r2_metrics.csv
+summary: e010_a5_r2_research_summary.md
+classification: MODEL_REVISED
+
+R2-E1/R2-E2:
+  peak overshoot = 3.51629 mV
+  recovery peak 2-12us = 1.75366 mV
+  recovery peak 12-40us = 3.51629 mV
+  peak undershoot = 7.63188 mV
+  burst count / limit = 5 / 2
+  guard_pass = false
+
+R2-E3/R2-E4:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Boundary: R2 does not validate A5. Energy budget plus Ton ramp gives a real but unsafe positive-recovery benefit; current soft preload is only logged/proxy-effective; scheduler release gating plus voltage-window enable still starves recovery energy. Next smallest useful E010 step is to revise the severe-drop `a_O` token structure or downgrade the severe-drop improvement claim, not to broaden into sweeps, mismatch, active Lambda, or active-phase shed.

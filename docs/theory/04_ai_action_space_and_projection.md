@@ -506,6 +506,11 @@ a_O_severe = [
   reentry_min_inter_pulse_spacing_us,
   first_reentry_Ton_limit_ns,
   recovery_Ton_ramp_rate,
+  reentry_Ton_budget_ns,
+  reentry_energy_budget_window_us,
+  area_int_soft_preload_policy,
+  scheduler_release_policy,
+  voltage_window_release_policy,
   area_int_reentry_clamp,
   late_settling_guard,
   undershoot_budget_severe,
@@ -606,6 +611,61 @@ P_O must satisfy:
 ```
 
 If these budgets cannot be satisfied together, the projection must fall back to the previous safe no-op/A4 boundary rather than applying a count-only burst limiter. The next A5 revision should shape reentry energy at the scheduler-release level and not only inhibit pulses after accepted reentry events have already clustered.
+
+### E010-A5-R2 Reentry Energy-Shaping Revision
+
+E010-A5-R2 tested the fixed severe `40A -> 1A` external load-current drop with fixed four phases, nominal DCR/sense, active Lambda disabled, and active-phase add/shed disabled:
+
+```text
+experiment: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/
+classification: MODEL_REVISED
+```
+
+R2 adds these projected token dimensions to the severe-drop `a_O` design space:
+
+```text
+reentry_energy_budget_window_us
+reentry_Ton_budget_ns
+first_reentry_Ton_limit_ns
+second_reentry_Ton_limit_ns
+Ton_ramp_step_ns
+Ton_ramp_max_ns
+area_int_soft_preload_enable
+area_int_preload_target
+area_int_restore_rate
+scheduler_release_fraction_initial
+scheduler_release_ramp_rate
+scheduler_release_window_us
+voltage_window_release_enable
+upper_reentry_band_mV
+undershoot_budget_severe_mV
+```
+
+The R2 evidence keeps `a_O_severe` revised:
+
+```text
+R2-E1/E2:
+  positive recovery peaks improve
+  peak undershoot = 7.63188 mV
+  burst count / limit = 5 / 2
+
+R2-E3/E4:
+  positive peaks collapse to 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+```
+
+Projection rule update:
+
+```text
+Do not project scheduler release as a hard final-REQ gate or scalar pulse-count limiter.
+The release policy must allocate accepted-event energy while preserving recovery energy.
+If signed energy, burst density, undershoot, and final-error guards cannot all pass,
+fallback to no-harm A4/no-op for this severe-drop boundary.
+```
+
+E2 shows that a logged soft preload is insufficient unless it actually modifies the area-integrator path. E4 shows that simply enabling a voltage-window flag does not fix a starvation-prone scheduler-release insertion point. A5-R2 therefore remains evidence for theory revision, not a validated severe-drop AI/table token.
 
 ## Load-Rise Projection Rule from E020
 

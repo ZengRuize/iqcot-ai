@@ -28,6 +28,14 @@ elseif variant == "A5-T4-R1b"
     modelName = "E010A5_T4_R1b_burst_area_clamp_40A_1A_" + dateTag;
 elseif variant == "A5-T4-R1c"
     modelName = "E010A5_T4_R1c_burst_clamp_ton_ramp_40A_1A_" + dateTag;
+elseif variant == "A5-R2-E1"
+    modelName = "E010A5_R2_E1_energy_ton_ramp_40A_1A_" + dateTag;
+elseif variant == "A5-R2-E2"
+    modelName = "E010A5_R2_E2_energy_area_preload_40A_1A_" + dateTag;
+elseif variant == "A5-R2-E3"
+    modelName = "E010A5_R2_E3_scheduler_release_40A_1A_" + dateTag;
+elseif variant == "A5-R2-E4"
+    modelName = "E010A5_R2_E4_voltage_window_release_40A_1A_" + dateTag;
 else
     error("Unknown E010-A5 candidate variant: %s", variant);
 end
@@ -74,6 +82,14 @@ if startsWith(variant, "A5-T4-R1")
     else
         addScalarConstantLog(modelName, "recovery_Ton_ramp_usage", "0", ...
             [4080 2045 4260 2075]);
+    end
+elseif startsWith(variant, "A5-R2")
+    addR2EnergyShaping(modelName);
+    if variant == "A5-R2-E3" || variant == "A5-R2-E4"
+        addR2SchedulerReleaseGate(modelName);
+    else
+        addScalarConstantLog(modelName, "scheduler_release_gate_active", "0", ...
+            [4080 2310 4260 2340]);
     end
 end
 
@@ -660,6 +676,258 @@ connectBlocks(usageMux, 1, usageTerm, 1);
 markBlockOutport(usageMux, 1, "recovery_Ton_ramp_usage");
 end
 
+function addR2EnergyShaping(modelName)
+clockBlock = modelName + "/E010A5_R2_Energy_Clock";
+enableBlock = modelName + "/E010A5_R2_Energy_Enable";
+tstepBlock = modelName + "/E010A5_R2_LoadStepTime";
+budgetWindowBlock = modelName + "/E010A5_R2_BudgetWindow";
+budgetBlock = modelName + "/E010A5_R2_TonBudget";
+firstLimitBlock = modelName + "/E010A5_R2_FirstTonLimit";
+secondLimitBlock = modelName + "/E010A5_R2_SecondTonLimit";
+stepBlock = modelName + "/E010A5_R2_TonRampStep";
+rampWindowBlock = modelName + "/E010A5_R2_TonRampWindow";
+maxTonBlock = modelName + "/E010A5_R2_TonRampMax";
+softEnableBlock = modelName + "/E010A5_R2_SoftPreloadEnable";
+preloadTargetBlock = modelName + "/E010A5_R2_PreloadTarget";
+restoreRateBlock = modelName + "/E010A5_R2_RestoreRate";
+schedulerEnableBlock = modelName + "/E010A5_R2_SchedulerReleaseEnable";
+releaseInitialBlock = modelName + "/E010A5_R2_ReleaseInitial";
+releaseRateBlock = modelName + "/E010A5_R2_ReleaseRate";
+releaseWindowBlock = modelName + "/E010A5_R2_ReleaseWindow";
+voltageEnableBlock = modelName + "/E010A5_R2_VoltageWindowEnable";
+voutBlock = modelName + "/E010A5_R2_Vout";
+vrefBlock = modelName + "/E010A5_R2_Vref";
+upperBandBlock = modelName + "/E010A5_R2_UpperBand";
+undershootBlock = modelName + "/E010A5_R2_UndershootBudget";
+energyBlock = modelName + "/E010A5_R2_EnergyShaper";
+usageMux = modelName + "/E010A5_R2_TonRampUsage_Mux";
+limitMux = modelName + "/E010A5_R2_TonRampLimit_Mux";
+usageTerm = modelName + "/E010A5_R2_TonRampUsage_Term";
+limitTerm = modelName + "/E010A5_R2_TonRampLimit_Term";
+releaseGoto = modelName + "/E010A5_R2_ReleaseFraction_Goto";
+voltageGoto = modelName + "/E010A5_R2_VoltageState_Goto";
+
+blocks = [clockBlock, enableBlock, tstepBlock, budgetWindowBlock, budgetBlock, ...
+    firstLimitBlock, secondLimitBlock, stepBlock, rampWindowBlock, maxTonBlock, ...
+    softEnableBlock, preloadTargetBlock, restoreRateBlock, schedulerEnableBlock, ...
+    releaseInitialBlock, releaseRateBlock, releaseWindowBlock, voltageEnableBlock, ...
+    voutBlock, vrefBlock, upperBandBlock, undershootBlock, energyBlock, usageMux, ...
+    limitMux, usageTerm, limitTerm, releaseGoto, voltageGoto];
+for idx = 1:numel(blocks)
+    deleteBlockIfExists(blocks(idx));
+end
+for phase = 1:4
+    deleteBlockIfExists(modelName + "/E010A5_R2_REQAccept_From" + phase);
+    deleteBlockIfExists(modelName + "/E010A5_R2_REQAccept_Delay" + phase);
+end
+
+add_block("simulink/Sources/Clock", clockBlock, "Position", [1680 2680 1720 2710]);
+add_block("simulink/Sources/Constant", enableBlock, ...
+    "Value", "E010A5_R2_EnergyShaper_Enable", "Position", [1680 2725 1870 2750]);
+add_block("simulink/Sources/Constant", tstepBlock, ...
+    "Value", "t_load_step", "Position", [1680 2770 1870 2795]);
+add_block("simulink/Sources/Constant", budgetWindowBlock, ...
+    "Value", "E010A5_R2_BudgetWindow", "Position", [1680 2815 1870 2840]);
+add_block("simulink/Sources/Constant", budgetBlock, ...
+    "Value", "E010A5_R2_TonBudget", "Position", [1680 2860 1870 2885]);
+add_block("simulink/Sources/Constant", firstLimitBlock, ...
+    "Value", "E010A5_R2_FirstTonLimit", "Position", [1680 2905 1870 2930]);
+add_block("simulink/Sources/Constant", secondLimitBlock, ...
+    "Value", "E010A5_R2_SecondTonLimit", "Position", [1680 2950 1870 2975]);
+add_block("simulink/Sources/Constant", stepBlock, ...
+    "Value", "E010A5_R2_TonRampStep", "Position", [1680 2995 1870 3020]);
+add_block("simulink/Sources/Constant", rampWindowBlock, ...
+    "Value", "E010A5_R2_TonRampWindow", "Position", [1680 3040 1870 3065]);
+add_block("simulink/Sources/Constant", maxTonBlock, ...
+    "Value", "E010A5_R2_TonRampMax", "Position", [1680 3085 1870 3110]);
+add_block("simulink/Sources/Constant", softEnableBlock, ...
+    "Value", "E010A5_R2_SoftPreloadEnable", "Position", [1680 3130 1870 3155]);
+add_block("simulink/Sources/Constant", preloadTargetBlock, ...
+    "Value", "E010A5_R2_PreloadTarget", "Position", [1680 3175 1870 3200]);
+add_block("simulink/Sources/Constant", restoreRateBlock, ...
+    "Value", "E010A5_R2_RestoreRate", "Position", [1680 3220 1870 3245]);
+add_block("simulink/Sources/Constant", schedulerEnableBlock, ...
+    "Value", "E010A5_R2_SchedulerReleaseEnable", "Position", [1680 3265 1870 3290]);
+add_block("simulink/Sources/Constant", releaseInitialBlock, ...
+    "Value", "E010A5_R2_ReleaseInitial", "Position", [1680 3310 1870 3335]);
+add_block("simulink/Sources/Constant", releaseRateBlock, ...
+    "Value", "E010A5_R2_ReleaseRate", "Position", [1680 3355 1870 3380]);
+add_block("simulink/Sources/Constant", releaseWindowBlock, ...
+    "Value", "E010A5_R2_ReleaseWindow", "Position", [1680 3400 1870 3425]);
+add_block("simulink/Sources/Constant", voltageEnableBlock, ...
+    "Value", "E010A5_R2_VoltageWindowEnable", "Position", [1680 3445 1870 3470]);
+add_block("simulink/Signal Routing/From", voutBlock, ...
+    "GotoTag", "Vout", "Position", [1680 3490 1740 3518]);
+add_block("simulink/Sources/Constant", vrefBlock, ...
+    "Value", "E010_Vref", "Position", [1680 3535 1870 3560]);
+add_block("simulink/Sources/Constant", upperBandBlock, ...
+    "Value", "E010A5_R2_UpperReentryBand", "Position", [1680 3580 1870 3605]);
+add_block("simulink/Sources/Constant", undershootBlock, ...
+    "Value", "E010A5_R2_UndershootBudget", "Position", [1680 3625 1870 3650]);
+
+add_block("simulink/User-Defined Functions/MATLAB Function", energyBlock, ...
+    "Position", [2400 2680 2800 3040]);
+setR2EnergyShaperScript(energyBlock);
+add_block("simulink/Signal Routing/Mux", usageMux, ...
+    "Inputs", "4", "Position", [3030 2820 3060 2940]);
+add_block("simulink/Signal Routing/Mux", limitMux, ...
+    "Inputs", "4", "Position", [3030 2980 3060 3100]);
+add_block("simulink/Sinks/Terminator", usageTerm, ...
+    "Position", [3160 2865 3180 2890]);
+add_block("simulink/Sinks/Terminator", limitTerm, ...
+    "Position", [3160 3025 3180 3050]);
+add_block("simulink/Signal Routing/Goto", releaseGoto, ...
+    "GotoTag", "E010A5_R2_scheduler_release_fraction", ...
+    "Position", [3180 3285 3295 3315]);
+add_block("simulink/Signal Routing/Goto", voltageGoto, ...
+    "GotoTag", "E010A5_R2_voltage_window_state", ...
+    "Position", [3180 3375 3295 3405]);
+
+for phase = 1:4
+    connectBlocks(modelName + "/E010A5_TonTrunc" + phase, 1, energyBlock, phase);
+end
+connectBlocks(clockBlock, 1, energyBlock, 5);
+connectBlocks(tstepBlock, 1, energyBlock, 6);
+connectBlocks(enableBlock, 1, energyBlock, 7);
+connectBlocks(budgetWindowBlock, 1, energyBlock, 8);
+connectBlocks(budgetBlock, 1, energyBlock, 9);
+connectBlocks(firstLimitBlock, 1, energyBlock, 10);
+connectBlocks(secondLimitBlock, 1, energyBlock, 11);
+connectBlocks(stepBlock, 1, energyBlock, 12);
+connectBlocks(rampWindowBlock, 1, energyBlock, 13);
+connectBlocks(maxTonBlock, 1, energyBlock, 14);
+connectBlocks(softEnableBlock, 1, energyBlock, 15);
+connectBlocks(preloadTargetBlock, 1, energyBlock, 16);
+connectBlocks(restoreRateBlock, 1, energyBlock, 17);
+connectBlocks(schedulerEnableBlock, 1, energyBlock, 18);
+connectBlocks(releaseInitialBlock, 1, energyBlock, 19);
+connectBlocks(releaseRateBlock, 1, energyBlock, 20);
+connectBlocks(releaseWindowBlock, 1, energyBlock, 21);
+connectBlocks(voltageEnableBlock, 1, energyBlock, 22);
+connectBlocks(voutBlock, 1, energyBlock, 23);
+connectBlocks(vrefBlock, 1, energyBlock, 24);
+connectBlocks(upperBandBlock, 1, energyBlock, 25);
+connectBlocks(undershootBlock, 1, energyBlock, 26);
+
+for phase = 1:4
+    fromBlock = modelName + "/E010A5_R2_REQAccept_From" + phase;
+    delayBlock = modelName + "/E010A5_R2_REQAccept_Delay" + phase;
+    y = 3660 + 45 * phase;
+    add_block("simulink/Signal Routing/From", fromBlock, ...
+        "GotoTag", "REQ_accept" + phase, "Position", [1970 y 2040 y+28]);
+    add_block("simulink/Discrete/Unit Delay", delayBlock, ...
+        "SampleTime", "Tss", "InitialCondition", "0", ...
+        "Position", [2105 y 2160 y+28]);
+    connectBlocks(fromBlock, 1, delayBlock, 1);
+    connectBlocks(delayBlock, 1, energyBlock, 26 + phase);
+end
+
+for phase = 1:4
+    disconnectInport(modelName + "/COT_Cell_1Phase" + phase, 3);
+    connectBlocks(energyBlock, phase, modelName + "/COT_Cell_1Phase" + phase, 3);
+    connectBlocks(energyBlock, 4 + phase, usageMux, phase);
+    connectBlocks(energyBlock, 8 + phase, limitMux, phase);
+    markBlockOutport(energyBlock, phase, "Ton_cmd" + phase);
+end
+connectBlocks(usageMux, 1, usageTerm, 1);
+connectBlocks(limitMux, 1, limitTerm, 1);
+markBlockOutport(usageMux, 1, "Ton_ramp_usage");
+markBlockOutport(limitMux, 1, "Ton_ramp_limit_i");
+
+r2Scalar = [
+    "Ton_ramp_state", "energy_budget_state", "reentry_energy_budget_used", ...
+    "reentry_energy_budget_remaining", "reentry_energy_budget_violation", ...
+    "area_int_soft_preload_state", "area_int_soft_preload_count", ...
+    "area_int_restore_state", "scheduler_release_state", ...
+    "scheduler_release_fraction", "scheduler_release_guard_violation", ...
+    "voltage_window_release_state", "voltage_window_release_violation", ...
+    "controlled_reentry_active"];
+for idx = 1:numel(r2Scalar)
+    portNo = 12 + idx;
+    termBlock = modelName + "/E010A5_R2_" + r2Scalar(idx) + "_Term";
+    deleteBlockIfExists(termBlock);
+    add_block("simulink/Sinks/Terminator", termBlock, ...
+        "Position", [3180 3115 + 30 * idx 3200 3140 + 30 * idx]);
+    connectBlocks(energyBlock, portNo, termBlock, 1);
+    markBlockOutport(energyBlock, portNo, r2Scalar(idx));
+end
+connectBlocks(energyBlock, 22, releaseGoto, 1);
+connectBlocks(energyBlock, 24, voltageGoto, 1);
+
+addScalarConstantLog(modelName, "Ton_nom", "Ton_nom", [4080 2220 4210 2250]);
+addScalarConstantLog(modelName, "burst_limiter_state", "0", [4080 2265 4210 2295]);
+addScalarConstantLog(modelName, "area_int_reentry_clamp", "0", [4080 2355 4210 2385]);
+addScalarConstantLog(modelName, "burst_limiter_clamp_count", "0", [4080 2400 4210 2430]);
+addScalarConstantLog(modelName, "burst_limiter_release_count", "0", [4080 2445 4210 2475]);
+addScalarConstantLog(modelName, "burst_limiter_fallback_reason", "0", [4080 2490 4210 2520]);
+addScalarConstantLog(modelName, "recovery_Ton_ramp_usage", "0", [4080 2535 4210 2565]);
+end
+
+function addR2SchedulerReleaseGate(modelName)
+releaseBlock = modelName + "/E010A5_R2_ReleaseFraction_From";
+voltageBlock = modelName + "/E010A5_R2_VoltageState_From";
+gateMux = modelName + "/E010A5_R2_SchedulerGate_Mux";
+gateTerm = modelName + "/E010A5_R2_SchedulerGate_Term";
+deleteBlockIfExists(releaseBlock);
+deleteBlockIfExists(voltageBlock);
+deleteBlockIfExists(gateMux);
+deleteBlockIfExists(gateTerm);
+add_block("simulink/Signal Routing/From", releaseBlock, ...
+    "GotoTag", "E010A5_R2_scheduler_release_fraction", ...
+    "Position", [2180 4070 2290 4098]);
+add_block("simulink/Signal Routing/From", voltageBlock, ...
+    "GotoTag", "E010A5_R2_voltage_window_state", ...
+    "Position", [2180 4125 2290 4153]);
+add_block("simulink/Signal Routing/Mux", gateMux, ...
+    "Inputs", "4", "Position", [2910 4130 2940 4250]);
+add_block("simulink/Sinks/Terminator", gateTerm, ...
+    "Position", [3040 4175 3060 4200]);
+
+for phase = 1:4
+    gateBlock = modelName + "/E010A5_R2_FinalReqGate" + phase;
+    activeTerm = modelName + "/E010A5_R2_FinalReqGate" + phase + "_Active_Term";
+    phaseRankBlock = modelName + "/E010A5_R2_FinalReqGate" + phase + "_Rank";
+    enableBlock = modelName + "/E010A5_R2_FinalReqGate" + phase + "_Enable";
+    voltageEnableBlock = modelName + "/E010A5_R2_FinalReqGate" + phase + "_VoltageEnable";
+    deleteBlockIfExists(activeTerm);
+    deleteBlockIfExists(phaseRankBlock);
+    deleteBlockIfExists(enableBlock);
+    deleteBlockIfExists(voltageEnableBlock);
+    deleteBlockIfExists(gateBlock);
+    y = 3900 + 110 * phase;
+    add_block("simulink/Sources/Constant", phaseRankBlock, ...
+        "Value", num2str(phase), "Position", [2180 y 2240 y+25]);
+    add_block("simulink/Sources/Constant", enableBlock, ...
+        "Value", "E010A5_R2_SchedulerGateEnable", "Position", [2180 y+35 2360 y+60]);
+    add_block("simulink/Sources/Constant", voltageEnableBlock, ...
+        "Value", "E010A5_R2_VoltageWindowEnable", "Position", [2180 y+70 2360 y+95]);
+    add_block("simulink/User-Defined Functions/MATLAB Function", gateBlock, ...
+        "Position", [2520 y 2760 y+90]);
+    setR2FinalReqGateScript(gateBlock);
+    add_block("simulink/Sinks/Terminator", activeTerm, ...
+        "Position", [2860 y+50 2880 y+75]);
+
+    pulseBlock = modelName + "/E010A5_PulseInhibit" + phase;
+    cotBlock = modelName + "/COT_Cell_1Phase" + phase;
+    gotoBlock = modelName + "/E010A5_REQAccept_Goto" + phase;
+    disconnectInport(cotBlock, 1);
+    disconnectInport(gotoBlock, 1);
+    connectBlocks(pulseBlock, 1, gateBlock, 1);
+    connectBlocks(releaseBlock, 1, gateBlock, 2);
+    connectBlocks(voltageBlock, 1, gateBlock, 3);
+    connectBlocks(phaseRankBlock, 1, gateBlock, 4);
+    connectBlocks(enableBlock, 1, gateBlock, 5);
+    connectBlocks(voltageEnableBlock, 1, gateBlock, 6);
+    connectBlocks(gateBlock, 1, cotBlock, 1);
+    connectBlocks(gateBlock, 1, gotoBlock, 1);
+    connectBlocks(gateBlock, 3, activeTerm, 1);
+    connectBlocks(gateBlock, 3, gateMux, phase);
+    markBlockOutport(gateBlock, 1, "REQ_accept" + phase);
+end
+connectBlocks(gateMux, 1, gateTerm, 1);
+markBlockOutport(gateMux, 1, "scheduler_release_gate_active");
+end
+
 function addReqRejectReasonLog(modelName)
 block = modelName + "/E010A5_REQRejectReason";
 termBlock = modelName + "/E010A5_REQRejectReason_Term";
@@ -762,6 +1030,14 @@ elseif variant == "A5-T4-R1b"
     value = "62";
 elseif variant == "A5-T4-R1c"
     value = "63";
+elseif variant == "A5-R2-E1"
+    value = "71";
+elseif variant == "A5-R2-E2"
+    value = "72";
+elseif variant == "A5-R2-E3"
+    value = "73";
+elseif variant == "A5-R2-E4"
+    value = "74";
 else
     value = "50";
 end
@@ -1070,6 +1346,187 @@ script = [
 ];
 setChartScriptAndTypes(blockPath, script, ...
     ["req_in", "enable_in", "req_out"], ["req_in", "req_out"]);
+setFastSampleTime(blockPath);
+end
+
+function setR2EnergyShaperScript(blockPath)
+script = [
+"function [ton1o,ton2o,ton3o,ton4o,u1,u2,u3,u4,l1,l2,l3,l4,ton_state,budget_state,budget_used,budget_remaining,budget_violation,soft_state,soft_count,restore_state,sched_state,sched_fraction,sched_guard_violation,voltage_state,voltage_violation,controlled_active] = r2_energy_shaper(ton1,ton2,ton3,ton4,t,t_step,enable,budget_window,ton_budget,first_lim,second_lim,ton_step,ramp_window,max_ton,soft_enable,preload_target,restore_rate,sched_enable,release_initial,release_rate,release_window,voltage_enable,vout,vref,upper_band,undershoot_budget,req1,req2,req3,req4)"
+"%#codegen"
+"persistent prev_req count used first_time soft_seen"
+"if isempty(prev_req)"
+"    prev_req = [false,false,false,false];"
+"end"
+"if isempty(count)"
+"    count = 0.0;"
+"end"
+"if isempty(used)"
+"    used = 0.0;"
+"end"
+"if isempty(first_time)"
+"    first_time = -1.0;"
+"end"
+"if isempty(soft_seen)"
+"    soft_seen = 0.0;"
+"end"
+"if t < t_step"
+"    prev_req = [false,false,false,false];"
+"    count = 0.0;"
+"    used = 0.0;"
+"    first_time = -1.0;"
+"    soft_seen = 0.0;"
+"end"
+"tons = [ton1,ton2,ton3,ton4];"
+"req = [req1,req2,req3,req4] > 0.5;"
+"rise = req & ~prev_req;"
+"active = (enable > 0.5) && (t >= t_step);"
+"if active && (first_time < 0.0) && any(rise)"
+"    first_time = t;"
+"end"
+"if first_time >= 0.0"
+"    age = max(t - first_time, 0.0);"
+"else"
+"    age = 0.0;"
+"end"
+"in_window = active && (first_time >= 0.0) && (age <= max(budget_window, 0.0));"
+"if voltage_enable > 0.5"
+"    if vout < vref - max(undershoot_budget, 0.0)"
+"        voltage_state = 2.0;"
+"    elseif vout > vref + max(upper_band, 0.0)"
+"        voltage_state = 3.0;"
+"    else"
+"        voltage_state = 1.0;"
+"    end"
+"else"
+"    voltage_state = 0.0;"
+"end"
+"if (sched_enable > 0.5) && in_window"
+"    sched_fraction = min(1.0, max(0.0, release_initial) + max(age, 0.0) * max(release_rate, 0.0));"
+"    if age > max(release_window, 0.0)"
+"        sched_fraction = 1.0;"
+"    end"
+"    sched_state = 1.0 + double(sched_fraction >= 0.999);"
+"else"
+"    sched_fraction = 1.0;"
+"    sched_state = 0.0;"
+"end"
+"if ramp_window > 0.0"
+"    alpha = min(max(age / ramp_window, 0.0), 1.0);"
+"else"
+"    alpha = 1.0;"
+"end"
+"base_limit = first_lim + alpha * max(max_ton - first_lim, 0.0);"
+"event_limit = first_lim;"
+"if count >= 0.5"
+"    event_limit = second_lim;"
+"end"
+"if count >= 1.5"
+"    event_limit = second_lim + (count - 1.0) * max(ton_step, 0.0);"
+"end"
+"limit = min(max_ton, max(first_lim, min(base_limit, event_limit)));"
+"if sched_enable > 0.5"
+"    limit = max(first_lim, limit * max(sched_fraction, 0.25));"
+"end"
+"if voltage_state == 2.0"
+"    limit = max_ton;"
+"elseif voltage_state == 3.0"
+"    limit = min(limit, first_lim);"
+"end"
+"outs = tons;"
+"limits = max_ton * ones(1,4);"
+"if in_window"
+"    limits = limit * ones(1,4);"
+"    for idx = 1:4"
+"        if rise(idx)"
+"            remaining = max(ton_budget - used, 0.0);"
+"            allowed = min(tons(idx), limit);"
+"            if remaining > 0.0"
+"                allowed = min(allowed, remaining);"
+"                allowed = max(allowed, min(first_lim, remaining));"
+"            else"
+"                allowed = min(allowed, first_lim);"
+"            end"
+"            outs(idx) = allowed;"
+"            used = used + max(allowed, 0.0);"
+"            count = count + 1.0;"
+"        else"
+"            outs(idx) = min(tons(idx), limit);"
+"        end"
+"    end"
+"end"
+"budget_remaining = max(ton_budget - used, 0.0);"
+"budget_violation = double(in_window && (used > ton_budget + 1.0e-12));"
+"budget_used = used;"
+"if ~active"
+"    ton_state = 0.0;"
+"elseif in_window"
+"    ton_state = 1.0;"
+"else"
+"    ton_state = 2.0;"
+"end"
+"if ~active"
+"    budget_state = 0.0;"
+"elseif budget_violation > 0.5"
+"    budget_state = 3.0;"
+"elseif in_window"
+"    budget_state = 1.0;"
+"else"
+"    budget_state = 2.0;"
+"end"
+"soft_state = double(in_window && (soft_enable > 0.5));"
+"if soft_state > 0.5"
+"    soft_seen = 1.0;"
+"end"
+"soft_count = soft_seen;"
+"restore_state = double((soft_seen > 0.5) && (restore_rate >= 0.0));"
+"sched_guard_violation = double((sched_enable > 0.5) && in_window && sched_fraction < 0.249);"
+"voltage_violation = double((voltage_enable > 0.5) && (voltage_state == 3.0));"
+"controlled_active = double(in_window);"
+"u = max(tons - outs, 0.0);"
+"ton1o = outs(1); ton2o = outs(2); ton3o = outs(3); ton4o = outs(4);"
+"u1 = u(1); u2 = u(2); u3 = u(3); u4 = u(4);"
+"l1 = limits(1); l2 = limits(2); l3 = limits(3); l4 = limits(4);"
+"prev_req = req;"
+"unused_preload = preload_target; %#ok<NASGU>"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["ton1", "ton2", "ton3", "ton4", "t", "t_step", "enable", ...
+    "budget_window", "ton_budget", "first_lim", "second_lim", ...
+    "ton_step", "ramp_window", "max_ton", "soft_enable", ...
+    "preload_target", "restore_rate", "sched_enable", "release_initial", ...
+    "release_rate", "release_window", "voltage_enable", "vout", "vref", ...
+    "upper_band", "undershoot_budget", "req1", "req2", "req3", "req4", ...
+    "ton1o", "ton2o", "ton3o", "ton4o", "u1", "u2", "u3", "u4", ...
+    "l1", "l2", "l3", "l4", "ton_state", "budget_state", ...
+    "budget_used", "budget_remaining", "budget_violation", "soft_state", ...
+    "soft_count", "restore_state", "sched_state", "sched_fraction", ...
+    "sched_guard_violation", "voltage_state", "voltage_violation", ...
+    "controlled_active"], ["req1", "req2", "req3", "req4"]);
+setFastSampleTime(blockPath);
+end
+
+function setR2FinalReqGateScript(blockPath)
+script = [
+"function [req_out,reject_reason,gate_active] = r2_final_req_gate(req_in,sched_fraction,voltage_state,phase_rank,enable,voltage_enable)"
+"%#codegen"
+"gate_active = double(enable > 0.5);"
+"allow_count = ceil(4.0 * min(max(sched_fraction, 0.0), 1.0));"
+"allow_count = max(1.0, min(4.0, allow_count));"
+"allow = (enable <= 0.5) || (phase_rank <= allow_count);"
+"if (voltage_enable > 0.5) && (voltage_state == 2.0)"
+"    allow = true;"
+"end"
+"req_out = (req_in > 0.5) && allow;"
+"if (req_in > 0.5) && ~allow"
+"    reject_reason = 4.0;"
+"else"
+"    reject_reason = 0.0;"
+"end"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["req_in", "sched_fraction", "voltage_state", "phase_rank", ...
+    "enable", "voltage_enable", "req_out", "reject_reason", ...
+    "gate_active"], ["req_in", "req_out"]);
 setFastSampleTime(blockPath);
 end
 

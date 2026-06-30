@@ -61,12 +61,12 @@ Current status:
 120A -> 10A A0 completed as operating-boundary check, not improvement evidence
 comparison: experiments/E010_load_drop_overshoot/e010_research_summary.md
 classification: MODEL_REVISED
-next E010 expansion target: severe-drop reentry energy shaping for 40A -> 1A
+latest E010 severe-drop expansion: A5-R2 reentry energy shaping for 40A -> 1A completed, MODEL_REVISED
 ```
 
 ### E010-A5 Severe-Drop Token Design
 
-Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison and A5-T4-R1 controlled-reentry revision have run and are `MODEL_REVISED`; do not claim A5 validation.
+Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison, A5-T4-R1 controlled-reentry revision, and A5-R2 reentry energy-shaping/scheduler-release revision have run and are `MODEL_REVISED`; do not claim A5 validation.
 
 Fixed case:
 
@@ -169,7 +169,63 @@ Interpretation:
 ```text
 The count/window burst limiter did not close the T4 burst failure.
 The apparent positive-peak suppression in R1-T4a/b/c is a severe undershoot collapse, not usable recovery improvement.
-Next smallest useful step: revise reentry energy shaping and scheduler release, not a broad sweep.
+R2 is the next completed smallest useful step; it revises the token structure again rather than validating A5.
+```
+
+Completed A5-R2 reentry energy-shaping / scheduler-release revision:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/
+metrics: e010_a5_r2_metrics.csv
+summary: e010_a5_r2_research_summary.md
+classification: MODEL_REVISED
+
+R2-C0/R2-C4:
+  carry-forward severe-drop baseline references
+
+R2-T4proxy:
+  carry-forward partial recovery benefit with burst guard fail
+
+R2-R1bad:
+  carry-forward severe undershoot/final-error collapse
+
+R2-E1:
+  energy budget + Ton ramp
+
+R2-E2:
+  energy budget + Ton ramp + area-int soft preload
+
+R2-E3:
+  energy budget + Ton ramp + area-int soft preload + scheduler release ramp
+
+R2-E4:
+  E3 + voltage-windowed release
+
+R2-E1/E2 result:
+  peak overshoot = 3.51629 mV
+  recovery peak 2-12us = 1.75366 mV
+  recovery peak 12-40us = 3.51629 mV
+  peak undershoot = 7.63188 mV
+  burst count / limit = 5 / 2
+  guard_pass = false
+
+R2-E3/E4 result:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  REQ reject count = 170
+  burst count / limit = 5 / 2
+  guard_pass = false
+```
+
+Interpretation:
+
+```text
+E1/E2 prove that per-event Ton/energy shaping can reduce positive recovery peaks, but the resulting recovery trajectory violates the severe undershoot and burst guards.
+E2 soft preload is observable but does not alter the waveform versus E1.
+E3/E4 prove that the current scheduler-release gate starves recovery energy; voltage-window enable does not rescue the final-REQ gate insertion.
+Next smallest useful step: revise severe-drop a_O token structure or downgrade the severe-drop improvement claim. Do not broad sweep.
 ```
 
 Metrics:

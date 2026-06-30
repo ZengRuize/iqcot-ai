@@ -145,6 +145,7 @@ The severe `40A -> 1A` case is not solved by the current A4 selector:
 A5-C0/A5-C4 baseline audit: MODEL_CONFIRMED
 A5-T1/T2/T3/T4 candidate comparison: MODEL_REVISED
 A5-T4-R1 controlled-reentry burst-limiter revision: MODEL_REVISED
+E010-A5-R2 reentry energy shaping / scheduler release: MODEL_REVISED
 ```
 
 The proposed severe-drop token is:
@@ -183,7 +184,9 @@ The design combines five mechanisms:
 2. bounded multi-event pulse inhibit;
 3. area-integrator hold / bleed / controlled reset;
 4. stricter but undershoot-budgeted reentry;
-5. fallback-to-A4/no-op if predicted undershoot or reentry risk is too high.
+5. per-event reentry energy/Ton shaping;
+6. scheduler-release shaping with voltage-window and burst guards;
+7. fallback-to-A4/no-op if predicted undershoot or reentry risk is too high.
 ```
 
 Severe-drop detection is evidence-local:
@@ -261,6 +264,56 @@ E_pulse,k ~= integral_pulse(Vin - Vout) * i_L,phase(k) dt
 ```
 
 must be shaped by voltage, area-integrator, and phase-scheduler state. The next A5 revision should therefore reconstruct the reentry energy distribution and scheduler release conditions rather than only counting accepted pulses after reentry.
+
+### E010-A5-R2 Reentry Energy-Shaping Revision
+
+R2 tested the fixed severe `40A -> 1A` external load-current drop with fixed four phases, nominal DCR/sense gains, active Lambda disabled, and active-phase add/shed disabled:
+
+```text
+experiment: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R2_reentry_energy_shaping/
+variants: R2-E1, R2-E2, R2-E3, R2-E4
+classification: MODEL_REVISED
+```
+
+The R2 hypothesis was that R1 failed because scheduler release was treated as pulse counting, while the real variable is signed recovery energy per accepted event. The tested proxy budget was:
+
+```text
+E_reentry_budget_proxy = sum(Ton_actual_i over reentry_window)
+```
+
+R2-E1 and R2-E2 confirm that per-event Ton shaping is meaningful but incomplete:
+
+```text
+R2-E1/E2 peak overshoot = 3.51629 mV
+R2-E1/E2 recovery peak 2-12us = 1.75366 mV
+R2-E1/E2 recovery peak 12-40us = 3.51629 mV
+R2-E1/E2 peak undershoot = 7.63188 mV
+R2-E1/E2 burst count / limit = 5 / 2
+```
+
+Thus energy budget plus Ton ramp reduces positive recovery peaks, but violates the negative-energy and burst guards. The area-int soft preload in E2 was observable, but did not change the waveform versus E1, so it is not yet a validated actuator path.
+
+R2-E3 and R2-E4 revise the scheduler-release model:
+
+```text
+R2-E3/E4 peak overshoot = 0 mV
+R2-E3/E4 peak undershoot = 971.618 mV
+R2-E3/E4 final Vout error = -919.625 mV
+R2-E3/E4 REQ reject count = 170
+R2-E3/E4 burst count / limit = 5 / 2
+```
+
+Voltage-window release did not rescue E4 because the current release gate still starved the converter of recovery energy. Therefore a valid severe-drop reentry model must release an event queue with a signed energy allocation constraint, not gate the final accepted request path as a scalar fraction:
+
+```text
+release_ok(k) =
+  phase_order_ok(k)
+  and Vout within signed recovery window
+  and Q_reentry_min <= Q_reentry_accum + Q_event,k <= Q_reentry_max
+  and burst_density_window <= burst_limit
+```
+
+The severe-drop claim remains revised. The next model revision should change the `a_O` token structure or fall back to the previous no-harm A4 boundary; it should not expand to broad sweeps, mismatch, active Lambda, or active-phase shed from this R2 state.
 
 ## Load-Rise Branch: Undershoot / Deficit Current
 
