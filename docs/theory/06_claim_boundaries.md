@@ -72,10 +72,35 @@ Not yet allowed:
 
 - generalization to all E010 load-drop cases;
 - claims at 120A initial load until the high-load operating boundary is resolved;
+- severe `40A -> 1A` improvement claim until E010-A5 is implemented and validated;
 - load-rise undershoot recovery claims;
 - current-sharing or phase-recovery claims under mismatch;
 - active-phase add/shed claims;
 - hardware, HIL, or board-level claims.
+
+## E010-A5 Severe-Drop Design Boundary
+
+The severe `40A -> 1A` load-drop case remains unresolved:
+
+```text
+current status: A4 no-harm but non-improving
+new design target: E010-A5 severe-drop a_O token
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+status: DESIGN_ONLY until a future derived-model run produces metrics
+```
+
+Allowed at this stage:
+
+- define the severe-drop token, state machine, metrics, waveform audit, and future pass/fail criteria;
+- describe why severe load-drop is a large-signal excess-current / excess-energy branch;
+- state that PIS-IEK may only be used after protection/reentry for conservative balance recovery.
+
+Forbidden at this stage:
+
+- claiming A5 improves peak overshoot or recovery peak;
+- claiming A5 solves severe `40A -> 1A` until CSV metrics and a Markdown report exist;
+- mixing severe-drop A5 with active-phase shedding;
+- using Simulink-only future evidence as hardware/HIL/board/silicon validation.
 
 ## Current E020 Evidence Boundary
 
@@ -378,7 +403,35 @@ Additional forbidden claims from R3:
 
 ## Current E040 Boundary
 
-E040 active-phase add/shed is planned. After E030-R3, it may be prepared only after the local guarded `a_S` selector is frozen. Do not claim active-phase robustness until add/shed transitions are validated with voltage, reentry, current-sharing, dwell, residual-current, and sensing-confidence guards.
+E040 active-phase validation has local add and shed integrity evidence after E040-A-R1 and E040-S1, but it is not broad active-phase robustness. The local guarded `a_S` selector remains frozen and active Lambda remains disabled. Do not expand E040 until a new smallest-useful protocol is written for the next specific question.
+
+## Local Active-Phase Evidence After E040-A-R1 and E040-S1
+
+The current paper may claim only local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model.
+
+Allowed:
+
+- E040-A-R1 supports a local `2 -> 4` add-phase transition claim under `20A -> 40A`;
+- E040-S1 supports a local `4 -> 2` shed-phase handoff claim under `40A -> 20A`;
+- both claims are derived-Simulink local evidence only.
+
+Add-phase and shed-phase are not symmetric:
+
+- for add, the main issue was active-phase remap, phase insertion, and post-add order relock;
+- for shed, the main issue was load-share handoff and disabled-phase current management;
+- E040-S0 remains important negative evidence because shed cannot be treated as the inverse of add;
+- immediate or dwell-only shed can cause severe undershoot/current-limit failure even when `N_active_final = 2`;
+- E040-S1 confirms that staged load-share transfer, disabled-phase drain, atomic commit, and two-phase relock are required for the tested mild shed case.
+
+Forbidden:
+
+- broad active-phase robustness;
+- arbitrary 1/2/4 scheduling;
+- active Lambda control;
+- active-phase robustness under DCR/current-sense mismatch;
+- severe load-rise/drop active-phase performance;
+- global efficiency improvement;
+- hardware, HIL, board-level, or silicon validation.
 
 First E040-A result:
 

@@ -145,8 +145,8 @@ Proceed in this order:
 5. Freeze E040-A-R1 as local add-phase insertion evidence; keep active Lambda disabled.
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
-8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids until the paper claim boundary is updated.
-9. Add or design a severe-drop `a_O` token for `40A -> 1A`.
+8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
+9. Design the severe-drop `a_O` token package for `40A -> 1A` before any new E010-A5 simulation.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -372,6 +372,32 @@ Allowed local claim: S1-R3 validates only the fixed `40A -> 20A`, `4 -> [1,3]` s
 Still forbidden: broad active-phase robustness, arbitrary 1/2/4 scheduling, severe shed behavior, current-sense/DCR mismatch with active-phase, active Lambda, efficiency improvement, hardware/HIL/board/silicon validation.
 
 Do not run broad active-phase grids, active Lambda, current-sense mismatch with active-phase, or severe load-rise/drop active-phase cases yet.
+
+## Local Active-Phase Evidence Frozen After E040-A-R1 and E040-S1
+
+Add-phase and shed-phase are not symmetric.
+
+For `2 -> 4` add, the main issue was active-phase remap, phase insertion, and post-add order relock. E040-A first failed on phase-order integrity; E040-A-R1 confirmed the local `20A -> 40A` add integrity point.
+
+For `4 -> 2` shed, the main issue was load-share handoff and disabled-phase current management. E040-S0 showed that immediate or dwell-only shed can be unsafe even when it reaches `N_active_final = 2`. E040-S1 confirmed that staged load-share transfer, disabled-phase drain, atomic commit, and two-phase relock are required in the local mild `40A -> 20A` case.
+
+The current paper may claim local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model only. It must not claim broad active-phase robustness, arbitrary `1/2/4` scheduling, active Lambda control, efficiency improvement, severe load-rise/drop active-phase behavior, or hardware/HIL/board/silicon validation.
+
+## Next E010-A5 Design Target
+
+Design only before simulation:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+status: DESIGN_ONLY
+```
+
+The A5 severe-drop `a_O` token should combine active-HS-aware Ton truncation, bounded multi-event pulse inhibit, area-integrator hold/controlled reset, undershoot-budgeted reentry, and fallback-to-A4/no-op. Do not use PIS-IEK to claim first-peak prediction; the severe first peak is a large-signal excess-energy branch.
 
 ## Standing Guardrails
 

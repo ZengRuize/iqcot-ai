@@ -108,10 +108,10 @@ safety projection and a load-drop magnitude selector.
 | Module | Status | Next action |
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
-| Load-drop `a_O` | partially validated | add severe-drop token |
+| Load-drop `a_O` | partially validated; `40A -> 1A` remains no-harm but non-improving under A4 | design E010-A5 severe-drop token before new simulation |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
-| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | freeze S1-R3 local claim; do not run S1-R4 or broad grids without a new protocol |
+| `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
 | Manuscript | Markdown draft synced through E040-S1 local shed-handoff confirmation | convert current Markdown draft into LaTeX plan/figures after claim and citation scaffolding |
 
 ## Current Phase
@@ -416,3 +416,36 @@ final Vout error = 1.65264 mV
 The S1 implementation confirms that shed handoff needs staged load-share transfer away from phases `[2,4]`, disabled-phase drain, per-phase zero-current gate-enable masking, atomic commit to `[1,0,1,0]`, exact post-commit `N_active == 2`, and post-commit relock to physical sequence `[1,3]`. Active Lambda remained disabled and post-shed `a_S` was not enabled in S1-R3.
 
 Boundary: this is one local ideal-derived Simulink shed-handoff integrity point, not broad active-phase robustness. Do not run S1-R4, severe shed cases, active Lambda, current-sense/DCR mismatch with active-phase, or broad active-phase grids without a new smallest-useful protocol.
+
+## Local Active-Phase Evidence Freeze
+
+After E040-A-R1 and E040-S1, active-phase add and shed are frozen as local integrity mechanisms only:
+
+```text
+2 -> 4 add:
+  E040-A first failed on phase-order integrity
+  E040-A-R1 confirmed local add remap/insertion/relock under 20A -> 40A
+
+4 -> 2 shed:
+  E040-S0 showed immediate/dwell-only shed can be unsafe
+  E040-S1 confirmed staged load-share transfer, disabled-phase drain,
+  atomic commit, and two-phase relock under 40A -> 20A
+```
+
+The current paper may claim local add/shed integrity in the derived ideal IQCOT Simulink model only. It must not claim broad active-phase robustness, arbitrary `1/2/4` scheduling, active Lambda control, efficiency improvement, severe active-phase load-rise/drop performance, or hardware/HIL/board/silicon validation.
+
+## E010-A5 Severe-Drop Token Design Status
+
+E010-A5 is now the next design target:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+status: DESIGN_ONLY until future metrics exist
+```
+
+The severe-drop token should not be mixed with active-phase shedding. The first severe-drop peak is a large-signal excess-current / excess-energy effect; PIS-IEK may only be used after protection/reentry for conservative balance recovery.

@@ -64,6 +64,67 @@ classification: MODEL_REVISED
 next E010 expansion target: severe-drop a_O token for 40A -> 1A
 ```
 
+### E010-A5 Severe-Drop Token Design
+
+Status: design/protocol only. Do not claim validation until a future derived-model run produces CSV metrics and a Markdown report.
+
+Fixed case:
+
+```text
+External load-current drop: 40A -> 1A
+Active phases: fixed four-phase
+Power-stage DCR: nominal
+Current-sense gains: nominal
+Active Lambda: disabled
+Active-phase add/shed: disabled
+```
+
+Future variants:
+
+```text
+A5-C0: original ideal IQCOT reference for 40A -> 1A
+A5-C4: previous A4 no-harm selector
+A5-T1: severe Ton truncation only
+A5-T2: severe Ton truncation + bounded one-pulse inhibit
+A5-T3: severe Ton truncation + bounded multi-pulse inhibit + area hold
+A5-T4: full severe-drop token with controlled reentry and fallback guard
+```
+
+Future metrics:
+
+```text
+peak_overshoot_mV
+peak_undershoot_mV
+recovery_peak_2_12us_mV
+recovery_peak_12_40us_mV
+settling_time_us
+final_Vout_error_mV
+Ton_trunc_count
+pulse_inhibit_count
+area_hold/reset/bleed counts
+first_reentry_time_us
+first_reentry_phase
+first_reentry_Ton_ns
+burst_pulse_count_after_reentry
+dropped_REQ_count
+phase_order_error_rate
+current_limit_hit
+undershoot_budget_violation
+fallback_count
+```
+
+Pass gate:
+
+```text
+improves peak overshoot or recovery peak versus A5-C0 and A5-C4
+peak undershoot remains within severe undershoot budget
+dropped_REQ_count == 0
+phase_order_error_rate == 0
+current_limit_hit == false
+burst_pulse_count_after_reentry is bounded
+final_Vout_error remains bounded
+```
+
 ## E020 Load-Rise Undershoot Validation
 
 Compare:
@@ -171,7 +232,7 @@ else:
 
 ## E040 Active-Phase Validation
 
-First chunk: E040-A add-phase validation only. Do not run E040-S or a broad active-phase grid until E040-A is classified.
+Historical first chunk: E040-A add-phase validation. Current frozen local evidence includes E040-A-R1 add integrity and E040-S1 shed-handoff integrity. Do not run S1-R4, severe active-phase cases, mismatch active-phase cases, active Lambda, or a broad active-phase grid without a new smallest-useful protocol.
 
 E040-A compare:
 
@@ -383,3 +444,38 @@ after IL2/IL4 cross the residual-current band.
 ```
 
 Do not run S1-R4, broad 1/2/4 grids, active Lambda, current-sense/DCR mismatch with active-phase, or severe load-rise/drop active-phase cases without a new smallest-useful protocol.
+
+### Local Active-Phase Evidence After E040-A-R1 and E040-S1
+
+Current status: frozen local evidence only.
+
+Add-phase and shed-phase are not symmetric:
+
+```text
+2 -> 4 add:
+  main issue = active-phase remap, phase insertion, post-add order relock
+  E040-A failed first
+  E040-A-R1 confirmed local add integrity under 20A -> 40A
+
+4 -> 2 shed:
+  main issue = load-share handoff and disabled-phase current management
+  E040-S0 showed immediate/dwell-only shed is unsafe
+  E040-S1 confirmed staged transfer, disabled-phase drain, atomic commit, and two-phase relock
+```
+
+Allowed claim:
+
+```text
+local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model
+```
+
+Forbidden claim:
+
+```text
+broad active-phase robustness
+arbitrary 1/2/4 scheduling
+active Lambda control
+efficiency improvement
+severe load-rise/drop active-phase behavior
+hardware/HIL/board/silicon validation
+```

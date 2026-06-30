@@ -76,13 +76,60 @@ N_active_candidate
 I_add_high
 I_shed_low
 dwell_time
-new_phase_ramp_rate
 shed_lockout_after_protect
 residual_current_threshold
+
+For add-phase:
+active_phase_remap_policy
 phase_insert_policy
+new_phase_ramp_rate
+order_relock_window
+post_add_aS_enable_guard
+
+For shed-phase:
+load_share_transfer_rate
+disabled_phase_drain_policy
+zero_current_gate_mask
+shed_commit_boundary_policy
+atomic_active_set_commit
+two_phase_order_relock_window
+post_shed_aS_enable_guard
+fallback_4ph_policy
 ```
 
-Purpose: manage 1/2/4 active phases without destabilizing voltage protection, reentry, or current sharing.
+Purpose: manage 1/2/4 active phases without destabilizing voltage protection, reentry, or current sharing. `a_N` is not merely a phase-count selector. It is a guarded hybrid event-transition token. The supervisor proposes `a_N`, but only the projected and state-machine-qualified `a_N` reaches IQCOT parameter scheduling. It never commands gates directly.
+
+## Local Active-Phase Evidence After E040-A-R1 and E040-S1
+
+The current active-phase evidence is frozen as local derived-Simulink evidence. Add-phase and shed-phase are not symmetric.
+
+For `2 -> 4` add, the main issue was active-phase remap, phase insertion, and post-add order relock. E040-A failed first because it reached four active phases without preserving post-add phase order. E040-A-R1 then confirmed local add integrity for the moderate `20A -> 40A` external load-current rise:
+
+```text
+E040-A-R1:
+  N_active_final = 4
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_add = 0
+  current_limit_hit = false
+```
+
+For `4 -> 2` shed, the main issue was load-share handoff and disabled-phase current management. E040-S0 showed that immediate or dwell-only shed can force two active phases but causes severe voltage/current-limit failure. E040-S1 then confirmed that staged load-share transfer, disabled-phase drain, atomic commit, and two-phase relock are required for the local mild `40A -> 20A` shed handoff:
+
+```text
+E040-S1 S1-R3:
+  N_active_final = 2
+  actual_active_phase_set_final = 1010
+  shed_commit_count = 1
+  fallback_4ph_count = 0
+  dropped_REQ_count = 0
+  inactive_phase_REQ_count = 0
+  phase_order_error_rate_post_shed = 0
+  current_limit_hit = false
+  residual_current_check = pass
+```
+
+Allowed paper claim: local add/shed integrity mechanisms in the derived ideal IQCOT Simulink model. Forbidden claims remain broad active-phase robustness, arbitrary 1/2/4 scheduling, active Lambda control, efficiency improvement, hardware/HIL/silicon behavior, or severe load-rise/drop active-phase performance.
 
 ## E040-A-R1 Active-Phase Projection Rule
 
@@ -423,6 +470,73 @@ else:
 ```
 
 The numeric thresholds are evidence-local to the current ideal derived model and must not be presented as universal controller constants.
+
+## E010-A5 Severe-Drop a_O Design Boundary
+
+The unresolved severe load-drop case is:
+
+```text
+40A -> 1A external load-current drop
+active phases: fixed four-phase
+power-stage DCR: nominal
+current-sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+```
+
+The current A4 selector is no-harm but non-improving for this case. A new severe-drop token is therefore a design target, not validated evidence:
+
+```text
+a_O_severe = [
+  severe_drop_detect_enable,
+  DeltaI_drop_threshold_high,
+  active_HS_trunc_enable,
+  Tton_trunc_min_severe,
+  Tton_trunc_window_severe,
+  multi_pulse_inhibit_count,
+  inhibit_time_severe,
+  area_integrator_hold_policy,
+  area_integrator_bleed_or_reset_policy,
+  reentry_band_down_severe,
+  late_settling_guard,
+  undershoot_budget_severe,
+  fallback_to_A4_or_noop_guard
+]
+```
+
+The intended mechanisms are:
+
+```text
+1. active-HS-aware Ton truncation;
+2. bounded multi-event pulse inhibit;
+3. area-integrator hold / controlled reset;
+4. stricter but undershoot-budgeted reentry;
+5. fallback-to-safe no-op/A4 if predicted undershoot penalty is too high.
+```
+
+A5 must not use the PIS-IEK small-signal model to predict the severe-drop first peak. The first peak is a large-signal excess-current / excess-energy behavior. PIS-IEK may only act after protection and reentry as conservative balance recovery.
+
+The proposed observable A5 state machine is:
+
+```text
+NORMAL
+SEVERE_DROP_DETECTED
+ACTIVE_HS_TRUNCATE
+PULSE_INHIBIT
+AREA_HOLD
+REENTRY_ARMED
+CONTROLLED_REENTRY
+BALANCE_RECOVERY
+FALLBACK_SAFE
+```
+
+Initial candidate threshold:
+
+```text
+DeltaI_drop >= 30 A
+```
+
+This threshold is evidence-local to the current ideal derived model and must not be described as a universal controller constant.
 
 ## Load-Rise Projection Rule from E020
 

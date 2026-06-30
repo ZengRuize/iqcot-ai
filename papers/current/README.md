@@ -26,6 +26,12 @@ experiments/E040_active_phase_add_shed/S0_shed_phase_minimal/e040_s0_metrics.csv
 experiments/E040_active_phase_add_shed/S1_staged_shed_handoff/e040_s1_metrics.csv
 ```
 
+Current design package:
+
+```text
+experiments/E010_load_drop_overshoot/A5_severe_drop_token/
+```
+
 Scope:
 
 ```text

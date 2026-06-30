@@ -591,7 +591,7 @@ This draft does not claim hardware validation, HIL validation, board-level behav
 
 The next research steps are:
 
-1. Add a severe-drop `a_O` token for `40A -> 1A`, with explicit skip-hold and shaped reentry.
+1. Use the E010-A5 design package to preflight `40A -> 1A` severe-drop logging, starting only with A5-C0 and A5-C4 reproduction before testing A5-T1..T4.
 2. Tune the E020 `a_U` window and decide whether the residual 120A error requires phase-add or operating-boundary re-audit.
 3. Convert the frozen E030-R3 sensing-aware `a_S` selector into a compact paper figure and claim-evidence table.
 4. Prepare a new smallest-useful protocol before running S1-R4 post-shed conservative `a_S`; do not run it as an automatic extension of S1-R3.
