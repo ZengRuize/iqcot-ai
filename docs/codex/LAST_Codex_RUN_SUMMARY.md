@@ -3,7 +3,7 @@
 Task:
 
 ```text
-Rigorous IQCOT expert review + Git management
+Manuscript evidence package with Git management
 ```
 
 Date:
@@ -15,15 +15,14 @@ Date:
 Branch:
 
 ```text
-codex/rigorous-iqcot-review-git-managed
+codex/manuscript-evidence-package
 ```
 
 Commits created:
 
 ```text
-5940b13 docs: add rigorous IQCOT expert review package
-5b98238 docs: add research progress and git workflow tracking
-088373b docs: align IQCOT framing and claim boundaries
+ac55a8f docs: add manuscript evidence package
+f92f01b docs: update evidence index and next actions for manuscript package
 ```
 
 Simulations run:
@@ -35,27 +34,29 @@ none
 Models modified:
 
 ```text
-none by this task
+none
+```
+
+Unrelated dirty files:
+
+```text
+preserved / not committed
 ```
 
 Key outcome:
 
 ```text
-Project framing corrected.
-IQCOT is preserved as deterministic variable-frequency inner loop.
-Research contribution framed as safety-projected supervisory action-token selection.
+Existing IQCOT evidence converted into manuscript-ready figure/table/claim scaffolding.
 ```
 
 Next action:
 
 ```text
-Build manuscript evidence package.
-Then consider E020 settling audit if more validation is needed.
+human review, then E020 settling audit if needed.
 ```
 
-Note:
+Remote push:
 
 ```text
-This summary file is committed after the three task commits so it can record
-their generated hashes.
+not performed for this branch
 ```
