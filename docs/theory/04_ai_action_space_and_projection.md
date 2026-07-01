@@ -70,6 +70,33 @@ current_limit_guard
 
 Purpose: increase inductor current fast enough to reduce `Vout` undershoot while avoiding current limit, saturation, and post-recovery overshoot.
 
+Current validation status:
+
+```text
+a_U:
+  validated local load-rise token for the tested 40A -> 120A case
+
+validated components:
+  fast scheduler request
+  bounded Ton boost
+  boost-window tuning
+  current-limit guard
+  REQ/phase-order guard
+  fallback to nominal IQCOT
+
+validated effect:
+  reduces early peak undershoot
+  accelerates inductor-current rise
+
+not validated:
+  complete 120A recovery
+  arbitrary load-rise robustness
+  active Lambda coupling
+  active-phase add/shed interaction
+```
+
+`R1-U1` is selected as the frozen local `a_U` candidate. It should be used for manuscript figures and local mechanism discussion, but not used as evidence of global optimality.
+
 ## a_S: Small-Signal Current-Sharing / Phase-Recovery Token
 
 ```text
@@ -926,6 +953,14 @@ R1-U4 late-recovery guard:
 ```
 
 Claim boundary: R1-U1 confirms only a narrow window-tuned local `a_U` refinement. It does not prove full `120A` recovery, 1 mV settling, active Lambda, active-phase add, or broad load-rise robustness.
+
+Short manuscript wording:
+
+```text
+The a_U branch is locally confirmed for early load-rise dynamic regulation,
+namely peak-undershoot reduction and current-rise acceleration. The present
+evidence does not demonstrate complete 120A settling.
+```
 
 ## Balance-Recovery Projection Rule from E030
 

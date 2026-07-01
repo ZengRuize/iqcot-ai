@@ -421,6 +421,16 @@ I_Lsum(t0+) = I_Lsum(t0-)
 I_def(t0+) = Iload_new - I_Lsum(t0+)
 ```
 
+For the tested `40A -> 120A` event, the instantaneous large-signal deficit is approximately:
+
+```text
+Iload_before ~= I_Lsum(t0-) ~= 40 A
+Iload_after = 120 A
+I_deficit(t0+) ~= 120 A - 40 A = 80 A
+```
+
+The output capacitor supplies this deficit current initially, producing `Vout` undershoot. The `a_U` token reduces the early deficit interval by increasing early accepted event density and bounded high-side on-time energy injection. This is a large-signal deficit-charge argument; PIS-IEK is not used to predict the first undershoot peak.
+
 The first-order capacitor droop estimate is:
 
 ```text
@@ -591,6 +601,18 @@ late recovery improvement
 ```
 
 The R1-U1 final-error improvement over B3 is only `0.162402 mV`, and no R1 variant settled within `1 mV` in the `90 us` post-step window. Therefore R1 confirms a local window-tuned `a_U` refinement, not complete `40A -> 120A` recovery.
+
+Mechanism interpretation for the frozen manuscript boundary:
+
+```text
+load-rise undershoot is dominated by early inductor-current deficit
+fast request increases early accepted event density
+Ton boost increases early event energy injection
+R1-U1 preserves the early B3 benefit with a slightly shorter boost window
+late 120A recovery is not solved by early boost shaping alone
+```
+
+U3 shows that an overly decayed or poorly timed boost policy can destroy the early current-rise benefit. U4 shows that the tested late-recovery guard triggers frequently but does not improve late recovery, indicating that final recovery is not solved by scalar guard insertion alone.
 
 ## Branch Selection
 

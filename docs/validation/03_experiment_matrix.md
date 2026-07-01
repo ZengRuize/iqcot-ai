@@ -411,18 +411,24 @@ final error
 Current status:
 
 ```text
-40A -> 120A completed for B0-B3
+E020:
+case: 40A -> 120A
+variants: B0/B1/B2/B3
 summary: experiments/E020_load_rise_undershoot/e020_research_summary.md
 metrics: experiments/E020_load_rise_undershoot/e020_metrics.csv
 classification: MODEL_CONFIRMED
-scope: peak-undershoot reduction and current-rise acceleration only
-boundary: no tested variant settled within 1 mV in the 90us post-step window
-E020-R1 a_U window tuning completed
+conclusion: fast request + Ton boost reduces peak undershoot and accelerates current rise
+boundary: no full 120A 1mV settling within 90us
+
+E020-R1:
+case: 40A -> 120A
+variants: R1-B0/R1-B3/R1-U1/R1-U2/R1-U3/R1-U4
 R1 summary: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_research_summary.md
 R1 metrics: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_metrics.csv
 R1 classification: MODEL_CONFIRMED
-R1 carry-forward variant: R1-U1 only
-R1 boundary: narrow window-tuned local refinement, not full 120A recovery
+best variant: R1-U1
+conclusion: narrow boost-window refinement preserves early benefit and marginally improves final error
+boundary: no 1mV settling; not full 120A recovery
 ```
 
 E020-R1 fixed case:
@@ -471,7 +477,7 @@ R1-U4:
 Post-R1 gate:
 
 ```text
-freeze local a_U claim boundary
+freeze local a_U claim boundary: complete
 do not claim 1 mV settling or full 120A recovery
 do not add B4/B5 phase-add to this severe branch without a new protocol
 ```

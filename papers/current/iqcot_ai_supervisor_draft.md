@@ -4,7 +4,7 @@ Draft date: 2026-06-30
 
 ## Abstract
 
-This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters or active-phase event states. Derived Simulink validation now covers bidirectional large-signal regulation, sensing-aware PIS-IEK current-sharing guards, and first local active-phase add/shed integrity points. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us` without hitting the tested current guard. For current sharing, `Ton_diff` is confirmed as the dominant local DC balance actuator under a +/-10% DCR mismatch, while E030-R3 shows that confidence-gated or ideal-calibrated `a_S` projection can avoid real-current harm under one current-sense gain mismatch. For active phases, E040-A-R1 confirms one local `2 -> 4` insertion/relock integrity point, E040-S0 rejects simple immediate or dwell-only shed, and E040-S1 confirms one staged `4 -> [1,3]` shed handoff with exact `N_active_final = 2`, zero dropped/inactive accepted requests, zero post-shed order error, and residual-current qualification. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, broad mismatch robustness, broad active-phase robustness, efficiency improvement, or global optimality.
+This draft studies an AI/table-supervised parameter scheduling layer for a four-phase interleaved Buck voltage regulator using an ideal digital IQCOT baseline. The proposed architecture keeps the IQCOT loop as the fast deterministic event and pulse generator; the supervisor does not command gate signals and does not command the external load-current slew. Instead, it observes load-step direction and magnitude and proposes low-dimensional action tokens that are projected through model-based safety constraints before they modify IQCOT parameters or active-phase event states. Derived Simulink validation now covers bidirectional large-signal regulation, sensing-aware PIS-IEK current-sharing guards, and first local active-phase add/shed integrity points. For load drop, a magnitude-selected `a_O` token preserves no-op behavior for a mild `40A -> 20A` disturbance and selects Ton truncation plus one early event-domain pulse inhibit for a medium `40A -> 10A` disturbance, reducing the `2-12 us` recovery overshoot peak from `2.36936 mV` to `1.84342 mV` with a bounded `0.863951 mV` undershoot penalty. For load rise, a projected `a_U` token reduces peak undershoot in a severe `40A -> 120A` disturbance from `397.42 mV` to `319.08 mV` and reduces the 90% current-rise time from `37.996 us` to `1.212 us`; the R1-U1 window-tuned candidate marginally refines this to `318.801 mV` and `1.196 us` with guard checks passing. For current sharing, `Ton_diff` is confirmed as the dominant local DC balance actuator under a +/-10% DCR mismatch, while E030-R3 shows that confidence-gated or ideal-calibrated `a_S` projection can avoid real-current harm under one current-sense gain mismatch. For active phases, E040-A-R1 confirms one local `2 -> 4` insertion/relock integrity point, E040-S0 rejects simple immediate or dwell-only shed, and E040-S1 confirms one staged `4 -> [1,3]` shed handoff with exact `N_active_final = 2`, zero dropped/inactive accepted requests, zero post-shed order error, and residual-current qualification. These results support a limited claim of safety-projected supervisory scheduling in an ideal Simulink setting. They do not prove hardware, HIL, full 120A settling, broad mismatch robustness, broad active-phase robustness, efficiency improvement, or global optimality.
 
 ## 1. Introduction
 
@@ -116,7 +116,7 @@ Ton boost:
   increase current increment per accepted event
 ```
 
-E020 confirms the local ordering expected from this model: fast request dominates Ton boost alone in the severe `40A -> 120A` chunk, and the combination is strongest. The same E020 result does not prove complete settling; no B0-B3 variant returned within the `1 mV` band in the `90 us` post-step window.
+For the tested `40A -> 120A` event, the initial deficit is approximately `80A` because the load demand changes faster than the inductor-current sum. E020 confirms the local ordering expected from this model: fast request dominates Ton boost alone in the severe `40A -> 120A` chunk, and the combination is strongest. E020-R1 then shows that a shorter boost window preserves and slightly refines the early B3 benefit. The same evidence does not prove complete settling; no B0-B3 or R1 variant returned within the `1 mV` band in the `90 us` post-step window.
 
 ## 4. Supervisory Action Token
 
@@ -177,6 +177,8 @@ phase_add_fast_enable
 integrator_preload_policy
 current_limit_guard
 ```
+
+The frozen local `a_U` candidate is `R1-U1`: fast scheduler request, bounded Ton boost, a `1.5 us` boost window, current-limit guard, REQ/phase-order guard, and fallback to nominal IQCOT. It is used for mechanism discussion and figures, not as evidence of global optimality or full 120A recovery.
 
 The first E020 projection enables fast request and Ton boost only when:
 
@@ -427,6 +429,22 @@ B3 reduces peak undershoot by `78.34 mV` relative to B0 and accelerates the 90% 
 
 This is a limited confirmation. B3 still has about `-297.93 mV` final error over the `75-90 us` post-step window, and no tested variant settles within the `1 mV` band in the simulated window. The result supports peak-undershoot and current-rise improvement, not complete 120A recovery.
 
+E020-R1 freezes the local window-tuned `a_U` boundary:
+
+```text
+experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_metrics.csv
+```
+
+| Variant | Mechanism | Peak undershoot (mV) | 90% rise (us) | Final error (mV) | Phase current peak (A) | Guard pass | Claim role |
+|---|---|---:|---:|---:|---:|---|---|
+| B0 | original IQCOT | 397.42 | 37.996 | -376.361 | 34.0379 | yes | baseline |
+| B1 | fast request | 343.787 | 2.658 | -322.051 | 33.9041 | yes | ablation |
+| B2 | Ton boost | 382.408 | 39.92 | -362.688 | 33.8865 | yes | ablation |
+| B3 | fast request + Ton boost | 319.081 | 1.212 | -297.928 | 34.0934 | yes | confirmed base a_U |
+| R1-U1 | window-tuned a_U | 318.801 | 1.196 | -297.766 | 33.9359 | yes | frozen local a_U |
+
+R1-U1 improves final error versus B3 by only `+0.162402 mV` toward zero. U3 shows that an overly decayed or poorly timed boost policy can destroy the early current-rise benefit, while U4 shows that the tested late-recovery guard triggers frequently but does not improve late recovery. The manuscript claim is therefore narrow: the `a_U` branch is locally confirmed for early load-rise dynamic regulation, namely peak-undershoot reduction and current-rise acceleration. The present evidence does not demonstrate complete 120A settling.
+
 ### 6.6 DCR-Mismatch Current Sharing: Fixed 40A
 
 The E030 C0-C4 comparison is available in:
@@ -616,7 +634,7 @@ This draft does not claim hardware validation, HIL validation, board-level behav
 The next research steps are:
 
 1. Freeze E010-A5 as `MODEL_REVISED` severe-drop boundary evidence and do not run A5-R4 projected scheduling tweaks without a new structural hypothesis.
-2. Tune the E020 `a_U` window and decide whether the residual 120A error requires phase-add or operating-boundary re-audit.
+2. Use the frozen E020-R1 `R1-U1` boundary for figures and claim text; do not start E020-R2 without a new physical hypothesis.
 3. Convert the frozen E030-R3 sensing-aware `a_S` selector into a compact paper figure and claim-evidence table.
 4. Prepare a new smallest-useful protocol before running S1-R4 post-shed conservative `a_S`; do not run it as an automatic extension of S1-R3.
 5. Prepare separate protocols for severe shed cases, mismatch with active-phase scheduling, and broad 1/2/4 active-phase grids.
@@ -638,7 +656,10 @@ The severe 40A -> 1A load-drop A5 path is frozen as MODEL_REVISED boundary
 evidence and is not claimed as an improvement.
 For load rise, the first a_U chunk reduces 40A -> 120A peak undershoot from
 397.42 mV to 319.08 mV and accelerates the 90% current-rise metric from
-37.996 us to 1.212 us without hitting the tested current guard. For the first
+37.996 us to 1.212 us without hitting the tested current guard. E020-R1
+freezes R1-U1 as a narrow local refinement: 318.801 mV peak undershoot,
+1.196 us 90% rise, -297.766 mV final error, and no current-limit, REQ-drop,
+or phase-order guard violation. This is not complete 120A settling. For the first
 DCR-mismatch balance chunk, Ton_diff reduces max current imbalance from
 0.853665 A to 0.313775 A, while the C4 projected balancer reaches 0.376221 A
 with lower Ton usage and smaller final Vout error magnitude than Ton_diff-only

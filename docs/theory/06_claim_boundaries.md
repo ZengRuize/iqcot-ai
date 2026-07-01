@@ -502,6 +502,42 @@ Not allowed from E020-R1:
 - hardware, HIL, board-level, or silicon validation;
 - AI direct gate control or AI control of external load-current slew.
 
+## Frozen E020 / E020-R1 Load-Rise a_U Boundary
+
+Allowed:
+
+```text
+In the local ideal IQCOT derived Simulink model, a safety-projected a_U token
+with fast request and Ton boost reduces the tested 40A -> 120A peak undershoot
+and accelerates 90% current rise.
+
+R1-U1 provides a narrow local window-tuning refinement:
+  peak undershoot improves from B3 319.081 mV to 318.801 mV;
+  90% current-rise time improves from B3 1.212 us to 1.196 us;
+  final error improves from B3 -297.928 mV to -297.766 mV;
+  current-limit, REQ, and phase-order guards pass.
+```
+
+Forbidden:
+
+- claiming complete `120A` recovery;
+- claiming `1 mV` settling;
+- claiming broad load-rise robustness;
+- claiming active Lambda validation;
+- claiming active-phase add/shed during this load-rise;
+- claiming DCR/current-sense mismatch robustness;
+- claiming hardware/HIL/board/silicon validation;
+- claiming AI directly commands MOSFET gates;
+- claiming AI controls external load-current slew.
+
+Short manuscript version:
+
+```text
+The a_U branch is locally confirmed for early load-rise dynamic regulation,
+namely peak-undershoot reduction and current-rise acceleration. The present
+evidence does not demonstrate complete 120A settling.
+```
+
 ## Current E030 Evidence Boundary
 
 Validated so far:

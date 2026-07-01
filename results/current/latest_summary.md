@@ -109,7 +109,7 @@ safety projection and a load-drop magnitude selector.
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
 | Load-drop `a_O` | medium-drop `a_O` has local support; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4, A5-T4-R1, A5-R2, and A5-R3 all `MODEL_REVISED` | freeze A5 as severe-drop boundary evidence; do not run A5-R4 without a new structural hypothesis |
-| Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise; E020-R1 window tuning `MODEL_CONFIRMED` for narrow R1-U1 refinement | freeze local a_U boundary; do not claim full 120A recovery or 1 mV settling |
+| Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise; E020-R1 window tuning `MODEL_CONFIRMED` for narrow R1-U1 refinement | use frozen R1-U1 figure/table boundary; do not claim full 120A recovery or 1 mV settling |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
 | Manuscript | Markdown draft synced through E040-S1 local shed-handoff confirmation | convert current Markdown draft into LaTeX plan/figures after claim and citation scaffolding |
@@ -152,6 +152,7 @@ variants: R1-B0/R1-B3 carry-forward, R1-U1/R1-U2/R1-U3/R1-U4 new runs
 metrics: e020_r1_metrics.csv
 summary: e020_r1_research_summary.md
 classification: MODEL_CONFIRMED
+confirmation type: narrow local a_U refinement
 
 R1-U1:
   peak undershoot = 318.801 mV
@@ -178,6 +179,14 @@ R1-U4:
 ```
 
 Boundary: R1-U1 preserves the B3 early benefit and improves final error by only `0.162402 mV` toward zero. U4 confirms that the tested late-recovery guard does not further improve late recovery. No R1 variant settled within `1 mV` by `90 us`. This confirms only a narrow window-tuned local `a_U` refinement, not complete `120A` recovery.
+
+Frozen manuscript wording:
+
+```text
+The a_U branch is locally confirmed for early load-rise dynamic regulation,
+namely peak-undershoot reduction and current-rise acceleration. The present
+evidence does not demonstrate complete 120A settling.
+```
 
 E030 balance-recovery first chunk is complete:
 

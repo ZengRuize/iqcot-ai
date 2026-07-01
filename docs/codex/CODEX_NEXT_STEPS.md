@@ -149,8 +149,8 @@ Proceed in this order:
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
 9. E010-A5-R3 event-queue energy-allocation revision is complete and remains `MODEL_REVISED`; no safe A5 candidate is carried forward.
 10. Freeze E010-A5 as negative/revision boundary evidence and do not run A5-R4 projected-scheduling tweaks without a new structural hypothesis.
-11. E020-R1 a_U window tuning is complete; freeze the narrow R1-U1 claim boundary and do not use it as full 120A recovery evidence.
-12. Update manuscript direction with E010-A5 boundary evidence plus E020-R1, E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
+11. E020-R1 a_U window tuning is complete; the narrow R1-U1 claim boundary is frozen and must not be used as full 120A recovery evidence.
+12. Manuscript direction now includes E010-A5 boundary evidence plus E020-R1, E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -184,6 +184,7 @@ variants: R1-B0/R1-B3 carry-forward references, R1-U1/R1-U2/R1-U3/R1-U4 new runs
 metrics: e020_r1_metrics.csv
 summary: e020_r1_research_summary.md
 classification: MODEL_CONFIRMED
+confirmation type: narrow local a_U refinement
 ```
 
 Best local R1 variant:
@@ -206,7 +207,7 @@ Interpretation: R1-U1 preserves the B3 early benefit and gives only a very small
 Next smallest useful step:
 
 ```text
-freeze local a_U claim boundary and update manuscript figures / tables
+update manuscript figures and claim/citation scaffolding
 do not claim full 120A recovery
 do not add active-phase phase-add to this severe 40A -> 120A branch without a new protocol
 ```
