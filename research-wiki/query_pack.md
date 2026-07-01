@@ -13,6 +13,16 @@ _Manually refreshed after R035 because the helper hit mixed-encoding wiki files.
 - `q_phi/r_hat/B_epsilon^sw` 是目前最稳妥的 AI 监督层接口：候选生成、短时风险预测、安全投影、dense fallback。
 - 派生 Simulink、event-domain surrogate、table-in-loop 和后处理均不是硬件验证；PIS-IEK 不声称精确预测大切载第一峰。
 
+## R050 Forward Query Focus
+
+- IQCOT-specific phase-indexed event map.
+- Ton_diff vs Lambda_diff actuator separation.
+- Digital IQCOT event jitter budget.
+- Cut-load first-peak risk boundary as safety guard, not universal predictor.
+- Guarded supervisor interface for low-dimensional parameter proposals.
+- Safe projection in power converter control.
+- Active-set add/shed validation for one add case and one shed case.
+
 ## Latest Evidence Chain
 
 - R030 dense-anchor challenge：30 行派生 Simulink 成对回放显示 proxy 未稳定优于 dense-anchor；dense-anchor mean switching regret `0.186`，proxy `0.574`；`20A/score_settle005` 的 `66us` 是负样本。

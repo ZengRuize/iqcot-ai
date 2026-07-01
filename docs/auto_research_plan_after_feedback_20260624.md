@@ -35,6 +35,25 @@ PR-ECB cut-load voltage stabilization
 
 ## Next Heartbeat Priority Order
 
+### R050 Alignment Override
+
+R050 aligns this plan with `.codex/skills/iqcot-research/SKILL.md`,
+`docs/CODEX_RESEARCH_WORKFLOW.md`, and the external literature review now
+stored at `docs/deep_research_external_literature_review.md`.
+
+Use the following forward order for new Codex research rounds:
+
+1. R051: PIS-IEK actuator ablation consolidation.
+2. R052: digital jitter budget validation consolidation.
+3. R053: PR-ECB controlled reentry minimal chunk.
+4. R054: related work and contribution rewrite.
+5. R055+: active-set add/shed and AI supervisor validation.
+
+The older PR-ECB-first sections below are retained as historical evidence and
+implementation context. They should not override the R050 decision that the
+current strongest paper-ready line is PIS-IEK + actuator separation + digital
+implementation budget.
+
 ### Priority 1: Architecture and State-Machine Specification
 
 Create or update:

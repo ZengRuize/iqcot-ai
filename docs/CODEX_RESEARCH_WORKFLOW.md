@@ -96,9 +96,17 @@ Keep evidence labels attached to claims. Derived Simulink, offline processing, a
 
 ## 8. Relationship to External Literature
 
-External deep-research report not found in this working tree. Related-work integration should be performed in a later round.
+The external deep-research report is now available at `docs/deep_research_external_literature_review.md`, with an R050 integration summary at `docs/deep_research_external_literature_review_summary.md`.
 
-Do not upgrade related-work claims until the external literature report is added or regenerated.
+R050 integration conclusions:
+
+- IQCOT base literature exists and must be cited; this project must not claim to invent IQCOT.
+- Multiphase COT small-signal and phase-overlap modeling literature exists and must be cited; this project must not claim to be the first multiphase COT small-signal model.
+- Digital COT / DICOT, current-balance loops, load transient / unload overshoot studies, and AI / RL / safe projection literature exist and must be treated as related work.
+- The strongest current novelty is the IQCOT-specific four-phase digital event interface: PIS-IEK, Ton/Lambda/delay actuator separation, and digital implementation budget.
+- PR-ECB should be written as a risk boundary / risk coordinate / safety guard, not a universal first-peak predictor.
+- AI supervisor should be written as a guarded low-dimensional parameter proposer, not an AI inner-loop controller.
+- Active-set add/shed should be kept as a controlled extension until further validation exists.
 
 ## 9. Per-Round Operating Rules
 

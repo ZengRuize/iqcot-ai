@@ -6,6 +6,19 @@
 
 > 对四相数字 IQCOT Buck，PIS-IEK 将面积触发、相序索引、积分复位、执行量通道、切载 skip/reentry 和 FPGA AI 延迟组织为统一的事件域小信号/混合事件框架；该框架能指导参考斜率和低维 AI 参数调度，但不能单独替代开关级仿真或精确预测大切载第一峰值。
 
+## R050 Protocol Alignment Overlay
+
+R050 adds wording/boundary alignment only; it does not add new simulation evidence or upgrade any physical model claim.
+
+| Topic | Claim status | Evidence level | Allowed wording | Forbidden wording | Next evidence gap |
+|---|---|---|---|---|---|
+| PIS-IEK | strongest paper-ready line | derived-Simulink + event-domain evidence | "PIS-IEK models the studied four-phase digital IQCOT event interface." | "PIS-IEK precisely predicts every large-signal first peak." | consolidate actuator ablations |
+| Ton_diff / Lambda_diff / delay_diff | strongest paper-ready line | derived-Simulink + analytic/event evidence | "Ton_diff is the main DC current-sharing actuator; Lambda_diff mainly trims phase-spacing/event rhythm; delay_diff is a jitter disturbance." | "Lambda_diff is a strong DC current-sharing actuator." | R051 actuator ablation consolidation |
+| digital budget | strongest paper-ready line | model/protocol evidence, pending consolidation | "quantization, clocks, Ton resolution, and supervisor delay map to event jitter, phase-spacing jitter, and current-sharing quantization." | "digital implementation budget is hardware-validated." | R052 digital jitter budget consolidation |
+| PR-ECB | controlled exploratory extension | derived-Simulink/offline evidence | "risk boundary / risk coordinate / safety guard." | "universal first-peak bound" or "globally precise first-peak predictor." | R053 controlled reentry minimal chunk |
+| AI supervisor | controlled exploratory extension | weak-to-medium supervisor-interface evidence | "guarded low-dimensional parameter proposer with safety projection." | "AI replaces IQCOT inner loop" or "AI directly controls gate/PWM pulses." | table/rule supervisor before neural loop |
+| active-set model | future controlled extension | exploratory model evidence | "promising add/shed extension requiring validation." | "active-set PIS-IEK is fully validated." | one add case and one shed case after core evidence |
+
 ## Claim-Evidence Matrix
 
 | ID | 论断 | 支撑证据 | 强度 | 允许写法 | 禁止写法 |
