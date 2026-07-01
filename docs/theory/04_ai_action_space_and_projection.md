@@ -511,6 +511,13 @@ a_O_severe = [
   area_int_soft_preload_policy,
   scheduler_release_policy,
   voltage_window_release_policy,
+  pending_REQ_queue,
+  queue_max_depth,
+  queue_release_min_spacing_us,
+  queue_release_max_per_window,
+  per_event_Ton_allocation_policy,
+  queue_reject_policy,
+  area_int_queue_coupling_policy,
   area_int_reentry_clamp,
   late_settling_guard,
   undershoot_budget_severe,
@@ -666,6 +673,54 @@ fallback to no-harm A4/no-op for this severe-drop boundary.
 ```
 
 E2 shows that a logged soft preload is insufficient unless it actually modifies the area-integrator path. E4 shows that simply enabling a voltage-window flag does not fix a starvation-prone scheduler-release insertion point. A5-R2 therefore remains evidence for theory revision, not a validated severe-drop AI/table token.
+
+### E010-A5-R3 Event-Queue Projection Revision
+
+E010-A5-R3 tested whether the severe-drop token should move from scalar gating into explicit event-queue / per-event Ton allocation:
+
+```text
+experiment: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/
+classification: MODEL_REVISED
+```
+
+The tested projected dimensions were:
+
+```text
+pending_REQ_queue
+queue_depth
+queue_phase_id
+queue_age_us
+queue_release_count
+queue_reject_count
+Ton_requested_ns
+Ton_allocated_ns
+Ton_budget_remaining_ns
+reentry_Ton_budget_used_ns
+area_int_queue_coupling_state
+event_queue_state
+energy_allocation_state
+```
+
+R3-E1/E2/E3 all failed the safety projection:
+
+```text
+peak undershoot = 971.618 mV
+final Vout error = -919.625 mV
+burst count / limit = 5 / 2
+phase_order_error_rate = 1
+guard_pass = false
+```
+
+Projection rule update:
+
+```text
+Do not accept event-queue/Ton allocation if positive recovery peaks disappear
+because recovery energy is starved. The projection must reject or fallback when
+signed energy, undershoot, final-error, burst, and phase-order guards cannot pass
+together.
+```
+
+R3 does not validate `a_O_severe`. It only confirms that queue observability and per-event accounting are necessary but not sufficient. Future A5 work should either downgrade the severe-drop improvement claim or introduce a different large-signal energy-management mechanism. It must not tune R3 into a pass by broad sweeps without a new hypothesis.
 
 ## Load-Rise Projection Rule from E020
 

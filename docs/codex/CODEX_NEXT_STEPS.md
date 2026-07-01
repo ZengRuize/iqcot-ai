@@ -1,6 +1,6 @@
 # Codex Next Steps
 
-Date: 2026-06-30
+Date: 2026-07-01
 
 ## Current State
 
@@ -146,7 +146,7 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. E010-A5-R2 reentry energy-shaping / scheduler-release revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is severe-drop `a_O` token-structure revision or claim downgrade, not a broad sweep.
+9. E010-A5-R3 event-queue energy-allocation revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is severe-drop `a_O` claim downgrade or a structurally different large-signal energy-management mechanism, not a broad sweep.
 10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
 11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
@@ -512,6 +512,43 @@ keep active Lambda disabled
 keep active-phase add/shed disabled
 do not add mismatch or broad load-drop grids
 do not tune into a pass without a new hypothesis
+```
+
+E010-A5-R3 event-queue energy-allocation revision completed:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+metrics: e010_a5_r3_metrics.csv
+summary: e010_a5_r3_research_summary.md
+classification: MODEL_REVISED
+
+R3-E1/E2/E3:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  burst count / limit = 5 / 2
+  phase_order_error_rate = 1
+  dropped_REQ_count = 0
+  queue_depth_final = 0
+  guard_pass = false
+```
+
+Interpretation: event-queue/Ton allocation as currently inserted suppresses positive recovery peaks only by starving recovery energy. R3 is valid negative/revision evidence, not an A5 validation. E3 is not close to passing, so optional R3-E4 was not run.
+
+Next smallest useful step:
+
+```text
+revise severe-drop claim boundary or introduce a structurally different
+large-signal energy-management mechanism beyond projected IQCOT scheduling
+keep A5 as MODEL_REVISED
+do not broad sweep
+do not add active Lambda, active-phase shed, mismatch, or 120A cases from this state
 ```
 
 ## Standing Guardrails

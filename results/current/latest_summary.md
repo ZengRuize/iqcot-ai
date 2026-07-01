@@ -1,6 +1,6 @@
 # Latest Summary
 
-Date: 2026-06-30
+Date: 2026-07-01
 
 ## Current Direction
 
@@ -108,7 +108,7 @@ safety projection and a load-drop magnitude selector.
 | Module | Status | Next action |
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
-| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4 candidate comparison `MODEL_REVISED`; A5-T4-R1 controlled-reentry burst limiter `MODEL_REVISED`; A5-R2 reentry energy shaping / scheduler release `MODEL_REVISED` | revise severe-drop token structure or downgrade severe-drop improvement claim; no broad sweeps |
+| Load-drop `a_O` | partially validated; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4 candidate comparison `MODEL_REVISED`; A5-T4-R1 controlled-reentry burst limiter `MODEL_REVISED`; A5-R2 reentry energy shaping / scheduler release `MODEL_REVISED`; A5-R3 event-queue energy allocation `MODEL_REVISED` | downgrade severe-drop improvement claim or introduce a structurally different large-signal energy-management mechanism; no broad sweeps |
 | Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on both load-drop and load-rise branches. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, E040-A-R1 is `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point, E040-S0 is `MODEL_REVISED` for the first minimal 4 -> 2 shed attempt, and E040-S1 is `MODEL_CONFIRMED` for one local staged 4 -> [1,3] shed-handoff integrity point.
+PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on the medium load-drop and severe load-rise branches, but the severe `40A -> 1A` load-drop A5 path remains `MODEL_REVISED` after R3 event-queue energy allocation. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, E040-A-R1 is `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point, E040-S0 is `MODEL_REVISED` for the first minimal 4 -> 2 shed attempt, and E040-S1 is `MODEL_CONFIRMED` for one local staged 4 -> [1,3] shed-handoff integrity point.
 
 E020 load-rise first chunk is complete:
 
@@ -568,3 +568,33 @@ R2-E3/R2-E4:
 ```
 
 Boundary: R2 does not validate A5. Energy budget plus Ton ramp gives a real but unsafe positive-recovery benefit; current soft preload is only logged/proxy-effective; scheduler release gating plus voltage-window enable still starves recovery energy. Next smallest useful E010 step is to revise the severe-drop `a_O` token structure or downgrade the severe-drop improvement claim, not to broaden into sweeps, mismatch, active Lambda, or active-phase shed.
+
+E010-A5-R3 event-queue energy allocation is complete:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+metrics: e010_a5_r3_metrics.csv
+summary: e010_a5_r3_research_summary.md
+classification: MODEL_REVISED
+
+R3-C0/R3-C4:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.61172 mV
+  recovery peak 12-40us = 3.59863 mV
+
+R3-E1/R3-E2/R3-E3:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  burst count / limit = 5 / 2
+  phase_order_error_rate = 1
+  guard_pass = false
+```
+
+Boundary: R3 does not validate A5. The tested event-queue/Ton allocation insertion suppresses positive recovery peaks only by starving recovery energy and reproducing the severe undershoot/final-error collapse seen in earlier gate/blocking attempts. Since E3 is not close to passing, optional E4 was not run. The severe-drop claim should be downgraded unless a structurally different large-signal energy-management mechanism is introduced.

@@ -61,12 +61,12 @@ Current status:
 120A -> 10A A0 completed as operating-boundary check, not improvement evidence
 comparison: experiments/E010_load_drop_overshoot/e010_research_summary.md
 classification: MODEL_REVISED
-latest E010 severe-drop expansion: A5-R2 reentry energy shaping for 40A -> 1A completed, MODEL_REVISED
+latest E010 severe-drop expansion: A5-R3 event-queue energy allocation for 40A -> 1A completed, MODEL_REVISED
 ```
 
 ### E010-A5 Severe-Drop Token Design
 
-Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison, A5-T4-R1 controlled-reentry revision, and A5-R2 reentry energy-shaping/scheduler-release revision have run and are `MODEL_REVISED`; do not claim A5 validation.
+Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison, A5-T4-R1 controlled-reentry revision, A5-R2 reentry energy-shaping/scheduler-release revision, and A5-R3 event-queue energy-allocation revision have run and are `MODEL_REVISED`; do not claim A5 validation.
 
 Fixed case:
 
@@ -226,6 +226,56 @@ E1/E2 prove that per-event Ton/energy shaping can reduce positive recovery peaks
 E2 soft preload is observable but does not alter the waveform versus E1.
 E3/E4 prove that the current scheduler-release gate starves recovery energy; voltage-window enable does not rescue the final-REQ gate insertion.
 Next smallest useful step: revise severe-drop a_O token structure or downgrade the severe-drop improvement claim. Do not broad sweep.
+```
+
+Completed A5-R3 event-queue energy-allocation revision:
+
+```text
+folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/
+metrics: e010_a5_r3_metrics.csv
+summary: e010_a5_r3_research_summary.md
+classification: MODEL_REVISED
+
+R3-C0/R3-C4:
+  carry-forward severe-drop baseline references
+
+R3-T4proxy:
+  carry-forward partial recovery benefit with burst guard fail
+
+R3-R2E1:
+  carry-forward R2 energy/Ton shaping partial benefit with undershoot and burst guard fail
+
+R3-E1:
+  event queue + per-event Ton allocation
+
+R3-E2:
+  E1 + queue release spacing
+
+R3-E3:
+  E2 + area-int queue coupling
+
+R3-E4:
+  not run; E3 was not close to passing and did not isolate voltage-window release as the missing guard
+
+R3-E1/E2/E3 result:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  burst count / limit = 5 / 2
+  phase_order_error_rate = 1
+  dropped_REQ_count = 0
+  guard_pass = false
+```
+
+Interpretation:
+
+```text
+The tested event-queue/Ton allocation path suppresses positive peaks only by starving recovery energy.
+Queue observability and per-event accounting are necessary but not sufficient.
+The severe-drop A5 token remains MODEL_REVISED; do not claim validation.
+Next smallest useful step: downgrade the severe-drop improvement claim or introduce a structurally different large-signal energy-management mechanism.
+Do not broad sweep.
 ```
 
 Metrics:

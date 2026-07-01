@@ -36,6 +36,14 @@ elseif variant == "A5-R2-E3"
     modelName = "E010A5_R2_E3_scheduler_release_40A_1A_" + dateTag;
 elseif variant == "A5-R2-E4"
     modelName = "E010A5_R2_E4_voltage_window_release_40A_1A_" + dateTag;
+elseif variant == "A5-R3-E1"
+    modelName = "E010A5_R3_E1_event_queue_alloc_40A_1A_" + dateTag;
+elseif variant == "A5-R3-E2"
+    modelName = "E010A5_R3_E2_queue_spacing_40A_1A_" + dateTag;
+elseif variant == "A5-R3-E3"
+    modelName = "E010A5_R3_E3_area_queue_coupling_40A_1A_" + dateTag;
+elseif variant == "A5-R3-E4"
+    modelName = "E010A5_R3_E4_voltage_window_queue_40A_1A_" + dateTag;
 else
     error("Unknown E010-A5 candidate variant: %s", variant);
 end
@@ -91,6 +99,8 @@ elseif startsWith(variant, "A5-R2")
         addScalarConstantLog(modelName, "scheduler_release_gate_active", "0", ...
             [4080 2310 4260 2340]);
     end
+elseif startsWith(variant, "A5-R3")
+    addR3EventQueueEnergyAllocation(modelName);
 end
 
 addReqRejectReasonLog(modelName);
@@ -928,6 +938,161 @@ connectBlocks(gateMux, 1, gateTerm, 1);
 markBlockOutport(gateMux, 1, "scheduler_release_gate_active");
 end
 
+function addR3EventQueueEnergyAllocation(modelName)
+clockBlock = modelName + "/E010A5_R3_Queue_Clock";
+tstepBlock = modelName + "/E010A5_R3_LoadStepTime";
+enableBlock = modelName + "/E010A5_R3_Enable";
+depthBlock = modelName + "/E010A5_R3_QueueMaxDepth";
+spacingBlock = modelName + "/E010A5_R3_MinSpacing";
+maxWindowBlock = modelName + "/E010A5_R3_MaxPerWindow";
+spacingEnableBlock = modelName + "/E010A5_R3_SpacingEnable";
+budgetWindowBlock = modelName + "/E010A5_R3_BudgetWindow";
+budgetBlock = modelName + "/E010A5_R3_TonBudget";
+tonMinBlock = modelName + "/E010A5_R3_TonMinMeaningful";
+firstLimitBlock = modelName + "/E010A5_R3_FirstTonLimit";
+rampStepBlock = modelName + "/E010A5_R3_TonRampStep";
+maxTonBlock = modelName + "/E010A5_R3_TonRampMax";
+areaEnableBlock = modelName + "/E010A5_R3_AreaCouplingEnable";
+areaIntBlock = modelName + "/E010A5_R3_AreaInt";
+areaTargetBlock = modelName + "/E010A5_R3_AreaTarget";
+areaRestoreBlock = modelName + "/E010A5_R3_AreaRestoreRate";
+voltageEnableBlock = modelName + "/E010A5_R3_VoltageWindowEnable";
+voutBlock = modelName + "/E010A5_R3_Vout";
+vrefBlock = modelName + "/E010A5_R3_Vref";
+upperBandBlock = modelName + "/E010A5_R3_UpperBand";
+undershootBlock = modelName + "/E010A5_R3_UndershootBudget";
+queueBlock = modelName + "/E010A5_R3_EventQueueAllocator";
+
+blocks = [clockBlock, tstepBlock, enableBlock, depthBlock, spacingBlock, ...
+    maxWindowBlock, spacingEnableBlock, budgetWindowBlock, budgetBlock, ...
+    tonMinBlock, firstLimitBlock, rampStepBlock, maxTonBlock, ...
+    areaEnableBlock, areaIntBlock, areaTargetBlock, areaRestoreBlock, ...
+    voltageEnableBlock, voutBlock, vrefBlock, upperBandBlock, ...
+    undershootBlock, queueBlock];
+for idx = 1:numel(blocks)
+    deleteBlockIfExists(blocks(idx));
+end
+
+add_block("simulink/Sources/Clock", clockBlock, "Position", [1680 4300 1720 4330]);
+add_block("simulink/Sources/Constant", tstepBlock, ...
+    "Value", "t_load_step", "Position", [1680 4345 1870 4370]);
+add_block("simulink/Sources/Constant", enableBlock, ...
+    "Value", "E010A5_R3_EventQueue_Enable", "Position", [1680 4390 1900 4415]);
+add_block("simulink/Sources/Constant", depthBlock, ...
+    "Value", "E010A5_R3_QueueMaxDepth", "Position", [1680 4435 1900 4460]);
+add_block("simulink/Sources/Constant", spacingBlock, ...
+    "Value", "E010A5_R3_QueueReleaseMinSpacing", "Position", [1680 4480 1900 4505]);
+add_block("simulink/Sources/Constant", maxWindowBlock, ...
+    "Value", "E010A5_R3_QueueReleaseMaxPerWindow", "Position", [1680 4525 1900 4550]);
+add_block("simulink/Sources/Constant", spacingEnableBlock, ...
+    "Value", "E010A5_R3_QueueSpacingEnable", "Position", [1680 4570 1900 4595]);
+add_block("simulink/Sources/Constant", budgetWindowBlock, ...
+    "Value", "E010A5_R3_TonBudgetWindow", "Position", [1680 4615 1900 4640]);
+add_block("simulink/Sources/Constant", budgetBlock, ...
+    "Value", "E010A5_R3_TonBudget", "Position", [1680 4660 1900 4685]);
+add_block("simulink/Sources/Constant", tonMinBlock, ...
+    "Value", "E010A5_R3_TonMinMeaningful", "Position", [1680 4705 1900 4730]);
+add_block("simulink/Sources/Constant", firstLimitBlock, ...
+    "Value", "E010A5_R3_FirstTonLimit", "Position", [1680 4750 1900 4775]);
+add_block("simulink/Sources/Constant", rampStepBlock, ...
+    "Value", "E010A5_R3_TonRampStep", "Position", [1680 4795 1900 4820]);
+add_block("simulink/Sources/Constant", maxTonBlock, ...
+    "Value", "E010A5_R3_TonRampMax", "Position", [1680 4840 1900 4865]);
+add_block("simulink/Sources/Constant", areaEnableBlock, ...
+    "Value", "E010A5_R3_AreaQueueCouplingEnable", "Position", [1680 4885 1900 4910]);
+add_block("simulink/Signal Routing/From", areaIntBlock, ...
+    "GotoTag", "A_iqcot", "Position", [1680 4930 1745 4958]);
+add_block("simulink/Sources/Constant", areaTargetBlock, ...
+    "Value", "E010A5_R3_AreaIntReentryTarget", "Position", [1680 4975 1900 5000]);
+add_block("simulink/Sources/Constant", areaRestoreBlock, ...
+    "Value", "E010A5_R3_AreaIntRestoreRate", "Position", [1680 5020 1900 5045]);
+add_block("simulink/Sources/Constant", voltageEnableBlock, ...
+    "Value", "E010A5_R3_VoltageWindowEnable", "Position", [1680 5065 1900 5090]);
+add_block("simulink/Signal Routing/From", voutBlock, ...
+    "GotoTag", "Vout", "Position", [1680 5110 1745 5138]);
+add_block("simulink/Sources/Constant", vrefBlock, ...
+    "Value", "E010_Vref", "Position", [1680 5155 1900 5180]);
+add_block("simulink/Sources/Constant", upperBandBlock, ...
+    "Value", "E010A5_R3_UpperReentryBand", "Position", [1680 5200 1900 5225]);
+add_block("simulink/Sources/Constant", undershootBlock, ...
+    "Value", "E010A5_R3_UndershootBudget", "Position", [1680 5245 1900 5270]);
+
+add_block("simulink/User-Defined Functions/MATLAB Function", queueBlock, ...
+    "Position", [2350 4300 2870 4750]);
+setR3EventQueueScript(queueBlock);
+
+for phase = 1:4
+    connectBlocks(modelName + "/E010A5_PulseInhibit" + phase, 1, queueBlock, phase);
+    connectBlocks(modelName + "/E010A5_TonTrunc" + phase, 1, queueBlock, 4 + phase);
+end
+connectBlocks(clockBlock, 1, queueBlock, 9);
+connectBlocks(tstepBlock, 1, queueBlock, 10);
+connectBlocks(enableBlock, 1, queueBlock, 11);
+connectBlocks(depthBlock, 1, queueBlock, 12);
+connectBlocks(spacingBlock, 1, queueBlock, 13);
+connectBlocks(maxWindowBlock, 1, queueBlock, 14);
+connectBlocks(spacingEnableBlock, 1, queueBlock, 15);
+connectBlocks(budgetWindowBlock, 1, queueBlock, 16);
+connectBlocks(budgetBlock, 1, queueBlock, 17);
+connectBlocks(tonMinBlock, 1, queueBlock, 18);
+connectBlocks(firstLimitBlock, 1, queueBlock, 19);
+connectBlocks(rampStepBlock, 1, queueBlock, 20);
+connectBlocks(maxTonBlock, 1, queueBlock, 21);
+connectBlocks(areaEnableBlock, 1, queueBlock, 22);
+connectBlocks(areaIntBlock, 1, queueBlock, 23);
+connectBlocks(areaTargetBlock, 1, queueBlock, 24);
+connectBlocks(areaRestoreBlock, 1, queueBlock, 25);
+connectBlocks(voltageEnableBlock, 1, queueBlock, 26);
+connectBlocks(voutBlock, 1, queueBlock, 27);
+connectBlocks(vrefBlock, 1, queueBlock, 28);
+connectBlocks(upperBandBlock, 1, queueBlock, 29);
+connectBlocks(undershootBlock, 1, queueBlock, 30);
+
+for phase = 1:4
+    deferTerm = modelName + "/E010A5_R3_REQDefer" + phase + "_Term";
+    deleteBlockIfExists(deferTerm);
+    add_block("simulink/Sinks/Terminator", deferTerm, ...
+        "Position", [3150 4260 + 35 * phase 3170 4285 + 35 * phase]);
+
+    cotBlock = modelName + "/COT_Cell_1Phase" + phase;
+    gotoBlock = modelName + "/E010A5_REQAccept_Goto" + phase;
+    disconnectInport(cotBlock, 1);
+    disconnectInport(cotBlock, 3);
+    disconnectInport(gotoBlock, 1);
+    connectBlocks(queueBlock, phase, cotBlock, 1);
+    connectBlocks(queueBlock, phase, gotoBlock, 1);
+    connectBlocks(queueBlock, 4 + phase, cotBlock, 3);
+    connectBlocks(queueBlock, 8 + phase, deferTerm, 1);
+    markBlockOutport(queueBlock, phase, "REQ_accept" + phase);
+    markBlockOutport(queueBlock, 4 + phase, "Ton_cmd" + phase);
+    markBlockOutport(queueBlock, 8 + phase, "REQ_defer" + phase);
+end
+
+scalarSignals = [
+    "pending_REQ_queue", "queue_depth", "queue_age_us", "queue_phase_id", ...
+    "queue_reason", "queue_release_time", "queue_energy_budget_ns", ...
+    "queue_release_count", "queue_reject_count", "queue_reject_reason", ...
+    "Ton_requested_ns", "Ton_allocated_ns", "Ton_budget_remaining_ns", ...
+    "Ton_allocation_reason", "reentry_Ton_budget_used_ns", ...
+    "reentry_Ton_budget_violation", "area_int_capture_at_drop", ...
+    "area_int_reentry_target", "area_int_restore_usage", ...
+    "area_int_queue_coupling_usage", "area_int_queue_coupling_state", ...
+    "area_int_restore_state", "event_queue_state", "energy_allocation_state", ...
+    "controlled_reentry_active", "actual_inter_pulse_spacing", ...
+    "burst_pulse_count_after_reentry"];
+for idx = 1:numel(scalarSignals)
+    portNo = 12 + idx;
+    termBlock = modelName + "/E010A5_R3_" + scalarSignals(idx) + "_Term";
+    deleteBlockIfExists(termBlock);
+    add_block("simulink/Sinks/Terminator", termBlock, ...
+        "Position", [3160 4440 + 28 * idx 3180 4465 + 28 * idx]);
+    connectBlocks(queueBlock, portNo, termBlock, 1);
+    markBlockOutport(queueBlock, portNo, scalarSignals(idx));
+end
+
+addScalarConstantLog(modelName, "Ton_nom", "Ton_nom", [4080 2220 4210 2250]);
+end
+
 function addReqRejectReasonLog(modelName)
 block = modelName + "/E010A5_REQRejectReason";
 termBlock = modelName + "/E010A5_REQRejectReason_Term";
@@ -1007,9 +1172,10 @@ addScalarConstantLog(modelName, "a_O_state", candidateStateCode(variant), ...
 end
 
 function addAuditStateConstants(modelName, variant)
-unusedVariant = variant; %#ok<NASGU>
 addScalarConstantLog(modelName, "fallback_state", "0", [4080 1670 4210 1700]);
-addScalarConstantLog(modelName, "burst_pulse_count_after_reentry", "0", [4080 1715 4300 1745]);
+if ~startsWith(string(variant), "A5-R3")
+    addScalarConstantLog(modelName, "burst_pulse_count_after_reentry", "0", [4080 1715 4300 1745]);
+end
 addScalarConstantLog(modelName, "fallback_count", "0", [4080 1895 4210 1925]);
 addScalarConstantLog(modelName, "fallback_reason", "0", [4080 1940 4210 1970]);
 end
@@ -1038,6 +1204,14 @@ elseif variant == "A5-R2-E3"
     value = "73";
 elseif variant == "A5-R2-E4"
     value = "74";
+elseif variant == "A5-R3-E1"
+    value = "81";
+elseif variant == "A5-R3-E2"
+    value = "82";
+elseif variant == "A5-R3-E3"
+    value = "83";
+elseif variant == "A5-R3-E4"
+    value = "84";
 else
     value = "50";
 end
@@ -1527,6 +1701,292 @@ setChartScriptAndTypes(blockPath, script, ...
     ["req_in", "sched_fraction", "voltage_state", "phase_rank", ...
     "enable", "voltage_enable", "req_out", "reject_reason", ...
     "gate_active"], ["req_in", "req_out"]);
+setFastSampleTime(blockPath);
+end
+
+function setR3EventQueueScript(blockPath)
+script = [
+"function [req1o,req2o,req3o,req4o,ton1o,ton2o,ton3o,ton4o,d1,d2,d3,d4,pending,queue_depth,queue_age_us,queue_phase_id,queue_reason,queue_release_time,queue_energy_budget_ns,queue_release_count,queue_reject_count,queue_reject_reason,Ton_requested_ns,Ton_allocated_ns,Ton_budget_remaining_ns,Ton_allocation_reason,reentry_Ton_budget_used_ns,reentry_Ton_budget_violation,area_int_capture_at_drop,area_int_reentry_target,area_int_restore_usage,area_int_queue_coupling_usage,area_int_queue_coupling_state,area_int_restore_state,event_queue_state,energy_allocation_state,controlled_reentry_active,actual_inter_pulse_spacing,burst_pulse_count_after_reentry] = r3_event_queue(req1,req2,req3,req4,ton1,ton2,ton3,ton4,t,t_step,enable,queue_max_depth,min_spacing,max_per_window,spacing_enable,budget_window,ton_budget,ton_min,first_limit,ramp_step,max_ton,area_enable,area_int,area_target,area_restore_rate,voltage_enable,vout,vref,upper_band,undershoot_budget)"
+"%#codegen"
+"persistent prev_req q_phase q_ton q_time q_reason q_depth used first_time"
+"persistent last_release release_window_start release_count_total reject_count_total"
+"persistent capture_set area_capture last_req_ns last_alloc_ns last_reason last_spacing"
+"persistent hold_phase hold_until hold_ton last_release_rel_us"
+"if isempty(prev_req)"
+"    prev_req = [false,false,false,false];"
+"    q_phase = zeros(1,4);"
+"    q_ton = zeros(1,4);"
+"    q_time = zeros(1,4);"
+"    q_reason = zeros(1,4);"
+"    q_depth = 0.0;"
+"    used = 0.0;"
+"    first_time = -1.0;"
+"    last_release = -1.0;"
+"    release_window_start = -1.0;"
+"    release_count_total = 0.0;"
+"    reject_count_total = 0.0;"
+"    capture_set = false;"
+"    area_capture = 0.0;"
+"    last_req_ns = 0.0;"
+"    last_alloc_ns = 0.0;"
+"    last_reason = 0.0;"
+"    last_spacing = 0.0;"
+"    hold_phase = 0.0;"
+"    hold_until = -1.0;"
+"    hold_ton = 0.0;"
+"    last_release_rel_us = 0.0;"
+"end"
+"if t < t_step"
+"    prev_req = [false,false,false,false];"
+"    q_phase(:) = 0.0;"
+"    q_ton(:) = 0.0;"
+"    q_time(:) = 0.0;"
+"    q_reason(:) = 0.0;"
+"    q_depth = 0.0;"
+"    used = 0.0;"
+"    first_time = -1.0;"
+"    last_release = -1.0;"
+"    release_window_start = -1.0;"
+"    release_count_total = 0.0;"
+"    reject_count_total = 0.0;"
+"    capture_set = false;"
+"    area_capture = 0.0;"
+"    last_req_ns = 0.0;"
+"    last_alloc_ns = 0.0;"
+"    last_reason = 0.0;"
+"    last_spacing = 0.0;"
+"    hold_phase = 0.0;"
+"    hold_until = -1.0;"
+"    hold_ton = 0.0;"
+"    last_release_rel_us = 0.0;"
+"end"
+"req = [req1,req2,req3,req4] > 0.5;"
+"rise = req & ~prev_req;"
+"tons = [ton1,ton2,ton3,ton4];"
+"req_out = [false,false,false,false];"
+"defer = [false,false,false,false];"
+"ton_out = tons;"
+"active = (enable > 0.5) && (t >= t_step);"
+"if active && ~capture_set"
+"    area_capture = area_int;"
+"    capture_set = true;"
+"end"
+"if active && (first_time < 0.0) && any(rise)"
+"    first_time = t;"
+"    release_window_start = t;"
+"end"
+"if first_time >= 0.0"
+"    age = max(t - first_time, 0.0);"
+"else"
+"    age = 0.0;"
+"end"
+"in_budget_window = active && (first_time >= 0.0) && (age <= max(budget_window, 0.0));"
+"if (release_window_start < 0.0) || ((t - release_window_start) > max(budget_window, 1.0e-12))"
+"    release_window_start = t;"
+"    release_count_total = 0.0;"
+"end"
+"budget_remaining = max(ton_budget - used, 0.0);"
+"if ~in_budget_window"
+"    budget_remaining = max(max_ton, ton_min);"
+"end"
+"ramp_limit = min(max_ton, max(first_limit, first_limit + release_count_total * max(ramp_step, 0.0)));"
+"spacing_ok = (spacing_enable <= 0.5) || (last_release < 0.0) || ((t - last_release) >= max(min_spacing, 0.0));"
+"window_ok = (spacing_enable <= 0.5) || (release_count_total < max(max_per_window, 1.0));"
+"voltage_ok = (voltage_enable <= 0.5) || ((vout <= vref + max(upper_band, 0.0)) && (vout >= vref - max(undershoot_budget, 0.0)));"
+"area_tol = max(abs(area_target), 1.0e-9) + 5.0e-7;"
+"area_ok = (area_enable <= 0.5) || (abs(area_int - area_target) <= area_tol);"
+"budget_ok = budget_remaining >= max(ton_min, 0.0);"
+"release_ok = active && spacing_ok && window_ok && voltage_ok && area_ok && budget_ok;"
+"holding = (hold_phase >= 1.0) && (t < hold_until);"
+"if holding"
+"    hp = min(max(round(hold_phase), 1), 4);"
+"    req_out(hp) = true;"
+"    ton_out(hp) = hold_ton;"
+"end"
+"released_this_step = false;"
+"if active && ~holding && (q_depth > 0.5) && release_ok"
+"    qp = min(max(round(q_phase(1)), 1), 4);"
+"    requested = max(q_ton(1), 0.0);"
+"    allocated = min([requested, budget_remaining, ramp_limit]);"
+"    last_req_ns = 1.0e9 * requested;"
+"    if allocated >= max(ton_min, 0.0)"
+"        req_out(qp) = true;"
+"        ton_out(qp) = allocated;"
+"        hold_phase = qp;"
+"        hold_until = t + 25.0e-9;"
+"        hold_ton = allocated;"
+"        used = used + double(in_budget_window) * allocated;"
+"        if last_release >= 0.0"
+"            last_spacing = t - last_release;"
+"        else"
+"            last_spacing = 0.0;"
+"        end"
+"        last_release = t;"
+"        last_release_rel_us = 1.0e6 * (t - t_step);"
+"        release_count_total = release_count_total + 1.0;"
+"        last_alloc_ns = 1.0e9 * allocated;"
+"        last_reason = 2.0;"
+"        released_this_step = true;"
+"        for k = 1:3"
+"            q_phase(k) = q_phase(k+1);"
+"            q_ton(k) = q_ton(k+1);"
+"            q_time(k) = q_time(k+1);"
+"            q_reason(k) = q_reason(k+1);"
+"        end"
+"        q_phase(4) = 0.0; q_ton(4) = 0.0; q_time(4) = 0.0; q_reason(4) = 0.0;"
+"        q_depth = max(q_depth - 1.0, 0.0);"
+"    else"
+"        last_reason = 4.0;"
+"    end"
+"end"
+"hold_pass_through = active && (in_budget_window || q_depth > 0.5 || spacing_enable > 0.5 || area_enable > 0.5 || voltage_enable > 0.5);"
+"for idx = 1:4"
+"    if rise(idx)"
+"        requested = max(tons(idx), 0.0);"
+"        last_req_ns = 1.0e9 * requested;"
+"        should_control = hold_pass_through;"
+"        if should_control"
+"            can_try_now = (q_depth < 0.5) && ~holding && ~released_this_step && release_ok;"
+"            allocated = min([requested, budget_remaining, ramp_limit]);"
+"            if can_try_now && (allocated >= max(ton_min, 0.0))"
+"                req_out(idx) = true;"
+"                ton_out(idx) = allocated;"
+"                hold_phase = idx;"
+"                hold_until = t + 25.0e-9;"
+"                hold_ton = allocated;"
+"                used = used + double(in_budget_window) * allocated;"
+"                if last_release >= 0.0"
+"                    last_spacing = t - last_release;"
+"                else"
+"                    last_spacing = 0.0;"
+"                end"
+"                last_release = t;"
+"                last_release_rel_us = 1.0e6 * (t - t_step);"
+"                release_count_total = release_count_total + 1.0;"
+"                last_alloc_ns = 1.0e9 * allocated;"
+"                last_reason = 1.0;"
+"                released_this_step = true;"
+"            else"
+"                reason = 3.0;"
+"                if ~budget_ok"
+"                    reason = 4.0;"
+"                elseif ~voltage_ok"
+"                    reason = 5.0;"
+"                elseif ~area_ok"
+"                    reason = 6.0;"
+"                elseif ~spacing_ok || ~window_ok"
+"                    reason = 7.0;"
+"                elseif allocated < max(ton_min, 0.0)"
+"                    reason = 8.0;"
+"                end"
+"                if q_depth < min(max(queue_max_depth, 1.0), 4.0)"
+"                    slot = min(max(round(q_depth + 1.0), 1), 4);"
+"                    q_phase(slot) = idx;"
+"                    q_ton(slot) = requested;"
+"                    q_time(slot) = t;"
+"                    q_reason(slot) = reason;"
+"                    q_depth = q_depth + 1.0;"
+"                    defer(idx) = true;"
+"                    last_reason = reason;"
+"                else"
+"                    reject_count_total = reject_count_total + 1.0;"
+"                    last_reason = 9.0;"
+"                end"
+"            end"
+"        else"
+"            req_out(idx) = true;"
+"            ton_out(idx) = requested;"
+"            last_alloc_ns = 1.0e9 * requested;"
+"            last_reason = 10.0;"
+"        end"
+"    elseif ~hold_pass_through"
+"        req_out(idx) = req(idx);"
+"    end"
+"end"
+"pending = double(q_depth > 0.5);"
+"if q_depth > 0.5"
+"    queue_age_us = 1.0e6 * max(t - q_time(1), 0.0);"
+"    queue_phase_id = q_phase(1);"
+"    queue_reason = q_reason(1);"
+"else"
+"    queue_age_us = 0.0;"
+"    queue_phase_id = 0.0;"
+"    queue_reason = 0.0;"
+"end"
+"queue_release_time = last_release_rel_us;"
+"queue_energy_budget_ns = 1.0e9 * budget_remaining;"
+"queue_release_count = release_count_total;"
+"queue_reject_count = reject_count_total;"
+"queue_reject_reason = double(last_reason == 9.0) * 9.0;"
+"Ton_requested_ns = last_req_ns;"
+"Ton_allocated_ns = last_alloc_ns;"
+"Ton_budget_remaining_ns = 1.0e9 * budget_remaining;"
+"Ton_allocation_reason = last_reason;"
+"reentry_Ton_budget_used_ns = 1.0e9 * used;"
+"reentry_Ton_budget_violation = double(in_budget_window && (used > ton_budget + 1.0e-12));"
+"area_int_capture_at_drop = area_capture;"
+"area_int_reentry_target = area_target;"
+"if area_enable > 0.5"
+"    area_int_restore_usage = min(max(age * max(area_restore_rate, 0.0), 0.0), 1.0);"
+"    area_int_queue_coupling_usage = double(q_depth > 0.5) * area_int_restore_usage;"
+"    area_int_queue_coupling_state = 1.0 + double(~area_ok);"
+"    area_int_restore_state = double(area_int_restore_usage > 0.0);"
+"else"
+"    area_int_restore_usage = 0.0;"
+"    area_int_queue_coupling_usage = 0.0;"
+"    area_int_queue_coupling_state = 0.0;"
+"    area_int_restore_state = 0.0;"
+"end"
+"if ~active"
+"    event_queue_state = 0.0;"
+"elseif q_depth > 0.5"
+"    event_queue_state = 2.0;"
+"elseif released_this_step"
+"    event_queue_state = 3.0;"
+"else"
+"    event_queue_state = 1.0;"
+"end"
+"if last_reason == 1.0 || last_reason == 2.0 || last_reason == 10.0"
+"    energy_allocation_state = 1.0;"
+"elseif last_reason == 4.0 || last_reason == 8.0"
+"    energy_allocation_state = 3.0;"
+"elseif last_reason == 0.0"
+"    energy_allocation_state = 0.0;"
+"else"
+"    energy_allocation_state = 2.0;"
+"end"
+"controlled_reentry_active = double(active && (in_budget_window || q_depth > 0.5));"
+"actual_inter_pulse_spacing = 1.0e6 * last_spacing;"
+"burst_pulse_count_after_reentry = release_count_total;"
+"req1o = req_out(1); req2o = req_out(2); req3o = req_out(3); req4o = req_out(4);"
+"ton1o = ton_out(1); ton2o = ton_out(2); ton3o = ton_out(3); ton4o = ton_out(4);"
+"d1 = defer(1); d2 = defer(2); d3 = defer(3); d4 = defer(4);"
+"queue_depth = q_depth;"
+"prev_req = req;"
+"end"
+];
+setChartScriptAndTypes(blockPath, script, ...
+    ["req1", "req2", "req3", "req4", "ton1", "ton2", "ton3", "ton4", ...
+    "t", "t_step", "enable", "queue_max_depth", "min_spacing", ...
+    "max_per_window", "spacing_enable", "budget_window", "ton_budget", ...
+    "ton_min", "first_limit", "ramp_step", "max_ton", "area_enable", ...
+    "area_int", "area_target", "area_restore_rate", "voltage_enable", ...
+    "vout", "vref", "upper_band", "undershoot_budget", ...
+    "req1o", "req2o", "req3o", "req4o", "ton1o", "ton2o", "ton3o", "ton4o", ...
+    "d1", "d2", "d3", "d4", "pending", "queue_depth", "queue_age_us", ...
+    "queue_phase_id", "queue_reason", "queue_release_time", ...
+    "queue_energy_budget_ns", "queue_release_count", "queue_reject_count", ...
+    "queue_reject_reason", "Ton_requested_ns", "Ton_allocated_ns", ...
+    "Ton_budget_remaining_ns", "Ton_allocation_reason", ...
+    "reentry_Ton_budget_used_ns", "reentry_Ton_budget_violation", ...
+    "area_int_capture_at_drop", "area_int_reentry_target", ...
+    "area_int_restore_usage", "area_int_queue_coupling_usage", ...
+    "area_int_queue_coupling_state", "area_int_restore_state", ...
+    "event_queue_state", "energy_allocation_state", ...
+    "controlled_reentry_active", "actual_inter_pulse_spacing", ...
+    "burst_pulse_count_after_reentry"], ...
+    ["req1", "req2", "req3", "req4", "req1o", "req2o", "req3o", "req4o", ...
+    "d1", "d2", "d3", "d4"]);
 setFastSampleTime(blockPath);
 end
 

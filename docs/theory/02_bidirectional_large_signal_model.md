@@ -146,6 +146,7 @@ A5-C0/A5-C4 baseline audit: MODEL_CONFIRMED
 A5-T1/T2/T3/T4 candidate comparison: MODEL_REVISED
 A5-T4-R1 controlled-reentry burst-limiter revision: MODEL_REVISED
 E010-A5-R2 reentry energy shaping / scheduler release: MODEL_REVISED
+E010-A5-R3 event-queue energy allocation: MODEL_REVISED
 ```
 
 The proposed severe-drop token is:
@@ -170,6 +171,12 @@ a_O_severe = [
   reentry_min_inter_pulse_spacing_us,
   first_reentry_Ton_limit_ns,
   recovery_Ton_ramp_rate,
+  event_queue_enable,
+  queue_max_depth,
+  queue_release_min_spacing,
+  queue_release_max_per_window,
+  per_event_Ton_allocation_policy,
+  area_int_queue_coupling_policy,
   area_int_reentry_clamp,
   undershoot_budget_severe,
   late_settling_guard,
@@ -177,7 +184,7 @@ a_O_severe = [
 ]
 ```
 
-The design combines five mechanisms:
+The design combines these mechanisms:
 
 ```text
 1. active-HS-aware Ton truncation;
@@ -186,7 +193,8 @@ The design combines five mechanisms:
 4. stricter but undershoot-budgeted reentry;
 5. per-event reentry energy/Ton shaping;
 6. scheduler-release shaping with voltage-window and burst guards;
-7. fallback-to-A4/no-op if predicted undershoot or reentry risk is too high.
+7. event-queue / per-event Ton allocation with explicit accounting;
+8. fallback-to-A4/no-op if predicted undershoot or reentry risk is too high.
 ```
 
 Severe-drop detection is evidence-local:
@@ -313,7 +321,54 @@ release_ok(k) =
   and burst_density_window <= burst_limit
 ```
 
-The severe-drop claim remains revised. The next model revision should change the `a_O` token structure or fall back to the previous no-harm A4 boundary; it should not expand to broad sweeps, mismatch, active Lambda, or active-phase shed from this R2 state.
+The severe-drop claim remained revised after R2. R3 below tested the next structural hypothesis and shows that the current event-queue insertion still does not safely solve the severe branch.
+
+### E010-A5-R3 Event-Queue Energy-Allocation Revision
+
+R3 tested the fixed severe `40A -> 1A` external load-current drop with fixed four phases, nominal DCR/sense gains, active Lambda disabled, and active-phase add/shed disabled:
+
+```text
+experiment: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/
+variants: R3-E1, R3-E2, R3-E3
+classification: MODEL_REVISED
+```
+
+The R3 hypothesis was that reentry should be treated as event-queue energy allocation rather than pulse blocking, count-only burst limiting, or scalar scheduler gating:
+
+```text
+each request is served, deferred, resized, or released later
+Ton_allocated = min(Ton_requested, Ton_budget_remaining, Ton_ramp_limit)
+```
+
+The implemented queue and accounting signals were observable, but the tested insertion still produced recovery starvation:
+
+```text
+R3-E1/E2/E3 peak overshoot = 0 mV
+R3-E1/E2/E3 recovery peaks = 0 mV
+R3-E1/E2/E3 peak undershoot = 971.618 mV
+R3-E1/E2/E3 final Vout error = -919.625 mV
+R3-E1/E2/E3 burst count / limit = 5 / 2
+R3-E1/E2/E3 phase_order_error_rate = 1
+```
+
+This revises the event-queue model:
+
+```text
+positive-peak suppression is not evidence of safe excess-energy removal
+if it is produced by negative-energy collapse.
+```
+
+For the severe branch, projected IQCOT scheduling must satisfy the signed energy bounds and event-integrity guards together:
+
+```text
+Q_min <= Q_reentry_accum + Q_event,k <= Q_max
+Vout_undershoot <= undershoot_budget
+burst_density <= burst_limit
+phase_order_error_rate == 0
+final_error within guard
+```
+
+R3-E3 was not close to passing, so the optional voltage-windowed R3-E4 was not run. The current severe-drop evidence supports only a downgraded claim: projected scheduling has partial/revision evidence, but the local `40A -> 1A` severe-drop improvement remains unvalidated. A future step must either downgrade the severe-drop claim boundary or introduce a structurally different large-signal energy-management mechanism beyond this projected scheduling path.
 
 ## Load-Rise Branch: Undershoot / Deficit Current
 

@@ -281,6 +281,66 @@ Not allowed from E010-A5-R2:
 - AI direct gate control or AI control of external load-current slew;
 - hardware, HIL, board-level, or silicon validation.
 
+## Current E010-A5-R3 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E010-A5-R3 event-queue energy allocation
+case: 40A -> 1A external load-current drop
+active phases: fixed four-phase
+DCR/sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+variants: R3-C0, R3-C4, R3-T4proxy, R3-R2E1, R3-E1, R3-E2, R3-E3
+metrics: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/e010_a5_r3_metrics.csv
+summary: experiments/E010_load_drop_overshoot/A5_severe_drop_token/R3_event_queue_energy_allocation/e010_a5_r3_research_summary.md
+classification: MODEL_REVISED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, adding observable event-queue and
+per-event Ton allocation accounting to the severe-drop reentry path did not
+produce a guard-passing A5 token. The tested R3-E1/E2/E3 variants suppress
+positive recovery peaks only by starving recovery energy, causing severe
+undershoot, final-error collapse, burst guard failure, and phase-order failure.
+```
+
+Quantitative local evidence:
+
+```text
+R3-C0/R3-C4:
+  peak overshoot = 4.06085 mV
+  recovery peak 2-12us = 3.61172 mV
+  recovery peak 12-40us = 3.59863 mV
+
+R3-E1/R3-E2/R3-E3:
+  peak overshoot = 0 mV
+  recovery peaks = 0 mV
+  peak undershoot = 971.618 mV
+  final Vout error = -919.625 mV
+  burst count / limit = 5 / 2
+  phase_order_error_rate = 1
+  dropped_REQ_count = 0
+  guard_pass = false
+```
+
+Not allowed from E010-A5-R3:
+
+- A5 `MODEL_CONFIRMED` severe-drop validation;
+- claiming the event queue safely improves `40A -> 1A`;
+- treating zero positive peak as improvement when it is caused by recovery starvation;
+- running or citing optional R3-E4 as evidence, because it was not run;
+- broad load-drop robustness;
+- active Lambda control;
+- active-phase shed during severe `40A -> 1A`;
+- AI direct gate control or AI control of external load-current slew;
+- hardware, HIL, board-level, or silicon validation.
+
+Boundary update: the severe-drop improvement claim should be downgraded unless a future protocol introduces a structurally different large-signal energy-management mechanism beyond the tested projected IQCOT scheduling path.
+
 ## Current E020 Evidence Boundary
 
 Validated so far:
