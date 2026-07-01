@@ -584,3 +584,37 @@ _Append-only timeline._
 - Next recommended task: R052_DIGITAL_JITTER_BUDGET_CONSOLIDATION.
 - Result classification: MODEL_CONFIRMED.
 - Commit SHA: reported in the final Codex Round Output for this self-referential commit.
+
+<!-- R052_DIGITAL_JITTER_BUDGET_CONSOLIDATION -->
+
+## 2026-07-01 R052 / Digital jitter budget consolidation
+
+- Objective: consolidated existing digital implementation budget evidence for
+  area threshold quantization, detection clock, Ton resolution,
+  comparator/detection delay, and supervisor latency; no new simulation was run.
+- MATLAB/Simulink used: no.
+- Original `.slx` modified: no.
+- Evidence files found: `output/iqcot_digital_area_bit_budget.csv`,
+  `output/iqcot_digital_detection_clock_budget.csv`,
+  `output/iqcot_digital_ton_resolution_budget.csv`,
+  `output/iqcot_digital_combined_jitter_budget.csv`,
+  `output/iqcot_digital_jitter_gain_summary.csv`,
+  `output/iqcot_pis_iek_monte_carlo_budget_report.md`,
+  `output/iqcot_pis_iek_monte_carlo_summary.csv`,
+  `output/iqcot_ai_delay_event_surrogate_report.md`, and
+  `output/iqcot_table_supervisor_delay_sensitivity_report.md`.
+- Digital budget decision: `MODEL_CONFIRMED` for safe model-level wording
+  within the studied four-phase digital IQCOT implementation. R052 supports
+  mapping quantization, clock, Ton resolution, comparator/detection delay, and
+  supervisor latency to event wait jitter, phase-spacing jitter, and
+  current-sharing quantization.
+- Claim matrix update: no direct edit; R052 generated structured evidence and
+  boundary tables instead, because the matrix already contained R050 digital
+  budget wording and had unrelated pre-existing dirty hunks.
+- New files: `refine-logs/LOCAL_AUDIT_R052_DIGITAL_JITTER_BUDGET.md`,
+  `docs/r052_digital_jitter_budget_consolidation.md`,
+  `output/tables/r052_digital_budget_evidence_map.csv`, and
+  `output/tables/r052_digital_budget_claim_boundary_table.csv`.
+- Next recommended task: R053_PR_ECB_CONTROLLED_REENTRY_MINIMAL_CHUNK.
+- Result classification: MODEL_CONFIRMED.
+- Commit SHA: reported in the final Codex Round Output for this self-referential commit.
