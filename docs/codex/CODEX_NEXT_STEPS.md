@@ -6,7 +6,7 @@ Date: 2026-07-01
 
 E010 load-drop overshoot validation has already produced a `MODEL_REVISED` result. Do not restart from the old first E010 task or from `A1 Ton truncation only`.
 
-E020 load-rise undershoot validation has produced the first `MODEL_CONFIRMED` chunk for the local peak-undershoot/current-rise mechanism, and E020-R1 has now confirmed a narrow a_U window-tuning refinement. Do not restart the first `40A -> 120A` B0/B1/B2/B3 run or the R1-U1/U2/U3 tuning run unless the model wiring or postprocess code changes.
+E020 load-rise undershoot validation has produced the first `MODEL_CONFIRMED` chunk for the local peak-undershoot/current-rise mechanism, and E020-R1 has now confirmed a narrow a_U window-tuning refinement. Do not restart the first `40A -> 120A` B0/B1/B2/B3 run or the R1-U1/U2/U3/U4 tuning run unless the model wiring or postprocess code changes.
 
 Current E010 evidence:
 
@@ -180,7 +180,7 @@ case: 40A -> 120A external load-current rise
 active phases: fixed four-phase
 active Lambda: disabled
 active-phase add/shed: disabled
-variants: R1-B0/R1-B3 carry-forward references, R1-U1/R1-U2/R1-U3 new runs
+variants: R1-B0/R1-B3 carry-forward references, R1-U1/R1-U2/R1-U3/R1-U4 new runs
 metrics: e020_r1_metrics.csv
 summary: e020_r1_research_summary.md
 classification: MODEL_CONFIRMED
@@ -193,15 +193,15 @@ R1-U1:
   Ton_boost_window = 1.5 us
   Ton_boost_gain label = 1.0
   decay policy = short_window_B3_exponential
-  peak undershoot = 318.771 mV
-  90% current-rise time = 1.204 us
-  final Vout error = -297.746 mV
+  peak undershoot = 318.801 mV
+  90% current-rise time = 1.196 us
+  final Vout error = -297.766 mV
   current_limit_hit = false
   REQ/accepted/dropped = 199/199/0
   phase_order_error_rate = 0
 ```
 
-Interpretation: R1-U1 preserves the B3 early benefit and gives only a very small final-error improvement versus B3 (`+0.18189 mV` toward zero). U2 and U3 preserve guards but worsen final error. E020-R1 therefore supports a narrow window-tuned local a_U claim, not full `40A -> 120A` recovery and not 1 mV settling.
+Interpretation: R1-U1 preserves the B3 early benefit and gives only a very small final-error improvement versus B3 (`+0.162402 mV` toward zero). U2 preserves guards but worsens final error, U3 loses the early current-rise benefit, and U4's late-recovery guard does not improve late recovery. E020-R1 therefore supports a narrow window-tuned local a_U claim, not full `40A -> 120A` recovery and not 1 mV settling.
 
 Next smallest useful step:
 

@@ -127,6 +127,7 @@ in = in.setVariable("Iout", spec.base_load_A);
 in = in.setVariable("Iph", spec.base_load_A / 4);
 in = in.setVariable("E020_Vref", spec.vref);
 in = in.setVariable("E020_Undershoot_Band", spec.undershoot_band_V);
+in = in.setVariable("E020_Settling_Band", spec.settle_band_V);
 in = in.setVariable("E020_CurrentLimit_Guard", spec.current_limit_guard_A);
 in = in.setVariable("E020_FastRequest_Enable", spec.fast_request_enable);
 in = in.setVariable("E020_FastRequest_Window", spec.fast_request_window_s);
@@ -136,6 +137,7 @@ in = in.setVariable("E020_TonBoost_Enable", spec.ton_boost_enable);
 in = in.setVariable("E020_TonBoost_Window", spec.ton_boost_window_s);
 in = in.setVariable("Tton_boost_max", spec.ton_boost_max_s);
 in = in.setVariable("E020_Boost_Decay_Rate", spec.boost_decay_rate);
+in = in.setVariable("E020_LateRecoveryGuard_Enable", 0);
 out = sim(in);
 end
 

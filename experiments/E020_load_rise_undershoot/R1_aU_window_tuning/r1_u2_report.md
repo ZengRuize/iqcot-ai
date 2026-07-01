@@ -4,7 +4,7 @@ Date: 2026-07-01
 
 ## Model Copy
 
-`E:/Desktop/codex/models/derived/E020_R1_U2_aU_window_from_ideal_iqcot_20260701_110611.slx`
+`E:/Desktop/codex/models/derived/E020_R1_U2_aU_window_from_ideal_iqcot_20260701_144800.slx`
 
 ## Fixed Case
 
@@ -21,10 +21,10 @@ External load-current disturbance: `40A -> 120A`; fixed four phases; active Lamb
 
 ## Metrics
 
-| Variant | Success | Peak us mV | Rise90 us | Final err mV | Peak current A | Guard | Hint |
+| Variant | Success | Peak undershoot mV | Rise90 us | Final err mV | Peak current A | Guard | Hint |
 |---|---:|---:|---:|---:|---:|---:|---|
-| R1-U2 | 1 | 325.935 | 1.34 | -303.158 | 33.9874 | 1 | pending |
+| R1-U2 | 1 | 325.954 | 1.33 | -303.17 | 33.9858 | 1 | pending |
 
 ## Interpretation
 
-This per-variant report is local to the fixed R1 case. Final classification is assigned in `e020_r1_research_summary.md` after comparing U1/U2/U3 against carry-forward B0/B3.
+This per-variant report is local to the fixed R1 case. Final classification is assigned in `e020_r1_research_summary.md` after comparing U1/U2/U3/U4 against carry-forward B0/B3.

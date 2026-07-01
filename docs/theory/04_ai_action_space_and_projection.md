@@ -877,9 +877,9 @@ R1-U1:
 R1-U1 evidence:
 
 ```text
-peak undershoot = 318.771 mV
-90% current-rise time = 1.204 us
-final Vout error = -297.746 mV
+peak undershoot = 318.801 mV
+90% current-rise time = 1.196 us
+final Vout error = -297.766 mV
 REQ/accepted/dropped = 199/199/0
 phase_order_error_rate = 0
 current_limit_hit = false
@@ -906,16 +906,23 @@ else:
     fallback to nominal Ton
 ```
 
-R1-U2 and R1-U3 did not carry forward:
+R1-U2, R1-U3, and R1-U4 did not carry forward:
 
 ```text
 R1-U2 lower gain:
-  peak undershoot = 325.935 mV
-  final Vout error = -303.158 mV
+  peak undershoot = 325.954 mV
+  final Vout error = -303.170 mV
 
 R1-U3 stronger decay:
-  peak undershoot = 328.236 mV
-  final Vout error = -305.057 mV
+  peak undershoot = 346.678 mV
+  90% current-rise time = 45.018 us
+  final Vout error = -328.811 mV
+
+R1-U4 late-recovery guard:
+  peak undershoot = 344.252 mV
+  90% current-rise time = 1.466 us
+  final Vout error = -323.979 mV
+  late_recovery_guard_trigger_count = 78
 ```
 
 Claim boundary: R1-U1 confirms only a narrow window-tuned local `a_U` refinement. It does not prove full `120A` recovery, 1 mV settling, active Lambda, active-phase add, or broad load-rise robustness.

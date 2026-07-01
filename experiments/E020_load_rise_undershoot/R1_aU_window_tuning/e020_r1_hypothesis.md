@@ -52,11 +52,11 @@ R1 tests whether early boost should be strong but short, then decay or hand back
 - `R1-B3`: carry-forward previous E020 B3 fast request + Ton boost reference.
 - `R1-U1`: `0.5 * B3` Ton-boost window, B3 boost gain, B3 fast-request behavior.
 - `R1-U2`: `0.5 * B3` Ton-boost window, `0.75 * B3` boost gain, B3 fast-request behavior.
-- `R1-U3`: B3 window with stronger exponential decay back to nominal Ton, B3 fast-request behavior.
+- `R1-U3`: B3 window with stronger exponential decay back to nominal Ton, fast request active only during the first deficit window.
+- `R1-U4`: `R1-U3` plus late-recovery guard that forces nominal Ton when the current target is reached, the Vout-error slope changes sign, or Vout enters the recovery band.
 
-`R1-U4` remains optional and is not run unless U3 logs isolate late recovery as a guard-trigger problem.
+All four R1 variants are run as the smallest fixed-case tuning set. No Cartesian sweep or broad load-rise grid is part of R1.
 
 ## Claim Boundary Before Running
 
-Do not claim full 120A recovery unless the R1 metrics show final-error or settling evidence.
-If R1 does not improve late recovery versus B3, the E020 claim remains limited to local early peak-undershoot reduction and current-rise acceleration.
+Do not claim full 120A recovery unless the R1 metrics show meaningful final-error or settling evidence. If R1 only gives a marginal final-error movement, the E020 claim remains limited to local early peak-undershoot reduction, current-rise acceleration, and a narrow window-tuning refinement.

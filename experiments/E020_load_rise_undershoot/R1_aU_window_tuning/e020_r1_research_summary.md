@@ -24,15 +24,22 @@ The first E020 chunk confirmed early load-rise benefit from fast request plus To
 
 `E:/Desktop/codex/experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_metrics.csv`
 
+Additional evidence CSVs:
+
+- variant config: `E:/Desktop/codex/experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_variant_config.csv`
+- signal availability: `E:/Desktop/codex/experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_signal_availability.csv`
+- scheduler audit: `E:/Desktop/codex/experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_scheduler_audit.csv`
+
 ## Metrics Table
 
 | Variant | Success | Peak undershoot mV | Rise90 us | Final err mV | Peak current A | Guard | Hint |
 |---|---:|---:|---:|---:|---:|---:|---|
 | R1-B0 | 1 | 397.42 | 37.996 | -376.361 | 34.0379 | 1 | carry_forward_reference |
 | R1-B3 | 1 | 319.081 | 1.212 | -297.928 | 34.0934 | 1 | carry_forward_reference |
-| R1-U1 | 1 | 318.771 | 1.204 | -297.746 | 33.9375 | 1 | candidate_model_confirmed |
-| R1-U2 | 1 | 325.935 | 1.34 | -303.158 | 33.9874 | 1 | late_recovery_not_improved |
-| R1-U3 | 1 | 328.236 | 2.312 | -305.057 | 33.9858 | 1 | late_recovery_not_improved |
+| R1-U1 | 1 | 318.801 | 1.196 | -297.766 | 33.9359 | 1 | candidate_model_confirmed |
+| R1-U2 | 1 | 325.954 | 1.33 | -303.17 | 33.9858 | 1 | late_recovery_not_improved |
+| R1-U3 | 1 | 346.678 | 45.018 | -328.811 | 34.1755 | 1 | early_benefit_lost |
+| R1-U4 | 1 | 344.252 | 1.466 | -323.979 | 33.9258 | 1 | late_recovery_not_improved |
 
 ## Classification
 
@@ -42,12 +49,12 @@ An R1 candidate preserved early undershoot/current-rise improvement and improved
 
 Best R1 variant: `R1-U1`.
 
-- peak undershoot: `318.771 mV`
-- 90% current-rise time: `1.204 us`
-- final Vout error: `-297.746 mV`
+- peak undershoot: `318.801 mV`
+- 90% current-rise time: `1.196 us`
+- final Vout error: `-297.766 mV`
 - guard pass: `1`
 
-The final-error improvement versus B3 is only `+0.18189 mV` toward zero, and no R1 variant settled within the `1 mV` band in the `90 us` post-step window. The confirmation is therefore a narrow local window-tuning confirmation, not a full `120A` recovery confirmation.
+The final-error improvement versus B3 is only `+0.162402 mV` toward zero, and no R1 variant settled within the `1 mV` band in the `90 us` post-step window. The confirmation is therefore a narrow local window-tuning confirmation, not a full `120A` recovery confirmation.
 
 ## Claim Boundary
 

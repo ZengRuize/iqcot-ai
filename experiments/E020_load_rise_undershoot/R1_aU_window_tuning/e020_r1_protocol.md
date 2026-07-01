@@ -33,7 +33,8 @@ New simulated variants:
 
 - `R1-U1`: shorter Ton-boost window, B3 boost maximum, B3 fast request.
 - `R1-U2`: shorter Ton-boost window, reduced boost maximum, B3 fast request.
-- `R1-U3`: B3 window with stronger exponential Ton decay, B3 fast request.
+- `R1-U3`: B3 window with stronger exponential Ton decay, fast request active only during the first deficit window.
+- `R1-U4`: R1-U3 plus late-recovery guard and fallback to nominal Ton.
 
 No Cartesian sweep is allowed in R1.
 
@@ -49,6 +50,7 @@ delta_peak_undershoot_vs_B0_mV
 delta_peak_undershoot_vs_B3_mV
 recovery_peak_2_12us_mV
 recovery_peak_12_40us_mV
+recovery_overshoot_mV
 current_rise_50pct_us
 current_rise_90pct_us
 delta_current_rise_90pct_vs_B0_us
@@ -60,7 +62,11 @@ delta_final_error_vs_B3_mV
 phase_current_peak_A
 phase_current_peak_limit_A
 current_limit_hit
+events_0_2us
+events_2_12us
+events_12_40us
 Ton_boost_count
+Ton_boost_usage
 Ton_boost_gain
 Ton_boost_window_us
 Ton_boost_decay_policy

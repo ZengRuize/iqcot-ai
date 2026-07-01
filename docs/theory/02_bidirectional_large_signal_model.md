@@ -522,7 +522,7 @@ Outside the boost window the projection falls back to nominal IQCOT Ton:
 Ton_i,R1(t) = Ton_i,nom
 ```
 
-R1 compared carry-forward `R1-B0/R1-B3` references with three new derived-copy variants:
+R1 compared carry-forward `R1-B0/R1-B3` references with four new derived-copy variants:
 
 ```text
 R1-U1:
@@ -539,6 +539,11 @@ R1-U3:
   boost_window = 3.0 us
   Tton_boost_max = 260 ns
   decay_rate = 1e6 1/s
+
+R1-U4:
+  same as R1-U3
+  late_recovery_guard = enabled
+  fallback when current target, error slope, or recovery band guard triggers
 ```
 
 Measured result:
@@ -550,20 +555,27 @@ B3:
   final Vout error = -297.928 mV
 
 R1-U1:
-  peak undershoot = 318.771 mV
-  90% current-rise time = 1.204 us
-  final Vout error = -297.746 mV
+  peak undershoot = 318.801 mV
+  90% current-rise time = 1.196 us
+  final Vout error = -297.766 mV
   REQ/accepted/dropped = 199/199/0
   phase_order_error_rate = 0
   current_limit_hit = false
 
 R1-U2:
-  peak undershoot = 325.935 mV
-  final Vout error = -303.158 mV
+  peak undershoot = 325.954 mV
+  final Vout error = -303.170 mV
 
 R1-U3:
-  peak undershoot = 328.236 mV
-  final Vout error = -305.057 mV
+  peak undershoot = 346.678 mV
+  90% current-rise time = 45.018 us
+  final Vout error = -328.811 mV
+
+R1-U4:
+  peak undershoot = 344.252 mV
+  90% current-rise time = 1.466 us
+  final Vout error = -323.979 mV
+  late_recovery_guard_trigger_count = 78
 ```
 
 This revises the load-rise model in a narrow way:
@@ -574,10 +586,11 @@ useful early deficit filling
     + short bounded Ton energy boost
 
 late recovery improvement
-  is not monotonic in lower Ton boost gain or stronger decay.
+  is not monotonic in lower Ton boost gain, stronger decay, or the tested
+  late-recovery guard.
 ```
 
-The R1-U1 final-error improvement over B3 is only `0.18189 mV`, and no R1 variant settled within `1 mV` in the `90 us` post-step window. Therefore R1 confirms a local window-tuned `a_U` refinement, not complete `40A -> 120A` recovery.
+The R1-U1 final-error improvement over B3 is only `0.162402 mV`, and no R1 variant settled within `1 mV` in the `90 us` post-step window. Therefore R1 confirms a local window-tuned `a_U` refinement, not complete `40A -> 120A` recovery.
 
 ## Branch Selection
 

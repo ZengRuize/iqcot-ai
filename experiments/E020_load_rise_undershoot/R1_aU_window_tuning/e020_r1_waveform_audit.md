@@ -4,7 +4,7 @@ Date: 2026-07-01
 
 ## Scope
 
-Fixed external `40A -> 120A` load-current rise. `R1-B0` and `R1-B3` are carry-forward references; `R1-U1/U2/U3` are newly simulated derived models.
+Fixed external `40A -> 120A` load-current rise. `R1-B0` and `R1-B3` are carry-forward references; `R1-U1/U2/U3/U4` are newly simulated derived models.
 
 ## Signal Availability
 
@@ -24,18 +24,7 @@ Fixed external `40A -> 120A` load-current rise. `R1-B0` and `R1-B3` are carry-fo
 
 - `R1-B0`: `E:/Desktop/codex/models/derived/E020_B0_load_rise_observable_from_ideal_iqcot_20260629.slx`
 - `R1-B3`: `E:/Desktop/codex/models/derived/E020_B3_fast_request_ton_boost_from_ideal_iqcot_20260629.slx`
-- `R1-U1`: `E:/Desktop/codex/models/derived/E020_R1_U1_aU_window_from_ideal_iqcot_20260701_110513.slx`
-- `R1-U2`: `E:/Desktop/codex/models/derived/E020_R1_U2_aU_window_from_ideal_iqcot_20260701_110611.slx`
-- `R1-U3`: `E:/Desktop/codex/models/derived/E020_R1_U3_aU_window_from_ideal_iqcot_20260701_110651.slx`
-
-## Structural Check
-
-`model_check` was run on the local baseline and the final R1-U1 derived model.
-Both reported the same inherited pattern:
-
-```text
-total_errors = 7
-total_warnings = 33
-```
-
-The errors are the known unconnected top-level `Add/Add1/Add2/Add3/Add4` and `OnDelay` diagnostic ports inherited from the baseline. The warnings are inherited unconnected diagnostic outputs / physical-port check artifacts on COT cells, gate-driver shoot-through diagnostics, current-measurement blocks, and one MOSFET block. No additional Stateflow lint error was introduced by the R1 fast-request, Ton-boost, or diagnostic logging blocks. R1 interpretation therefore relies on successful simulation, logged metrics, and the identical baseline/R1 structural-check issue count.
+- `R1-U1`: `E:/Desktop/codex/models/derived/E020_R1_U1_aU_window_from_ideal_iqcot_20260701_144658.slx`
+- `R1-U2`: `E:/Desktop/codex/models/derived/E020_R1_U2_aU_window_from_ideal_iqcot_20260701_144800.slx`
+- `R1-U3`: `E:/Desktop/codex/models/derived/E020_R1_U3_aU_window_from_ideal_iqcot_20260701_144845.slx`
+- `R1-U4`: `E:/Desktop/codex/models/derived/E020_R1_U4_aU_window_from_ideal_iqcot_20260701_144929.slx`

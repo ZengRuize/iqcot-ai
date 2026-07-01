@@ -443,23 +443,29 @@ R1-B0: carry-forward original B0
 R1-B3: carry-forward previous B3 fast request + Ton boost
 R1-U1: 1.5 us Ton-boost window, B3 boost max, B3 fast request
 R1-U2: 1.5 us Ton-boost window, lower boost max, B3 fast request
-R1-U3: 3 us window with stronger exponential decay, B3 fast request
-R1-U4: not run
+R1-U3: 3 us window with stronger exponential decay, first-deficit fast request
+R1-U4: R1-U3 plus late-recovery guard, completed
 ```
 
 E020-R1 key result:
 
 ```text
 R1-U1:
-  peak undershoot = 318.771 mV
-  90% current-rise time = 1.204 us
-  final Vout error = -297.746 mV
+  peak undershoot = 318.801 mV
+  90% current-rise time = 1.196 us
+  final Vout error = -297.766 mV
   current_limit_hit = false
   dropped_REQ_count = 0
   phase_order_error_rate = 0
 
-R1-U2/U3:
+R1-U2:
   guard pass, but final error worsened versus B3
+
+R1-U3:
+  guard pass, but early current-rise benefit was lost
+
+R1-U4:
+  late-recovery guard triggered cleanly, but final error worsened versus B3
 ```
 
 Post-R1 gate:

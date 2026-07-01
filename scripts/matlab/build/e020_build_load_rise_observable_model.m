@@ -342,6 +342,9 @@ voutBlock = modelName + "/E020_TonBoost_Vout";
 vrefBlock = modelName + "/E020_TonBoost_Vref";
 bandBlock = modelName + "/E020_TonBoost_UndershootBand";
 limitBlock = modelName + "/E020_TonBoost_CurrentLimit";
+targetBlock = modelName + "/E020_TonBoost_TargetLoad";
+settleBlock = modelName + "/E020_TonBoost_SettlingBand";
+lateGuardEnableBlock = modelName + "/E020_TonBoost_LateGuardEnable";
 
 deleteBlockIfExists(clockBlock);
 deleteBlockIfExists(enableBlock);
@@ -353,6 +356,9 @@ deleteBlockIfExists(voutBlock);
 deleteBlockIfExists(vrefBlock);
 deleteBlockIfExists(bandBlock);
 deleteBlockIfExists(limitBlock);
+deleteBlockIfExists(targetBlock);
+deleteBlockIfExists(settleBlock);
+deleteBlockIfExists(lateGuardEnableBlock);
 
 add_block("simulink/Sources/Clock", clockBlock, "Position", [3680 900 3720 930]);
 add_block("simulink/Sources/Constant", enableBlock, ...
@@ -373,6 +379,21 @@ add_block("simulink/Sources/Constant", bandBlock, ...
     "Value", "E020_Undershoot_Band", "Position", [3680 1265 3795 1290]);
 add_block("simulink/Sources/Constant", limitBlock, ...
     "Value", "E020_CurrentLimit_Guard", "Position", [3680 1310 3795 1335]);
+add_block("simulink/Sources/Constant", targetBlock, ...
+    "Value", "Iload_final", "Position", [3680 1355 3795 1380]);
+add_block("simulink/Sources/Constant", settleBlock, ...
+    "Value", "E020_Settling_Band", "Position", [3680 1400 3795 1425]);
+add_block("simulink/Sources/Constant", lateGuardEnableBlock, ...
+    "Value", "E020_LateRecoveryGuard_Enable", "Position", [3680 1445 3795 1470]);
+
+sumIlBlocks = strings(1, 4);
+for phase = 1:4
+    sumIlBlocks(phase) = modelName + "/E020_TonBoost_SumIL" + phase;
+    deleteBlockIfExists(sumIlBlocks(phase));
+    ySum = 1490 + 45 * (phase - 1);
+    add_block("simulink/Signal Routing/From", sumIlBlocks(phase), ...
+        "GotoTag", "IL" + phase, "Position", [3680 ySum 3735 ySum+28]);
+end
 
     for phase = 1:4
         ilBlock = modelName + "/E020_TonBoost_IL" + phase;
@@ -424,6 +445,12 @@ add_block("simulink/Sources/Constant", limitBlock, ...
         connectBlocks(bandBlock, 1, boostBlock, 10);
         connectBlocks(ilBlock, 1, boostBlock, 11);
         connectBlocks(limitBlock, 1, boostBlock, 12);
+        connectBlocks(lateGuardEnableBlock, 1, boostBlock, 13);
+        connectBlocks(targetBlock, 1, boostBlock, 14);
+        connectBlocks(settleBlock, 1, boostBlock, 15);
+        for sumPhase = 1:4
+            connectBlocks(sumIlBlocks(sumPhase), 1, boostBlock, 15 + sumPhase);
+        end
         connectBlocks(boostBlock, 1, modelName + "/COT_Cell_1Phase" + phase, 3);
         connectBlocks(boostBlock, 2, activeTerm, 1);
         connectBlocks(boostBlock, 3, stateTerm, 1);
@@ -567,13 +594,27 @@ end
 
 function setTonBoostScript(blockPath)
 script = [
-"function [ton_out,boost_active,boost_state,boost_gain,boost_window,boost_decay_state,fallback_state] = ton_boost(ton_in,t,t_step,t_window,t_max,decay_rate,enable,vout,vref,band,il_i,current_limit)"
+"function [ton_out,boost_active,boost_state,boost_gain,boost_window,boost_decay_state,fallback_state] = ton_boost(ton_in,t,t_step,t_window,t_max,decay_rate,enable,vout,vref,band,il_i,current_limit,late_guard_enable,target_load,settle_band,il1,il2,il3,il4)"
 "%#codegen"
+"persistent prev_t prev_error"
+"if isempty(prev_t)"
+"    prev_t = t;"
+"end"
+"if isempty(prev_error)"
+"    prev_error = vout - vref;"
+"end"
 "age = t - t_step;"
 "in_window = (enable > 0.5) && (age >= 0.0) && (age <= t_window);"
 "deficit = vout <= (vref - band);"
 "guard_ok = (current_limit <= 0.0) || (abs(il_i) <= current_limit);"
-"active = in_window && deficit && guard_ok && (t_max > ton_in);"
+"verr = vout - vref;"
+"dt = max(t - prev_t, eps);"
+"verr_slope = (verr - prev_error) / dt;"
+"current_target_reached = (t >= t_step) && ((il1 + il2 + il3 + il4) >= 0.9 * target_load);"
+"slope_release = (verr < 0.0) && (verr_slope > 0.0);"
+"band_release = abs(verr) <= max(5.0 * settle_band, settle_band);"
+"late_guard = (late_guard_enable > 0.5) && (t >= t_step) && (current_target_reached || slope_release || band_release);"
+"active = in_window && deficit && guard_ok && ~late_guard && (t_max > ton_in);"
 "boost_window = t_window;"
 "boost_gain = 0.0;"
 "boost_decay_state = 0.0;"
@@ -587,14 +628,34 @@ script = [
 "    ton_out = ton_in;"
 "end"
 "boost_active = double(active);"
-"boost_state = double(in_window && deficit && guard_ok);"
-"fallback_state = double(~active && (age > t_window) && (t >= t_step));"
+"boost_state = double(in_window && deficit && guard_ok && ~late_guard);"
+"fallback_state = double((t >= t_step) && ((~active && age > t_window) || late_guard));"
+"prev_t = t;"
+"prev_error = verr;"
 ];
 setChartScriptAndTypes(blockPath, script, ...
     ["ton_in", "t", "t_step", "t_window", "t_max", "decay_rate", "enable", ...
     "vout", "vref", "band", "il_i", "current_limit", "ton_out", "boost_active", ...
+    "late_guard_enable", "target_load", "settle_band", "il1", "il2", "il3", "il4", ...
     "boost_state", "boost_gain", "boost_window", "boost_decay_state", "fallback_state"], ...
     strings(0, 1));
+rt = sfroot;
+chart = rt.find("-isa", "Stateflow.EMChart", "Path", char(blockPath));
+if ~isempty(chart)
+    try
+        chart.UpdateMethod = "DISCRETE";
+        chart.SampleTime = "Ts_ctrl";
+    catch
+        try
+            set_param(blockPath, "SampleTime", "Ts_ctrl");
+        catch
+        end
+    end
+end
+try
+    set_param(blockPath, "SystemSampleTime", "Ts_ctrl");
+catch
+end
 end
 
 function setTonActualScript(blockPath)

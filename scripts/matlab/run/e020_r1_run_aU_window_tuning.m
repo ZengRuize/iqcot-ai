@@ -3,7 +3,7 @@ function rows = e020_r1_run_aU_window_tuning(variants)
 % Fixed case: external 40A->120A load rise, four phases, no Lambda/phase add.
 
 if nargin < 1
-    variants = ["R1-U1", "R1-U2", "R1-U3"];
+    variants = ["R1-U1", "R1-U2", "R1-U3", "R1-U4"];
 end
 variants = string(variants);
 
@@ -19,10 +19,16 @@ ensureDir(experimentRoot);
 metricsCsv = fullfile(experimentRoot, "e020_r1_metrics.csv");
 summaryPath = fullfile(experimentRoot, "e020_r1_research_summary.md");
 auditPath = fullfile(experimentRoot, "e020_r1_waveform_audit.md");
+variantConfigCsv = fullfile(experimentRoot, "e020_r1_variant_config.csv");
+signalAvailabilityCsv = fullfile(experimentRoot, "e020_r1_signal_availability.csv");
+schedulerAuditCsv = fullfile(experimentRoot, "e020_r1_scheduler_audit.csv");
 
 baselineAudit = auditBaseline(projectRoot);
+writeVariantConfig(variantConfigCsv, variants);
 reference = referenceRows(projectRoot);
 rows = reference;
+signalRows = table();
+schedulerRows = table();
 
 for idx = 1:numel(variants)
     spec = variantSpec(variants(idx));
@@ -37,6 +43,8 @@ for idx = 1:numel(variants)
         logs = out.logsout;
         metrics = collectMetrics(logs, spec);
         row = rowFromMetrics(spec, metrics, true, "", modelFile);
+        signalRows = appendTable(signalRows, signalAvailabilityRows(logs, spec));
+        schedulerRows = appendTable(schedulerRows, schedulerAuditRows(logs, spec));
         exportWaveSample(logs, spec, fullfile(experimentRoot, spec.file_prefix + "_wave_sample.csv"));
         writeVariantReport(fullfile(experimentRoot, spec.file_prefix + "_report.md"), ...
             modelFile, spec, row);
@@ -53,13 +61,23 @@ end
 rows = addDeltaColumns(rows);
 rows = addClassificationHints(rows);
 writetable(rows, metricsCsv);
+if ~isempty(signalRows)
+    writetable(signalRows, signalAvailabilityCsv);
+end
+if ~isempty(schedulerRows)
+    writetable(schedulerRows, schedulerAuditCsv);
+end
 [classification, detail, bestVariant] = classifyRows(rows);
 writeWaveformAudit(auditPath, rows);
-writeSummary(summaryPath, rows, classification, detail, bestVariant, metricsCsv, baselineAudit);
+writeSummary(summaryPath, rows, classification, detail, bestVariant, metricsCsv, ...
+    baselineAudit, variantConfigCsv, signalAvailabilityCsv, schedulerAuditCsv);
 
 fprintf("E020_R1_METRICS=%s\n", metricsCsv);
 fprintf("E020_R1_SUMMARY=%s\n", summaryPath);
 fprintf("E020_R1_WAVEFORM_AUDIT=%s\n", auditPath);
+fprintf("E020_R1_VARIANT_CONFIG=%s\n", variantConfigCsv);
+fprintf("E020_R1_SIGNAL_AVAILABILITY=%s\n", signalAvailabilityCsv);
+fprintf("E020_R1_SCHEDULER_AUDIT=%s\n", schedulerAuditCsv);
 disp(rows);
 end
 
@@ -121,6 +139,50 @@ rows = [referenceRow(projectRoot, oldMetrics, b0, "B0"); ...
     referenceRow(projectRoot, oldMetrics, b3, "B3")];
 end
 
+function writeVariantConfig(csvPath, variants)
+rows = table();
+
+b0 = baseSpecTemplate();
+b0.variant = "R1-B0";
+b0.fast_request_enable = 0;
+b0.ton_boost_enable = 0;
+b0.ton_boost_gain = 0;
+b0.ton_boost_decay_policy = "none";
+rows = appendTable(rows, variantConfigRow(b0, "carry_forward_B0"));
+
+b3 = baseSpecTemplate();
+b3.variant = "R1-B3";
+b3.fast_request_enable = 1;
+b3.ton_boost_enable = 1;
+b3.ton_boost_gain = 1.0;
+b3.ton_boost_decay_policy = "B3_exponential_5e5_1ps";
+rows = appendTable(rows, variantConfigRow(b3, "carry_forward_B3"));
+
+for idx = 1:numel(variants)
+    rows = appendTable(rows, variantConfigRow(variantSpec(variants(idx)), "new_R1_run"));
+end
+writetable(rows, csvPath);
+end
+
+function row = variantConfigRow(spec, role)
+fallbackPolicy = "window_end";
+if spec.late_recovery_guard_enable > 0
+    fallbackPolicy = "window_end_or_late_guard";
+end
+row = table(string(spec.variant), string(role), spec.fast_request_enable, ...
+    1e6 * spec.fast_request_window_s, 1e9 * spec.fast_request_period_s, ...
+    1e9 * spec.fast_request_pulse_width_s, spec.ton_boost_enable, ...
+    spec.ton_boost_gain, 1e6 * spec.ton_boost_window_s, ...
+    1e9 * spec.ton_boost_max_s, string(spec.ton_boost_decay_policy), ...
+    spec.boost_decay_rate, spec.late_recovery_guard_enable, string(fallbackPolicy), ...
+    "B3 settings recovered from scripts/matlab/run/e020_run_load_rise_small_chunk.m and scripts/matlab/build/e020_build_load_rise_observable_model.m", ...
+    'VariableNames', {'variant','role','fast_req_enable','fast_req_window_us', ...
+    'fast_req_period_ns','fast_req_pulse_width_ns','Ton_boost_enable', ...
+    'Ton_boost_gain','Ton_boost_window_us','Tton_boost_max_ns', ...
+    'Ton_boost_decay_policy','boost_decay_rate_1ps', ...
+    'late_recovery_guard_enable','fallback_to_nominal_policy','source_note'});
+end
+
 function row = referenceRow(projectRoot, oldMetrics, spec, oldVariant)
 old = oldMetrics(oldMetrics.short_variant == oldVariant, :);
 wave = readtable(spec.wave_sample);
@@ -129,6 +191,7 @@ vout = wave.Vout;
 ilSum = wave.IL1 + wave.IL2 + wave.IL3 + wave.IL4;
 metrics = emptyMetrics();
 metrics.peak_undershoot_mV = old.peak_undershoot_mV(1);
+metrics.recovery_overshoot_mV = old.recovery_overshoot_mV(1);
 metrics.recovery_peak_2_12us_mV = windowMaxMv(tauUs, vout, spec.vref, 2, 12);
 metrics.recovery_peak_12_40us_mV = windowMaxMv(tauUs, vout, spec.vref, 12, 40);
 metrics.current_rise_50pct_us = currentRiseFromWave(tauUs, ilSum, spec, 0.5);
@@ -139,10 +202,14 @@ metrics.final_Vout_error_mV = old.final_error_mV(1);
 metrics.phase_current_peak_A = old.phase_current_peak_A(1);
 metrics.phase_current_peak_limit_A = spec.current_limit_guard_A;
 metrics.current_limit_hit = old.current_limit_hit(1) > 0;
+metrics.events_0_2us = old.event_count_0_2us(1);
+metrics.events_2_12us = NaN;
+metrics.events_12_40us = NaN;
 metrics.Ton_boost_count = 0;
 if oldVariant == "B3"
     metrics.Ton_boost_count = NaN;
 end
+metrics.Ton_boost_usage = old.ton_boost_usage_fraction(1);
 metrics.Ton_boost_gain = spec.ton_boost_gain;
 metrics.Ton_boost_window_us = 1e6 * spec.ton_boost_window_s;
 metrics.Ton_boost_decay_policy = spec.ton_boost_decay_policy;
@@ -192,11 +259,13 @@ elseif variant == "R1-U2"
     spec.boost_decay_rate = 5.0e5;
     spec.ton_boost_decay_policy = "short_window_0p75_gain_exponential";
 elseif variant == "R1-U3"
+    spec.fast_request_window_s = 1.5e-6;
     spec.ton_boost_window_s = 3.0e-6;
     spec.ton_boost_max_s = 260e-9;
     spec.boost_decay_rate = 1.0e6;
     spec.ton_boost_decay_policy = "strong_initial_exponential_decay_1e6_1ps";
 elseif variant == "R1-U4"
+    spec.fast_request_window_s = 1.5e-6;
     spec.ton_boost_window_s = 3.0e-6;
     spec.ton_boost_max_s = 260e-9;
     spec.boost_decay_rate = 1.0e6;
@@ -279,6 +348,7 @@ vPost = vout(post);
 
 metrics = emptyMetrics();
 metrics.peak_undershoot_mV = 1e3 * max(spec.vref - vPost);
+metrics.recovery_overshoot_mV = 1e3 * max(vPost - spec.vref);
 metrics.recovery_peak_2_12us_mV = 1e3 * maxWindow(tauPost, vPost - spec.vref, 2e-6, 12e-6);
 metrics.recovery_peak_12_40us_mV = 1e3 * maxWindow(tauPost, vPost - spec.vref, 12e-6, 40e-6);
 metrics.current_rise_50pct_us = currentRiseTimeUs(logs, spec, 0.5);
@@ -290,10 +360,15 @@ metrics.phase_current_peak_A = maxPhaseCurrent(logs, spec.t_load_step, spec.stop
 metrics.phase_current_peak_limit_A = spec.current_limit_guard_A;
 metrics.current_limit_hit = metrics.phase_current_peak_A > spec.current_limit_guard_A || ...
     maxOptionalSignal(logs, "current_limit_hit", spec.t_load_step, spec.stop_time) > 0.5;
+metrics.events_0_2us = countQhEvents(logs, spec.t_load_step, spec.t_load_step + 2e-6);
+metrics.events_2_12us = countQhEvents(logs, spec.t_load_step + 2e-6, spec.t_load_step + 12e-6);
+metrics.events_12_40us = countQhEvents(logs, spec.t_load_step + 12e-6, spec.t_load_step + 40e-6);
 metrics.Ton_boost_count = 0;
 for phase = 1:4
     metrics.Ton_boost_count = metrics.Ton_boost_count + countRisingEdges(logs, "ton_boost_active" + phase, spec.t_load_step, spec.stop_time);
 end
+metrics.Ton_boost_usage = activeFraction(logs, "ton_boost_active", ...
+    spec.t_load_step, spec.t_load_step + spec.ton_boost_window_s);
 metrics.Ton_boost_gain = spec.ton_boost_gain;
 metrics.Ton_boost_window_us = 1e6 * spec.ton_boost_window_s;
 metrics.Ton_boost_decay_policy = spec.ton_boost_decay_policy;
@@ -323,6 +398,7 @@ end
 function metrics = emptyMetrics()
 metrics = struct( ...
     "peak_undershoot_mV", NaN, ...
+    "recovery_overshoot_mV", NaN, ...
     "recovery_peak_2_12us_mV", NaN, ...
     "recovery_peak_12_40us_mV", NaN, ...
     "current_rise_50pct_us", NaN, ...
@@ -333,7 +409,11 @@ metrics = struct( ...
     "phase_current_peak_A", NaN, ...
     "phase_current_peak_limit_A", 55, ...
     "current_limit_hit", false, ...
+    "events_0_2us", NaN, ...
+    "events_2_12us", NaN, ...
+    "events_12_40us", NaN, ...
     "Ton_boost_count", NaN, ...
+    "Ton_boost_usage", NaN, ...
     "Ton_boost_gain", NaN, ...
     "Ton_boost_window_us", NaN, ...
     "Ton_boost_decay_policy", "NaN", ...
@@ -371,12 +451,13 @@ rows.delta_final_error_vs_B3_mV = rows.final_Vout_error_mV - b3.final_Vout_error
 
 desiredOrder = ["variant", "success", ...
     "peak_undershoot_mV", "delta_peak_undershoot_vs_B0_mV", "delta_peak_undershoot_vs_B3_mV", ...
-    "recovery_peak_2_12us_mV", "recovery_peak_12_40us_mV", ...
+    "recovery_overshoot_mV", "recovery_peak_2_12us_mV", "recovery_peak_12_40us_mV", ...
     "current_rise_50pct_us", "current_rise_90pct_us", ...
     "delta_current_rise_90pct_vs_B0_us", "delta_current_rise_90pct_vs_B3_us", ...
     "settling_time_1mV_us", "settled_within_90us", "final_Vout_error_mV", ...
     "delta_final_error_vs_B3_mV", "phase_current_peak_A", "phase_current_peak_limit_A", ...
-    "current_limit_hit", "Ton_boost_count", "Ton_boost_gain", "Ton_boost_window_us", ...
+    "current_limit_hit", "events_0_2us", "events_2_12us", "events_12_40us", ...
+    "Ton_boost_count", "Ton_boost_usage", "Ton_boost_gain", "Ton_boost_window_us", ...
     "Ton_boost_decay_policy", "Ton_boost_decay_done_time_us", "fast_req_count", ...
     "fast_req_window_us", "fast_req_reject_count", "fast_req_reject_reason", ...
     "fallback_to_nominal_time_us", "late_recovery_guard_enable", ...
@@ -419,11 +500,12 @@ function row = rowFromMetrics(spec, m, success, errorMessage, modelFile)
 row = table( ...
     string(spec.variant), success, ...
     m.peak_undershoot_mV, NaN, NaN, ...
-    m.recovery_peak_2_12us_mV, m.recovery_peak_12_40us_mV, ...
+    m.recovery_overshoot_mV, m.recovery_peak_2_12us_mV, m.recovery_peak_12_40us_mV, ...
     m.current_rise_50pct_us, m.current_rise_90pct_us, NaN, NaN, ...
     m.settling_time_1mV_us, m.settled_within_90us, m.final_Vout_error_mV, NaN, ...
     m.phase_current_peak_A, m.phase_current_peak_limit_A, m.current_limit_hit, ...
-    m.Ton_boost_count, m.Ton_boost_gain, m.Ton_boost_window_us, string(m.Ton_boost_decay_policy), ...
+    m.events_0_2us, m.events_2_12us, m.events_12_40us, ...
+    m.Ton_boost_count, m.Ton_boost_usage, m.Ton_boost_gain, m.Ton_boost_window_us, string(m.Ton_boost_decay_policy), ...
     m.Ton_boost_decay_done_time_us, m.fast_req_count, m.fast_req_window_us, ...
     m.fast_req_reject_count, string(m.fast_req_reject_reason), m.fallback_to_nominal_time_us, ...
     m.late_recovery_guard_enable, m.late_recovery_guard_trigger_count, string(m.late_recovery_guard_trigger_reason), ...
@@ -432,12 +514,13 @@ row = table( ...
     m.guard_pass, string(m.classification_hint), string(errorMessage), string(modelFile), ...
     'VariableNames', {'variant','success','peak_undershoot_mV', ...
     'delta_peak_undershoot_vs_B0_mV','delta_peak_undershoot_vs_B3_mV', ...
-    'recovery_peak_2_12us_mV','recovery_peak_12_40us_mV', ...
+    'recovery_overshoot_mV','recovery_peak_2_12us_mV','recovery_peak_12_40us_mV', ...
     'current_rise_50pct_us','current_rise_90pct_us', ...
     'delta_current_rise_90pct_vs_B0_us','delta_current_rise_90pct_vs_B3_us', ...
     'settling_time_1mV_us','settled_within_90us','final_Vout_error_mV', ...
     'delta_final_error_vs_B3_mV','phase_current_peak_A','phase_current_peak_limit_A', ...
-    'current_limit_hit','Ton_boost_count','Ton_boost_gain','Ton_boost_window_us', ...
+    'current_limit_hit','events_0_2us','events_2_12us','events_12_40us', ...
+    'Ton_boost_count','Ton_boost_usage','Ton_boost_gain','Ton_boost_window_us', ...
     'Ton_boost_decay_policy','Ton_boost_decay_done_time_us','fast_req_count', ...
     'fast_req_window_us','fast_req_reject_count','fast_req_reject_reason', ...
     'fallback_to_nominal_time_us','late_recovery_guard_enable', ...
@@ -524,7 +607,8 @@ fprintf(fid, "- Derived model: `%s`\n", slashPath(modelFile));
 fprintf(fid, "- Error: `%s`\n", message);
 end
 
-function writeSummary(summaryPath, rows, classification, detail, bestVariant, metricsCsv, audit)
+function writeSummary(summaryPath, rows, classification, detail, bestVariant, metricsCsv, ...
+    audit, variantConfigCsv, signalAvailabilityCsv, schedulerAuditCsv)
 fid = fopen(summaryPath, "w");
 cleanup = onCleanup(@() fclose(fid));
 fprintf(fid, "# E020-R1 a_U Window Tuning Research Summary\n\n");
@@ -542,6 +626,10 @@ fprintf(fid, "- saved during audit: `%d`\n\n", audit.saved);
 fprintf(fid, "## Fixed Case\n\n");
 fprintf(fid, "`40A -> 120A` external load-current rise, fixed four phases, nominal DCR/current sensing, active Lambda disabled, active-phase add/shed disabled.\n\n");
 fprintf(fid, "## Metrics CSV\n\n`%s`\n\n", slashPath(metricsCsv));
+fprintf(fid, "Additional evidence CSVs:\n\n");
+fprintf(fid, "- variant config: `%s`\n", slashPath(variantConfigCsv));
+fprintf(fid, "- signal availability: `%s`\n", slashPath(signalAvailabilityCsv));
+fprintf(fid, "- scheduler audit: `%s`\n\n", slashPath(schedulerAuditCsv));
 fprintf(fid, "## Metrics Table\n\n");
 writeMetricsTable(fid, rows);
 fprintf(fid, "## Classification\n\n`%s`\n\n", classification);
@@ -554,7 +642,8 @@ if strlength(bestVariant) > 0
     fprintf(fid, "- final Vout error: `%.6g mV`\n", best.final_Vout_error_mV(1));
     fprintf(fid, "- guard pass: `%d`\n\n", best.guard_pass(1));
     if bestVariant == "R1-U1"
-        fprintf(fid, "The final-error improvement versus B3 is only `+0.18189 mV` toward zero, and no R1 variant settled within the `1 mV` band in the `90 us` post-step window. The confirmation is therefore a narrow local window-tuning confirmation, not a full `120A` recovery confirmation.\n\n");
+        finalDelta = best.delta_final_error_vs_B3_mV(1);
+        fprintf(fid, "The final-error improvement versus B3 is only `%+.6g mV` toward zero, and no R1 variant settled within the `1 mV` band in the `90 us` post-step window. The confirmation is therefore a narrow local window-tuning confirmation, not a full `120A` recovery confirmation.\n\n", finalDelta);
     end
 end
 fprintf(fid, "## Claim Boundary\n\n");
@@ -580,7 +669,7 @@ cleanup = onCleanup(@() fclose(fid));
 fprintf(fid, "# E020-R1 Waveform Audit\n\n");
 fprintf(fid, "Date: 2026-07-01\n\n");
 fprintf(fid, "## Scope\n\n");
-fprintf(fid, "Fixed external `40A -> 120A` load-current rise. `R1-B0` and `R1-B3` are carry-forward references; `R1-U1/U2/U3` are newly simulated derived models.\n\n");
+fprintf(fid, "Fixed external `40A -> 120A` load-current rise. `R1-B0` and `R1-B3` are carry-forward references; `R1-U1/U2/U3/U4` are newly simulated derived models.\n\n");
 fprintf(fid, "## Signal Availability\n\n");
 fprintf(fid, "- Direct or baseline logged: `Vout`, `Iload`, `IL1..IL4`, `QH1..QH4`, `QL1..QL4`, `phase_idx`, `Ton_cmd1..4`, `Ton_actual1..4`, `Lambda_i`, `area_int_i`, `active_phase_set`.\n");
 fprintf(fid, "- R1 added logs: `IL_sense1..4`, `REQ_accept1..4`, `REQ_reject_reason`, `current_limit_hit`, `phase_current_peak`, `current_rise_target_state`, `late_recovery_guard_state`, `Vout_error`, `Vout_error_slope`, `settling_band_state`, `phase_order_error`.\n");
@@ -636,6 +725,83 @@ out.current_rise_target_state = interpOptionalSignal(logs, "current_rise_target_
 out.Vout_error = interpOptionalSignal(logs, "Vout_error", timeGrid, "linear");
 out.Vout_error_slope = interpOptionalSignal(logs, "Vout_error_slope", timeGrid, "linear");
 writetable(out, csvPath);
+end
+
+function rows = signalAvailabilityRows(logs, spec)
+names = requiredSignalNames();
+rows = table();
+for idx = 1:numel(names)
+    name = names(idx);
+    available = false;
+    source = "logsout";
+    if name == "Ton_nom"
+        available = all(arrayfun(@(p) ~isempty(optionalSignal(logs, "Ton_cmd" + p)), 1:4));
+        source = "derived_from_Ton_cmd1_4";
+    elseif name == "fast_req_count"
+        available = ~isempty(optionalSignal(logs, "fast_request_count")) || ...
+            ~isempty(optionalSignal(logs, "fast_request_active"));
+        source = "fast_request_count_or_active_edges";
+    elseif name == "phase_current_peak"
+        available = ~isempty(optionalSignal(logs, "phase_current_peak"));
+        source = "R1_diagnostic";
+    else
+        available = ~isempty(optionalSignal(logs, name));
+    end
+    row = table(string(spec.variant), string(name), available, string(source), ...
+        'VariableNames', {'variant','signal','available','source'});
+    rows = appendTable(rows, row);
+end
+end
+
+function names = requiredSignalNames()
+names = ["Vout", "Iload", "IL1", "IL2", "IL3", "IL4", ...
+    "IL_sense1", "IL_sense2", "IL_sense3", "IL_sense4", ...
+    "REQ1", "REQ2", "REQ3", "REQ4", ...
+    "REQ_accept1", "REQ_accept2", "REQ_accept3", "REQ_accept4", ...
+    "REQ_reject_reason", "QH1", "QH2", "QH3", "QH4", ...
+    "QL1", "QL2", "QL3", "QL4", "phase_idx", "phase_order_error", ...
+    "Ton_nom", "Ton_cmd1", "Ton_cmd2", "Ton_cmd3", "Ton_cmd4", ...
+    "Ton_actual1", "Ton_actual2", "Ton_actual3", "Ton_actual4", ...
+    "Ton_boost_state", "Ton_boost_gain", "Ton_boost_window", ...
+    "Ton_boost_decay_state", "fallback_to_nominal_state", ...
+    "fast_req_state", "fast_req_count", "fast_req_reject_reason", ...
+    "current_limit_hit", "phase_current_peak", "current_rise_target_state", ...
+    "late_recovery_guard_state", "Vout_error", "Vout_error_slope", ...
+    "settling_band_state"];
+end
+
+function rows = schedulerAuditRows(logs, spec)
+eventTimes = [];
+eventPhases = [];
+for phase = 1:4
+    times = edgeTimes(logs, "REQ_accept" + phase, spec.t_load_step, spec.stop_time);
+    eventTimes = [eventTimes; times(:)]; %#ok<AGROW>
+    eventPhases = [eventPhases; phase * ones(numel(times), 1)]; %#ok<AGROW>
+end
+rows = table();
+if isempty(eventTimes)
+    return;
+end
+[eventTimes, order] = sort(eventTimes);
+eventPhases = eventPhases(order);
+for idx = 1:numel(eventTimes)
+    t = eventTimes(idx);
+    expected = NaN;
+    orderError = 0;
+    if idx > 1
+        expected = mod(eventPhases(idx - 1), 4) + 1;
+        orderError = double(eventPhases(idx) ~= expected);
+    end
+    row = table(string(spec.variant), idx, 1e6 * (t - spec.t_load_step), ...
+        eventPhases(idx), expected, orderError, ...
+        valueAtOptional(logs, "phase_idx", t, NaN), ...
+        valueAtOptional(logs, "REQ_reject_reason", t, 0), ...
+        valueAtOptional(logs, "phase_order_error", t, 0), ...
+        'VariableNames', {'variant','event_index','time_after_step_us', ...
+        'REQ_accept_phase','expected_phase','phase_order_error_event', ...
+        'phase_idx_sample','REQ_reject_reason_sample','phase_order_error_sample'});
+    rows = appendTable(rows, row);
+end
 end
 
 function riseUs = currentRiseTimeUs(logs, spec, fraction)
@@ -726,6 +892,13 @@ for phase = 1:4
 end
 end
 
+function count = countQhEvents(logs, startTime, endTime)
+count = 0;
+for phase = 1:4
+    count = count + countRisingEdges(logs, "QH" + phase, startTime, endTime);
+end
+end
+
 function count = countRisingEdges(logs, name, startTime, endTime)
 sig = optionalSignal(logs, name);
 if isempty(sig)
@@ -761,6 +934,26 @@ if any(mask)
     value = max(values(mask));
 else
     value = 0;
+end
+end
+
+function frac = activeFraction(logs, prefix, startTime, endTime)
+vals = [];
+for phase = 1:4
+    sig = optionalSignal(logs, prefix + phase);
+    if isempty(sig)
+        continue;
+    end
+    t = sig.Values.Time(:);
+    data = squeeze(double(sig.Values.Data));
+    data = data(:);
+    mask = t >= startTime & t <= endTime;
+    vals = [vals; data(mask)]; %#ok<AGROW>
+end
+if isempty(vals)
+    frac = 0;
+else
+    frac = mean(vals > 0.5);
 end
 end
 
@@ -872,6 +1065,22 @@ if isempty(values)
 end
 rise = [values(1); diff(values) > 0];
 times = t(rise > 0);
+end
+
+function value = valueAtOptional(logs, name, sampleTime, defaultValue)
+sig = optionalSignal(logs, name);
+if isempty(sig)
+    value = defaultValue;
+    return;
+end
+t = sig.Values.Time(:);
+data = squeeze(double(sig.Values.Data));
+data = data(:);
+if isempty(t)
+    value = defaultValue;
+else
+    value = interp1(t, data, sampleTime, "previous", "extrap");
+end
 end
 
 function value = peakToPeakWindow(t, y, startTime, endTime)
@@ -992,6 +1201,14 @@ catch
     catch
         sig = [];
     end
+end
+end
+
+function out = appendTable(base, row)
+if isempty(base)
+    out = row;
+else
+    out = [base; row]; %#ok<AGROW>
 end
 end
 

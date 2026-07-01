@@ -148,29 +148,36 @@ E020-R1 a_U window tuning is complete:
 ```text
 folder: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/
 case: 40A -> 120A external load-current rise
-variants: R1-B0/R1-B3 carry-forward, R1-U1/R1-U2/R1-U3 new runs
+variants: R1-B0/R1-B3 carry-forward, R1-U1/R1-U2/R1-U3/R1-U4 new runs
 metrics: e020_r1_metrics.csv
 summary: e020_r1_research_summary.md
 classification: MODEL_CONFIRMED
 
 R1-U1:
-  peak undershoot = 318.771 mV
-  90% current-rise time = 1.204 us
-  final Vout error = -297.746 mV
+  peak undershoot = 318.801 mV
+  90% current-rise time = 1.196 us
+  final Vout error = -297.766 mV
   current_limit_hit = false
   dropped_REQ_count = 0
   phase_order_error_rate = 0
 
 R1-U2:
-  peak undershoot = 325.935 mV
-  final Vout error = -303.158 mV
+  peak undershoot = 325.954 mV
+  final Vout error = -303.170 mV
 
 R1-U3:
-  peak undershoot = 328.236 mV
-  final Vout error = -305.057 mV
+  peak undershoot = 346.678 mV
+  90% current-rise time = 45.018 us
+  final Vout error = -328.811 mV
+
+R1-U4:
+  peak undershoot = 344.252 mV
+  90% current-rise time = 1.466 us
+  final Vout error = -323.979 mV
+  late_recovery_guard_trigger_count = 78
 ```
 
-Boundary: R1-U1 preserves the B3 early benefit and improves final error by only `0.18189 mV` toward zero. No R1 variant settled within `1 mV` by `90 us`. This confirms only a narrow window-tuned local `a_U` refinement, not complete `120A` recovery.
+Boundary: R1-U1 preserves the B3 early benefit and improves final error by only `0.162402 mV` toward zero. U4 confirms that the tested late-recovery guard does not further improve late recovery. No R1 variant settled within `1 mV` by `90 us`. This confirms only a narrow window-tuned local `a_U` refinement, not complete `120A` recovery.
 
 E030 balance-recovery first chunk is complete:
 
