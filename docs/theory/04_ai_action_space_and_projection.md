@@ -826,6 +826,100 @@ The current `a_U` selector should therefore prefer fast request as the primary s
 
 This evidence is local to the derived ideal model. The same E020 run did not settle within the `90 us` post-step window, so `a_U` is currently confirmed only for peak-undershoot reduction and current-rise acceleration, not for complete 120A recovery.
 
+## E020-R1 Window-Tuned a_U Projection
+
+E020-R1 refines the local `a_U` token without changing the fixed validation case:
+
+```text
+experiment: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/
+case: 40A -> 120A external load-current rise
+active phases: fixed four-phase
+active Lambda: disabled
+active-phase add/shed: disabled
+classification: MODEL_CONFIRMED
+```
+
+The R1 token under projection is:
+
+```text
+a_U_R1 = [
+  fast_req_enable,
+  fast_req_window_us,
+  fast_req_threshold_mV,
+  Ton_boost_enable,
+  Ton_boost_gain,
+  Ton_boost_window_us,
+  Ton_boost_decay_policy,
+  current_rise_target,
+  current_limit_guard,
+  late_recovery_guard,
+  fallback_to_B0_guard
+]
+```
+
+The confirmed local candidate is:
+
+```text
+R1-U1:
+  fast_req_enable = true
+  fast_req_window = 3 us
+  fast_req_period = 160 ns
+  fast_req_pulse_width = 25 ns
+  Ton_boost_enable = true
+  Ton_boost_window = 1.5 us
+  Ton_boost_gain label = 1.0
+  Tton_boost_max = 260 ns
+  Ton_boost_decay_policy = short_window_B3_exponential
+  current_limit_guard = 55 A/phase
+  late_recovery_guard = disabled
+```
+
+R1-U1 evidence:
+
+```text
+peak undershoot = 318.771 mV
+90% current-rise time = 1.204 us
+final Vout error = -297.746 mV
+REQ/accepted/dropped = 199/199/0
+phase_order_error_rate = 0
+current_limit_hit = false
+```
+
+The projection rule is:
+
+```text
+if branch == load_rise
+and Vout <= Vref - undershoot_band
+and t in fast_req_window
+and max_i |IL_i| <= current_limit_guard:
+    allow fast projected request pulses
+else:
+    fallback to nominal request path
+
+if branch == load_rise
+and Vout <= Vref - undershoot_band
+and t in Ton_boost_window
+and |IL_i| <= current_limit_guard
+and Ton_cmd_i < Tton_boost_max:
+    allow bounded Ton boost
+else:
+    fallback to nominal Ton
+```
+
+R1-U2 and R1-U3 did not carry forward:
+
+```text
+R1-U2 lower gain:
+  peak undershoot = 325.935 mV
+  final Vout error = -303.158 mV
+
+R1-U3 stronger decay:
+  peak undershoot = 328.236 mV
+  final Vout error = -305.057 mV
+```
+
+Claim boundary: R1-U1 confirms only a narrow window-tuned local `a_U` refinement. It does not prove full `120A` recovery, 1 mV settling, active Lambda, active-phase add, or broad load-rise robustness.
+
 ## Balance-Recovery Projection Rule from E030
 
 The first E030 validation chunk supports a revised local projection rule for `a_S`:

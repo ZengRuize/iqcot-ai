@@ -486,6 +486,99 @@ settling time within 1 mV: not reached in the simulated window
 
 Thus E020 supports a peak-undershoot and current-rise improvement claim for the first derived-Simulink chunk. It does not yet support a full recovery, final regulation, phase-add, or global 120A operating-boundary claim.
 
+### E020-R1 a_U Window-Tuning Result
+
+E020-R1 tested whether the confirmed early `a_U` benefit can be preserved while improving late recovery by changing only the fast-request / Ton-boost window shape:
+
+```text
+experiment: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/
+case: 40A -> 120A external load-current rise
+active phases: fixed four-phase
+active Lambda: disabled
+active-phase add/shed: disabled
+classification: MODEL_CONFIRMED
+```
+
+The projected Ton boost is modeled as a bounded event-energy increment:
+
+```text
+Ton_i,R1(t) =
+  Ton_i,nom + (Tton_boost_max - Ton_i,nom)
+              * exp(-k_boost * (t - t0))
+```
+
+only while:
+
+```text
+branch == load_rise
+Vout <= Vref - undershoot_band
+t0 <= t <= t0 + boost_window
+|IL_i| <= current_limit_guard
+```
+
+Outside the boost window the projection falls back to nominal IQCOT Ton:
+
+```text
+Ton_i,R1(t) = Ton_i,nom
+```
+
+R1 compared carry-forward `R1-B0/R1-B3` references with three new derived-copy variants:
+
+```text
+R1-U1:
+  boost_window = 1.5 us
+  Tton_boost_max = 260 ns
+  decay_rate = 5e5 1/s
+
+R1-U2:
+  boost_window = 1.5 us
+  Tton_boost_max = 245 ns
+  decay_rate = 5e5 1/s
+
+R1-U3:
+  boost_window = 3.0 us
+  Tton_boost_max = 260 ns
+  decay_rate = 1e6 1/s
+```
+
+Measured result:
+
+```text
+B3:
+  peak undershoot = 319.081 mV
+  90% current-rise time = 1.212 us
+  final Vout error = -297.928 mV
+
+R1-U1:
+  peak undershoot = 318.771 mV
+  90% current-rise time = 1.204 us
+  final Vout error = -297.746 mV
+  REQ/accepted/dropped = 199/199/0
+  phase_order_error_rate = 0
+  current_limit_hit = false
+
+R1-U2:
+  peak undershoot = 325.935 mV
+  final Vout error = -303.158 mV
+
+R1-U3:
+  peak undershoot = 328.236 mV
+  final Vout error = -305.057 mV
+```
+
+This revises the load-rise model in a narrow way:
+
+```text
+useful early deficit filling
+  = fast request event density
+    + short bounded Ton energy boost
+
+late recovery improvement
+  is not monotonic in lower Ton boost gain or stronger decay.
+```
+
+The R1-U1 final-error improvement over B3 is only `0.18189 mV`, and no R1 variant settled within `1 mV` in the `90 us` post-step window. Therefore R1 confirms a local window-tuned `a_U` refinement, not complete `40A -> 120A` recovery.
+
 ## Branch Selection
 
 Branch selection is event driven:

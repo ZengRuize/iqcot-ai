@@ -417,7 +417,57 @@ metrics: experiments/E020_load_rise_undershoot/e020_metrics.csv
 classification: MODEL_CONFIRMED
 scope: peak-undershoot reduction and current-rise acceleration only
 boundary: no tested variant settled within 1 mV in the 90us post-step window
-next E020 expansion target: tune a_U window before any B4 phase-add run
+E020-R1 a_U window tuning completed
+R1 summary: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_research_summary.md
+R1 metrics: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_metrics.csv
+R1 classification: MODEL_CONFIRMED
+R1 carry-forward variant: R1-U1 only
+R1 boundary: narrow window-tuned local refinement, not full 120A recovery
+```
+
+E020-R1 fixed case:
+
+```text
+external load-current rise: 40A -> 120A
+active phases: fixed four-phase
+power-stage DCR: nominal
+current-sense gains: nominal
+active Lambda: disabled
+active-phase add/shed: disabled
+```
+
+E020-R1 variants:
+
+```text
+R1-B0: carry-forward original B0
+R1-B3: carry-forward previous B3 fast request + Ton boost
+R1-U1: 1.5 us Ton-boost window, B3 boost max, B3 fast request
+R1-U2: 1.5 us Ton-boost window, lower boost max, B3 fast request
+R1-U3: 3 us window with stronger exponential decay, B3 fast request
+R1-U4: not run
+```
+
+E020-R1 key result:
+
+```text
+R1-U1:
+  peak undershoot = 318.771 mV
+  90% current-rise time = 1.204 us
+  final Vout error = -297.746 mV
+  current_limit_hit = false
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0
+
+R1-U2/U3:
+  guard pass, but final error worsened versus B3
+```
+
+Post-R1 gate:
+
+```text
+freeze local a_U claim boundary
+do not claim 1 mV settling or full 120A recovery
+do not add B4/B5 phase-add to this severe branch without a new protocol
 ```
 
 ## E030 Balance Recovery Validation

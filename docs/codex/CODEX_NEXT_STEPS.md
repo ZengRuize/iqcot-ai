@@ -6,7 +6,7 @@ Date: 2026-07-01
 
 E010 load-drop overshoot validation has already produced a `MODEL_REVISED` result. Do not restart from the old first E010 task or from `A1 Ton truncation only`.
 
-E020 load-rise undershoot validation has produced the first `MODEL_CONFIRMED` chunk for the local peak-undershoot/current-rise mechanism. Do not restart the first `40A -> 120A` B0/B1/B2/B3 run unless the model wiring or postprocess code changes.
+E020 load-rise undershoot validation has produced the first `MODEL_CONFIRMED` chunk for the local peak-undershoot/current-rise mechanism, and E020-R1 has now confirmed a narrow a_U window-tuning refinement. Do not restart the first `40A -> 120A` B0/B1/B2/B3 run or the R1-U1/U2/U3 tuning run unless the model wiring or postprocess code changes.
 
 Current E010 evidence:
 
@@ -149,8 +149,8 @@ Proceed in this order:
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
 9. E010-A5-R3 event-queue energy-allocation revision is complete and remains `MODEL_REVISED`; no safe A5 candidate is carried forward.
 10. Freeze E010-A5 as negative/revision boundary evidence and do not run A5-R4 projected-scheduling tweaks without a new structural hypothesis.
-11. Next smallest useful step: move to E020 `a_U` window tuning, or write only an A6 structural energy-management concept note as future work.
-12. Update manuscript direction with E010-A5 boundary evidence plus E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
+11. E020-R1 a_U window tuning is complete; freeze the narrow R1-U1 claim boundary and do not use it as full 120A recovery evidence.
+12. Update manuscript direction with E010-A5 boundary evidence plus E020-R1, E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -172,7 +172,44 @@ B3 90% current-rise time: 1.212 us
 
 Boundary: E020 confirms local peak-undershoot reduction and current-rise acceleration, not full recovery. B0-B3 did not settle within the 1 mV band in the 90 us post-step window.
 
-Do not add phase-add until E020 window tuning and E030 balance evidence are reviewed.
+E020-R1 a_U window tuning completed:
+
+```text
+folder: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/
+case: 40A -> 120A external load-current rise
+active phases: fixed four-phase
+active Lambda: disabled
+active-phase add/shed: disabled
+variants: R1-B0/R1-B3 carry-forward references, R1-U1/R1-U2/R1-U3 new runs
+metrics: e020_r1_metrics.csv
+summary: e020_r1_research_summary.md
+classification: MODEL_CONFIRMED
+```
+
+Best local R1 variant:
+
+```text
+R1-U1:
+  Ton_boost_window = 1.5 us
+  Ton_boost_gain label = 1.0
+  decay policy = short_window_B3_exponential
+  peak undershoot = 318.771 mV
+  90% current-rise time = 1.204 us
+  final Vout error = -297.746 mV
+  current_limit_hit = false
+  REQ/accepted/dropped = 199/199/0
+  phase_order_error_rate = 0
+```
+
+Interpretation: R1-U1 preserves the B3 early benefit and gives only a very small final-error improvement versus B3 (`+0.18189 mV` toward zero). U2 and U3 preserve guards but worsen final error. E020-R1 therefore supports a narrow window-tuned local a_U claim, not full `40A -> 120A` recovery and not 1 mV settling.
+
+Next smallest useful step:
+
+```text
+freeze local a_U claim boundary and update manuscript figures / tables
+do not claim full 120A recovery
+do not add active-phase phase-add to this severe 40A -> 120A branch without a new protocol
+```
 
 ## E030-R2 Confirmation Result
 

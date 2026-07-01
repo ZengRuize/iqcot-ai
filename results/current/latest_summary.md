@@ -109,7 +109,7 @@ safety projection and a load-drop magnitude selector.
 |---|---|---|
 | PIS-IEK | E030/E030-R1 DCR chunks `MODEL_REVISED`; E030-R2 `MODEL_REVISED`; E030-R3 guard `MODEL_CONFIRMED`; local guarded `a_S` selector frozen | use frozen selector only after add/reentry in E040-A |
 | Load-drop `a_O` | medium-drop `a_O` has local support; E010-A5 A5-C0/A5-C4 baseline audit `MODEL_CONFIRMED`; A5-T1/T2/T3/T4, A5-T4-R1, A5-R2, and A5-R3 all `MODEL_REVISED` | freeze A5 as severe-drop boundary evidence; do not run A5-R4 without a new structural hypothesis |
-| Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise only | tune a_U window; do not claim full 120A recovery |
+| Load-rise `a_U` | first E020 chunk `MODEL_CONFIRMED` for peak undershoot/current rise; E020-R1 window tuning `MODEL_CONFIRMED` for narrow R1-U1 refinement | freeze local a_U boundary; do not claim full 120A recovery or 1 mV settling |
 | `a_S` balance | guarded/calibrated selector validated locally in R3 and frozen for E040-A | do not claim active Lambda |
 | `a_N` active phase | E040-A first chunk `MODEL_REVISED`; E040-A-R1 local add insertion `MODEL_CONFIRMED`; E040-S0 minimal shed `MODEL_REVISED`; E040-S1 staged shed handoff `MODEL_CONFIRMED` for one local 4 -> 2 point | frozen as local add/shed integrity evidence; do not run S1-R4 or broad grids without a new protocol |
 | Manuscript | Markdown draft synced through E040-S1 local shed-handoff confirmation | convert current Markdown draft into LaTeX plan/figures after claim and citation scaffolding |
@@ -120,7 +120,7 @@ safety projection and a load-drop magnitude selector.
 theory reconstruction + minimal validation
 ```
 
-PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on the medium load-drop and severe load-rise branches, but the severe `40A -> 1A` load-drop A5 path is now frozen as `MODEL_REVISED` boundary evidence after R3 event-queue energy allocation. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism; E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, E040-A-R1 is `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point, E040-S0 is `MODEL_REVISED` for the first minimal 4 -> 2 shed attempt, and E040-S1 is `MODEL_CONFIRMED` for one local staged 4 -> [1,3] shed-handoff integrity point.
+PIS-IEK small-signal evidence now has local DCR-mismatch support, a current-sense mismatch warning, and a first confirmed sensing-aware guard. Bidirectional large-signal theory has initial validation on the medium load-drop and severe load-rise branches, but the severe `40A -> 1A` load-drop A5 path is now frozen as `MODEL_REVISED` boundary evidence after R3 event-queue energy allocation. E010 remains `MODEL_REVISED`; E020 is `MODEL_CONFIRMED` for the limited peak-undershoot/current-rise mechanism, and E020-R1 is `MODEL_CONFIRMED` only for a narrow R1-U1 Ton-boost-window refinement with marginal final-error improvement. E030/E030-R1/E030-R2 remain `MODEL_REVISED`; E030-R3 is `MODEL_CONFIRMED` for one local confidence/calibration guard pattern. E040-A first add-phase validation was `MODEL_REVISED`, E040-A-R1 is `MODEL_CONFIRMED` for one local phase-insertion/relock integrity point, E040-S0 is `MODEL_REVISED` for the first minimal 4 -> 2 shed attempt, and E040-S1 is `MODEL_CONFIRMED` for one local staged 4 -> [1,3] shed-handoff integrity point.
 
 E020 load-rise first chunk is complete:
 
@@ -142,6 +142,35 @@ B3 phase-current peak = 34.09 A/phase, current guard not hit
 ```
 
 Boundary: this confirms the local `a_U` mechanism for peak-undershoot reduction and current-rise acceleration, not full 120A recovery. None of B0-B3 settled within the 1 mV band in the simulated 90 us post-step window, and B3 final error remained about `-297.93 mV`.
+
+E020-R1 a_U window tuning is complete:
+
+```text
+folder: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/
+case: 40A -> 120A external load-current rise
+variants: R1-B0/R1-B3 carry-forward, R1-U1/R1-U2/R1-U3 new runs
+metrics: e020_r1_metrics.csv
+summary: e020_r1_research_summary.md
+classification: MODEL_CONFIRMED
+
+R1-U1:
+  peak undershoot = 318.771 mV
+  90% current-rise time = 1.204 us
+  final Vout error = -297.746 mV
+  current_limit_hit = false
+  dropped_REQ_count = 0
+  phase_order_error_rate = 0
+
+R1-U2:
+  peak undershoot = 325.935 mV
+  final Vout error = -303.158 mV
+
+R1-U3:
+  peak undershoot = 328.236 mV
+  final Vout error = -305.057 mV
+```
+
+Boundary: R1-U1 preserves the B3 early benefit and improves final error by only `0.18189 mV` toward zero. No R1 variant settled within `1 mV` by `90 us`. This confirms only a narrow window-tuned local `a_U` refinement, not complete `120A` recovery.
 
 E030 balance-recovery first chunk is complete:
 

@@ -423,6 +423,77 @@ Not yet allowed from E020:
 - phase-add benefit claim, because B4/B5 were not run;
 - global load-rise generalization beyond this first derived-Simulink chunk.
 
+## Current E020-R1 Evidence Boundary
+
+Validated so far:
+
+```text
+experiment: E020-R1 a_U window tuning
+case: 40A -> 120A external load-current rise
+active phases: fixed four-phase
+active Lambda: disabled
+active-phase add/shed: disabled
+variants: R1-B0, R1-B3, R1-U1, R1-U2, R1-U3
+summary: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_research_summary.md
+metrics: experiments/E020_load_rise_undershoot/R1_aU_window_tuning/e020_r1_metrics.csv
+classification: MODEL_CONFIRMED
+```
+
+Allowed claim from this chunk:
+
+```text
+In the local ideal IQCOT derived model, a safety-projected a_U load-rise token
+with B3 fast request behavior and a shorter 1.5 us Ton-boost window preserves
+the tested 40A -> 120A peak-undershoot/current-rise benefit and gives a small
+late final-error improvement without current-limit, REQ, phase-order, or
+boost-window guard violations.
+```
+
+Quantitative local evidence:
+
+```text
+R1-B3 reference:
+  peak undershoot = 319.081 mV
+  90% current-rise time = 1.212 us
+  final Vout error = -297.928 mV
+
+R1-U1:
+  peak undershoot = 318.771 mV
+  90% current-rise time = 1.204 us
+  final Vout error = -297.746 mV
+  final-error improvement vs B3 = +0.18189 mV toward zero
+  phase-current peak = 33.9375 A
+  current_limit_hit = false
+  REQ/accepted/dropped = 199/199/0
+  phase_order_error_rate = 0
+
+R1-U2:
+  peak undershoot = 325.935 mV
+  final Vout error = -303.158 mV
+
+R1-U3:
+  peak undershoot = 328.236 mV
+  final Vout error = -305.057 mV
+```
+
+Interpretation:
+
+- R1-U1 is the only R1 candidate carried forward.
+- The final-error improvement is real under the local metrics but very small.
+- R1-U2 and R1-U3 show that lower boost gain or stronger decay does not automatically improve late recovery.
+- No R1 variant settled within the `1 mV` band by `90 us`.
+
+Not allowed from E020-R1:
+
+- full `40A -> 120A` recovery or final-regulation claim;
+- 1 mV settling claim;
+- broad load-rise robustness;
+- active Lambda validation;
+- active-phase add/shed during this severe load-rise;
+- DCR/current-sense mismatch robustness;
+- hardware, HIL, board-level, or silicon validation;
+- AI direct gate control or AI control of external load-current slew.
+
 ## Current E030 Evidence Boundary
 
 Validated so far:
