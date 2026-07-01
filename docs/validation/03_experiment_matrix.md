@@ -64,6 +64,36 @@ classification: MODEL_REVISED
 latest E010 severe-drop expansion: A5-R3 event-queue energy allocation for 40A -> 1A completed, MODEL_REVISED
 ```
 
+Frozen E010 branch summary:
+
+```text
+E010-A4:
+  status: local medium-drop support
+  case: 40A -> 10A
+  classification: MODEL_REVISED / local useful medium branch
+
+E010-A5 baseline:
+  status: A5-C0/A5-C4 baseline audit MODEL_CONFIRMED
+  case: 40A -> 1A
+  conclusion: A4 no-harm but non-improving
+
+E010-A5 candidate:
+  status: MODEL_REVISED
+  conclusion: T3/T4 partial recovery improvement but burst guard fail
+
+E010-A5-R1:
+  status: MODEL_REVISED
+  conclusion: pulse-count burst limiter causes recovery starvation / severe undershoot
+
+E010-A5-R2:
+  status: MODEL_REVISED
+  conclusion: energy budget + Ton ramp reduces peaks but violates undershoot/burst guards
+
+E010-A5-R3:
+  status: MODEL_REVISED
+  conclusion: event queue / Ton allocation still causes recovery starvation and phase-order guard failure
+```
+
 ### E010-A5 Severe-Drop Token Design
 
 Status: baseline reproduction/logging audit confirmed for A5-C0 and A5-C4. The smallest A5-T1/T2/T3/T4 candidate comparison, A5-T4-R1 controlled-reentry revision, A5-R2 reentry energy-shaping/scheduler-release revision, and A5-R3 event-queue energy-allocation revision have run and are `MODEL_REVISED`; do not claim A5 validation.
@@ -225,7 +255,7 @@ Interpretation:
 E1/E2 prove that per-event Ton/energy shaping can reduce positive recovery peaks, but the resulting recovery trajectory violates the severe undershoot and burst guards.
 E2 soft preload is observable but does not alter the waveform versus E1.
 E3/E4 prove that the current scheduler-release gate starves recovery energy; voltage-window enable does not rescue the final-REQ gate insertion.
-Next smallest useful step: revise severe-drop a_O token structure or downgrade the severe-drop improvement claim. Do not broad sweep.
+Post-R2 status was still MODEL_REVISED; R3 is the completed follow-up and A5 is now frozen as severe-drop boundary evidence. Do not broad sweep.
 ```
 
 Completed A5-R3 event-queue energy-allocation revision:
@@ -274,8 +304,17 @@ Interpretation:
 The tested event-queue/Ton allocation path suppresses positive peaks only by starving recovery energy.
 Queue observability and per-event accounting are necessary but not sufficient.
 The severe-drop A5 token remains MODEL_REVISED; do not claim validation.
-Next smallest useful step: downgrade the severe-drop improvement claim or introduce a structurally different large-signal energy-management mechanism.
+Next smallest useful step: freeze the severe-drop improvement claim boundary and move to E020 a_U window tuning or manuscript synthesis.
 Do not broad sweep.
+```
+
+Post-freeze next action:
+
+```text
+do not run R4 projected scheduling tweak without a new structural hypothesis
+either introduce a structurally different large-signal energy-management mechanism as future work
+or move to E020 a_U window tuning / manuscript synthesis
+recommended: move to E020 a_U window tuning
 ```
 
 Metrics:

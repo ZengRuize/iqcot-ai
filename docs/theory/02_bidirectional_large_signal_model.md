@@ -54,7 +54,13 @@ DeltaI_drop = 39A
 I_excess(t0+) ~= 39A
 ```
 
-This first peak is a large-signal excess-current / excess-energy behavior. It must not be treated as a PIS-IEK small-signal first-peak prediction problem. PIS-IEK may only be used after protection and reentry for conservative current-sharing and event recovery.
+For severe load drop:
+
+```text
+I_excess(t0+) = I_Lsum(t0+) - Iload_after
+```
+
+For `40A -> 1A`, the initial excess-current estimate is approximately `39A`. This first voltage peak is dominated by large-signal excess-current / excess-charge / excess-energy behavior. It must not be treated as a PIS-IEK small-signal first-peak prediction problem. PIS-IEK may only be used after protection and reentry for conservative current-sharing and event recovery.
 
 The output-capacitor voltage rise is dominated by surplus charge:
 
@@ -149,7 +155,15 @@ E010-A5-R2 reentry energy shaping / scheduler release: MODEL_REVISED
 E010-A5-R3 event-queue energy allocation: MODEL_REVISED
 ```
 
-The proposed severe-drop token is:
+After R3, A5 is frozen as revised boundary evidence rather than a continuing projected-scheduling tuning path. Projected IQCOT scheduling variants repeatedly showed the same severe-branch tradeoff:
+
+```text
+too permissive -> no improvement or bursty reentry
+moderately shaped -> partial recovery-peak reduction with undershoot / burst guard failure
+too restrictive -> recovery starvation, severe undershoot, and final-error collapse
+```
+
+The severe-drop token remains a design/revision candidate, not a validated action:
 
 ```text
 a_O_severe = [
@@ -368,7 +382,20 @@ phase_order_error_rate == 0
 final_error within guard
 ```
 
-R3-E3 was not close to passing, so the optional voltage-windowed R3-E4 was not run. The current severe-drop evidence supports only a downgraded claim: projected scheduling has partial/revision evidence, but the local `40A -> 1A` severe-drop improvement remains unvalidated. A future step must either downgrade the severe-drop claim boundary or introduce a structurally different large-signal energy-management mechanism beyond this projected scheduling path.
+R3-E3 was not close to passing, so the optional voltage-windowed R3-E4 was not run. The current severe-drop evidence supports only a `MODEL_REVISED` boundary statement: projected scheduling has partial/revision evidence, but the local `40A -> 1A` severe-drop improvement remains unvalidated. A future step must either keep this boundary as future work or introduce a structurally different large-signal energy-management mechanism beyond this projected scheduling path.
+
+### Frozen Severe-Drop Boundary After A5
+
+The A5 conclusion is:
+
+```text
+Projected pulse scheduling can reduce or delay energy injection,
+but if it is too aggressive it starves recovery and creates undershoot/final-error collapse.
+If it is too permissive it allows bursty reentry.
+The tested A5 variants did not find a guard-passing middle path.
+```
+
+This is not a failure of the whole research direction. It defines the boundary of the current projected supervisory scheduling action set. A structurally different future mechanism, such as an energy dump/clamp path or controlled recirculation mode, belongs to A6 future work and is not part of the validated A5 claim.
 
 ## Load-Rise Branch: Undershoot / Deficit Current
 

@@ -35,6 +35,21 @@ reentry_release_policy
 
 Purpose: remove or reduce excess high-side energy injection and safely reenter IQCOT.
 
+Current validated/revised split:
+
+```text
+a_O_medium:
+  supported for local medium load-drop protection under the tested 40A -> 10A case.
+
+a_O_severe_candidate:
+  design/revision candidate only.
+  It includes active-HS-aware Ton truncation, bounded pulse inhibit,
+  area-integrator management, controlled reentry, and event-queue /
+  energy-allocation concepts, but it remains MODEL_REVISED for 40A -> 1A.
+```
+
+The supervisor may propose severe-drop scheduling actions, but current local evidence shows that projected scheduling alone can either fail to improve, cause burst/reentry guard violations, or starve recovery energy. Therefore `a_O_severe_candidate` remains outside the validated action set.
+
 ## a_U: Load-Rise Undershoot Recovery Token
 
 For load increase, for example `40A -> 120A`:
@@ -471,7 +486,7 @@ else:
 
 The numeric thresholds are evidence-local to the current ideal derived model and must not be presented as universal controller constants.
 
-## E010-A5 Severe-Drop a_O Design Boundary
+## E010-A5 Severe-Drop a_O Boundary
 
 The unresolved severe load-drop case is:
 
@@ -484,7 +499,7 @@ active Lambda: disabled
 active-phase add/shed: disabled
 ```
 
-The current A4 selector is no-harm but non-improving for this case. A new severe-drop token is therefore a design target, not validated evidence:
+The current A4 selector is no-harm but non-improving for this case. A5 tested severe-drop projected scheduling through T/R1/R2/R3 revisions. The severe token is therefore frozen as a design/revision candidate, not validated evidence:
 
 ```text
 a_O_severe = [
@@ -720,7 +735,27 @@ signed energy, undershoot, final-error, burst, and phase-order guards cannot pas
 together.
 ```
 
-R3 does not validate `a_O_severe`. It only confirms that queue observability and per-event accounting are necessary but not sufficient. Future A5 work should either downgrade the severe-drop improvement claim or introduce a different large-signal energy-management mechanism. It must not tune R3 into a pass by broad sweeps without a new hypothesis.
+R3 does not validate `a_O_severe_candidate`. It only confirms that queue observability and per-event accounting are necessary but not sufficient.
+
+### Frozen a_O Severe Boundary
+
+After A5-R3, the `a_O` action-set boundary is:
+
+```text
+validated local tokens:
+  a_O medium load-drop protection under tested medium drop
+  a_U local peak-undershoot / current-rise acceleration under tested load-rise
+  a_S calibration-aware guard under tested current-sense mismatch
+  a_N local add/shed integrity under tested mild active-phase transitions
+
+not validated:
+  a_O severe 40A -> 1A improvement
+  active Lambda
+  broad active-phase scheduling
+  broad mismatch robustness
+```
+
+Future severe-drop work should either stay outside the validated action set as an A6 structural energy-management concept, or return only with a new structural hypothesis. It must not tune R3 into a pass by broad sweeps.
 
 ## Load-Rise Projection Rule from E020
 

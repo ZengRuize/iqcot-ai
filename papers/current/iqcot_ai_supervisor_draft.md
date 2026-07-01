@@ -157,10 +157,10 @@ if DeltaI_drop <= 20 A:
 elif 20 A < DeltaI_drop <= 30 A:
     allow Ton truncation + one early pulse inhibit under undershoot budget
 else:
-    require a revised severe-drop token before claiming improvement
+    exclude severe 40A -> 1A improvement from the validated action set
 ```
 
-These thresholds are evidence-local to the present ideal derived model. They are not universal controller constants.
+These thresholds are evidence-local to the present ideal derived model. They are not universal controller constants. The severe branch is represented only as `a_O_severe_candidate`; A5 projected scheduling has been frozen as `MODEL_REVISED` boundary evidence, and any A6 structural energy-management mechanism is future work only.
 
 The first load-rise branch is `a_U`:
 
@@ -380,7 +380,29 @@ This case demonstrates why the AI/table supervisor must be a selector rather tha
 | A0 | 3.61172 | 0 | baseline |
 | A4 | 3.61172 | 0 | no-harm but non-improving |
 
-The severe-drop result does not support a broad improvement claim. It motivates a new token level, likely involving longer skip hold, reentry shaping, or a state-aware pulse-inhibit window.
+The severe-drop result has now been extended through the A5 severe-token path:
+
+```text
+A5-C0/A5-C4 baseline audit: MODEL_CONFIRMED
+A5-T1/T2/T3/T4 candidate comparison: MODEL_REVISED
+A5-T4-R1 controlled reentry / burst limiter: MODEL_REVISED
+A5-R2 reentry energy shaping / scheduler release: MODEL_REVISED
+A5-R3 event-queue energy allocation: MODEL_REVISED
+```
+
+The frozen A5 evidence shows a repeated tradeoff. T3/T4 give a small recovery-peak reduction but fail the burst guard. R2-E1/E2 reduce recovery peaks more strongly but violate undershoot and burst guards. R1 and R3 variants suppress positive peaks only by starving recovery energy, producing about `971.618 mV` peak undershoot and `-919.625 mV` final error. Therefore A5 is used as negative / revision boundary evidence, not as a severe-drop improvement claim.
+
+The manuscript distinction is:
+
+```text
+medium load drop:
+  A4 provides useful local projected protection for the tested 40A -> 10A case
+
+severe load drop:
+  A5 projected scheduling has not passed the tested 40A -> 1A guard set
+```
+
+A structurally different A6 large-signal energy-management mechanism, such as an energy clamp or controlled recirculation mode, is future work only and is not part of the validated action set.
 
 ### 6.4 High-Load Boundary: 120A to 10A
 
@@ -555,7 +577,7 @@ This is classified as `MODEL_CONFIRMED` for one local ideal-derived Simulink she
 
 The E010-E040 loops produced eight useful findings.
 
-First, the load-drop branch is not controlled by a single monotonic protection knob. Mild drops may be harmed by truncation; medium drops benefit from a projected combination of Ton truncation and one early pulse inhibit; severe drops need a different token.
+First, the load-drop branch is not controlled by a single monotonic protection knob. Mild drops may be harmed by truncation; medium drops benefit from a projected combination of Ton truncation and one early pulse inhibit; severe `40A -> 1A` remains unresolved under projected scheduling tokens. A5 is therefore boundary evidence for the current action space, while any A6 energy-management mechanism is future work.
 
 Second, safety projection is not optional. A3 showed that the reentry guard can become a binding constraint and reject pulse inhibit. The projection changes behavior, not just documentation.
 
@@ -577,6 +599,8 @@ This draft does not claim hardware validation, HIL validation, board-level behav
 
 - load-rise `a_U` behavior beyond the first `40A -> 120A` peak-undershoot chunk;
 - complete load-rise settling and 120A final regulation;
+- severe `40A -> 1A` load-drop improvement under projected scheduling tokens;
+- A6 structural large-signal energy-management mechanisms, which are concept-only and unvalidated;
 - robust PIS-IEK current-sharing and phase-recovery across mismatch families beyond the tested DCR and current-sense-gain chunks;
 - practical online calibration accuracy for the E030-R3 calibrated `a_S` modes;
 - active-phase add/shed behavior beyond the local E040-A-R1 add point and E040-S1 shed point;
@@ -591,13 +615,14 @@ This draft does not claim hardware validation, HIL validation, board-level behav
 
 The next research steps are:
 
-1. Use the E010-A5 design package to preflight `40A -> 1A` severe-drop logging, starting only with A5-C0 and A5-C4 reproduction before testing A5-T1..T4.
+1. Freeze E010-A5 as `MODEL_REVISED` severe-drop boundary evidence and do not run A5-R4 projected scheduling tweaks without a new structural hypothesis.
 2. Tune the E020 `a_U` window and decide whether the residual 120A error requires phase-add or operating-boundary re-audit.
 3. Convert the frozen E030-R3 sensing-aware `a_S` selector into a compact paper figure and claim-evidence table.
 4. Prepare a new smallest-useful protocol before running S1-R4 post-shed conservative `a_S`; do not run it as an automatic extension of S1-R3.
 5. Prepare separate protocols for severe shed cases, mismatch with active-phase scheduling, and broad 1/2/4 active-phase grids.
 6. Implement an event-native Lambda_diff path before claiming active phase-spacing control.
-7. Convert this Markdown draft into LaTeX with evidence tables for E010, E020, E030-R3, E040-A-R1, E040-S0, and E040-S1.
+7. Keep A6 structural energy management as a future-work concept note until a new model and protocol exist.
+8. Convert this Markdown draft into LaTeX with evidence tables for E010, E020, E030-R3, E040-A-R1, E040-S0, and E040-S1.
 
 ## 10. Current Claim
 
@@ -609,6 +634,8 @@ supervisor can schedule low-dimensional event-domain IQCOT parameter tokens
 without commanding gates or external load slew. For load drop, the a_O selector
 preserves baseline behavior for a mild 40A -> 20A step and reduces the 40A ->
 10A recovery peak by about 22.2% with a bounded 0.863951 mV undershoot penalty.
+The severe 40A -> 1A load-drop A5 path is frozen as MODEL_REVISED boundary
+evidence and is not claimed as an improvement.
 For load rise, the first a_U chunk reduces 40A -> 120A peak undershoot from
 397.42 mV to 319.08 mV and accelerates the 90% current-rise metric from
 37.996 us to 1.212 us without hitting the tested current guard. For the first

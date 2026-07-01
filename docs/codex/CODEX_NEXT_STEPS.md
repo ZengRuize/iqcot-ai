@@ -21,7 +21,8 @@ Current E010 evidence:
 
 40A -> 1A:
   severe load drop; current A4 is no-harm but non-improving.
-  severe-drop a_O token is still missing.
+  A5 projected scheduling has now been tested through T/R1/R2/R3 revisions.
+  freeze as MODEL_REVISED boundary evidence; do not run A5-R4 without a new structural hypothesis.
 
 120A -> 10A:
   operating-boundary check only.
@@ -146,9 +147,10 @@ Proceed in this order:
 6. Freeze E040-S0 as a `MODEL_REVISED` shed-phase boundary.
 7. Freeze E040-S1 staged shed-handoff as a local `MODEL_CONFIRMED` 4 -> 2 shed integrity point.
 8. Do not run S1-R4, severe shed cases, active Lambda, active-phase mismatch cases, or broad 1/2/4 grids without a new protocol.
-9. E010-A5-R3 event-queue energy-allocation revision is complete and remains `MODEL_REVISED`; next smallest useful E010 step is severe-drop `a_O` claim downgrade or a structurally different large-signal energy-management mechanism, not a broad sweep.
-10. Tune the E020 `a_U` window only after recording that the first B0/B1/B2/B3 chunk does not prove full 120A settling.
-11. Update manuscript direction with E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
+9. E010-A5-R3 event-queue energy-allocation revision is complete and remains `MODEL_REVISED`; no safe A5 candidate is carried forward.
+10. Freeze E010-A5 as negative/revision boundary evidence and do not run A5-R4 projected-scheduling tweaks without a new structural hypothesis.
+11. Next smallest useful step: move to E020 `a_U` window tuning, or write only an A6 structural energy-management concept note as future work.
+12. Update manuscript direction with E010-A5 boundary evidence plus E030-R3, E040-A-R1, E040-S0, and E040-S1 evidence before broad grids.
 
 ## E020 First Chunk Result
 
@@ -506,8 +508,8 @@ Interpretation: E1/E2 show that energy budget plus Ton ramp can reduce positive 
 Next smallest useful step:
 
 ```text
-revise severe-drop a_O token structure or downgrade severe-drop improvement claim
-keep 40A -> 1A fixed four-phase severe drop if another smallest-useful test is needed
+freeze severe-drop a_O boundary as MODEL_REVISED evidence
+return to 40A -> 1A only with a new structural hypothesis, not an A5-R4 scheduling tweak
 keep active Lambda disabled
 keep active-phase add/shed disabled
 do not add mismatch or broad load-drop grids
@@ -544,11 +546,41 @@ Interpretation: event-queue/Ton allocation as currently inserted suppresses posi
 Next smallest useful step:
 
 ```text
-revise severe-drop claim boundary or introduce a structurally different
-large-signal energy-management mechanism beyond projected IQCOT scheduling
+freeze severe-drop claim boundary
+move to E020 a_U window tuning
+or keep A6 structural energy-management only as future-work concept note
 keep A5 as MODEL_REVISED
 do not broad sweep
 do not add active Lambda, active-phase shed, mismatch, or 120A cases from this state
+```
+
+E010-A5 freeze completed:
+
+```text
+synthesis: experiments/E010_load_drop_overshoot/A5_severe_drop_token/e010_a5_revision_synthesis.md
+A6 concept note: experiments/E010_load_drop_overshoot/A6_structural_energy_management/e010_a6_concept_note.md
+classification: MODEL_REVISED
+no safe candidate carried forward
+```
+
+Main conclusion:
+
+```text
+Projected IQCOT scheduling has not safely solved severe 40A -> 1A.
+Do not claim A5 severe-drop improvement.
+Medium load-drop projected protection remains supported by earlier E010 evidence.
+Severe 40A -> 1A remains unresolved under projected scheduling tokens.
+```
+
+Do not run:
+
+```text
+A5-R4 projected scheduling tweak
+broad load grids
+mismatch cases
+active Lambda
+active-phase shed during severe 40A -> 1A
+hardware/HIL/silicon claims
 ```
 
 ## Standing Guardrails

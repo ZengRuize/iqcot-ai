@@ -72,7 +72,7 @@ Not yet allowed:
 
 - generalization to all E010 load-drop cases;
 - claims at 120A initial load until the high-load operating boundary is resolved;
-- severe `40A -> 1A` improvement claim until E010-A5 is implemented and validated;
+- severe `40A -> 1A` improvement claim, because E010-A5 has been tested through R3 and remains `MODEL_REVISED`;
 - load-rise undershoot recovery claims;
 - current-sharing or phase-recovery claims under mismatch;
 - active-phase add/shed claims;
@@ -83,8 +83,8 @@ Not yet allowed:
 The severe `40A -> 1A` load-drop case remains unresolved as an improvement target, but the A5 baseline reproduction and logging infrastructure is now confirmed:
 
 ```text
-current status: A4 no-harm but non-improving
-new design target: E010-A5 severe-drop a_O token
+current status: A5 frozen as MODEL_REVISED boundary evidence
+severe token status: design/revision candidate only
 folder: experiments/E010_load_drop_overshoot/A5_severe_drop_token/
 baseline audit status: MODEL_CONFIRMED for A5-C0 and A5-C4
 metrics: e010_a5_baseline_metrics.csv
@@ -339,7 +339,45 @@ Not allowed from E010-A5-R3:
 - AI direct gate control or AI control of external load-current slew;
 - hardware, HIL, board-level, or silicon validation.
 
-Boundary update: the severe-drop improvement claim should be downgraded unless a future protocol introduces a structurally different large-signal energy-management mechanism beyond the tested projected IQCOT scheduling path.
+Boundary update: the severe-drop improvement claim is not supported by A5. Keep E010-A5 classified as `MODEL_REVISED`; any future severe-drop improvement requires a new structural hypothesis and protocol beyond the tested projected IQCOT scheduling path.
+
+## E010-A5 Severe-Drop Boundary Freeze
+
+The E010-A5 path is now frozen as `MODEL_REVISED` boundary evidence.
+
+Allowed:
+
+- A5 establishes a negative / revision boundary for the severe `40A -> 1A` load-drop case.
+- Projected IQCOT scheduling tokens have not yet safely improved the severe `40A -> 1A` branch.
+- Medium load-drop protection remains supported by earlier E010 evidence.
+- Severe `40A -> 1A` remains future work or requires a structurally different mechanism.
+- A6 structural energy management may be described only as a future-work concept note, not validation evidence.
+
+Forbidden:
+
+- claiming A5 improves `40A -> 1A`;
+- claiming severe load-drop robustness;
+- claiming A5-T4, R1, R2, or R3 as validated;
+- claiming PIS-IEK predicts the severe-drop first peak;
+- claiming hardware/HIL/board/silicon validation;
+- claiming AI directly controls gates or external load-current slew.
+
+Branch distinction:
+
+```text
+Medium load-drop branch:
+  A4 can provide useful projected protection under the tested 40A -> 10A case.
+
+Severe load-drop branch:
+  A5 projected scheduling has not yet passed the tested 40A -> 1A guard set.
+```
+
+Safer manuscript wording:
+
+```text
+E010-A5 remains MODEL_REVISED and severe 40A -> 1A remains unresolved
+under projected scheduling tokens.
+```
 
 ## Current E020 Evidence Boundary
 
