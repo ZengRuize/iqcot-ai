@@ -528,3 +528,14 @@ _Append-only timeline._
   `1.695us`: recovery peak `+0.1365mV`, undershoot `-1.1109mV`.
 - Decision: `MODEL_REVISED`.  Next: implement true soft/ramped restore, not
   more scalar binary-delay refinement.
+
+<!-- R000_CREATE_LONG_TERM_IQCOT_CODEX_SKILL_AND_OUTPUT_PROTOCOL -->
+
+## 2026-07-01 R000 / CREATE_LONG_TERM_IQCOT_CODEX_SKILL_AND_OUTPUT_PROTOCOL
+
+- Created long-term Codex skill.
+- Created workflow document.
+- Created output protocol.
+- No simulation was run.
+- No original `.slx` was modified.
+- Next recommended task: R050_RESEARCH_STATE_ALIGNMENT_AND_NEXT_ACTION_PLAN.

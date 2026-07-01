@@ -33,6 +33,13 @@ Key planning documents:
 - `docs/control_state_machine_after_feedback.md`
 - `docs/adaptive_validation_automation_20260624.md`
 
+## Codex Research Workflow
+
+- Long-term Codex research skill lives in `.codex/skills/iqcot-research/SKILL.md`.
+- Workflow protocol is in `docs/CODEX_RESEARCH_WORKFLOW.md`.
+- Output protocol is in `docs/CODEX_OUTPUT_PROTOCOL.md`.
+- Every future Codex round should read these files before executing research tasks.
+
 ## Research Logs
 
 - Research wiki: `research-wiki/`
