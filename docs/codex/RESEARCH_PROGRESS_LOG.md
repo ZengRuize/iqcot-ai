@@ -47,3 +47,57 @@ Classification:
 ```text
 documentation / claim-boundary / roadmap update
 ```
+
+## Manuscript Evidence Package
+
+Date: 2026-07-01
+Branch: codex/manuscript-evidence-package
+
+Purpose:
+
+```text
+Convert existing local IQCOT evidence into paper-ready figure/table/claim scaffolding.
+```
+
+Files created:
+
+```text
+papers/current/manuscript_evidence_package/
+docs/codex/git_state_before_manuscript_evidence_package.md
+```
+
+Files updated:
+
+```text
+docs/codex/RESEARCH_PROGRESS_LOG.md
+docs/codex/EVIDENCE_INDEX.md
+docs/codex/CLAIM_BOUNDARY_REGISTER.md
+docs/codex/NEXT_ACTIONS.md
+docs/codex/CODEX_NEXT_STEPS.md
+results/current/latest_summary.md
+```
+
+Simulations run:
+
+```text
+none
+```
+
+Models modified:
+
+```text
+none
+```
+
+Classification:
+
+```text
+manuscript documentation / evidence packaging
+```
+
+Next action:
+
+```text
+human review of evidence package;
+then E020 settling audit if more validation is needed.
+```

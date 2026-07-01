@@ -22,3 +22,27 @@ does not claim that IQCOT cannot respond to load transients. The contribution is
 a safety-projected supervisory layer for bounded action-token selection around
 IQCOT.
 ```
+
+## Manuscript Evidence Package Boundary
+
+Date: 2026-07-01
+Branch: `codex/manuscript-evidence-package`
+
+The manuscript evidence package is a documentation and packaging artifact. It does not create new experimental evidence and does not expand any claim.
+
+Allowed use:
+
+```text
+Use `papers/current/manuscript_evidence_package/` to draft figures, tables,
+claim wording, reviewer responses, and the LaTeX manuscript outline.
+```
+
+Forbidden use:
+
+```text
+Do not cite the package as simulation evidence independent of the underlying
+metrics CSV and summary Markdown files.
+Do not use it to claim severe 40A -> 1A solved.
+Do not use it to claim full 120A recovery, broad robustness, active Lambda,
+efficiency improvement, or hardware/HIL/board/silicon validation.
+```

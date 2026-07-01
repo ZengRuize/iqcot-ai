@@ -663,3 +663,38 @@ active Lambda validation
 active-phase broad scheduling
 hardware claims
 ```
+
+## Manuscript Evidence Package Update
+
+Date: 2026-07-01
+Branch: `codex/manuscript-evidence-package`
+
+Completed package:
+
+```text
+papers/current/manuscript_evidence_package/
+```
+
+Package role:
+
+```text
+existing local IQCOT evidence converted into manuscript-ready figure/table/claim scaffolding
+```
+
+Next recommended step:
+
+```text
+human review of manuscript evidence package
+then E020 settling audit if more validation is needed
+```
+
+Keep these boundaries:
+
+```text
+no simulations were run for the package
+no models were modified
+no new claims were added
+do not claim full 120A recovery
+do not claim severe 40A -> 1A solved
+do not claim active Lambda or hardware/HIL/board/silicon validation
+```

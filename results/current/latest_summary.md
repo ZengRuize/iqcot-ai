@@ -703,3 +703,55 @@ Next recommended step:
 build manuscript evidence package
 then run E020 settling audit only if the paper needs stronger late-recovery evidence
 ```
+
+## Manuscript Evidence Package
+
+Date: 2026-07-01
+Branch: `codex/manuscript-evidence-package`
+
+Created:
+
+```text
+papers/current/manuscript_evidence_package/
+```
+
+Key contents:
+
+```text
+00_evidence_index.md
+01_problem_solution_matrix_for_paper.md
+02_claim_boundary_table.md
+03_figure_plan.md
+04_table_plan.md
+05_results_to_text_mapping.md
+06_reviewer_risk_register.md
+07_latex_manuscript_outline.md
+08_citation_scaffold.md
+09_next_validation_decision.md
+```
+
+Outcome:
+
+```text
+Existing local IQCOT evidence has been converted into manuscript-ready
+figure/table/claim scaffolding.
+```
+
+Simulations:
+
+```text
+none
+```
+
+Models modified:
+
+```text
+none
+```
+
+Next recommended step:
+
+```text
+human review of manuscript evidence package;
+then E020 settling audit if more validation is needed.
+```

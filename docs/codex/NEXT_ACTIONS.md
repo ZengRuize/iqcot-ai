@@ -28,3 +28,25 @@ Next smallest useful research step:
 Build the manuscript evidence package, then consider E020 settling audit if
 the paper needs a stronger statement about late recovery.
 ```
+
+## After Manuscript Evidence Package
+
+Date: 2026-07-01
+Branch: `codex/manuscript-evidence-package`
+
+Current recommended order:
+
+1. Human review of `papers/current/manuscript_evidence_package/`.
+2. Convert the outline into the next paper draft / LaTeX skeleton.
+3. Run E020 settling audit only if the paper needs a stronger statement about late `120A` recovery.
+
+Do not start:
+
+```text
+E020-R2 tuning before settling audit
+A5-R4 projected scheduling
+broad load grids
+active Lambda validation
+active-phase broad scheduling
+hardware claims
+```
