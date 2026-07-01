@@ -1183,3 +1183,39 @@ phase_order_error_rate = 0 for all R3 variants
 The calibrated variants use the ideal boundary `g_hat_i = g_i`. This supports the projection architecture, not a claim that calibration is available or accurate in hardware.
 
 The frozen selector can be used after an active-phase add/reentry event in E040-A, but R3 itself still provides no active-phase add/shed evidence and no active Lambda control evidence. It also does not prove broad current-sense robustness or imperfect calibration robustness.
+
+## Expert-Review Framing Freeze
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+The action-space definition is now fixed around the following review boundary:
+
+```text
+a_AI = [a_O, a_U, a_S, a_N]
+a_projected = P_safe(a_AI, x_hat, mode, guards)
+```
+
+The AI/table supervisor does not directly control MOSFET gates, does not control the converter load-current slew, and does not replace the deterministic IQCOT inner loop. It proposes bounded supervisory action tokens. Only the safety-projected result may reach IQCOT parameter scheduling.
+
+Allowed token maturity:
+
+```text
+a_U:
+  local early load-rise dynamic regulation confirmed
+  full 120A recovery not confirmed
+
+a_O:
+  medium load-drop protection locally supported
+  severe 40A -> 1A unresolved
+
+a_S:
+  one calibration-aware current-sense guard pattern locally confirmed
+  active Lambda and broad robustness not confirmed
+
+a_N:
+  one add and one shed event-integrity point locally confirmed
+  broad 1/2/4 scheduling and efficiency improvement not confirmed
+```
+
+Future manuscripts should describe the supervisor as a safety-projected event-management layer around IQCOT, not as a direct gate controller or as a fix for a basic IQCOT voltage-regulation defect.

@@ -666,3 +666,40 @@ For 40A -> 1A, tested A5 variants repeatedly show:
 ```
 
 Boundary: A5 is useful as negative/revision evidence for the limit of projected supervisory scheduling. It must not be claimed as severe-drop improvement. A6 structural energy management is future work only, not implemented or validated. Recommended next step is E020 `a_U` window tuning.
+
+## Power-Electronics Expert Review
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+The project does not frame IQCOT as lacking basic variable-frequency regulation. IQCOT remains the deterministic fast inner loop. The contribution is safety-projected supervisory action-token selection around IQCOT.
+
+Strongest supported mechanisms:
+
+```text
+a_U early load-rise dynamic regulation
+a_S calibration-aware current-sharing guard
+a_N local add/shed event integrity
+```
+
+Partially supported:
+
+```text
+a_O medium load-drop projected protection
+```
+
+Unresolved:
+
+```text
+severe 40A -> 1A load-drop
+full 120A settling
+broad robustness
+nonideal digital/hardware validation
+```
+
+Next recommended step:
+
+```text
+build manuscript evidence package
+then run E020 settling audit only if the paper needs stronger late-recovery evidence
+```

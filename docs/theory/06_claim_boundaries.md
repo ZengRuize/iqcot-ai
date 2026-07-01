@@ -1109,3 +1109,45 @@ residual_current_check == pass
 active Lambda == disabled
 post_shed_aS_mode == 0
 ```
+
+## Rigorous Expert-Review Boundary Freeze
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+Frozen core wording:
+
+```text
+The deterministic IQCOT inner loop already provides fast variable-frequency
+voltage regulation. The proposed work does not replace the IQCOT inner loop and
+does not claim that IQCOT cannot respond to load transients. The contribution is
+a safety-projected supervisory layer for bounded action-token selection around
+IQCOT.
+```
+
+Allowed contribution wording:
+
+```text
+1. Safety-projected supervisory action-token framework around IQCOT.
+2. Local a_U confirmation for early load-rise peak-undershoot reduction and current-rise acceleration.
+3. Local a_O support for medium load-drop and explicit severe-drop boundary.
+4. Local calibration-aware a_S current-sharing guard.
+5. Local a_N add/shed event-integrity confirmation.
+6. Claim-boundary-driven validation methodology.
+```
+
+Forbidden wording:
+
+```text
+IQCOT cannot regulate load transients.
+AI replaces IQCOT.
+AI directly controls MOSFET gates.
+The method solves all load-rise/load-drop problems.
+A5 solves severe 40A -> 1A load drop.
+E020 solves full 120A recovery.
+Active Lambda is validated.
+Active-phase control proves efficiency improvement.
+Hardware/HIL/silicon validation is shown.
+```
+
+The first future validation, if additional evidence is needed, should be an E020 settling audit. It should not be E020-R2 tuning unless the settling audit first shows that tuning is the right hypothesis.

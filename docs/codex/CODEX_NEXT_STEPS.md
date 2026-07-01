@@ -630,3 +630,36 @@ hardware/HIL/silicon claims
 - Derived models must be created through MATLAB/Simulink APIs.
 - Every derived model must have a hypothesis, metrics CSV, Markdown report, and classification.
 - Simulink-only evidence must not be described as hardware, HIL, board-level, or silicon validation.
+
+## Rigorous IQCOT Expert Review Update
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+Next smallest useful step:
+
+```text
+complete rigorous IQCOT language audit and expert review package.
+Then build manuscript evidence package.
+Then, if required, run E020 settling audit.
+```
+
+Correct framing:
+
+```text
+The deterministic IQCOT inner loop already provides fast variable-frequency
+voltage regulation. The proposed work does not replace the IQCOT inner loop.
+The contribution is a safety-projected supervisory layer for bounded action-token
+selection around IQCOT.
+```
+
+Do not start:
+
+```text
+E020-R2 tuning before settling audit
+A5-R4 projected scheduling
+broad load grids
+active Lambda validation
+active-phase broad scheduling
+hardware claims
+```

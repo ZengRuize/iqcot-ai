@@ -789,3 +789,45 @@ efficiency improvement
 severe load-rise/drop active-phase behavior
 hardware/HIL/board/silicon validation
 ```
+
+## Expert-Review Priority Update
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+No simulations are launched by the rigorous expert-review task. The next validation priority, if more validation is required after manuscript evidence packaging, is E020 settling audit:
+
+```text
+run B0, B3, R1-U1 with longer stop times:
+  0.8 ms
+  1 ms
+  2 ms
+
+log:
+  Vout average
+  I_Lsum average
+  Iload actual
+  Ton_actual_i
+  event density
+  comparator / area-integrator state
+  fast_req_state
+  Ton_boost_state
+  fallback-to-nominal state
+
+classify:
+  SETTLING_TIME_INSUFFICIENT
+  STEADY_STATE_BIAS
+  MODEL_OR_MEASUREMENT_ISSUE
+  CONTROL_LIMITATION
+```
+
+Do not run:
+
+```text
+E020-R2 tuning before settling audit
+A5-R4 projected scheduling
+broad load grids
+active Lambda validation
+active-phase broad scheduling
+hardware/HIL/board/silicon claims
+```

@@ -631,3 +631,32 @@ The branch selector uses the observed disturbance estimate. It is not an actuato
 Load-drop validation measures peak overshoot, early local peak, recovery peak, late settling, undershoot penalty, reentry time, skip count, and final error.
 
 Load-rise validation measures peak undershoot, current rise time, recovery overshoot, phase current peak, current-limit hit, settling time, and final error.
+
+## Expert-Review Framing Freeze
+
+Date: 2026-07-01
+Branch: `codex/rigorous-iqcot-review-git-managed`
+
+The bidirectional large-signal model must not be written as if IQCOT cannot regulate load transients. The deterministic IQCOT inner loop already provides fast variable-frequency voltage regulation.
+
+The reason for separating load-rise and load-drop is supervisory-action polarity:
+
+```text
+load rise:
+  external disturbance creates an inductor-current deficit
+  projected actions may add event density or bounded Ton energy
+
+load drop:
+  external disturbance creates excess inductor current / energy
+  projected actions may truncate Ton, inhibit selected events, or reshape reentry
+```
+
+The branch selector observes the external disturbance and controller state. It does not command load-current slew. The supervisor only proposes low-dimensional tokens that must pass safety projection before reaching IQCOT parameter scheduling.
+
+Current boundary:
+
+```text
+a_U: locally confirmed for early load-rise peak-undershoot/current-rise improvement
+a_O: locally useful for medium load-drop protection
+a_O severe 40A -> 1A: unresolved under A5 projected scheduling
+```
