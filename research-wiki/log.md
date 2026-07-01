@@ -554,3 +554,33 @@ _Append-only timeline._
 - Next recommended task: R051_PIS_IEK_ACTUATOR_ABLATION_CONSOLIDATION.
 - Result classification: MODEL_CONFIRMED.
 - Commit SHA: reported in the final Codex Round Output for this self-referential commit.
+
+<!-- R051_PIS_IEK_ACTUATOR_ABLATION_CONSOLIDATION -->
+
+## 2026-07-01 R051 / PIS-IEK actuator ablation consolidation
+
+- Objective: consolidated existing evidence for `Ton_diff`, `Lambda_diff`, and
+  `delay_diff` actuator separation; no new simulation was run.
+- MATLAB/Simulink used: no.
+- Original `.slx` modified: no.
+- Evidence files found: `output/iqcot_four_phase_actuator_matrix.csv`,
+  `output/iqcot_simulink_modal_cross_validation_summary.csv`,
+  `output/iqcot_iek_perphase_model_validation_report.md`,
+  `output/iqcot_iek_perphase_load_sweep_report.md`,
+  `output/iqcot_digital_jitter_gain_summary.csv`, `experiments/E030_balance_recovery/*`,
+  and R1/R2/R3 balance-recovery summaries.
+- Actuator separation decision: `Ton_diff` is confirmed as the primary DC
+  current-sharing actuator within the studied four-phase digital IQCOT scope;
+  `Lambda_diff` is confirmed as phase-spacing/event-rhythm actuator rather
+  than strong DC current-sharing actuator; `delay_diff` is confirmed as
+  jitter/detection-timing disturbance and digital-budget term.
+- Claim matrix update: no direct edit; R051 generated structured evidence and
+  boundary tables instead, because the matrix already contained R050/C3/C4
+  locators and had unrelated pre-existing R049T/R049U/R049V dirty hunks.
+- New files: `refine-logs/LOCAL_AUDIT_R051_PIS_IEK_ACTUATOR_ABLATION.md`,
+  `docs/r051_pis_iek_actuator_ablation_consolidation.md`,
+  `output/tables/r051_actuator_evidence_map.csv`, and
+  `output/tables/r051_actuator_claim_boundary_table.csv`.
+- Next recommended task: R052_DIGITAL_JITTER_BUDGET_CONSOLIDATION.
+- Result classification: MODEL_CONFIRMED.
+- Commit SHA: reported in the final Codex Round Output for this self-referential commit.
